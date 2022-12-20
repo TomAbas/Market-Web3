@@ -1,7 +1,10 @@
 {
   "name": "metaspacecy-xmas",
+  "description": "Metaspacecy Christmas",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
+  "author": "Bekh-nam <bekhnam2021@gmail.com>",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -43,7 +46,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "clean": "prettier --write '**/*.+(js|jsx|json|css|md|html|scss)'",
+    "format": "npm run clean && npm run lint",
+    "analyze": "craco build"
   },
   "eslintConfig": {
     "extends": [
