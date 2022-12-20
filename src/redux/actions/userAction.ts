@@ -145,7 +145,6 @@ export const useUserInfo = () => {
 		}
 	};
 	useEffect(() => {
-		console.log('chay trong hooks');
 		getUserAddress();
 	}, []);
 	return {
