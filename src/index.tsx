@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 // import { BrowserRouter } from 'react-router-dom';
 // redux
 import { store } from './redux/store';
+import { Provider } from 'react-redux';
 // styled
 import './index.css';
 import 'swiper/swiper.min.css';
@@ -14,7 +15,9 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<Provider store={store}>
+			<App />
+		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')
 );
