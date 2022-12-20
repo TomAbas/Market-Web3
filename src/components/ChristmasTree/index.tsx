@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Link, Stack, Typography } from '@mui/material';
 import React from 'react';
-import bg1 from '../../assets/images/background/bg1.png';
-import bg2 from '../../assets/images/background/bg2.png';
-import bg3 from '../../assets/images/background/bg3.png';
-import bg4 from '../../assets/images/background/bg4.png';
-import bg5 from '../../assets/images/background/bg5.png';
+import bg1 from '../../assets/images/background/bg1.webp';
+import bg2 from '../../assets/images/background/bg2.webp';
+import bg3 from '../../assets/images/background/bg3.webp';
+import bg4 from '../../assets/images/background/bg4.webp';
+import bg5 from '../../assets/images/background/bg5.webp';
 import bg7 from '../../assets/images/background/bg7.webp';
 import bg6 from '../../assets/images/background/bg6.webp';
 import bg8 from '../../assets/images/background/bg8.webp';
 import bg9 from '../../assets/images/background/bg9.png';
-import xmas from '../../assets/images/background/xmas.png';
-import xmasText from '../../assets/images/background/xmas-text.svg';
-import xmasTextttt from '../../assets/images/background/xmasss.svg';
+import xmas from '../../assets/images/background/xmas.webp';
+import xmasText from '../../assets/images/background/xmas-text.webp';
+import xmasTextttt from '../../assets/images/background/xmasss.webp';
 import icon from '../../assets/icons/Icon.svg';
 import star from '../../assets/icons/Star.svg';
 import check from '../../assets/icons/check.svg';
@@ -20,6 +20,7 @@ import Slider from '../Slider';
 
 import TwitterWhite from 'assets/icons/twitter-white.svg';
 import DiscordWhite from 'assets/icons/discord-white.svg';
+import { PATH_SOCIAL } from 'routes/path';
 
 export default function ChristmasTree() {
 	return (
@@ -174,7 +175,7 @@ export default function ChristmasTree() {
 						},
 					}}
 				>
-					<Box sx={{ maxWidth: '1070px', mx: 'auto', color: '#fff' }}>
+					<Box sx={{ maxWidth: '1070px', mx: 'auto', color: '#fff', px: 4 }}>
 						<Typography variant="h2" color="#fff">
 							InTO the Metaverse
 						</Typography>
@@ -287,7 +288,7 @@ export default function ChristmasTree() {
 							>
 								<img src={star} alt="star" />
 								<Typography variant="h5">
-									Grab your Xmas gifts from the tallest Christmas
+									Grab your Xmas gifts from the tallest Christmas tree
 								</Typography>
 							</Stack>
 						</Stack>
@@ -317,28 +318,14 @@ export default function ChristmasTree() {
 			</Box>
 			<Box
 				sx={{
-					position: 'relative',
-					'& > img': {
-						width: '100%',
-						height: '670px',
-						objectFit: 'cover',
-						objectPosition: 'bottom',
-						display: 'center',
-						minHeight: '200px',
-					},
+					background: `url(${bg9}) center center / cover no-repeat`,
+					px: 4,
+					pt: 4,
+					pb: 6,
 				}}
 			>
-				<img src={bg9} alt="xmas" />
 				<Box
 					sx={{
-						position: 'absolute',
-						top: '40px',
-						left: '50%',
-						transform: 'translateX(-50%)',
-						width: '100%',
-						px: 4,
-						pb: 6,
-
 						h2: {
 							textTransform: 'uppercase',
 							fontFamily: 'Montserrat, sans-serif !important',
@@ -476,39 +463,53 @@ export default function ChristmasTree() {
 								<Typography variant="h5">Being active daily</Typography>
 							</Stack>
 						</Stack>
-						<Stack direction="row" gap="32px" justifyContent="center">
-							<Stack
-								direction="row"
-								gap="10px"
-								alignItems="center"
-								sx={{
-									img: {
-										width: '32px',
-									},
-								}}
-							>
-								<img src={TwitterWhite} alt="twitter" />
-								<Typography variant="h5">Metaspacecy</Typography>
-							</Stack>
-							<Stack
-								direction="row"
-								gap="10px"
-								alignItems="center"
-								sx={{
-									img: {
-										width: '32px',
-									},
-								}}
-							>
-								<img src={DiscordWhite} alt="twitter" />
-								<Typography variant="h5">Metaspacecy</Typography>
-							</Stack>
+						<Stack
+							direction="row"
+							gap="32px"
+							justifyContent="center"
+							sx={{
+								a: {
+									color: '#fff',
+									textDecoration: 'none',
+								},
+							}}
+						>
+							<Link href={`${PATH_SOCIAL.discord}`} target="_blank">
+								<Stack
+									direction="row"
+									gap="10px"
+									alignItems="center"
+									sx={{
+										img: {
+											width: '32px',
+										},
+									}}
+								>
+									<img src={TwitterWhite} alt="twitter" />
+									<Typography variant="h5">Metaspacecy</Typography>
+								</Stack>
+							</Link>
+
+							<Link href={`${PATH_SOCIAL.discord}`} target="_blank">
+								<Stack
+									direction="row"
+									gap="10px"
+									alignItems="center"
+									sx={{
+										img: {
+											width: '32px',
+										},
+									}}
+								>
+									<img src={DiscordWhite} alt="twitter" />
+									<Typography variant="h5">@Spaceman</Typography>
+								</Stack>
+							</Link>
 						</Stack>
 						<Box
 							sx={{
 								textAlign: 'center',
 								mt: '32px',
-								mb: '20px',
 								button: {
 									padding: '10px 30px',
 									border: '1.5px solid #e7e8ec',
@@ -544,7 +545,7 @@ export default function ChristmasTree() {
 							}}
 						>
 							<button>
-								<Link href="http://virtual.metaspacecy.com/#/xmas" target="_blank">
+								<Link href={`${PATH_SOCIAL.discord}`} target="_blank">
 									Complete Your Tasks
 								</Link>
 							</button>

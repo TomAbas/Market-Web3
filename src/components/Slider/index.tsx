@@ -8,16 +8,16 @@ import '../../../node_modules/swiper/swiper.min.css';
 // import required modules
 import { EffectCoverflow, Navigation, Autoplay } from 'swiper';
 
-import Asset1 from 'assets/images/card/Asset1.png';
-import Asset2 from 'assets/images/card/Asset2.png';
-import Asset3 from 'assets/images/card/Asset3.png';
-import Asset4 from 'assets/images/card/Asset4.png';
-import Asset5 from 'assets/images/card/Asset5.png';
-import Asset6 from 'assets/images/card/Asset6.png';
-import Asset7 from 'assets/images/card/Asset7.png';
-import Asset8 from 'assets/images/card/Asset8.png';
-import Asset9 from 'assets/images/card/Asset9.png';
-import Asset10 from 'assets/images/card/Asset10.png';
+import Asset1 from 'assets/images/card/Asset1.webp';
+import Asset2 from 'assets/images/card/Asset2.webp';
+import Asset3 from 'assets/images/card/Asset3.webp';
+import Asset4 from 'assets/images/card/Asset4.webp';
+import Asset5 from 'assets/images/card/Asset5.webp';
+import Asset6 from 'assets/images/card/Asset6.webp';
+import Asset7 from 'assets/images/card/Asset7.webp';
+import Asset8 from 'assets/images/card/Asset8.webp';
+import Asset9 from 'assets/images/card/Asset9.webp';
+import Asset10 from 'assets/images/card/Asset10.webp';
 
 import { Box, Stack, Typography } from '@mui/material';
 
