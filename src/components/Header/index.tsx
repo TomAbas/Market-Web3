@@ -22,18 +22,21 @@ import LogoMSMobileWhite from '../../assets/images/logo/MSMobile-white.webp';
 import LogoMSGray from '../../assets/images/logo/logo-metaspacecy-gray.webp';
 import LogoMSGrayMoblie from '../../assets/images/logo/logo-metaspacecy-gray-moblie.webp';
 import connectIcon from '../../assets/icons/icon-connect-white.svg';
-import binance from '../../assets/wallet/binance.svg';
+import binance from '../../assets/wallet/bnb-new.webp';
 import ModalWallet from '../ModalWallet';
-import { selectUser } from '../../redux/slices/userInfo';
+import { selectUser, selectWeb3 } from '../../redux/slices/userInfo';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 //hooks
 import { useUserInfo } from '../../redux/actions/userAction';
+import { TOKEN_PAYMENT } from 'constants/token.constant';
 
 const Header: React.FC = () => {
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
 	const userInfo = useAppSelector(selectUser);
 	const userAddress = userInfo?.userAddress;
 	const userBalance = userInfo?.balance;
+	const web3Info = useAppSelector(selectWeb3);
+	const chainId = web3Info.chainId;
 	const dispatch = useAppDispatch();
 	let ref: any = useRef();
 	const theme = useTheme();
@@ -255,10 +258,10 @@ const Header: React.FC = () => {
 														},
 													}}
 												>
-													{/* <img src={binance} alt="bnb" />
-													<Box>{TOKEN_PAYMENT[chainId][0].symbol}</Box> */}
+													<img src={binance} alt="bnb" />
+													<Box>{userBalance}</Box>
+													<Box>{TOKEN_PAYMENT[chainId][0].symbol}</Box>
 												</Stack>
-												<Box>{userBalance} BNB</Box>
 											</Stack>
 										</Stack>
 									</DropDownContent>
