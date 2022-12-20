@@ -1,13 +1,151 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html {
+	scroll-behavior: smooth;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+	font-family: 'Montserrat', sans-serif;
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	font-style: italic;
 }
+textarea {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 12px;
+	resize: none;
+}
+
+body.stop-scroll {
+	overflow: hidden;
+	height: 100vh;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+
+ul {
+	margin: 0;
+}
+
+p {
+	margin: 0;
+}
+
+body::-webkit-scrollbar {
+	width: 8px;
+	height: 4px;
+}
+
+body::-webkit-scrollbar-track {
+	background: #0c5599;
+}
+
+body::-webkit-scrollbar-thumb {
+	background: #65b8ff;
+}
+* {
+	scrollbar-width: thin;
+	scrollbar-color: #65b8ff #0c5599;
+}
+.Toastify__toast-theme--light.Toastify__toast--success {
+	background: rgba(255, 255, 250, 0.5);
+	backdrop-filter: blur(16px);
+}
+.Toastify__toast-theme--light.Toastify__toast--error {
+	background: rgba(255, 255, 250, 0.5);
+	backdrop-filter: blur(16px);
+}
+.Toastify__toast-theme--light.Toastify__toast--warning {
+	background: rgba(255, 255, 250, 0.5);
+	backdrop-filter: blur(16px);
+}
+.Toastify__toast-theme--light {
+	color: black;
+}
+.Toastify__toast-theme--dark {
+	color: white;
+}
+@media screen and (max-width: 541px) {
+	body::-webkit-scrollbar {
+		width: 2px;
+	}
+}
+@media screen and (max-width: 321px) {
+	body::-webkit-scrollbar {
+		width: 1px;
+	}
+}
+@keyframes smoothAppear {
+	0% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes smoothClose {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+@keyframes Img1 {
+	0% {
+		opacity: 1;
+	}
+	25% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 1;
+	}
+	75% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes Img2 {
+	0% {
+		opacity: 1;
+	}
+	5% {
+		opacity: 0;
+	}
+	55% {
+		opacity: 0;
+	}
+	75% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes Stadium {
+	from {
+		height: 160px;
+	}
+	to {
+		height: auto;
+	}
+}
+
+@keyframes Stadium1 {
+	from {
+		height: auto;
+	}
+	to {
+		height: 160px;
+	}
+}
+
+/* Style for toastify */
