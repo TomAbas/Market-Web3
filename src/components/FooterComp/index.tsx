@@ -49,6 +49,7 @@ import MidiumGray from '../../assets/icons/mediumicon.svg';
 import Instagram from '../../assets/icons/icon-instagram.svg';
 import {
 	PATH_BLOG,
+	PATH_CATEGORY,
 	PATH_COLLECTION,
 	PATH_DROP,
 	PATH_PAGE,
@@ -133,44 +134,39 @@ const FooterComp: React.FC = () => {
 		{
 			title: 'Marketplace',
 			contents: [
-				// {
-				// 	title: 'NFTs Space',
-				// 	link: `#${PATH_VIEWALL.root}`,
-				// 	isFilter: false,
-				// },
 				{
 					title: 'Collectible',
-					link: '',
+					link: `${PATH_VIEWALL.collections}`,
 					isFilter: false,
 				},
 				{
 					title: 'Art',
-					link: '',
+					link: `${PATH_CATEGORY.artwork}`,
 					isFilter: true,
 				},
 				{
 					title: 'Music',
-					link: '',
+					link: `${PATH_CATEGORY.artwork}`,
 					isFilter: true,
 				},
 				{
 					title: 'Sport',
-					link: '',
+					link: `${PATH_CATEGORY.artwork}`,
 					isFilter: true,
 				},
 				{
 					title: 'Domain Name',
-					link: '',
+					link: `${PATH_CATEGORY.artwork}`,
 					isFilter: true,
 				},
 				{
 					title: 'Trading Card',
-					link: '',
+					link: `${PATH_CATEGORY.artwork}`,
 					isFilter: true,
 				},
 				{
 					title: 'Esport',
-					link: '',
+					link: `${PATH_CATEGORY.artwork}`,
 					isFilter: true,
 				},
 			],
@@ -196,7 +192,7 @@ const FooterComp: React.FC = () => {
 				{
 					id: 3,
 					name: 'Boarc',
-					link: '',
+					link: `${PATH_DROP.boarc}`,
 					target: '',
 				},
 			],
@@ -520,7 +516,12 @@ const FooterComp: React.FC = () => {
 														? item.link + '?category=' + item.title
 														: item.link
 												}
-												sx={{ fontStyle: 'italic' }}
+												target="_blank"
+												sx={{
+													fontStyle: 'italic',
+													pointerEvents:
+														item.link === '' ? 'none' : 'pointer',
+												}}
 											>
 												{item.title}
 											</DetailLink>
@@ -559,36 +560,10 @@ const FooterComp: React.FC = () => {
 												sx={{
 													cursor:
 														item.link === '' ? 'default' : 'pointer',
+													pointerEvents:
+														item.link === '' ? 'none' : 'pointer',
 													fontStyle: 'italic',
 												}}
-												// onClick={(e) => {
-												// 	if (item.link === '') {
-												// 		e.preventDefault();
-												// 	} else {
-												// 		if (item.link !== '') {
-												// 			e.preventDefault();
-												// 			// navigate(item.link);
-
-												// 			// setTimeout(() => {
-												// 			// 	document
-												// 			// 		?.querySelector(`#${item.id}`)
-												// 			// 		?.scrollIntoView({
-												// 			// 			behavior: 'auto',
-												// 			// 		});
-
-												// 			// 	setTimeout(() => {
-												// 			// 		document
-												// 			// 			?.querySelector(
-												// 			// 				`#${item.id}`
-												// 			// 			)
-												// 			// 			?.scrollIntoView({
-												// 			// 				behavior: 'auto',
-												// 			// 			});
-												// 			// 	}, 500);
-												// 			// }, 200);
-												// 		}
-												// 	}
-												// }}
 												target="_blank"
 												href={item.link}
 											>

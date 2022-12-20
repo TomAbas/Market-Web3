@@ -20,7 +20,9 @@ import { selectUser, selectWeb3 } from '../slices/userInfo';
 //modalWallet
 import { openSecondModal } from '../slices/modalWallet';
 import { useEffect } from 'react';
+declare let window: any;
 export const useUserInfo = () => {
+	const ethereum: any = window.ethereum;
 	const context = useWeb3React<Web3Provider>();
 	let { activate } = context;
 	const dispatch = useAppDispatch();
@@ -57,28 +59,16 @@ export const useUserInfo = () => {
 		}
 	};
 	const getUserAddress = async () => {
-		let address = await web3.eth.getAccounts();
-		let addressUser = address[0];
-		let userInfo = { userAddress: addressUser };
-		// usePost(`${API_ENDPOINT}/users/login`, userInfo);
-		dispatch(getUserSuccessA(userInfo));
-		getUserBalance(addressUser);
+		if (ethereum) {
+			let address = await web3.eth.getAccounts();
+			let addressUser = address[0];
+			let userInfo = { userAddress: addressUser };
+			// usePost(`${API_ENDPOINT}/users/login`, userInfo);
+			dispatch(getUserSuccessA(userInfo));
+			getUserBalance(addressUser);
+		}
 	};
-	// const formatNumber = (
-	// 	amount: string,
-	// 	minNumberLimitAfterComma: number,
-	// 	maxNumberLimitAfterComma: number
-	// ) => {
-	// 	if (maxNumberLimitAfterComma) {
-	// 		return numeral(amount).format(
-	// 			`0,0.${'0'.repeat(minNumberLimitAfterComma)}[${'0'.repeat(
-	// 				maxNumberLimitAfterComma - minNumberLimitAfterComma
-	// 			)}]`
-	// 		);
-	// 	} else {
-	// 		return numeral(amount).format(`0,0.${'0'.repeat(minNumberLimitAfterComma)}`);
-	// 	}
-	// };
+
 	const getUserBalance = async (address: string) => {
 		let balanceOfUser;
 		if (address) {
