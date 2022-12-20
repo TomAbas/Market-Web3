@@ -175,7 +175,7 @@ export default function ChristmasTree() {
 						},
 					}}
 				>
-					<Box sx={{ maxWidth: '1070px', mx: 'auto', color: '#fff', px: 4 }}>
+					<Box sx={{ maxWidth: '1070px', mx: 'auto', color: '#fff' }}>
 						<Typography variant="h2" color="#fff">
 							InTO the Metaverse
 						</Typography>
@@ -474,7 +474,7 @@ export default function ChristmasTree() {
 								},
 							}}
 						>
-							<Link href={`${PATH_SOCIAL.discord}`} target="_blank">
+							<Link href={`${PATH_SOCIAL.twitter}`} target="_blank">
 								<Stack
 									direction="row"
 									gap="10px"

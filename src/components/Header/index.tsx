@@ -62,7 +62,7 @@ const Header: React.FC = () => {
 		},
 		{
 			id: 3,
-			name: 'How to join',
+			name: 'How To Join',
 			link: '',
 		},
 	];
@@ -184,6 +184,31 @@ const Header: React.FC = () => {
 						) : null}
 
 						<Stack direction="row" gap="10px">
+							{innerWidth < 730 ? (
+								<IconItem>
+									<MoreHorizOutlinedIcon
+										sx={{
+											width: '34px',
+											position: 'absolute',
+											top: '6px',
+											color: 'white',
+										}}
+										onClick={() => setOption(true)}
+									/>
+
+									{option && (
+										<ClickAwayListener
+											onClickAway={() => {
+												openMoreOption();
+											}}
+										>
+											<DropDownContent ref={ref}>
+												{renderListNavMobile()}
+											</DropDownContent>
+										</ClickAwayListener>
+									)}
+								</IconItem>
+							) : null}
 							<IconItem onClick={openModal}>
 								<img src={connectIcon} alt="connect icon" />
 								{modalWalletSteps.steps.firstModal && (
@@ -195,7 +220,7 @@ const Header: React.FC = () => {
 										<DropDownContent ref={ref}>
 											<Box
 												sx={{
-													width: '350px',
+													width: '330px',
 												}}
 												p={4}
 											>
@@ -313,31 +338,6 @@ const Header: React.FC = () => {
 									</ClickAwayListener>
 								)}
 							</IconItem>
-							{innerWidth < 730 ? (
-								<IconItem>
-									<MoreHorizOutlinedIcon
-										sx={{
-											width: '34px',
-											position: 'absolute',
-											top: '6px',
-											color: 'white',
-										}}
-										onClick={() => setOption(true)}
-									/>
-
-									{option && (
-										<ClickAwayListener
-											onClickAway={() => {
-												openMoreOption();
-											}}
-										>
-											<DropDownContent ref={ref}>
-												{renderListNavMobile()}
-											</DropDownContent>
-										</ClickAwayListener>
-									)}
-								</IconItem>
-							) : null}
 						</Stack>
 					</Stack>
 				</Box>

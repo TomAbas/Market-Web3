@@ -28,7 +28,10 @@ const ModalWallet: React.FC = () => {
 									src={wallet.image}
 									alt={wallet.name}
 								/>
-								<Typography fontStyle="italic" style={{ marginBottom: 0 }}>
+								<Typography
+									fontStyle="italic"
+									style={{ marginBottom: 0, fontFamily: 'Montserrat, san-serif' }}
+								>
 									{wallet.name}
 								</Typography>
 							</Stack>
