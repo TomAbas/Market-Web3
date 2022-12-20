@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 //web3 provider
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
+import SizeObserver from 'contexts/SizeObserver';
 function App() {
 	const getLibrary = (provider: any): Web3Provider => {
 		const library = new Web3Provider(provider);
@@ -15,9 +16,11 @@ function App() {
 	return (
 		<>
 			<Web3ReactProvider getLibrary={getLibrary}>
-				<Header />
-				<ChristmasTree />
-				<FooterComp />
+				<SizeObserver>
+					<Header />
+					<ChristmasTree />
+					<FooterComp />
+				</SizeObserver>
 			</Web3ReactProvider>
 		</>
 	);

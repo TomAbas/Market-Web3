@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 // mui
 import { Box, Link, Stack, Typography, useTheme } from '@mui/material';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
@@ -30,6 +30,8 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { useUserInfo } from '../../redux/actions/userAction';
 import { TOKEN_PAYMENT } from 'constants/token.constant';
 
+import { useSizeObersver } from '../../contexts/SizeObserver';
+
 const Header: React.FC = () => {
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
 	const userInfo = useAppSelector(selectUser);
@@ -41,9 +43,11 @@ const Header: React.FC = () => {
 	let ref: any = useRef();
 	const theme = useTheme();
 	const isLightTheme = theme.palette.mode === 'dark';
+	const { innerWidth } = useSizeObersver();
 	useUserInfo();
 	// useState
 	let [background, setBackground] = useState(false);
+	let [option, setOption] = useState(false);
 
 	const listNav = [
 		{
@@ -76,6 +80,20 @@ const Header: React.FC = () => {
 			);
 		});
 	};
+	const renderListNavMobile = () => {
+		return listNav.map((item) => {
+			return (
+				<Box key={item.id} px={4} py={2}>
+					<Link
+						href={item.link}
+						sx={{ textDecoration: 'none', color: '#fff', fontWeight: '500' }}
+					>
+						{item.name}
+					</Link>
+				</Box>
+			);
+		});
+	};
 	const openModal = () => {
 		if (!userAddress) {
 			dispatch(openFirstModal());
@@ -83,7 +101,20 @@ const Header: React.FC = () => {
 			dispatch(openSecondModal());
 		}
 	};
+	useEffect(() => {
+		// Handler to call on window scroll
+		const handleScroll = () => {
+			if (window.pageYOffset > 25) {
+				setBackground(true);
+			} else {
+				setBackground(false);
+			}
+		};
+		window.addEventListener('scroll', handleScroll, { passive: true });
 
+		return () => window.removeEventListener('scroll', handleScroll);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	return (
 		<>
 			<AppbarHeader
@@ -143,57 +174,40 @@ const Header: React.FC = () => {
 								)}
 							</LogoLink>
 						</PageLogo>
-						<Stack sx={{ flexDirection: 'row', gap: '60px' }}>{renderListNav()}</Stack>
-						<IconItem onClick={openModal}>
-							<img src={connectIcon} alt="connect icon" />
-							{modalWalletSteps.steps.firstModal && (
-								<ClickAwayListener
-									onClickAway={() => {
-										dispatch(closeModal());
-									}}
-								>
-									<DropDownContent ref={ref}>
-										<Box
-											sx={{
-												width: '350px',
-											}}
-											p={4}
-										>
-											<Box>
-												<Typography
-													variant="h4"
-													fontStyle="italic"
-													style={{
-														textAlign: 'center',
-														marginBottom: '20px',
-														fontFamily: 'Montserrat, san-serif',
-													}}
-												>
-													Connect wallet
-												</Typography>
-												<Typography
-													variant="body2"
-													fontWeight="400"
-													sx={{
-														fontFamily: 'Montserrat, san-serif',
-														[theme.breakpoints.down(500)]: {
-															fontSize: '13px',
-														},
-													}}
-													color="#fff"
-													fontSize="16px"
-													fontStyle="italic"
-												>
-													Use any existing crypto wallet to connect to
-													Metaspacecy
-												</Typography>
-											</Box>
-											<ModalWallet />
-											<Box pt={2}>
-												<LinkWrapper
-													href="https://metaspacecy.gitbook.io/metaspacecy/getting-started/installing-a-wallet"
-													target="_blank"
-												>
+						{innerWidth > 730 ? (
+							<Stack sx={{ flexDirection: 'row', gap: '60px' }}>
+								{renderListNav()}
+							</Stack>
+						) : null}
+
+						<Stack direction="row" gap="10px">
+							<IconItem onClick={openModal}>
+								<img src={connectIcon} alt="connect icon" />
+								{modalWalletSteps.steps.firstModal && (
+									<ClickAwayListener
+										onClickAway={() => {
+											dispatch(closeModal());
+										}}
+									>
+										<DropDownContent ref={ref}>
+											<Box
+												sx={{
+													width: '350px',
+												}}
+												p={4}
+											>
+												<Box>
+													<Typography
+														variant="h4"
+														fontStyle="italic"
+														style={{
+															textAlign: 'center',
+															marginBottom: '20px',
+															fontFamily: 'Montserrat, san-serif',
+														}}
+													>
+														Connect wallet
+													</Typography>
 													<Typography
 														variant="body2"
 														fontWeight="400"
@@ -207,78 +221,111 @@ const Header: React.FC = () => {
 														fontSize="16px"
 														fontStyle="italic"
 													>
-														I dont have a crypto wallet
+														Use any existing crypto wallet to connect to
+														Metaspacecy
 													</Typography>
-												</LinkWrapper>
+												</Box>
+												<ModalWallet />
+												<Box pt={2}>
+													<LinkWrapper
+														href="https://metaspacecy.gitbook.io/metaspacecy/getting-started/installing-a-wallet"
+														target="_blank"
+													>
+														<Typography
+															variant="body2"
+															fontWeight="400"
+															sx={{
+																fontFamily: 'Montserrat, san-serif',
+																[theme.breakpoints.down(500)]: {
+																	fontSize: '13px',
+																},
+															}}
+															color="#fff"
+															fontSize="16px"
+															fontStyle="italic"
+														>
+															I dont have a crypto wallet
+														</Typography>
+													</LinkWrapper>
+												</Box>
 											</Box>
-										</Box>
-									</DropDownContent>
-								</ClickAwayListener>
-							)}
-							{modalWalletSteps.steps.secondModal && (
-								<ClickAwayListener
-									onClickAway={() => {
-										dispatch(closeModal());
-									}}
-								>
-									<DropDownContent ref={ref}>
-										<Box p={2}>
-											<Typography
-												variant="body2"
-												fontWeight="400"
-												sx={{
-													textAlign: 'center',
-													fontFamily: 'Montserrat, san-serif',
-													[theme.breakpoints.down(500)]: {
-														fontSize: '13px',
-													},
-												}}
-												color="#fff"
-												fontSize="16px"
-												fontStyle="italic"
-											>
-												{userAddress?.substring(0, 10)} ...{' '}
-												{userAddress?.substring(37, userAddress.length + 1)}{' '}
-											</Typography>
-										</Box>
-										<Stack direction="column" gap="16px">
-											<Stack
-												direction="row"
-												justifyContent="center"
-												alignItems="center"
-												sx={{ marginBottom: '10px' }}
-											>
-												<Stack
-													direction="row"
-													gap="10px"
-													alignItems="center"
+										</DropDownContent>
+									</ClickAwayListener>
+								)}
+								{modalWalletSteps.steps.secondModal && (
+									<ClickAwayListener
+										onClickAway={() => {
+											dispatch(closeModal());
+										}}
+									>
+										<DropDownContent ref={ref}>
+											<Box p={2}>
+												<Typography
+													variant="body2"
+													fontWeight="400"
 													sx={{
-														img: {
-															width: '32px',
+														textAlign: 'center',
+														fontFamily: 'Montserrat, san-serif',
+														[theme.breakpoints.down(500)]: {
+															fontSize: '13px',
 														},
 													}}
+													color="#fff"
+													fontSize="16px"
+													fontStyle="italic"
 												>
-													<img src={binance} alt="bnb" />
-													<Box>{userBalance}</Box>
-													<Box>{TOKEN_PAYMENT[chainId][0].symbol}</Box>
+													{userAddress?.substring(0, 10)} ...{' '}
+													{userAddress?.substring(
+														37,
+														userAddress.length + 1
+													)}{' '}
+												</Typography>
+											</Box>
+											<Stack direction="column" gap="16px">
+												<Stack
+													direction="row"
+													justifyContent="center"
+													alignItems="center"
+													sx={{ marginBottom: '10px' }}
+												>
+													<Stack
+														direction="row"
+														gap="10px"
+														alignItems="center"
+														sx={{
+															img: {
+																width: '32px',
+															},
+														}}
+													>
+														<img src={binance} alt="bnb" />
+														<Box>{userBalance}</Box>
+														<Box>
+															{TOKEN_PAYMENT[chainId][0].symbol}
+														</Box>
+													</Stack>
 												</Stack>
 											</Stack>
-										</Stack>
+										</DropDownContent>
+									</ClickAwayListener>
+								)}
+							</IconItem>
+							{innerWidth < 730 ? (
+								<IconItem>
+									<MoreHorizOutlinedIcon
+										sx={{
+											width: '34px',
+											position: 'absolute',
+											top: '6px',
+											color: 'white',
+										}}
+									/>
+									<DropDownContent ref={ref}>
+										{renderListNavMobile()}
 									</DropDownContent>
-								</ClickAwayListener>
-							)}
-						</IconItem>
-
-						{/* <IconItem>
-							<MoreHorizOutlinedIcon
-								sx={{
-									width: '34px',
-									position: 'absolute',
-									top: '6px',
-									color: 'white',
-								}}
-							/>
-						</IconItem> */}
+								</IconItem>
+							) : null}
+						</Stack>
 					</Stack>
 				</Box>
 			</AppbarHeader>

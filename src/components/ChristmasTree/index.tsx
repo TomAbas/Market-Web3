@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Link, Stack, Typography } from '@mui/material';
 import React from 'react';
-import bg1 from '../../assets/images/background/bg1.png';
-import bg2 from '../../assets/images/background/bg2.png';
-import bg3 from '../../assets/images/background/bg3.png';
-import bg4 from '../../assets/images/background/bg4.png';
-import bg5 from '../../assets/images/background/bg5.png';
+import bg1 from '../../assets/images/background/bg1.webp';
+import bg2 from '../../assets/images/background/bg2.webp';
+import bg3 from '../../assets/images/background/bg3.webp';
+import bg4 from '../../assets/images/background/bg4.webp';
+import bg5 from '../../assets/images/background/bg5.webp';
 import bg7 from '../../assets/images/background/bg7.webp';
 import bg6 from '../../assets/images/background/bg6.webp';
 import bg8 from '../../assets/images/background/bg8.webp';
 import bg9 from '../../assets/images/background/bg9.png';
-import xmas from '../../assets/images/background/xmas.png';
-import xmasText from '../../assets/images/background/xmas-text.svg';
-import xmasTextttt from '../../assets/images/background/xmasss.svg';
+import xmas from '../../assets/images/background/xmas.webp';
+import xmasText from '../../assets/images/background/xmas-text.webp';
+import xmasTextttt from '../../assets/images/background/xmasss.webp';
 import icon from '../../assets/icons/Icon.svg';
 import star from '../../assets/icons/Star.svg';
 import check from '../../assets/icons/check.svg';
@@ -175,7 +175,7 @@ export default function ChristmasTree() {
 						},
 					}}
 				>
-					<Box sx={{ maxWidth: '1070px', mx: 'auto', color: '#fff' }}>
+					<Box sx={{ maxWidth: '1070px', mx: 'auto', color: '#fff', px: 4 }}>
 						<Typography variant="h2" color="#fff">
 							InTO the Metaverse
 						</Typography>

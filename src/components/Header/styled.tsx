@@ -70,7 +70,7 @@ export const LogoLink = styled(Link)(({ theme }) => ({
 	// 	height: 50,
 	// 	width: '100%',
 	// },
-	'@media screen and (max-width: 650px)': {
+	'@media screen and (max-width: 450px)': {
 		'.logoMobile': {
 			display: 'block',
 		},
@@ -78,7 +78,7 @@ export const LogoLink = styled(Link)(({ theme }) => ({
 			display: 'none',
 		},
 	},
-	'@media screen and (min-width: 651px)': {
+	'@media screen and (min-width: 451px)': {
 		'.logoMobile': {
 			display: 'none',
 		},
@@ -162,10 +162,7 @@ export const IconItem = styled(Box)(({ theme }) => ({
 	position: 'relative',
 	cursor: 'pointer',
 	transition: 'all 0.4s',
-	'&:hover': {
-		background: 'rgba(255, 0, 0, 0.6)',
-		color: '#fff',
-	},
+	color: '#fff',
 }));
 
 export const DropDownContent = styled(Stack)(() => ({
@@ -177,7 +174,7 @@ export const DropDownContent = styled(Stack)(() => ({
 	zIndex: 100,
 	top: '130%',
 	animation: 'smoothAppear 0.5s',
-	backgroundColor: 'rgba(177, 218, 255, 0.45)',
+	backgroundColor: '#89AED0',
 	color: '#fff',
 	fontFamily: '',
 }));
