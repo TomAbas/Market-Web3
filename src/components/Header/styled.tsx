@@ -172,7 +172,7 @@ export const DropDownContent = styled(Stack)(() => ({
 	position: 'absolute',
 	fontWeight: '300',
 	right: 0,
-	minWidth: 180,
+	minWidth: 220,
 	borderRadius: 12,
 	zIndex: 100,
 	top: '130%',

@@ -22,6 +22,7 @@ import LogoMSMobileWhite from '../../assets/images/logo/MSMobile-white.webp';
 import LogoMSGray from '../../assets/images/logo/logo-metaspacecy-gray.webp';
 import LogoMSGrayMoblie from '../../assets/images/logo/logo-metaspacecy-gray-moblie.webp';
 import connectIcon from '../../assets/icons/icon-connect-white.svg';
+import binance from '../../assets/wallet/binance.svg';
 import ModalWallet from '../ModalWallet';
 import { selectUser } from '../../redux/slices/userInfo';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
@@ -32,6 +33,7 @@ const Header: React.FC = () => {
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
 	const userInfo = useAppSelector(selectUser);
 	const userAddress = userInfo?.userAddress;
+	const userBalance = userInfo?.balance;
 	const dispatch = useAppDispatch();
 	let ref: any = useRef();
 	const theme = useTheme();
@@ -217,11 +219,12 @@ const Header: React.FC = () => {
 									}}
 								>
 									<DropDownContent ref={ref}>
-										<Box p={3}>
+										<Box p={2}>
 											<Typography
 												variant="body2"
 												fontWeight="400"
 												sx={{
+													textAlign: 'center',
 													fontFamily: 'Montserrat, san-serif',
 													[theme.breakpoints.down(500)]: {
 														fontSize: '13px',
@@ -231,9 +234,33 @@ const Header: React.FC = () => {
 												fontSize="16px"
 												fontStyle="italic"
 											>
-												{userAddress}
+												{userAddress?.substring(0, 10)} ...{' '}
+												{userAddress?.substring(37, userAddress.length + 1)}{' '}
 											</Typography>
 										</Box>
+										<Stack direction="column" gap="16px">
+											<Stack
+												direction="row"
+												justifyContent="center"
+												alignItems="center"
+												sx={{ marginBottom: '10px' }}
+											>
+												<Stack
+													direction="row"
+													gap="10px"
+													alignItems="center"
+													sx={{
+														img: {
+															width: '32px',
+														},
+													}}
+												>
+													{/* <img src={binance} alt="bnb" />
+													<Box>{TOKEN_PAYMENT[chainId][0].symbol}</Box> */}
+												</Stack>
+												<Box>{userBalance} BNB</Box>
+											</Stack>
+										</Stack>
 									</DropDownContent>
 								</ClickAwayListener>
 							)}

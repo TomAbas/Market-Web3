@@ -7,7 +7,7 @@ import {
 } from '../slices/userInfo';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import Web3 from 'web3';
-import numeral from 'numeral';
+import { formatNumber } from 'utils/formatNumber';
 import { ethers, BigNumber } from 'ethers';
 import { useWeb3React } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
@@ -64,21 +64,21 @@ export const useUserInfo = () => {
 		dispatch(getUserSuccessA(userInfo));
 		getUserBalance(addressUser);
 	};
-	const formatNumber = (
-		amount: string,
-		minNumberLimitAfterComma: number,
-		maxNumberLimitAfterComma: number
-	) => {
-		if (maxNumberLimitAfterComma) {
-			return numeral(amount).format(
-				`0,0.${'0'.repeat(minNumberLimitAfterComma)}[${'0'.repeat(
-					maxNumberLimitAfterComma - minNumberLimitAfterComma
-				)}]`
-			);
-		} else {
-			return numeral(amount).format(`0,0.${'0'.repeat(minNumberLimitAfterComma)}`);
-		}
-	};
+	// const formatNumber = (
+	// 	amount: string,
+	// 	minNumberLimitAfterComma: number,
+	// 	maxNumberLimitAfterComma: number
+	// ) => {
+	// 	if (maxNumberLimitAfterComma) {
+	// 		return numeral(amount).format(
+	// 			`0,0.${'0'.repeat(minNumberLimitAfterComma)}[${'0'.repeat(
+	// 				maxNumberLimitAfterComma - minNumberLimitAfterComma
+	// 			)}]`
+	// 		);
+	// 	} else {
+	// 		return numeral(amount).format(`0,0.${'0'.repeat(minNumberLimitAfterComma)}`);
+	// 	}
+	// };
 	const getUserBalance = async (address: string) => {
 		let balanceOfUser;
 		if (address) {
@@ -87,8 +87,10 @@ export const useUserInfo = () => {
 				const value = BigNumber.from(balance);
 				const token = ethers.utils.formatEther(value);
 				balanceOfUser = token.toString();
-				let format = formatNumber(balanceOfUser, 0, 3);
-				console.log('format ' + format);
+				let formatValue = formatNumber(balanceOfUser, 0, 3);
+				let userInfo = { userAddress: address, balance: formatValue };
+				dispatch(getUserSuccessA(userInfo));
+				console.log('format ' + formatValue);
 				console.log('balanceOfUser ' + balanceOfUser);
 			} catch (error: any) {
 				console.log(error.message);
