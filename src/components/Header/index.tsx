@@ -101,6 +101,9 @@ const Header: React.FC = () => {
 			dispatch(openSecondModal());
 		}
 	};
+	const openMoreOption = () => {
+		setOption(!option);
+	};
 	useEffect(() => {
 		// Handler to call on window scroll
 		const handleScroll = () => {
@@ -319,10 +322,20 @@ const Header: React.FC = () => {
 											top: '6px',
 											color: 'white',
 										}}
+										onClick={() => setOption(true)}
 									/>
-									<DropDownContent ref={ref}>
-										{renderListNavMobile()}
-									</DropDownContent>
+
+									{option && (
+										<ClickAwayListener
+											onClickAway={() => {
+												openMoreOption();
+											}}
+										>
+											<DropDownContent ref={ref}>
+												{renderListNavMobile()}
+											</DropDownContent>
+										</ClickAwayListener>
+									)}
 								</IconItem>
 							) : null}
 						</Stack>
