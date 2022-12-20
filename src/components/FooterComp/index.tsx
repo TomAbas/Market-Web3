@@ -242,7 +242,7 @@ const FooterComp: React.FC = () => {
 				},
 				{
 					name: 'Virtual Museum',
-					link: '',
+					link: `${PATH_VIRTUAL_WORLD.virtualArt}`,
 					id: 7,
 					target: '_blank',
 				},
@@ -381,7 +381,7 @@ const FooterComp: React.FC = () => {
 							>
 								{ContentFooter.map((title: any, index: number) => (
 									<Typography
-										color="rgba(90, 93, 121, 1)"
+										color="#fff"
 										fontSize="18px"
 										padding="4px 0"
 										fontStyle="italic"
@@ -414,6 +414,7 @@ const FooterComp: React.FC = () => {
 										padding="2px 0"
 										fontStyle="italic"
 										sx={{
+											color: 'white !important',
 											[theme.breakpoints.down(500)]: {
 												fontSize: '13px',
 											},
@@ -439,34 +440,17 @@ const FooterComp: React.FC = () => {
 						</SocialWrap>
 
 						<Stack direction="row" gap={3} mt={4}>
-							{/* <LinkWrapper>
-								<Typography
-									variant="body2"
-									fontWeight="400"
-									sx={{
-										opacity: 0.6,
-										...(theme.palette.mode === 'light' && {
-											color: 'rgba(90, 93, 121, 1)',
-										}),
-										[theme.breakpoints.down(500)]: {
-											fontSize: '13px',
-										},
-									}}
-									color="#fff"
-									fontSize="16px"
-									fontStyle="italic"
-								></Typography>
-							</LinkWrapper> */}
-							<LinkWrapper>
+							<LinkWrapper
+								href="https://metaspacecy.com/#/terms-of-service"
+								target="_blank"
+							>
 								<Typography
 									variant="body2"
 									fontWeight="400"
 									sx={{
 										opacity: 0.6,
 										fontFamily: 'Montserrat, san-serif',
-										...(theme.palette.mode === 'light' && {
-											color: 'rgba(90, 93, 121, 1)',
-										}),
+
 										[theme.breakpoints.down(500)]: {
 											fontSize: '13px',
 										},
@@ -475,7 +459,29 @@ const FooterComp: React.FC = () => {
 									fontSize="16px"
 									fontStyle="italic"
 								>
-									Terms of Service and Privacy Policy
+									Terms of Service
+								</Typography>
+							</LinkWrapper>
+							<LinkWrapper
+								href="https://metaspacecy.com/#/privacy-policy"
+								target="_blank"
+							>
+								<Typography
+									variant="body2"
+									fontWeight="400"
+									sx={{
+										opacity: 0.6,
+										fontFamily: 'Montserrat, san-serif',
+
+										[theme.breakpoints.down(500)]: {
+											fontSize: '13px',
+										},
+									}}
+									color="#fff"
+									fontSize="16px"
+									fontStyle="italic"
+								>
+									Privacy Policy
 								</Typography>
 							</LinkWrapper>
 						</Stack>

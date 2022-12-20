@@ -20,6 +20,7 @@ import Slider from '../Slider';
 
 import TwitterWhite from 'assets/icons/twitter-white.svg';
 import DiscordWhite from 'assets/icons/discord-white.svg';
+import { PATH_SOCIAL } from 'routes/path';
 
 export default function ChristmasTree() {
 	return (
@@ -287,7 +288,7 @@ export default function ChristmasTree() {
 							>
 								<img src={star} alt="star" />
 								<Typography variant="h5">
-									Grab your Xmas gifts from the tallest Christmas
+									Grab your Xmas gifts from the tallest Christmas tree
 								</Typography>
 							</Stack>
 						</Stack>
@@ -317,28 +318,14 @@ export default function ChristmasTree() {
 			</Box>
 			<Box
 				sx={{
-					position: 'relative',
-					'& > img': {
-						width: '100%',
-						height: '670px',
-						objectFit: 'cover',
-						objectPosition: 'bottom',
-						display: 'center',
-						minHeight: '200px',
-					},
+					background: `url(${bg9}) center center / cover no-repeat`,
+					px: 4,
+					pt: 4,
+					pb: 6,
 				}}
 			>
-				<img src={bg9} alt="xmas" />
 				<Box
 					sx={{
-						position: 'absolute',
-						top: '40px',
-						left: '50%',
-						transform: 'translateX(-50%)',
-						width: '100%',
-						px: 4,
-						pb: 6,
-
 						h2: {
 							textTransform: 'uppercase',
 							fontFamily: 'Montserrat, sans-serif !important',
@@ -476,39 +463,53 @@ export default function ChristmasTree() {
 								<Typography variant="h5">Being active daily</Typography>
 							</Stack>
 						</Stack>
-						<Stack direction="row" gap="32px" justifyContent="center">
-							<Stack
-								direction="row"
-								gap="10px"
-								alignItems="center"
-								sx={{
-									img: {
-										width: '32px',
-									},
-								}}
-							>
-								<img src={TwitterWhite} alt="twitter" />
-								<Typography variant="h5">Metaspacecy</Typography>
-							</Stack>
-							<Stack
-								direction="row"
-								gap="10px"
-								alignItems="center"
-								sx={{
-									img: {
-										width: '32px',
-									},
-								}}
-							>
-								<img src={DiscordWhite} alt="twitter" />
-								<Typography variant="h5">Metaspacecy</Typography>
-							</Stack>
+						<Stack
+							direction="row"
+							gap="32px"
+							justifyContent="center"
+							sx={{
+								a: {
+									color: '#fff',
+									textDecoration: 'none',
+								},
+							}}
+						>
+							<Link href={`${PATH_SOCIAL.discord}`} target="_blank">
+								<Stack
+									direction="row"
+									gap="10px"
+									alignItems="center"
+									sx={{
+										img: {
+											width: '32px',
+										},
+									}}
+								>
+									<img src={TwitterWhite} alt="twitter" />
+									<Typography variant="h5">Metaspacecy</Typography>
+								</Stack>
+							</Link>
+
+							<Link href={`${PATH_SOCIAL.discord}`} target="_blank">
+								<Stack
+									direction="row"
+									gap="10px"
+									alignItems="center"
+									sx={{
+										img: {
+											width: '32px',
+										},
+									}}
+								>
+									<img src={DiscordWhite} alt="twitter" />
+									<Typography variant="h5">@Spaceman</Typography>
+								</Stack>
+							</Link>
 						</Stack>
 						<Box
 							sx={{
 								textAlign: 'center',
 								mt: '32px',
-								mb: '20px',
 								button: {
 									padding: '10px 30px',
 									border: '1.5px solid #e7e8ec',
@@ -544,7 +545,7 @@ export default function ChristmasTree() {
 							}}
 						>
 							<button>
-								<Link href="http://virtual.metaspacecy.com/#/xmas" target="_blank">
+								<Link href={`${PATH_SOCIAL.discord}`} target="_blank">
 									Complete Your Tasks
 								</Link>
 							</button>

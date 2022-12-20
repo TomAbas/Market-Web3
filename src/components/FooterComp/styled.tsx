@@ -29,18 +29,6 @@ export const FooterWrap = styled('footer')(({ theme }) => ({
 	//     backgroundRepeat: "no-repeat",
 	//     backgroundPosition: "center center",
 	//   }),
-	'@media screen and (max-width: 1017px)': {
-		background: `url(${backgroundtablet})`,
-		backgroundSize: 'cover',
-		backgroundRepeat: 'no-repeat',
-		backgroundPosition: 'center bottom',
-		...(theme.palette.mode === 'light' && {
-			background: `linear-gradient(0deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%),url(${bglight})`,
-			backgroundSize: 'cover',
-			backgroundRepeat: 'no-repeat',
-			backgroundPosition: 'center center',
-		}),
-	},
 }));
 
 export const GridContent = styled(Box)({
@@ -58,7 +46,7 @@ export const BrandWrap = styled('div')({
 	flexDirection: 'column',
 	alignItems: 'flex-start',
 	textAlign: 'left',
-	width: '40%',
+	width: '32%',
 	marginTop: '32px',
 	'@media screen and (max-width: 1800px)': { padding: '0 0 0 70px' },
 	'@media screen and (max-width: 1600px)': {
@@ -109,6 +97,7 @@ export const LogoLink = styled('a')(({ theme }) => ({
 export const FooterText = styled('p')(({ theme }) => ({
 	marginBottom: '2rem',
 	marginRight: '1rem',
+	color: 'white',
 	'@media screen and (max-width: 768px)': {
 		textAlign: 'center',
 		marginRight: 'unset',
@@ -128,9 +117,6 @@ export const DetailColumn = styled('div')({
 	width: '160px',
 	marginTop: '32px',
 
-	'@media screen and (min-width: 768px)': {
-		width: '160px',
-	},
 	'@media screen and (max-width: 600px)': {
 		width: '100%',
 	},
@@ -152,23 +138,13 @@ export const DetailList = styled('ul')(({ theme }) => ({
 	display: 'flex',
 	flexDirection: 'column',
 	listStyle: 'none',
-	...(theme.palette.mode === 'light'
-		? {}
-		: {
-				color: 'rgba(90, 93, 121, 1)',
-		  }),
+	color: 'white',
 }));
 export const ListRow = styled('li')({});
 export const DetailLink = styled('a')(({ theme }) => ({
 	textDecoration: 'none',
+	color: 'white',
 	// fontWeight: '500',
-	...(theme.palette.mode === 'light'
-		? {
-				color: 'rgba(90, 93, 121, 1)',
-		  }
-		: {
-				color: 'white',
-		  }),
 }));
 
 export const DetailContainer = styled(Box)(({ theme }) => ({
@@ -201,6 +177,9 @@ export const DetailContainer = styled(Box)(({ theme }) => ({
 		gap: '8px',
 		display: 'grid',
 		gridTemplateColumns: 'repeat(2,1fr)',
+	},
+	'& div:nth-child(3)': {
+		width: '185px',
 	},
 }));
 
