@@ -3,18 +3,19 @@ function path(root: string, sublink: string) {
 	return `${root}${sublink}`;
 }
 
-const ROOTS_COLLECTION = 'https://metaspacecy.com/collection';
-const ROOTS_ITEM = 'https://metaspacecy.com/item';
-const ROOTS_AUCTION = 'https://metaspacecy.com/auction';
-const ROOTS_IGO = 'https://metaspacecy.com/igo';
-const ROOTS_EARN = 'https://metaspacecy.com/earn';
-const ROOTS_CATEGORY = 'https://metaspacecy.com/view-all';
-const ROOTS_VIEWALL = 'https://metaspacecy.com/view-all';
-const ROOTS_MARKETPLACE = 'https://metaspacecy.com/marketplace';
-const ROOTS_BOARC = 'https://metaspacecy.com/boarc';
-const ROOTS_DROP = 'https://metaspacecy.com/drops';
-const ROOTS_ABOUT = 'https://metaspacecy.com/about';
-const ROOTS_BLOG = 'https://metaspacecy.com/blog';
+const ROOTS_METASPACECY = 'https://metaspacecy.com/#/';
+const ROOTS_COLLECTION = 'https://metaspacecy.com/#//collection';
+const ROOTS_ITEM = 'https://metaspacecy.com/#/item';
+const ROOTS_AUCTION = 'https://metaspacecy.com/#/auction';
+const ROOTS_IGO = 'https://metaspacecy.com/#/igo';
+const ROOTS_EARN = 'https://metaspacecy.com/#/earn';
+const ROOTS_CATEGORY = 'https://metaspacecy.com/#/view-all';
+const ROOTS_VIEWALL = 'https://metaspacecy.com/#/view-all';
+const ROOTS_MARKETPLACE = 'https://metaspacecy.com/#/marketplace';
+const ROOTS_BOARC = 'https://metaspacecy.com/#/boarc';
+const ROOTS_DROP = 'https://metaspacecy.com/#/drops';
+const ROOTS_ABOUT = 'https://metaspacecy.com/#/about';
+const ROOTS_BLOG = 'https://metaspacecy.com/#/blog';
 const ROOTS_VIRTUAL = 'https://virtual.metaspacecy.com/';
 // Main routes
 export const PATH_PAGE = {
@@ -96,7 +97,7 @@ export const PATH_EARN = {
 export const PATH_CATEGORY = {
 	root: ROOTS_CATEGORY,
 	other: path(ROOTS_CATEGORY, '/other'),
-	artwork: path(ROOTS_CATEGORY, '/collections?category=Artwork'),
+	artwork: path(ROOTS_CATEGORY, '/collections'),
 	music: path(ROOTS_CATEGORY, '/music'),
 	photography: path(ROOTS_CATEGORY, '/photography'),
 	games: path(ROOTS_CATEGORY, '/games'),

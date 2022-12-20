@@ -176,7 +176,6 @@ export const DropDownContent = styled(Stack)(() => ({
 	animation: 'smoothAppear 0.5s',
 	backgroundColor: '#89AED0',
 	color: '#fff',
-	fontFamily: '',
 }));
 
 export const LinkWrapper = styled('a')(() => ({

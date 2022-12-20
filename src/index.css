@@ -8,6 +8,7 @@ body {
 	padding: 0;
 	font-size: 16px;
 	font-style: italic;
+	overflow-x: hidden;
 }
 textarea {
 	font-family: 'Montserrat', sans-serif;
@@ -24,6 +25,7 @@ body.stop-scroll {
 	margin: 0;
 	padding: 0;
 	text-decoration: none;
+	box-sizing: border-box;
 }
 
 ul {
