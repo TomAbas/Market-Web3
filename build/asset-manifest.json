@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.94ecf662.css",
-    "main.js": "/static/js/main.703157ce.js",
+    "main.css": "/static/css/main.49d8d75d.css",
+    "main.js": "/static/js/main.39459064.js",
     "static/js/563.a5ba6569.chunk.js": "/static/js/563.a5ba6569.chunk.js",
     "static/js/942.ebf91195.chunk.js": "/static/js/942.ebf91195.chunk.js",
     "static/js/235.3e95a9e0.chunk.js": "/static/js/235.3e95a9e0.chunk.js",
@@ -56,14 +56,14 @@
     "static/media/facebook-white.svg": "/static/media/facebook-white.988bcbfa9d6d177e82e26970ae27c2f0.svg",
     "static/media/coinbase.svg": "/static/media/coinbase.842e029e40d5f46784ae44091dd3f34e.svg",
     "static/media/check.svg": "/static/media/check.146100e8ff2a4f21226fa56217198908.svg",
-    "main.94ecf662.css.map": "/static/css/main.94ecf662.css.map",
-    "main.703157ce.js.map": "/static/js/main.703157ce.js.map",
+    "main.49d8d75d.css.map": "/static/css/main.49d8d75d.css.map",
+    "main.39459064.js.map": "/static/js/main.39459064.js.map",
     "235.3e95a9e0.chunk.js.map": "/static/js/235.3e95a9e0.chunk.js.map",
     "419.4a7b6d33.chunk.js.map": "/static/js/419.4a7b6d33.chunk.js.map",
     "48.c736929b.chunk.js.map": "/static/js/48.c736929b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.94ecf662.css",
-    "static/js/main.703157ce.js"
+    "static/css/main.49d8d75d.css",
+    "static/js/main.39459064.js"
   ]
 }
