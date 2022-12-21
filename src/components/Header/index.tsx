@@ -134,7 +134,7 @@ const Header: React.FC = () => {
 					>
 						<PageLogo>
 							<LogoLink
-								href="/"
+								href="https://metaspacecy.com/"
 								sx={{
 									img: {
 										height: 50,
