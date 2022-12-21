@@ -10,6 +10,8 @@ import bg7 from '../../assets/images/background/bg7.webp';
 import bg6 from '../../assets/images/background/bg6.webp';
 import bg8 from '../../assets/images/background/bg8.webp';
 import bg9 from '../../assets/images/background/bg9.png';
+import slide from '../../assets/images/background/slide.png';
+import snowman from '../../assets/images/background/snowman.png';
 import xmas from '../../assets/images/background/xmas.webp';
 import xmasText from '../../assets/images/background/xmas-text.webp';
 import xmasTextttt from '../../assets/images/background/xmasss.webp';
@@ -90,12 +92,12 @@ export default function ChristmasTree() {
 									fontFamily: 'Montserrat, sans-serif !important',
 									fontStyle: 'italic !important',
 									width: '240px',
+									color: '#fff',
 									'&:hover': {
 										background: 'rgba(255, 0, 0, 0.6)',
 										borderColor: 'rgba(255, 255, 255, 0.5)',
 									},
 									a: {
-										color: '#fff',
 										textDecoration: 'none',
 										'&:hover': {
 											textDecoration: 'none',
@@ -111,11 +113,11 @@ export default function ChristmasTree() {
 								},
 							}}
 						>
-							<button>
-								<Link href="http://virtual.metaspacecy.com/#/xmas" target="_blank">
+							<Link href="http://virtual.metaspacecy.com/#/xmas" target="_blank">
+								<button>
 									Join Virtual <img src={icon} alt="icon" />
-								</Link>
-							</button>
+								</button>
+							</Link>
 						</Box>
 					</Stack>
 				</Box>
@@ -136,12 +138,17 @@ export default function ChristmasTree() {
 			<Box
 				sx={{
 					position: 'relative',
-					img: {
+
+					'& > img': {
 						width: '100%',
 						height: '100vh',
+						minHeight: '620px',
 						objectFit: 'cover',
 						objectPosition: 'bottom',
 						display: 'block',
+						'@media (max-width: 480px)': {
+							height: '620px',
+						},
 					},
 				}}
 			>
@@ -153,7 +160,15 @@ export default function ChristmasTree() {
 						left: '50%',
 						transform: 'translateX(-50%)',
 						width: '100%',
+						zIndex: '5',
 						px: 4,
+
+						'@media (max-width: 768px)': {
+							px: 2,
+						},
+						'@media (max-width: 480px)': {
+							px: '10px',
+						},
 
 						h2: {
 							textTransform: 'uppercase',
@@ -212,8 +227,8 @@ export default function ChristmasTree() {
 							>
 								<img src={star} alt="star" />
 								<Typography variant="h5">
-									Enjoy climbing the 99-floor Christmas tree to overview Xmas
-									villages Visit "Gassho Go Winter" Village Tour by train
+									Climb on the 99-floor Christmas tree to enjoy the Xmas village’s
+									panoramic view
 								</Typography>
 							</Stack>
 							<Stack
@@ -232,44 +247,7 @@ export default function ChristmasTree() {
 							>
 								<img src={star} alt="star" />
 								<Typography variant="h5">
-									Immersive Experience with games: Skiing, Snowboarding and
-									Hoverboarding Game
-								</Typography>
-							</Stack>
-							<Stack
-								direction="row"
-								gap="10px"
-								sx={{
-									img: {
-										width: '24px',
-										height: '24px',
-									},
-									h5: {
-										fontFamily: 'Montserrat, sans-serif !important',
-										fontWeight: '400',
-									},
-								}}
-							>
-								<img src={star} alt="star" />
-								<Typography variant="h5">Build your own Snowman</Typography>
-							</Stack>
-							<Stack
-								direction="row"
-								gap="10px"
-								sx={{
-									img: {
-										width: '24px',
-										height: '24px',
-									},
-									h5: {
-										fontFamily: 'Montserrat, sans-serif !important',
-										fontWeight: '400',
-									},
-								}}
-							>
-								<img src={star} alt="star" />
-								<Typography variant="h5">
-									Snow throw game with your best friends
+									Sightsee “Gassho Go Winter” village by train tour
 								</Typography>
 							</Stack>
 							<Stack
@@ -288,7 +266,46 @@ export default function ChristmasTree() {
 							>
 								<img src={star} alt="star" />
 								<Typography variant="h5">
-									Grab your Xmas gifts from the tallest Christmas tree
+									Immersive experience with games: Skiing, Snowboarding and
+									Hoverboarding
+								</Typography>
+							</Stack>
+							<Stack
+								direction="row"
+								gap="10px"
+								sx={{
+									img: {
+										width: '24px',
+										height: '24px',
+									},
+									h5: {
+										fontFamily: 'Montserrat, sans-serif !important',
+										fontWeight: '400',
+									},
+								}}
+							>
+								<img src={star} alt="star" />
+								<Typography variant="h5">
+									Build your own Snowman Snowball fight with your best friends
+								</Typography>
+							</Stack>
+							<Stack
+								direction="row"
+								gap="10px"
+								sx={{
+									img: {
+										width: '24px',
+										height: '24px',
+									},
+									h5: {
+										fontFamily: 'Montserrat, sans-serif !important',
+										fontWeight: '400',
+									},
+								}}
+							>
+								<img src={star} alt="star" />
+								<Typography variant="h5">
+									Grab your Xmas gifts from the Greatet Christmas tree
 								</Typography>
 							</Stack>
 						</Stack>
@@ -309,6 +326,9 @@ export default function ChristmasTree() {
 							width: '55%',
 						},
 						'@media (max-width: 1440px)': {
+							width: '80%',
+						},
+						'@media (max-width: 1024px)': {
 							width: '90%',
 						},
 					}}
@@ -322,32 +342,39 @@ export default function ChristmasTree() {
 					px: 4,
 					pt: 4,
 					pb: 6,
+					'@media (max-width: 768px)': {
+						px: 2,
+					},
+					'@media (max-width: 480px)': {
+						px: '10px',
+					},
 				}}
 			>
 				<Box
 					sx={{
-						h2: {
-							textTransform: 'uppercase',
+						h3: {
+							// textTransform: 'uppercase',
 							fontFamily: 'Montserrat, sans-serif !important',
-							fontWeight: '600',
+							fontWeight: '500',
 							textAlign: 'center',
+							mb: 4,
 							'@media (max-width: 1440px)': {
-								fontSize: '52px',
+								fontSize: '42px',
 							},
 							'@media (max-width: 1024px)': {
-								fontSize: '44px',
-							},
-							'@media (max-width: 768px)': {
 								fontSize: '36px',
 							},
+							'@media (max-width: 768px)': {
+								fontSize: '30px',
+							},
 							'@media (max-width: 480px)': {
-								fontSize: '28px',
+								fontSize: '24px',
 							},
 						},
 						h5: {
 							fontFamily: 'Montserrat, sans-serif !important',
 							fontWeight: '400',
-							textAlign: 'center',
+							// textAlign: 'center',
 							'@media (max-width: 1024px)': {
 								fontSize: '22px',
 							},
@@ -360,156 +387,131 @@ export default function ChristmasTree() {
 						},
 					}}
 				>
-					<Box sx={{ maxWidth: '1070px', mx: 'auto', color: '#fff' }}>
-						<Typography variant="h2" color="#fff">
-							How To Join
-						</Typography>
-						<Typography variant="h5">
-							Xmas X Space Into The Metaverse opens for everyone to come. However,
-							getting more immersive experience with gaming activities and receive
-							lucky gifts by owning your NFT tickets following the tasks
-						</Typography>
-						<Stack
-							gap="10px"
-							mt="48px"
-							mb="32px"
-							justifyContent="center"
-							sx={{
-								width: 'fit-content',
-								mx: 'auto',
-								h5: {
-									'@media (max-width: 1024px)': {
-										fontSize: '20px',
-									},
-									'@media (max-width: 768px)': {
-										fontSize: '18px',
-									},
-									'@media (max-width: 480px)': {
-										fontSize: '16px',
-									},
-								},
-							}}
-						>
-							<Stack
-								direction="row"
-								alignItems="center"
-								gap="10px"
+					<Box sx={{ maxWidth: '1090px', mx: 'auto', color: '#fff' }}>
+						<Stack direction="row" alignItems="center" gap="32px" mb={6}>
+							<Box
 								sx={{
-									img: {
-										width: '24px',
-										height: '24px',
-									},
-									h5: {
-										fontFamily: 'Montserrat, sans-serif !important',
-										fontWeight: '400',
-									},
-								}}
-							>
-								<img src={check} alt="check" />
-								<Typography variant="h5">Being @Spaceman in Discord</Typography>
-							</Stack>
-							<Stack
-								direction="row"
-								gap="10px"
-								alignItems="center"
-								sx={{
-									img: {
-										width: '24px',
-										height: '24px',
-									},
-									h5: {
-										fontFamily: 'Montserrat, sans-serif !important',
-										fontWeight: '400',
-									},
-								}}
-							>
-								<img src={check} alt="check" />
-								<Typography variant="h5">Follow Metaspacecy Twitter</Typography>
-							</Stack>
-							<Stack
-								direction="row"
-								gap="10px"
-								alignItems="center"
-								sx={{
-									img: {
-										width: '24px',
-										height: '24px',
-									},
-									h5: {
-										fontFamily: 'Montserrat, sans-serif !important',
-										fontWeight: '400',
-									},
-								}}
-							>
-								<img src={check} alt="check" />
-								<Typography variant="h5">Retweet post</Typography>
-							</Stack>
-							<Stack
-								direction="row"
-								gap="10px"
-								alignItems="center"
-								sx={{
-									img: {
-										width: '24px',
-										height: '24px',
-									},
-									h5: {
-										fontFamily: 'Montserrat, sans-serif !important',
-										fontWeight: '400',
-									},
-								}}
-							>
-								<img src={check} alt="check" />
-								<Typography variant="h5">Being active daily</Typography>
-							</Stack>
-						</Stack>
-						<Stack
-							direction="row"
-							gap="32px"
-							justifyContent="center"
-							sx={{
-								a: {
-									color: '#fff',
-									textDecoration: 'none',
-								},
-							}}
-						>
-							<Link href={`${PATH_SOCIAL.twitter}`} target="_blank">
-								<Stack
-									direction="row"
-									gap="10px"
-									alignItems="center"
-									sx={{
+									'@media (max-width: 650px)': {
 										img: {
-											width: '32px',
+											width: '140px',
 										},
-									}}
-								>
-									<img src={TwitterWhite} alt="twitter" />
-									<Typography variant="h5">Metaspacecy</Typography>
-								</Stack>
-							</Link>
+									},
+								}}
+							>
+								<img src={snowman} alt="snowman" />
+							</Box>
+							<Box>
+								<Typography variant="h3" color="#fff">
+									Guideline
+								</Typography>
+								<Typography variant="h5">
+									“Xmas X Space Into The Metaverse” is an open virtual space for
+									everyone to come. Everyone is able to enjoy cool, snowy
+									Christmas via immersive experience in the virtual world with a
+									lot gaming activities and get lucky gifts on the greatest
+									Christmas tree if owning NFT tickets.
+								</Typography>
+							</Box>
+						</Stack>
 
-							<Link href={`${PATH_SOCIAL.discord}`} target="_blank">
-								<Stack
-									direction="row"
-									gap="10px"
-									alignItems="center"
-									sx={{
-										img: {
-											width: '32px',
-										},
-									}}
-								>
-									<img src={DiscordWhite} alt="twitter" />
-									<Typography variant="h5">@Spaceman</Typography>
-								</Stack>
-							</Link>
-						</Stack>
 						<Box
 							sx={{
 								textAlign: 'center',
-								mt: '32px',
+								h3: { fontFamily: 'Montserrat, sans-serif !important' },
+							}}
+						>
+							<Typography variant="h3" fontWeight={500}>
+								How to get Xmas NFT tickets
+							</Typography>
+						</Box>
+						<Stack direction="row" gap="32px" alignItems="center" my={4}>
+							<Stack
+								gap="10px"
+								mt="48px"
+								mb="32px"
+								justifyContent="center"
+								sx={{
+									width: 'fit-content',
+									mx: 'auto',
+									h5: {
+										'@media (max-width: 1024px)': {
+											fontSize: '20px',
+										},
+										'@media (max-width: 768px)': {
+											fontSize: '18px',
+										},
+										'@media (max-width: 480px)': {
+											fontSize: '16px',
+										},
+									},
+								}}
+							>
+								<Stack
+									direction="row"
+									gap="10px"
+									sx={{
+										img: {
+											width: '20px',
+											height: '20px',
+											mt: '2px',
+										},
+										h5: {
+											fontFamily: 'Montserrat, sans-serif !important',
+											fontWeight: '400',
+										},
+									}}
+								>
+									<img src={check} alt="check" />
+									<Typography variant="h5">
+										Become OG in Metaspacecy Discord
+									</Typography>
+								</Stack>
+								<Stack
+									direction="row"
+									gap="10px"
+									sx={{
+										img: {
+											width: '20px',
+											height: '20px',
+											mt: '2px',
+										},
+										h5: {
+											fontFamily: 'Montserrat, sans-serif !important',
+											fontWeight: '400',
+										},
+									}}
+								>
+									<img src={check} alt="check" />
+									<Typography variant="h5">
+										Win giveaway from Metaspacecy Partner’s event
+									</Typography>
+								</Stack>
+							</Stack>
+							<Box
+								sx={{
+									img: {
+										width: '180px',
+									},
+								}}
+							>
+								<img src={slide} alt="slide" />
+							</Box>
+						</Stack>
+
+						<Box
+							sx={{
+								textAlign: 'center',
+								h3: { fontFamily: 'Montserrat, sans-serif !important' },
+							}}
+						>
+							<Typography variant="h3" fontWeight={500}>
+								How to Join
+							</Typography>
+						</Box>
+						<Box
+							sx={{
+								textAlign: 'center',
+								mt: 4,
 								button: {
 									padding: '10px 30px',
 									border: '1.5px solid #e7e8ec',
@@ -521,14 +523,13 @@ export default function ChristmasTree() {
 									cursor: 'pointer',
 									fontFamily: 'Montserrat, sans-serif !important',
 									fontStyle: 'italic !important',
-									width: '300px',
-
+									width: '240px',
+									color: '#fff',
 									'&:hover': {
 										background: 'rgba(255, 0, 0, 0.6)',
 										borderColor: 'rgba(255, 255, 255, 0.5)',
 									},
 									a: {
-										color: '#fff',
 										textDecoration: 'none',
 										'&:hover': {
 											textDecoration: 'none',
@@ -544,11 +545,11 @@ export default function ChristmasTree() {
 								},
 							}}
 						>
-							<button>
-								<Link href={`${PATH_SOCIAL.discord}`} target="_blank">
-									Complete Your Tasks
-								</Link>
-							</button>
+							<Link href="http://virtual.metaspacecy.com/#/xmas" target="_blank">
+								<button>
+									Join Virtual <img src={icon} alt="icon" />
+								</button>
+							</Link>
 						</Box>
 					</Box>
 				</Box>
