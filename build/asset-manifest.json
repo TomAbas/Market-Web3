@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.49d8d75d.css",
-    "main.js": "/static/js/main.ca27cdee.js",
+    "main.js": "/static/js/main.eb41f985.js",
     "static/js/563.a5ba6569.chunk.js": "/static/js/563.a5ba6569.chunk.js",
     "static/js/942.ebf91195.chunk.js": "/static/js/942.ebf91195.chunk.js",
     "static/js/235.3e95a9e0.chunk.js": "/static/js/235.3e95a9e0.chunk.js",
@@ -34,7 +34,7 @@
     "static/media/logo-metaspacecy-gray.webp": "/static/media/logo-metaspacecy-gray.f30a4fc82aa9b0222131.webp",
     "static/media/xmasss.webp": "/static/media/xmasss.b7e48246c35de6ec8e7d.webp",
     "static/media/MSMobile-blue.webp": "/static/media/MSMobile-blue.f51a76bea02ba8daa5f2.webp",
-    "static/media/xmas-text.webp": "/static/media/xmas-text.6a94c3706ee8bec569b6.webp",
+    "static/media/xmas-text.webp": "/static/media/xmas-text.ce3d0b21234b5d89a6d0.webp",
     "static/media/MSMobile-white.webp": "/static/media/MSMobile-white.feb6e115bb0e8a6926e2.webp",
     "service-worker.js": "/service-worker.js",
     "static/media/snowman.png": "/static/media/snowman.7c4ce16d25c17d6a8df5.png",
@@ -59,13 +59,13 @@
     "static/media/coinbase.svg": "/static/media/coinbase.842e029e40d5f46784ae44091dd3f34e.svg",
     "static/media/check.svg": "/static/media/check.146100e8ff2a4f21226fa56217198908.svg",
     "main.49d8d75d.css.map": "/static/css/main.49d8d75d.css.map",
-    "main.ca27cdee.js.map": "/static/js/main.ca27cdee.js.map",
+    "main.eb41f985.js.map": "/static/js/main.eb41f985.js.map",
     "235.3e95a9e0.chunk.js.map": "/static/js/235.3e95a9e0.chunk.js.map",
     "419.4a7b6d33.chunk.js.map": "/static/js/419.4a7b6d33.chunk.js.map",
     "48.c736929b.chunk.js.map": "/static/js/48.c736929b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.49d8d75d.css",
-    "static/js/main.ca27cdee.js"
+    "static/js/main.eb41f985.js"
   ]
 }
