@@ -72,7 +72,15 @@ const Header: React.FC = () => {
 				<Box key={item.id}>
 					<Link
 						href={item.link}
-						sx={{ textDecoration: 'none', color: '#fff', fontWeight: '500' }}
+						sx={{
+							textDecoration: 'none',
+							color: '#fff',
+							fontWeight: '500',
+							transition: 'all 0.4s ',
+							'&:hover': {
+								color: '#007aff',
+							},
+						}}
 					>
 						{item.name}
 					</Link>
@@ -86,7 +94,15 @@ const Header: React.FC = () => {
 				<Box key={item.id} px={4} py={2}>
 					<Link
 						href={item.link}
-						sx={{ textDecoration: 'none', color: '#fff', fontWeight: '500' }}
+						sx={{
+							textDecoration: 'none',
+							color: '#fff',
+							fontWeight: '500',
+							transition: 'all 0.4s ',
+							'&:hover': {
+								color: '#007aff',
+							},
+						}}
 					>
 						{item.name}
 					</Link>
