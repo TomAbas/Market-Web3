@@ -91,7 +91,7 @@ export default function ChristmasTree() {
 									cursor: 'pointer',
 									fontFamily: 'Montserrat, sans-serif !important',
 									fontStyle: 'italic !important',
-									width: '240px',
+									width: '280px',
 									color: '#fff',
 									'&:hover': {
 										background: 'rgba(255, 0, 0, 0.6)',
@@ -115,7 +115,7 @@ export default function ChristmasTree() {
 						>
 							<Link href="http://virtual.metaspacecy.com/#/xmas" target="_blank">
 								<button>
-									Join Virtual <img src={icon} alt="icon" />
+									Join Virtual Xmas <img src={icon} alt="icon" />
 								</button>
 							</Link>
 						</Box>
@@ -171,9 +171,8 @@ export default function ChristmasTree() {
 						},
 
 						h2: {
-							textTransform: 'uppercase',
 							fontFamily: 'Montserrat, sans-serif !important',
-							fontWeight: '600',
+							fontWeight: '500',
 							textAlign: 'center',
 							'@media (max-width: 1440px)': {
 								fontSize: '52px',
@@ -192,7 +191,7 @@ export default function ChristmasTree() {
 				>
 					<Box sx={{ maxWidth: '1070px', mx: 'auto', color: '#fff' }}>
 						<Typography variant="h2" color="#fff">
-							InTO the Metaverse
+							Into The Metaverse
 						</Typography>
 						<Stack
 							gap="10px"
@@ -421,7 +420,7 @@ export default function ChristmasTree() {
 							}}
 						>
 							<Typography variant="h3" fontWeight={500}>
-								How to get Xmas NFT tickets
+								How To Get Xmas NFT Tickets
 							</Typography>
 						</Box>
 						<Stack direction="row" gap="32px" alignItems="center" my={4}>
@@ -505,7 +504,7 @@ export default function ChristmasTree() {
 							}}
 						>
 							<Typography variant="h3" fontWeight={500}>
-								How to Join
+								How To Join
 							</Typography>
 						</Box>
 						<Box
@@ -523,7 +522,7 @@ export default function ChristmasTree() {
 									cursor: 'pointer',
 									fontFamily: 'Montserrat, sans-serif !important',
 									fontStyle: 'italic !important',
-									width: '240px',
+									width: '280px',
 									color: '#fff',
 									'&:hover': {
 										background: 'rgba(255, 0, 0, 0.6)',
@@ -547,7 +546,7 @@ export default function ChristmasTree() {
 						>
 							<Link href="http://virtual.metaspacecy.com/#/xmas" target="_blank">
 								<button>
-									Join Virtual <img src={icon} alt="icon" />
+									Join Virtual Xmas <img src={icon} alt="icon" />
 								</button>
 							</Link>
 						</Box>
