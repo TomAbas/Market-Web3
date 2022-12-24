@@ -19,6 +19,12 @@ import icon from '../../assets/icons/Icon.svg';
 import star from '../../assets/icons/Star.svg';
 import check from '../../assets/icons/check.svg';
 import Slider from '../Slider';
+import gif from '../../assets/images/background/gif-qua-noel.gif';
+import item1 from '../../assets/icons/1.svg';
+import item2 from '../../assets/icons/2.svg';
+import item3 from '../../assets/icons/3.svg';
+import item4 from '../../assets/images/background/item1.png';
+import item5 from '../../assets/images/background/item2.png';
 
 import TwitterWhite from 'assets/icons/twitter-white.svg';
 import DiscordWhite from 'assets/icons/discord-white.svg';
@@ -387,12 +393,25 @@ export default function ChristmasTree() {
 					}}
 				>
 					<Box sx={{ maxWidth: '1090px', mx: 'auto', color: '#fff' }}>
-						<Stack direction="row" alignItems="center" gap="32px" mb={6}>
+						<Stack
+							direction="row"
+							alignItems="center"
+							gap="32px"
+							mb={6}
+							sx={{
+								'@media (max-width: 400px)': {
+									gap: 0,
+								},
+							}}
+						>
 							<Box
 								sx={{
 									'@media (max-width: 650px)': {
 										img: {
 											width: '140px',
+											'@media (max-width: 400px)': {
+												display: 'none',
+											},
 										},
 									},
 								}}
@@ -423,7 +442,7 @@ export default function ChristmasTree() {
 								How To Get Xmas NFT Tickets
 							</Typography>
 						</Box>
-						<Stack direction="row" gap="32px" alignItems="center" my={4}>
+						<Stack direction="row" gap="32px" alignItems="center" my={4} sx={{}}>
 							<Stack
 								gap="10px"
 								mt="48px"
@@ -432,6 +451,9 @@ export default function ChristmasTree() {
 								sx={{
 									width: 'fit-content',
 									mx: 'auto',
+									'@media (max-width: 400px)': {
+										my: 0,
+									},
 									h5: {
 										'@media (max-width: 1024px)': {
 											fontSize: '20px',
@@ -481,7 +503,7 @@ export default function ChristmasTree() {
 									}}
 								>
 									<img src={check} alt="check" />
-									<Typography variant="h5">
+									<Typography variant="h5" id="join">
 										Win giveaway from Metaspacecy Partner’s event
 									</Typography>
 								</Stack>
@@ -490,6 +512,9 @@ export default function ChristmasTree() {
 								sx={{
 									img: {
 										width: '180px',
+										'@media (max-width: 400px)': {
+											display: 'none',
+										},
 									},
 								}}
 							>
@@ -507,6 +532,48 @@ export default function ChristmasTree() {
 								How To Join
 							</Typography>
 						</Box>
+						<Stack
+							direction="row"
+							justifyContent="space-between"
+							py={2}
+							gap={3}
+							id="xmas"
+							sx={{
+								h5: {
+									'@media (max-width: 1024px)': {
+										fontSize: '20px',
+									},
+									'@media (max-width: 768px)': {
+										fontSize: '18px',
+									},
+									'@media (max-width: 480px)': {
+										fontSize: '16px',
+									},
+								},
+								'@media (max-width: 480px)': {
+									flexDirection: 'column',
+								},
+							}}
+						>
+							<Box sx={{ textAlign: 'center' }}>
+								<img src={item1} alt="item" />
+								<Typography variant="h5" mt={1}>
+									Connect your Metamask
+								</Typography>
+							</Box>
+							<Box sx={{ textAlign: 'center' }}>
+								<img src={item2} alt="item" />
+								<Typography variant="h5" mt={1}>
+									Choose your avatar
+								</Typography>
+							</Box>
+							<Box sx={{ textAlign: 'center' }}>
+								<img src={item3} alt="item" />
+								<Typography variant="h5" mt={1}>
+									Experience Xmas space
+								</Typography>
+							</Box>
+						</Stack>
 						<Box
 							sx={{
 								textAlign: 'center',
@@ -552,8 +619,57 @@ export default function ChristmasTree() {
 						</Box>
 					</Box>
 				</Box>
+				<Stack
+					direction="row"
+					justifyContent="space-between"
+					alignItems="center"
+					maxWidth={1800}
+					mx="auto"
+					mt={2}
+				>
+					<Box
+						sx={{
+							img: {
+								'@media (max-width: 1300px)': { width: '350px' },
+								'@media (max-width: 1200px)': { width: '300px' },
+								'@media (max-width: 1100px)': { width: '280px' },
+								'@media (max-width: 1024px)': {
+									display: 'none',
+								},
+							},
+						}}
+					>
+						<img src={item4} alt="itme" />
+					</Box>
+					<Box
+						sx={{
+							img: {
+								width: '400px',
+								'@media (max-width: 450px)': {
+									width: '300px',
+								},
+							},
+						}}
+					>
+						<img src={gif} alt="gif" />
+					</Box>
+					<Box
+						sx={{
+							img: {
+								'@media (max-width: 1300px)': { width: '350px' },
+								'@media (max-width: 1200px)': { width: '300px' },
+								'@media (max-width: 1100px)': { width: '280px' },
+								'@media (max-width: 1024px)': {
+									display: 'none',
+								},
+							},
+						}}
+					>
+						<img src={item5} alt="itme" />
+					</Box>
+				</Stack>
 			</Box>
-			<Box
+			{/* <Box
 				sx={{
 					img: {
 						width: '100%',
@@ -566,7 +682,7 @@ export default function ChristmasTree() {
 				}}
 			>
 				<img src={bg3} alt="xmas" />
-			</Box>
+			</Box> */}
 			<Box
 				sx={{
 					position: 'relative',
