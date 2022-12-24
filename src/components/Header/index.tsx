@@ -53,17 +53,17 @@ const Header: React.FC = () => {
 		{
 			id: 1,
 			name: 'Home',
-			link: '/',
+			link: '#',
 		},
 		{
 			id: 2,
 			name: 'Xmas',
-			link: '',
+			link: '#xmas',
 		},
 		{
 			id: 3,
 			name: 'How To Join',
-			link: '',
+			link: '#join',
 		},
 	];
 	const renderListNav = () => {
