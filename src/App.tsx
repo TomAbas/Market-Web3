@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import ChristmasTree from 'components/ChristmasTree';
 import FooterComp from 'components/FooterComp';
 import Header from 'components/Header';
 import React, { useEffect, useState } from 'react';
@@ -7,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 import SizeObserver from 'contexts/SizeObserver';
+import Marketplace from 'components/Marketplace';
 function App() {
 	const getLibrary = (provider: any): Web3Provider => {
 		const library = new Web3Provider(provider);
@@ -18,7 +18,10 @@ function App() {
 			<Web3ReactProvider getLibrary={getLibrary}>
 				<SizeObserver>
 					<Header />
-					<ChristmasTree />
+					<div className="container">
+						<Marketplace />
+					</div>
+
 					<FooterComp />
 				</SizeObserver>
 			</Web3ReactProvider>

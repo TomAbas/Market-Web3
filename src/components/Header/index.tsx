@@ -17,8 +17,8 @@ import {
 import { AppbarHeader, LogoLink, PageLogo, IconItem, LinkWrapper, DropDownContent } from './styled';
 //models
 //image
-import LogoMSWhite from '../../assets/images/logo/Metaspacecy-white.webp';
-import LogoMSMobileWhite from '../../assets/images/logo/MSMobile-white.webp';
+import LogoMSWhite from '../../assets/images/logo/logoMetaBlue.png';
+import LogoMSMobileWhite from '../../assets/images/logo/logoMetaBlue.png';
 import LogoMSGray from '../../assets/images/logo/logo-metaspacecy-gray.webp';
 import LogoMSGrayMoblie from '../../assets/images/logo/logo-metaspacecy-gray-moblie.webp';
 import connectIcon from '../../assets/icons/icon-connect-white.svg';
@@ -52,17 +52,17 @@ const Header: React.FC = () => {
 	const listNav = [
 		{
 			id: 1,
-			name: 'Home',
+			name: 'Marketplace',
 			link: '#',
 		},
 		{
 			id: 2,
-			name: 'Xmas',
+			name: 'Drop',
 			link: '#xmas',
 		},
 		{
 			id: 3,
-			name: 'How To Join',
+			name: 'Mint',
 			link: '#join',
 		},
 	];
@@ -74,7 +74,7 @@ const Header: React.FC = () => {
 						href={item.link}
 						sx={{
 							textDecoration: 'none',
-							color: '#fff',
+							color: '#131740',
 							fontWeight: '500',
 							transition: 'all 0.4s ',
 							'&:hover': {
@@ -96,7 +96,7 @@ const Header: React.FC = () => {
 						href={item.link}
 						sx={{
 							textDecoration: 'none',
-							color: '#fff',
+							color: '#131740',
 							fontWeight: '500',
 							transition: 'all 0.4s ',
 							'&:hover': {

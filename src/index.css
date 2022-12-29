@@ -7,6 +7,7 @@ body {
 	margin: 0;
 	padding: 0;
 	font-size: 16px;
+	color: #131740 !important;
 	font-style: italic;
 	overflow-x: hidden;
 }
@@ -148,6 +149,10 @@ body::-webkit-scrollbar-thumb {
 	to {
 		height: 160px;
 	}
+}
+
+.container {
+	height: 60vh;
 }
 
 /* Style for toastify */

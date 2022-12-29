@@ -18,7 +18,7 @@ export const FooterWrap = styled('footer')(({ theme }) => ({
 	backgroundPosition: 'left bottom',
 	backgroundSize: 'cover',
 	backgroundRepeat: 'no-repeat',
-	background: 'rgba(0,0,0)',
+	background: 'linear-gradient(180deg, #E0F4FF 0%, #FFFFFF 100%)',
 
 	'@media screen and (max-width: 1582px)': {
 		backgroundPosition: 'center center',
@@ -125,7 +125,6 @@ export const DetailTitle = styled('h3')(({ theme }) => ({
 	marginBottom: '1.5rem',
 	fontSize: '.875rem',
 	lineHeight: 'normal',
-	color: 'white',
 	// ...(theme.palette.mode === "light"
 	//   ? {
 	//       color: "rgba(19, 23, 64, 1)",
@@ -143,7 +142,7 @@ export const DetailList = styled('ul')(({ theme }) => ({
 export const ListRow = styled('li')({});
 export const DetailLink = styled('a')(({ theme }) => ({
 	textDecoration: 'none',
-	color: 'white',
+	color: '#5A5D79',
 	// fontWeight: '500',
 }));
 

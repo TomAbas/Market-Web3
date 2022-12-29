@@ -18,7 +18,7 @@ import {
 	LinkWrapper,
 } from './styled';
 import LogoMSBlue from '../../assets/images/logo/MSMobile-blue.webp';
-import LogoMSWhite from '../../assets/images/logo/Metaspacecy-white.webp';
+import LogoMSWhite from '../../assets/images/logo/logoMetaBlue.png';
 import LogoMSMobileBlue from '../../assets/images/logo/Metaspacecy-blue.svg';
 import LogoMSMobileWhite from '../../assets/images/logo/MSMobile-white.webp';
 import LogoMSGray from '../../assets/images/logo/logo-metaspacecy-gray.png';
@@ -197,59 +197,7 @@ const FooterComp: React.FC = () => {
 				},
 			],
 		},
-		{
-			title: 'Virtual Space',
-			contents: [
-				{
-					name: 'Utility',
-					link: `${PATH_VIRTUAL_WORLD.root}`,
-					id: 1,
-					target: '_blank',
-				},
-				{
-					name: 'Virtual Time Square',
-					link: `${PATH_VIRTUAL_WORLD.virtualWorld}`,
-					id: 2,
-					target: '_blank',
-				},
-				{
-					name: 'Virtual Meeting',
-					link: `${PATH_VIRTUAL_WORLD.virtualEvent}`,
-					id: 3,
-					target: '_blank',
-				},
-				{
-					name: 'Virtual Concert',
-					link: '',
-					id: 4,
-					target: '_blank',
-				},
-				{
-					name: 'Virtual Exhibition',
-					link: '',
-					id: 5,
-					target: '_blank',
-				},
-				{
-					name: 'Virtual Sport',
-					link: `${PATH_VIRTUAL_WORLD.virtualSport}`,
-					id: 6,
-					target: '_blank',
-				},
-				{
-					name: 'Virtual Museum',
-					link: `${PATH_VIRTUAL_WORLD.virtualArt}`,
-					id: 7,
-					target: '_blank',
-				},
-				{
-					name: 'Virtual Xmas',
-					link: `${PATH_VIRTUAL_WORLD.eventXmax}`,
-					id: 8,
-					target: '_blank',
-				},
-			],
-		},
+
 		{
 			title: 'My Account',
 			contents: [
@@ -328,7 +276,6 @@ const FooterComp: React.FC = () => {
 		<FooterWrap
 			sx={{
 				pt: '6rem',
-				background: '#010E21',
 				[theme.breakpoints.down(1507)]: {
 					pt: '4rem',
 				},
@@ -377,7 +324,6 @@ const FooterComp: React.FC = () => {
 							>
 								{ContentFooter.map((title: any, index: number) => (
 									<Typography
-										color="#fff"
 										fontSize="18px"
 										padding="4px 0"
 										fontStyle="italic"
@@ -404,7 +350,6 @@ const FooterComp: React.FC = () => {
 							>
 								{ContentFooter.map((title: any, index: number) => (
 									<Typography
-										color="white"
 										key={index}
 										fontSize="18px"
 										padding="2px 0"
@@ -451,7 +396,6 @@ const FooterComp: React.FC = () => {
 											fontSize: '13px',
 										},
 									}}
-									color="#fff"
 									fontSize="16px"
 									fontStyle="italic"
 								>
@@ -473,7 +417,6 @@ const FooterComp: React.FC = () => {
 											fontSize: '13px',
 										},
 									}}
-									color="#fff"
 									fontSize="16px"
 									fontStyle="italic"
 								>
