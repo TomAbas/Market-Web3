@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 // mui
 import { Box, Link, Stack, Typography, useTheme } from '@mui/material';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
-
+import { useWallet } from '@manahippo/aptos-wallet-adapter';
 //redux
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import {
@@ -15,7 +15,6 @@ import {
 } from '../../redux/slices/modalWallet';
 //styled
 import { AppbarHeader, LogoLink, PageLogo, IconItem, LinkWrapper, DropDownContent } from './styled';
-//models
 //image
 import LogoMSWhite from '../../assets/images/logo/logoMetaBlue.png';
 import LogoMSMobileWhite from '../../assets/images/logo/logoMetaBlue.png';
@@ -31,6 +30,8 @@ import { useUserInfo } from '../../redux/actions/userAction';
 import { TOKEN_PAYMENT } from 'constants/token.constant';
 
 import { useSizeObersver } from '../../contexts/SizeObserver';
+import ModalInfo from './popupInfoModal';
+import MintTabs from '../Mint/mint';
 
 const Header: React.FC = () => {
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
@@ -46,8 +47,14 @@ const Header: React.FC = () => {
 	const { innerWidth } = useSizeObersver();
 	useUserInfo();
 	// useState
+	const { account } = useWallet();
 	let [background, setBackground] = useState(false);
 	let [option, setOption] = useState(false);
+	const [statePage, setStatePage] = useState(0);
+	const handleMint = (id: any) => {
+		console.log('oke ' + id);
+		setStatePage(id);
+	};
 
 	const listNav = [
 		{
@@ -69,7 +76,12 @@ const Header: React.FC = () => {
 	const renderListNav = () => {
 		return listNav.map((item) => {
 			return (
-				<Box key={item.id}>
+				<Box
+					key={item.id}
+					onClick={() => {
+						handleMint(item.id);
+					}}
+				>
 					<Link
 						href={item.link}
 						sx={{
@@ -227,7 +239,7 @@ const Header: React.FC = () => {
 							) : null}
 							<IconItem onClick={openModal}>
 								<img src={connectIcon} alt="connect icon" />
-								{modalWalletSteps.steps.firstModal && (
+								{modalWalletSteps.steps.firstModal && !account?.address && (
 									<ClickAwayListener
 										onClickAway={() => {
 											dispatch(closeModal());
@@ -270,6 +282,7 @@ const Header: React.FC = () => {
 													</Typography>
 												</Box>
 												<ModalWallet />
+
 												<Box pt={2}>
 													<LinkWrapper
 														href="https://metaspacecy.gitbook.io/metaspacecy/getting-started/installing-a-wallet"
@@ -295,6 +308,16 @@ const Header: React.FC = () => {
 											</Box>
 										</DropDownContent>
 									</ClickAwayListener>
+								)}
+								{account?.address && (
+									<>
+										<ModalInfo />
+									</>
+								)}
+								{statePage == 3 && (
+									<>
+										<MintTabs />
+									</>
 								)}
 								{modalWalletSteps.steps.secondModal && (
 									<ClickAwayListener
