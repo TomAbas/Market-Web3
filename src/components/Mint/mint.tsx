@@ -15,7 +15,7 @@ export default function MintTabs() {
 	};
 
 	return (
-		<Box sx={{ width: '550px', typography: 'body1', paddingTop: '150px', paddingLeft: '10%' }}>
+		<Box sx={{ width: '550px', paddingTop: '150px', paddingLeft: '10%' }}>
 			<TabContext value={value}>
 				<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
 					<TabList onChange={handleChange} aria-label="lab API tabs example">

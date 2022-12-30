@@ -81,6 +81,8 @@ export default function LayoutMintNFT() {
 				}
 			/>
 			<RedBar />
+			<input type="file" name="Asset" className="my-4" />
+			<RedBar />
 			<Button variant="contained">Create</Button>
 		</Box>
 	);

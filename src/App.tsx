@@ -41,9 +41,13 @@ function App() {
 			<WalletProvider wallets={wallets}>
 				<SizeObserver>
 					<Header setStatePage={setStatePage} />
-					<div className="container">
-						{statePage === 1 ? <Marketplace /> : <MintTabs />}
-					</div>
+					{statePage === 1 || statePage == 2 ? (
+						<div className="container">
+							<Marketplace />
+						</div>
+					) : (
+						<MintTabs />
+					)}
 
 					<FooterComp />
 				</SizeObserver>

@@ -24,7 +24,7 @@ export default function LayoutCreateCollection() {
 	const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 	console.log(MARKET_ADDRESS, MARKET_COINT_TYPE);
 	// const { account, signAndSubmitTransaction } = useWallet();
-	const [base64image, setBase64image] = useState('');
+	// const [base64image, setBase64image] = useState('');
 	const [formInput, updateFormInput] = useState<{
 		name: string;
 		description: string;
@@ -38,11 +38,11 @@ export default function LayoutCreateCollection() {
 	async function onChange(e: ChangeEvent<HTMLInputElement>) {
 		const file = e.target.files![0];
 		updateFormInput({ ...formInput, file: file });
-		const reader = new FileReader();
-		reader.onload = function (event) {
-			setBase64image(event.target!.result!.toString());
-		};
-		reader.readAsDataURL(file);
+		// const reader = new FileReader();
+		// reader.onload = function (event) {
+		// 	setBase64image(event.target!.result!.toString());
+		// };
+		// reader.readAsDataURL(file);
 	}
 	// async function createCollection() {
 	// 	const { name, description, file } = formInput;
@@ -93,7 +93,7 @@ export default function LayoutCreateCollection() {
 			/>
 			<RedBar />
 			<input type="file" name="Asset" className="my-4" onChange={onChange} />
-			{base64image && <img className="rounded mt-4" width="350" src={base64image} />}
+			{/* {base64image && <img className="rounded mt-4" width="350" src={base64image} />} */}
 			<RedBar />
 			<Button variant="contained">Create</Button>
 		</Box>
