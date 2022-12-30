@@ -79,14 +79,14 @@ export default function LayoutCreateCollection() {
 		>
 			<RedBar />
 			<TextField
-				label={'item name'}
+				label={'collection name'}
 				id="margin-dense"
 				margin="dense"
 				onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
 			/>
 			<RedBar />
 			<TextField
-				label={'item description'}
+				label={'collection description'}
 				id="margin-normal"
 				margin="normal"
 				onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
