@@ -33,7 +33,7 @@ import { useSizeObersver } from '../../contexts/SizeObserver';
 import ModalInfo from './popupInfoModal';
 import MintTabs from '../Mint/mint';
 
-const Header: React.FC = () => {
+const Header: any = ({ setStatePage }: { setStatePage: any }) => {
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
 	const userInfo = useAppSelector(selectUser);
 	const userAddress = userInfo?.userAddress;
@@ -50,7 +50,6 @@ const Header: React.FC = () => {
 	const { account } = useWallet();
 	let [background, setBackground] = useState(false);
 	let [option, setOption] = useState(false);
-	const [statePage, setStatePage] = useState(0);
 	const handleMint = (id: any) => {
 		console.log('oke ' + id);
 		setStatePage(id);
@@ -308,16 +307,6 @@ const Header: React.FC = () => {
 											</Box>
 										</DropDownContent>
 									</ClickAwayListener>
-								)}
-								{account?.address && (
-									<>
-										<ModalInfo />
-									</>
-								)}
-								{statePage == 3 && (
-									<>
-										<MintTabs />
-									</>
 								)}
 								{modalWalletSteps.steps.secondModal && (
 									<ClickAwayListener

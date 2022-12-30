@@ -27,7 +27,8 @@ import HeartFullWhite from '../../../assets/icons/heart-white.svg';
 import item from '../../../assets/images/card/box.webp';
 import ethe from '../../../assets/images/card/Ethereum-icon.svg';
 
-export default function CardNFT() {
+export default function CardNFT({ offer }: { offer: any }) {
+	const DECIMAL = 100000000;
 	return (
 		<>
 			<Grid xs={6} sm={4} md={3}>
@@ -36,7 +37,7 @@ export default function CardNFT() {
 						{/* Item image */}
 						<ItemImage>
 							<Box className="main-img">
-								<img src={item} alt="item" />
+								<img src={offer.uri} alt="item" />
 							</Box>
 							{/* Item favorite */}
 							<ItemFavorite>
@@ -162,7 +163,7 @@ export default function CardNFT() {
 										noWrap
 										sx={{ cursor: 'default' }}
 									>
-										Box1
+										{offer.token_id.token_data_id.name}
 									</Typography>
 									<ImageBlockchain>
 										<img src={ethe} alt="ethe" />
@@ -216,7 +217,7 @@ export default function CardNFT() {
 													>
 														View History
 													</span> */}
-										Unlisted
+										{offer.price / DECIMAL} APT
 									</Box>
 
 									<Typography
