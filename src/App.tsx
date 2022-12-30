@@ -46,7 +46,7 @@ function App() {
 							<Marketplace />
 						</div>
 					) : (
-						<MintTabs />
+						<></>
 					)}
 
 					<FooterComp />

@@ -160,35 +160,12 @@ export default function Marketplace() {
 					</Box>
 				</Box>
 			</ExploreCollection>
-			<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-				{/* <Grid xs={6} sm={4} md={3}>
-					<Box
-						sx={{ width: '100%', borderRadius: '12px', border: '1.8px solid #E7E8EC' }}
-					>
-						<Box
-							sx={{
-								width: '100%',
-
-								img: {
-									width: '100%',
-									borderRadius: '12px',
-								},
-							}}
-						>
-							<img src={item} alt={item} />
-						</Box>
-						<Box>
-							<Stack direction="row" alignItems="center">
-								<Typography>Box 1</Typography>
-								<img src={ethe} alt="network" />
-							</Stack>
-						</Box>
-					</Box>
-				</Grid> */}
+			{/* <Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+				
 				{offers.map((offer: any) => (
 					<CardNFT offer={offer} key={offer.timestamp} />
 				))}
-			</Grid>
+			</Grid> */}
 		</>
 	);
 }
