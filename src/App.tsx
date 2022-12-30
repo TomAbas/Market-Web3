@@ -7,6 +7,7 @@ import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 import SizeObserver from 'contexts/SizeObserver';
 import Marketplace from 'components/Marketplace';
+import MintTabs from './components/Mint/mint';
 
 import {
 	FewchaWalletAdapter,
@@ -23,6 +24,7 @@ function App() {
 		library.pollingInterval = 12000;
 		return library;
 	};
+	const [statePage, setStatePage] = useState(1);
 
 	const wallets = useMemo(
 		() => [
@@ -38,10 +40,14 @@ function App() {
 		<>
 			<WalletProvider wallets={wallets}>
 				<SizeObserver>
-					<Header />
-					<div className="container">
-						<Marketplace />
-					</div>
+					<Header setStatePage={setStatePage} />
+					{statePage === 1 || statePage == 2 ? (
+						<div className="container">
+							<Marketplace />
+						</div>
+					) : (
+						<MintTabs />
+					)}
 
 					<FooterComp />
 				</SizeObserver>

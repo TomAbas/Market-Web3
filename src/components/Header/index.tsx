@@ -36,7 +36,7 @@ import { useSizeObersver } from '../../contexts/SizeObserver';
 import ModalInfo from './popupInfoModal';
 import MintTabs from '../Mint/mint';
 
-const Header: React.FC = () => {
+const Header: any = ({ setStatePage }: { setStatePage: any }) => {
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
 	const userInfo = useAppSelector(selectUser);
 	// const userAddress = userInfo?.userAddress;
@@ -54,7 +54,6 @@ const Header: React.FC = () => {
 	let userAddress = account?.address?.toString();
 	let [background, setBackground] = useState(false);
 	let [option, setOption] = useState(false);
-	const [statePage, setStatePage] = useState(0);
 	const [isModalInfo, setIsModalInfo] = useState(false);
 	const handleMint = (id: any) => {
 		console.log('oke ' + id);

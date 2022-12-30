@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Container, Grid, Stack, Typography } from '@mui/material';
 import Slider from 'components/Slider';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import item from '../../assets/images/card/box.webp';
 import ethe from '../../assets/images/card/Ethereum-icon.svg';
@@ -31,6 +32,21 @@ import {
 } from './styled';
 
 export default function Marketplace() {
+	const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
+	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
+	const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
+	const [offers, setOffers] = useState<any[]>([]);
+	useEffect(() => {
+		const fetchOffers = async () => {
+			const response: any = await axios.get(
+				`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::market::TokenInfo`
+			);
+			const offers = response.data.data?.token_list;
+			setOffers(offers);
+		};
+		fetchOffers();
+	}, []);
+	console.log(offers);
 	return (
 		<>
 			<ExploreCollection
@@ -169,7 +185,9 @@ export default function Marketplace() {
 						</Box>
 					</Box>
 				</Grid> */}
-				<CardNFT />
+				{offers.map((offer: any) => (
+					<CardNFT offer={offer} key={offer.timestamp} />
+				))}
 			</Grid>
 		</>
 	);
