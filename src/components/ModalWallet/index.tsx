@@ -1,109 +1,63 @@
-import React from 'react';
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
-import { connectorsByName, listWalletAvailable } from '../../constants';
+import { useWallet, Wallet } from '@manahippo/aptos-wallet-adapter';
+import { DropDownContent, LinkWrapper } from './WalletModalStyles';
 
-import { useUserInfo } from '../../redux/actions/userAction';
-declare let window: any;
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import {
+	sellectStepsModalWallet,
+	openFirstModal,
+	openSecondModal,
+	openThirdModal,
+} from '../../redux/slices/modalWallet';
+
+// declare let window: any;
 const ModalWallet: React.FC = () => {
-	const { connectWalletFunc } = useUserInfo();
-	return (
-		<>
-			{' '}
-			{listWalletAvailable.map((wallet, idx) => {
-				const isMetamask = window.ethereum && window.ethereum.isMetaMask;
-				if (wallet.connector === connectorsByName.Injected) {
-					//check is metamask
-					if (!(window.web3 || window.ethereum)) {
-						if (wallet.name === 'Metamask') {
-							return (
-								<Box
-									my={1}
-									sx={{ cursor: 'pointer', userSelect: 'none' }}
-									key={idx}
-								>
-									<Stack
-										direction="row"
-										justifyContent="space-between"
-										alignItems="center"
-									>
-										<a
-											href="https://metamask.io"
-											target="_blank"
-											rel="noreferrer noopener"
-											style={{
-												display: 'flex',
-												justifyContent: 'center',
-												alignItems: 'center',
-												textDecoration: 'none',
-												gap: '16px',
-											}}
-										>
-											<Stack>
-												<img
-													style={{
-														width: '48px',
-														height: '48px',
-													}}
-													src={wallet.image}
-													alt={wallet.name}
-												/>
-											</Stack>
+	const DECIMAL = 100000000;
+	const dispatch = useAppDispatch();
+	const { wallets, connect } = useWallet();
+	const { account } = useWallet();
+	console.log(account?.address);
 
-											<Typography
-												fontStyle="italic"
-												style={{
-													marginBottom: 0,
-													textDecoration: 'none',
-													color: '#fff',
-												}}
-											>
-												Install {wallet.name}
-											</Typography>
-										</a>
-									</Stack>
-								</Box>
-							);
-						}
-						// don't return metamask if injected provider isn't metamask
-						else if (wallet.name === 'Metamask' && !isMetamask) {
-							return null;
-						}
-						// likewise for generic
-						else if (wallet.name === 'Injected' && isMetamask) {
-							return null;
-						}
-					}
-				}
+	async function connectWallet(wallet: Wallet) {
+		connect(wallet.adapter.name);
+		dispatch(openSecondModal());
+	}
+	let myAddress = account?.address?.toString();
 
-				return (
-					<Box my={1} sx={{ cursor: 'pointer', userSelect: 'none' }} key={idx}>
+	const renderListWallet = () => {
+		// console.log('oke');
+		return wallets.map((wallet: any, index: any) => {
+			return (
+				<>
+					<Box
+						my={1}
+						key={index}
+						sx={{ cursor: 'pointer', userSelect: 'none' }}
+						onClick={() => connectWallet(wallet)}
+					>
 						<Stack direction="row" justifyContent="space-between" alignItems="center">
-							<Stack
-								direction="row"
-								gap={2}
-								alignItems="center"
-								onClick={() => connectWalletFunc(wallet.connector)}
-							>
-								<img
-									style={{
-										width: '48px',
-										height: '48px',
-									}}
-									src={wallet.image}
-									alt={wallet.name}
-								/>
-								<Typography
-									fontStyle="italic"
-									style={{ marginBottom: 0, fontFamily: 'Montserrat, san-serif' }}
-								>
-									{wallet.name}
-								</Typography>
+							<Stack direction="row" gap={2} alignItems="center">
+								<img width={48} height={48} src={wallet.adapter.icon} />
+								<Typography fontStyle="italic">{wallet.adapter.name}</Typography>
 							</Stack>
 						</Stack>
 					</Box>
-				);
-			})}
+				</>
+			);
+		});
+	};
+
+	return (
+		<>
+			{!myAddress && (
+				<DropDownContent>
+					<Box>
+						<Stack>{renderListWallet()}</Stack>
+					</Box>
+				</DropDownContent>
+			)}
 		</>
 	);
 };
