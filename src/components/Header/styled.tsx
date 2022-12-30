@@ -155,14 +155,15 @@ export const IconItem = styled(Box)(({ theme }) => ({
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
-	background: 'rgba(157, 195, 230, 0.6)',
+	background: '#fff',
 	height: '34px',
 	width: '34px',
 	borderRadius: '50%',
 	position: 'relative',
-	cursor: 'pointer',
 	transition: 'all 0.4s',
-	color: '#fff',
+	color: '#000',
+	border: '1.5px solid #e7e8ec',
+	cursor: 'pointer',
 }));
 
 export const DropDownContent = styled(Stack)(() => ({
@@ -171,14 +172,15 @@ export const DropDownContent = styled(Stack)(() => ({
 	right: 0,
 	minWidth: 220,
 	borderRadius: 12,
+	cursor: 'auto',
 	zIndex: 100,
 	top: '130%',
 	animation: 'smoothAppear 0.5s',
-	backgroundColor: '#89AED0',
-	color: '#fff',
+	backgroundColor: '#fff',
+	color: '#000',
 }));
 
 export const LinkWrapper = styled('a')(() => ({
 	transition: 'all ease 0.5s',
-	color: '#fff',
+	color: '#000',
 }));

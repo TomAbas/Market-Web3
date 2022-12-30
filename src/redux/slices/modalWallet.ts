@@ -28,18 +28,21 @@ export const modalWalletSlice = createSlice({
 			state.steps = { ...state.steps, secondModal: false, thirdModal: true };
 		},
 		closeModal(state) {
-			state.steps = {
-				...state.steps,
-				firstModal: false,
-				secondModal: false,
-			};
+			console.log('chay close modal');
+			state.steps.firstModal = false;
+			state.steps.secondModal = false;
+			state.steps.thirdModal = false;
+		},
+		closeFirstModal(state) {
+			console.log('chay close modal1');
+			state.steps = { ...state.steps, firstModal: false };
 		},
 	},
 });
 
 //selector
 export const sellectStepsModalWallet = (state: RootState) => state.modalWalletSlice;
-export const { openFirstModal, openSecondModal, openThirdModal, closeModal } =
+export const { openFirstModal, openSecondModal, openThirdModal, closeModal, closeFirstModal } =
 	modalWalletSlice.actions;
 
 export default modalWalletSlice.reducer;

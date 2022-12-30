@@ -14,13 +14,16 @@ import {
 	closeModal,
 } from '../../redux/slices/modalWallet';
 //styled
+import userIcon from '../../assets/icons/icon-user-black.svg';
 import { AppbarHeader, LogoLink, PageLogo, IconItem, LinkWrapper, DropDownContent } from './styled';
 //image
 import LogoMSWhite from '../../assets/images/logo/logoMetaBlue.png';
 import LogoMSMobileWhite from '../../assets/images/logo/logoMetaBlue.png';
 import LogoMSGray from '../../assets/images/logo/logo-metaspacecy-gray.webp';
 import LogoMSGrayMoblie from '../../assets/images/logo/logo-metaspacecy-gray-moblie.webp';
-import connectIcon from '../../assets/icons/icon-connect-white.svg';
+import aptos from '../../assets/images/logo/aptos.png';
+import sui from '../../assets/images/logo/sui.png';
+import connectIcon from '../../assets/icons/icon-connect-black.svg';
 import binance from '../../assets/wallet/bnb-new.webp';
 import ModalWallet from '../ModalWallet';
 import { selectUser, selectWeb3 } from '../../redux/slices/userInfo';
@@ -36,7 +39,7 @@ import MintTabs from '../Mint/mint';
 const Header: React.FC = () => {
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
 	const userInfo = useAppSelector(selectUser);
-	const userAddress = userInfo?.userAddress;
+	// const userAddress = userInfo?.userAddress;
 	const userBalance = userInfo?.balance;
 	const web3Info = useAppSelector(selectWeb3);
 	const chainId = web3Info.chainId;
@@ -48,9 +51,11 @@ const Header: React.FC = () => {
 	useUserInfo();
 	// useState
 	const { account } = useWallet();
+	let userAddress = account?.address?.toString();
 	let [background, setBackground] = useState(false);
 	let [option, setOption] = useState(false);
 	const [statePage, setStatePage] = useState(0);
+	const [isModalInfo, setIsModalInfo] = useState(false);
 	const handleMint = (id: any) => {
 		console.log('oke ' + id);
 		setStatePage(id);
@@ -129,6 +134,9 @@ const Header: React.FC = () => {
 			dispatch(openSecondModal());
 		}
 	};
+	const openModalInfo = () => {
+		setIsModalInfo((prev) => !prev);
+	};
 	const openMoreOption = () => {
 		setOption(!option);
 	};
@@ -146,6 +154,7 @@ const Header: React.FC = () => {
 		return () => window.removeEventListener('scroll', handleScroll);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
 	return (
 		<>
 			<AppbarHeader
@@ -237,9 +246,10 @@ const Header: React.FC = () => {
 									)}
 								</IconItem>
 							) : null}
+
 							<IconItem onClick={openModal}>
 								<img src={connectIcon} alt="connect icon" />
-								{modalWalletSteps.steps.firstModal && !account?.address && (
+								{modalWalletSteps.steps.firstModal && !userAddress && (
 									<ClickAwayListener
 										onClickAway={() => {
 											dispatch(closeModal());
@@ -273,7 +283,7 @@ const Header: React.FC = () => {
 																fontSize: '13px',
 															},
 														}}
-														color="#fff"
+														color="#000"
 														fontSize="16px"
 														fontStyle="italic"
 													>
@@ -297,7 +307,7 @@ const Header: React.FC = () => {
 																	fontSize: '13px',
 																},
 															}}
-															color="#fff"
+															color="#000"
 															fontSize="16px"
 															fontStyle="italic"
 														>
@@ -309,16 +319,6 @@ const Header: React.FC = () => {
 										</DropDownContent>
 									</ClickAwayListener>
 								)}
-								{account?.address && (
-									<>
-										<ModalInfo />
-									</>
-								)}
-								{statePage == 3 && (
-									<>
-										<MintTabs />
-									</>
-								)}
 								{modalWalletSteps.steps.secondModal && (
 									<ClickAwayListener
 										onClickAway={() => {
@@ -326,57 +326,83 @@ const Header: React.FC = () => {
 										}}
 									>
 										<DropDownContent ref={ref}>
-											<Box p={2}>
+											<Box
+												sx={{
+													width: '330px',
+												}}
+												p={4}
+											>
 												<Typography
-													variant="body2"
-													fontWeight="400"
-													sx={{
-														textAlign: 'center',
-														fontFamily: 'Montserrat, san-serif',
-														[theme.breakpoints.down(500)]: {
-															fontSize: '13px',
-														},
-													}}
-													color="#fff"
-													fontSize="16px"
+													variant="h5"
 													fontStyle="italic"
+													fontWeight={500}
+													style={{
+														textAlign: 'center',
+														marginBottom: '20px',
+														fontFamily: 'Montserrat, san-serif',
+													}}
 												>
-													{userAddress?.substring(0, 10)} ...{' '}
-													{userAddress?.substring(
-														37,
-														userAddress.length + 1
-													)}{' '}
+													Switch Network
 												</Typography>
-											</Box>
-											<Stack direction="column" gap="16px">
 												<Stack
 													direction="row"
-													justifyContent="center"
-													alignItems="center"
-													sx={{ marginBottom: '10px' }}
+													justifyContent="space-between"
 												>
 													<Stack
 														direction="row"
-														gap="10px"
+														gap={1}
 														alignItems="center"
 														sx={{
-															img: {
-																width: '32px',
-															},
+															cursor: 'pointer',
+															img: { width: 32 },
 														}}
 													>
-														<img src={binance} alt="bnb" />
-														<Box>{userBalance}</Box>
-														<Box>
-															{TOKEN_PAYMENT[chainId][0].symbol}
-														</Box>
+														<img src={sui} alt="sui" />
+														<Typography variant="body1">Sui</Typography>
+													</Stack>
+													<Stack
+														direction="row"
+														gap={1}
+														alignItems="center"
+														sx={{
+															cursor: 'pointer',
+															img: { width: 32 },
+														}}
+													>
+														<img src={aptos} alt="aptos" />
+														<Typography variant="body1">
+															Aptos
+														</Typography>
 													</Stack>
 												</Stack>
-											</Stack>
+											</Box>
 										</DropDownContent>
 									</ClickAwayListener>
 								)}
 							</IconItem>
+							{account?.address && (
+								<IconItem onClick={openModalInfo}>
+									<img src={userIcon} alt="model info" />
+									{isModalInfo && account?.address && (
+										<ClickAwayListener
+											onClickAway={() => {
+												openModalInfo();
+											}}
+										>
+											<DropDownContent ref={ref}>
+												<Box
+													sx={{
+														width: '330px',
+													}}
+													p={4}
+												>
+													<ModalInfo />
+												</Box>
+											</DropDownContent>
+										</ClickAwayListener>
+									)}
+								</IconItem>
+							)}
 						</Stack>
 					</Stack>
 				</Box>

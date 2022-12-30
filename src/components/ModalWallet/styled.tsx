@@ -9,7 +9,7 @@ export const DropDownContent = styled(Stack)(() => ({
 	zIndex: 100,
 	top: '130%',
 	animation: 'smoothAppear 0.5s',
-	backgroundColor: 'rgba(177, 218, 255, 0.45)',
-	color: '#fff',
+	backgroundColor: '#fff',
+	color: '#000',
 	fontFamily: '',
 }));

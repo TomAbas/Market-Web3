@@ -10,6 +10,8 @@ import {
 	openFirstModal,
 	openSecondModal,
 	openThirdModal,
+	closeModal,
+	closeFirstModal,
 } from '../../redux/slices/modalWallet';
 
 // declare let window: any;
@@ -21,7 +23,8 @@ const ModalWallet: React.FC = () => {
 
 	async function connectWallet(wallet: Wallet) {
 		connect(wallet.adapter.name);
-		dispatch(openSecondModal());
+		dispatch(closeModal());
+		// dispatch(openSecondModal());
 	}
 	let myAddress = account?.address?.toString();
 

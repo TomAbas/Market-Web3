@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { getBalanceUser } from '../../utils/getUser';
+import { Box, Stack, Typography } from '@mui/material';
+// import userIcon from '../../assets/icons/icon-user-black.svg';
 
 const ModalInfo: React.FC = () => {
 	const [myBalance, setMyBalance] = useState(0);
@@ -30,51 +29,61 @@ const ModalInfo: React.FC = () => {
 		<PopupState variant="popover" popupId="demo-popup-menu">
 			{(popupState) => (
 				<React.Fragment>
-					<Button
-						variant="contained"
+					<Box
 						{...bindTrigger(popupState)}
 						sx={{
 							boxShadow: '0',
-							':hover': {
-								backgroundColor: 'white',
+							position: 'relative',
+							img: {
+								display: 'block',
 							},
-							backgroundColor: 'white',
 						}}
 					>
-						<img
-							src="../../assets/navbar/icon-user-black_3.svg"
-							alt="Wallet"
-							width={20}
-							height={20}
-						/>
-					</Button>
-					<Menu {...bindMenu(popupState)}>
-						<MenuItem onClick={popupState.close}>
-							<img
-								src="https://i.pinimg.com/736x/25/47/c7/2547c7ecb55605fbb39e04157f157021.jpg"
-								alt="Wallet"
-								width={50}
-								height={50}
-							/>
-							&emsp; {myAddress}
-						</MenuItem>
-						<MenuItem onClick={popupState.close}>
-							APT &emsp;&emsp; {myBalance / 100000000} APT
-						</MenuItem>
-						<MenuItem onClick={popupState.close}>
-							<a
-								href="/profile"
-								style={{
-									color: 'black',
+						<Stack gap={1.5} {...bindMenu(popupState)}>
+							<Stack
+								onClick={popupState.close}
+								direction="row"
+								alignItems="center"
+								gap={2}
+								sx={{
+									img: {
+										borderRadius: '50%',
+									},
 								}}
 							>
-								Profile
-							</a>
-						</MenuItem>
-						<MenuItem onClick={popupState.close}>My Collections</MenuItem>
-						<MenuItem onClick={popupState.close}>Settings</MenuItem>
-						<MenuItem onClick={popupState.close}>Logout</MenuItem>
-					</Menu>
+								<img
+									src="https://i.pinimg.com/736x/25/47/c7/2547c7ecb55605fbb39e04157f157021.jpg"
+									alt="Wallet"
+									width={50}
+									height={50}
+								/>
+								<Typography variant="body1">{myAddress}</Typography>
+							</Stack>
+							<Stack
+								justifyContent="space-between"
+								alignItems="center"
+								direction="row"
+								onClick={popupState.close}
+							>
+								<Box>APT</Box> <Box>{myBalance / 100000000} APT</Box>
+							</Stack>
+							<Stack gap={1.5} pl={2}>
+								<Box onClick={popupState.close}>
+									<a
+										href="/profile"
+										style={{
+											color: 'black',
+										}}
+									>
+										Profile
+									</a>
+								</Box>
+								<Box onClick={popupState.close}>My Collections</Box>
+								<Box onClick={popupState.close}>Settings</Box>
+								<Box onClick={popupState.close}>Logout</Box>
+							</Stack>
+						</Stack>
+					</Box>
 				</React.Fragment>
 			)}
 		</PopupState>

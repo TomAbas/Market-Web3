@@ -20,9 +20,8 @@ import { selectUser, selectWeb3 } from '../slices/userInfo';
 //modalWallet
 import { openSecondModal } from '../slices/modalWallet';
 import { useEffect } from 'react';
-declare let window: any;
+
 export const useUserInfo = () => {
-	const ethereum: any = window.ethereum;
 	const context = useWeb3React<Web3Provider>();
 	let { activate } = context;
 	const dispatch = useAppDispatch();
@@ -59,14 +58,12 @@ export const useUserInfo = () => {
 		}
 	};
 	const getUserAddress = async () => {
-		if (ethereum) {
-			let address = await web3.eth.getAccounts();
-			let addressUser = address[0];
-			let userInfo = { userAddress: addressUser };
-			// usePost(`${API_ENDPOINT}/users/login`, userInfo);
-			dispatch(getUserSuccessA(userInfo));
-			getUserBalance(addressUser);
-		}
+		let address = await web3.eth.getAccounts();
+		let addressUser = address[0];
+		let userInfo = { userAddress: addressUser };
+		// usePost(`${API_ENDPOINT}/users/login`, userInfo);
+		dispatch(getUserSuccessA(userInfo));
+		getUserBalance(addressUser);
 	};
 
 	const getUserBalance = async (address: string) => {

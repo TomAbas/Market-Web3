@@ -47,7 +47,7 @@ export const ConnectWalletImgBox = styled('div')(() => ({
 }));
 
 export const DropDownContent = styled(Stack)(({ theme }) => ({
-	marginTop: '4.5rem',
+	marginTop: '1.5rem',
 	right: 0,
 	minWidth: 180,
 	borderRadius: 12,

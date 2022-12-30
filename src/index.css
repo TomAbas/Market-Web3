@@ -27,6 +27,7 @@ body.stop-scroll {
 	padding: 0;
 	text-decoration: none;
 	box-sizing: border-box;
+	font-family: Montserrat, sans-serif !important;
 }
 
 ul {
