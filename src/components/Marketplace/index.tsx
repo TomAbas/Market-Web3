@@ -5,6 +5,7 @@ import React from 'react';
 
 import item from '../../assets/images/card/box.webp';
 import ethe from '../../assets/images/card/Ethereum-icon.svg';
+import CardNFT from './CardNFT';
 
 import {
 	ButtonBlue,
@@ -143,8 +144,8 @@ export default function Marketplace() {
 					</Box>
 				</Box>
 			</ExploreCollection>
-			<Grid container spacing={1}>
-				<Grid xs={6} sm={4} md={3}>
+			<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+				{/* <Grid xs={6} sm={4} md={3}>
 					<Box
 						sx={{ width: '100%', borderRadius: '12px', border: '1.8px solid #E7E8EC' }}
 					>
@@ -167,7 +168,8 @@ export default function Marketplace() {
 							</Stack>
 						</Box>
 					</Box>
-				</Grid>
+				</Grid> */}
+				<CardNFT />
 			</Grid>
 		</>
 	);

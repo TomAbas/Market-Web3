@@ -22,8 +22,9 @@ export const ItemImage = styled(Box)(({ theme }) => ({
 		top: '50%',
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
-		maxHeight: '100%',
-		maxWidth: '100%',
+		// maxHeight: '100%',
+		// maxWidth: '100%',
+		width: '100%',
 	},
 }));
 
