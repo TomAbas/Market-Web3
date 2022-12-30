@@ -18,7 +18,6 @@ const ModalWallet: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const { wallets, connect } = useWallet();
 	const { account } = useWallet();
-	console.log(account?.address);
 
 	async function connectWallet(wallet: Wallet) {
 		connect(wallet.adapter.name);

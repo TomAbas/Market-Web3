@@ -4,12 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 // mui
 import { Box, Link, Stack, Typography, useTheme } from '@mui/material';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { walletClient } from '../../utils/aptos';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import { useWallet, Wallet } from '@manahippo/aptos-wallet-adapter';
+import { useWallet } from '@manahippo/aptos-wallet-adapter';
 //redux
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import {
@@ -20,7 +15,6 @@ import {
 } from '../../redux/slices/modalWallet';
 //styled
 import { AppbarHeader, LogoLink, PageLogo, IconItem, LinkWrapper, DropDownContent } from './styled';
-//models
 //image
 import LogoMSWhite from '../../assets/images/logo/logoMetaBlue.png';
 import LogoMSMobileWhite from '../../assets/images/logo/logoMetaBlue.png';
@@ -36,6 +30,8 @@ import { useUserInfo } from '../../redux/actions/userAction';
 import { TOKEN_PAYMENT } from 'constants/token.constant';
 
 import { useSizeObersver } from '../../contexts/SizeObserver';
+import ModalInfo from './popupInfoModal';
+import MintTabs from '../Mint/mint';
 
 const Header: React.FC = () => {
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
@@ -51,29 +47,14 @@ const Header: React.FC = () => {
 	const { innerWidth } = useSizeObersver();
 	useUserInfo();
 	// useState
-	// const getBalanceUser = async (address: any): Promise<number> => {
-	// 	// console.log(address);
-	// 	let balance = await walletClient.getBalance(address);
-	// 	return balance;
-	// };
 	const { account } = useWallet();
-	let myAddress = account?.address?.toString();
-	let myBalance = 0;
-	// const fetchBalance = async () => {
-	// 	try {
-	// 		let balance: number = await getBalanceUser(account?.address);
-	// 		myBalance = balance;
-	// 	} catch (error) {
-	// 		return 0;
-	// 	}
-	// };
-	if (myAddress) {
-		myAddress =
-			myAddress.slice(0, 6) + '...' + myAddress.slice(myAddress.length - 4, myAddress.length);
-		// fetchBalance();
-	}
 	let [background, setBackground] = useState(false);
 	let [option, setOption] = useState(false);
+	const [statePage, setStatePage] = useState(0);
+	const handleMint = (id: any) => {
+		console.log('oke ' + id);
+		setStatePage(id);
+	};
 
 	const listNav = [
 		{
@@ -95,7 +76,12 @@ const Header: React.FC = () => {
 	const renderListNav = () => {
 		return listNav.map((item) => {
 			return (
-				<Box key={item.id}>
+				<Box
+					key={item.id}
+					onClick={() => {
+						handleMint(item.id);
+					}}
+				>
 					<Link
 						href={item.link}
 						sx={{
@@ -325,63 +311,12 @@ const Header: React.FC = () => {
 								)}
 								{account?.address && (
 									<>
-										<PopupState variant="popover" popupId="demo-popup-menu">
-											{(popupState) => (
-												<React.Fragment>
-													<Button
-														variant="contained"
-														{...bindTrigger(popupState)}
-														sx={{
-															boxShadow: '0',
-															':hover': {
-																backgroundColor: 'white',
-															},
-														}}
-													>
-														<img
-															src="../../assets/navbar/icon-user-black_3.svg"
-															alt="Wallet"
-															width={20}
-															height={20}
-														/>
-													</Button>
-													<Menu {...bindMenu(popupState)}>
-														<MenuItem onClick={popupState.close}>
-															<img
-																src="https://i.pinimg.com/736x/25/47/c7/2547c7ecb55605fbb39e04157f157021.jpg"
-																alt="Wallet"
-																width={50}
-																height={50}
-															/>
-															&emsp; {myAddress}
-														</MenuItem>
-														<MenuItem onClick={popupState.close}>
-															APT &emsp;&emsp; {myBalance / 100000000}{' '}
-															APT
-														</MenuItem>
-														<MenuItem onClick={popupState.close}>
-															<a
-																href="/profile"
-																style={{
-																	color: 'black',
-																}}
-															>
-																Profile
-															</a>
-														</MenuItem>
-														<MenuItem onClick={popupState.close}>
-															My Collections
-														</MenuItem>
-														<MenuItem onClick={popupState.close}>
-															Settings
-														</MenuItem>
-														<MenuItem onClick={popupState.close}>
-															Logout
-														</MenuItem>
-													</Menu>
-												</React.Fragment>
-											)}
-										</PopupState>
+										<ModalInfo />
+									</>
+								)}
+								{statePage == 3 && (
+									<>
+										<MintTabs />
 									</>
 								)}
 								{modalWalletSteps.steps.secondModal && (
