@@ -65,12 +65,12 @@ const Header: React.FC = () => {
 		{
 			id: 2,
 			name: 'Drop',
-			link: '#xmas',
+			link: '',
 		},
 		{
 			id: 3,
 			name: 'Mint',
-			link: '#join',
+			link: '',
 		},
 	];
 	const renderListNav = () => {
