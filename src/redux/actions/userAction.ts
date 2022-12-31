@@ -98,11 +98,7 @@ export const useUserInfo = () => {
 			hasError(error);
 		}
 	};
-	// let test: any = {
-	// 	'1': '5',
-	// 	'2': '8',
-	// 	'3': '10',
-	// };
+
 	const claimPresents = async () => {
 		if (userAddress && chainId) {
 			try {
