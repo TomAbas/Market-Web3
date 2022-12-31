@@ -9,7 +9,7 @@ export const AppbarHeader = styled((props: AppbarHeaderProps) => {
 	const { background, ...other } = props;
 	return <AppBar {...other} />;
 })(({ theme, background }) => ({
-	padding: '1.5rem 10%',
+	padding: '1.5rem 5%',
 
 	// ...(theme.palette.mode === 'light'
 	// 	? {

@@ -24,6 +24,7 @@ import LogoMSGrayMoblie from '../../assets/images/logo/logo-metaspacecy-gray-mob
 import aptos from '../../assets/images/logo/aptos.png';
 import sui from '../../assets/images/logo/sui.png';
 import connectIcon from '../../assets/icons/icon-connect-black.svg';
+import searchIcon from '../../assets/icons/search.svg';
 import binance from '../../assets/wallet/bnb-new.webp';
 import ModalWallet from '../ModalWallet';
 import { selectUser, selectWeb3 } from '../../redux/slices/userInfo';
@@ -161,7 +162,7 @@ const Header: React.FC = () => {
 				<Box>
 					<Stack
 						direction="row"
-						sx={{ justifyContent: 'space-between', alignItems: 'center' }}
+						sx={{ justifyContent: 'space-between', alignItems: 'center', gap: 3 }}
 					>
 						<PageLogo>
 							<LogoLink
@@ -208,39 +209,82 @@ const Header: React.FC = () => {
 								)}
 							</LogoLink>
 						</PageLogo>
-						{innerWidth > 730 ? (
-							<Stack sx={{ flexDirection: 'row', gap: '60px' }}>
-								{renderListNav()}
+						<Stack
+							direction="row"
+							justifyContent="space-between"
+							alignItems="center"
+							gap={3}
+							sx={{
+								width: '60%',
+								'@media (max-width: 1024px)': {
+									width: '90%',
+								},
+							}}
+						>
+							<Stack
+								direction="row"
+								alignItems="center"
+								gap={1}
+								sx={{
+									width: '40%',
+									boxShadow: 'rgb(0 0 0 / 20%) 2px 3px 2px 0px',
+									borderRadius: '10px',
+									px: 2,
+									py: 1,
+									background: '#fff',
+									'@media (max-width: 1024px)': {
+										width: '100%',
+									},
+									input: {
+										width: '100%',
+										border: '0',
+										outline: 'none',
+										fontStyle: 'italic',
+										fontWeight: '500',
+									},
+									'input::placeholder': {
+										fontStyle: 'italic',
+										fontWeight: '500',
+									},
+								}}
+							>
+								<img src={searchIcon} alt="search" />
+								<input type="text" placeholder="Search" />
 							</Stack>
-						) : null}
-
-						<Stack direction="row" gap="10px">
-							{innerWidth < 730 ? (
-								<IconItem>
-									<MoreHorizOutlinedIcon
-										sx={{
-											width: '34px',
-											position: 'absolute',
-											top: '6px',
-											color: 'white',
-										}}
-										onClick={() => setOption(true)}
-									/>
-
-									{option && (
-										<ClickAwayListener
-											onClickAway={() => {
-												openMoreOption();
-											}}
-										>
-											<DropDownContent ref={ref}>
-												{renderListNavMobile()}
-											</DropDownContent>
-										</ClickAwayListener>
-									)}
-								</IconItem>
+							{innerWidth > 1024 ? (
+								<Stack sx={{ flexDirection: 'row', gap: '60px' }}>
+									{renderListNav()}
+								</Stack>
 							) : null}
+						</Stack>
+						<Stack direction="row" alignItems="center" gap="8px">
+							<Stack direction="row" gap="10px">
+								{innerWidth < 1024 ? (
+									<IconItem>
+										<MoreHorizOutlinedIcon
+											sx={{
+												width: '34px',
+												position: 'absolute',
+												// top: '6px',
+												color: 'black',
+											}}
+											onClick={() => setOption(true)}
+										/>
 
+										{option && (
+											<ClickAwayListener
+												onClickAway={() => {
+													openMoreOption();
+												}}
+											>
+												<DropDownContent ref={ref}>
+													{renderListNavMobile()}
+												</DropDownContent>
+											</ClickAwayListener>
+										)}
+									</IconItem>
+								) : null}
+							</Stack>
 							<IconItem onClick={openModal}>
 								<img src={connectIcon} alt="connect icon" />
 								{modalWalletSteps.steps.firstModal && !userAddress && (

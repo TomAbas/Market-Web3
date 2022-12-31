@@ -34,7 +34,9 @@ function App() {
 			<WalletProvider wallets={wallets} autoConnect={true}>
 				<SizeObserver>
 					<Header />
-					<Outlet />
+					<div className="container">
+						<Outlet />
+					</div>
 					<FooterComp />
 				</SizeObserver>
 			</WalletProvider>

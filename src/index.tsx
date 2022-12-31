@@ -14,8 +14,9 @@ import Marketplace from 'components/Marketplace';
 import Mint from 'components/Mint/mint';
 // service worker
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-const router = createBrowserRouter([
+import { createHashRouter, RouterProvider } from 'react-router-dom';
+import ProfileUser from 'components/Profile/ProfileUser';
+const router = createHashRouter([
 	{
 		path: '/',
 		element: <App />,
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
 				path: '/mint',
 				element: <Mint />,
 			},
+			{ path: '/profile', element: <ProfileUser /> },
 		],
 	},
 ]);

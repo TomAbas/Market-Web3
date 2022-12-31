@@ -195,6 +195,12 @@ const FooterComp: React.FC = () => {
 					link: `${PATH_DROP.boarc}`,
 					target: '',
 				},
+				{
+					id: 4,
+					name: 'Drop',
+					link: ``,
+					target: '',
+				},
 			],
 		},
 
