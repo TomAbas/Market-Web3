@@ -4,6 +4,8 @@ import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generat
 import { useWallet, Wallet } from '@manahippo/aptos-wallet-adapter';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { openFirstModal } from '../../../redux/slices/modalWallet';
+import { useAppDispatch } from '../../../redux/hooks';
 import {
 	AvatarIcon,
 	BoxCountDown,
@@ -39,9 +41,10 @@ export default function CardNFT({ offer, setOffers }: { offer: any; setOffers: a
 	const DECIMAL = 100000000;
 	const [loading, setLoading] = useState('Buy now');
 	const { account, signAndSubmitTransaction } = useWallet();
+	const dispatch = useAppDispatch();
 	const claimOffer = async () => {
 		if (!account) {
-			// setModalState({ ...modalState, walletModal: true });
+			dispatch(openFirstModal());
 			return;
 		}
 		setLoading('Buying...');

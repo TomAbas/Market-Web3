@@ -3,6 +3,7 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { getBalanceUser } from '../../utils/getUser';
 import { Box, Stack, Typography } from '@mui/material';
+
 // import userIcon from '../../assets/icons/icon-user-black.svg';
 
 const ModalInfo: React.FC = () => {
