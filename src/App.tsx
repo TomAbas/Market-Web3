@@ -19,11 +19,6 @@ import {
 } from '@manahippo/aptos-wallet-adapter';
 
 function App() {
-	const getLibrary = (provider: any): Web3Provider => {
-		const library = new Web3Provider(provider);
-		library.pollingInterval = 12000;
-		return library;
-	};
 	const [statePage, setStatePage] = useState(1);
 
 	const wallets = useMemo(
@@ -38,7 +33,7 @@ function App() {
 	);
 	return (
 		<>
-			<WalletProvider wallets={wallets}>
+			<WalletProvider wallets={wallets} autoConnect={true}>
 				<SizeObserver>
 					<Header setStatePage={setStatePage} />
 					{statePage === 1 || statePage == 2 ? (
