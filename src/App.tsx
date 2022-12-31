@@ -17,8 +17,6 @@ import {
 import { Outlet } from 'react-router-dom';
 
 function App() {
-	const [statePage, setStatePage] = useState(1);
-
 	const wallets = useMemo(
 		() => [
 			new AptosWalletAdapter(),
