@@ -75,7 +75,7 @@ const ModalInfo: React.FC = () => {
 							<Stack gap={1.5} pl={2}>
 								<Box onClick={popupState.close}>
 									<a
-										href="/profile"
+										href="/#/profile"
 										style={{
 											color: 'black',
 										}}
