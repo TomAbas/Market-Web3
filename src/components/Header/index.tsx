@@ -35,8 +35,9 @@ import { TOKEN_PAYMENT } from 'constants/token.constant';
 import { useSizeObersver } from '../../contexts/SizeObserver';
 import ModalInfo from './popupInfoModal';
 import MintTabs from '../Mint/mint';
-
-const Header: any = ({ setStatePage }: { setStatePage: any }) => {
+import { useNavigate } from 'react-router-dom';
+const Header: React.FC = () => {
+	const navigate = useNavigate();
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
 	const userInfo = useAppSelector(selectUser);
 	// const userAddress = userInfo?.userAddress;
@@ -55,16 +56,12 @@ const Header: any = ({ setStatePage }: { setStatePage: any }) => {
 	let [background, setBackground] = useState(false);
 	let [option, setOption] = useState(false);
 	const [isModalInfo, setIsModalInfo] = useState(false);
-	const handleMint = (id: any) => {
-		console.log('oke ' + id);
-		setStatePage(id);
-	};
 
 	const listNav = [
 		{
 			id: 1,
 			name: 'Marketplace',
-			link: '#',
+			link: '/',
 		},
 		{
 			id: 2,
@@ -74,25 +71,21 @@ const Header: any = ({ setStatePage }: { setStatePage: any }) => {
 		{
 			id: 3,
 			name: 'Mint',
-			link: '',
+			link: '/mint',
 		},
 	];
 	const renderListNav = () => {
 		return listNav.map((item) => {
 			return (
-				<Box
-					key={item.id}
-					onClick={() => {
-						handleMint(item.id);
-					}}
-				>
+				<Box key={item.id}>
 					<Link
-						href={item.link}
+						onClick={() => navigate(item.link)}
 						sx={{
 							textDecoration: 'none',
 							color: '#131740',
 							fontWeight: '500',
 							transition: 'all 0.4s ',
+							cursor: 'pointer',
 							'&:hover': {
 								color: '#007aff',
 							},
@@ -109,12 +102,14 @@ const Header: any = ({ setStatePage }: { setStatePage: any }) => {
 			return (
 				<Box key={item.id} px={4} py={2}>
 					<Link
+						onClick={() => navigate(item.link)}
 						href={item.link}
 						sx={{
 							textDecoration: 'none',
 							color: '#131740',
 							fontWeight: '500',
 							transition: 'all 0.4s ',
+							cursor: 'pointer',
 							'&:hover': {
 								color: '#007aff',
 							},
@@ -258,6 +253,8 @@ const Header: any = ({ setStatePage }: { setStatePage: any }) => {
 											<Box
 												sx={{
 													width: '330px',
+													boxShadow: 'rgb(0 0 0 / 40%) 0px 0px 5px 0px',
+													borderRadius: '12px',
 												}}
 												p={4}
 											>
@@ -328,6 +325,8 @@ const Header: any = ({ setStatePage }: { setStatePage: any }) => {
 											<Box
 												sx={{
 													width: '330px',
+													boxShadow: 'rgb(0 0 0 / 40%) 0px 0px 5px 0px',
+													borderRadius: '12px',
 												}}
 												p={4}
 											>
@@ -353,6 +352,8 @@ const Header: any = ({ setStatePage }: { setStatePage: any }) => {
 														alignItems="center"
 														sx={{
 															cursor: 'pointer',
+															padding: '4px 12px',
+															borderRadius: '10px',
 															img: { width: 32 },
 														}}
 													>
@@ -365,6 +366,10 @@ const Header: any = ({ setStatePage }: { setStatePage: any }) => {
 														alignItems="center"
 														sx={{
 															cursor: 'pointer',
+															background:
+																'rgba(157, 195, 230, 0.537)',
+															padding: '4px 12px',
+															borderRadius: '10px',
 															img: { width: 32 },
 														}}
 													>
@@ -392,6 +397,9 @@ const Header: any = ({ setStatePage }: { setStatePage: any }) => {
 												<Box
 													sx={{
 														width: '330px',
+														boxShadow:
+															'rgb(0 0 0 / 40%) 0px 0px 5px 0px',
+														borderRadius: '12px',
 													}}
 													p={4}
 												>

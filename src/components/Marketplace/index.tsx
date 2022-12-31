@@ -159,8 +159,6 @@ export default function Marketplace() {
 						<Slider />
 					</Box>
 				</Box>
-			</ExploreCollection>
-			<ExploreCollection>
 				<Typography variant="h2" textAlign="center" fontWeight="500" mb={3}>
 					Explore NFT
 				</Typography>
