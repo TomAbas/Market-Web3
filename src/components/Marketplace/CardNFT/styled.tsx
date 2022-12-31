@@ -7,6 +7,8 @@ export const ItemCardStyle = styled(Card)(({ theme }) => ({
 	transition: '0.2s all ease-out',
 	borderRadius: '12px',
 	border: '1.8px solid #E7E8EC',
+	cursor: 'pointer',
+	'&:hover': {},
 }));
 
 export const ItemImage = styled(Box)(({ theme }) => ({
@@ -15,7 +17,6 @@ export const ItemImage = styled(Box)(({ theme }) => ({
 	paddingTop: '100%',
 	borderRadius: '12px',
 	// overflow: 'hidden',
-	cursor: 'pointer',
 
 	'.main-img img, video': {
 		position: 'absolute',

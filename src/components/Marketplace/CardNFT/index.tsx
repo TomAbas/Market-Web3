@@ -31,7 +31,7 @@ export default function CardNFT({ offer }: { offer: any }) {
 	const DECIMAL = 100000000;
 	return (
 		<>
-			<Grid xs={6} sm={4} md={3}>
+			<Grid xs={6} sm={4} md={3} p={1}>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
