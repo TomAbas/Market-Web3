@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	AvatarIcon,
 	BoxCountDown,
@@ -27,12 +27,25 @@ import HeartFullWhite from '../../../assets/icons/heart-white.svg';
 import item from '../../../assets/images/card/box.webp';
 import aptos from '../../../assets/images/card/aptos.jpg';
 
+<<<<<<< HEAD
 export default function CardNFTUser({ item }: { item: any }) {
 	let creator =
 		item.creator.slice(0, 6) +
 		'...' +
 		item.creator.slice(item.creator.length - 4, item.creator.length);
+=======
+const CardNFTUser = ({ item }: { item: any }) => {
+	// let [test, setTest] = useState<string>();
+>>>>>>> dev-tun
 
+	let creator =
+		item.creator.slice(0, 6) +
+		'...' +
+		item.creator.slice(item.creator.length - 4, item.creator.length);
+	// const funcTest = () => {
+	// 	setTest(creator);
+	// };
+	// funcTest();
 	const DECIMAL = 100000000;
 	return (
 		<>
@@ -177,4 +190,5 @@ export default function CardNFTUser({ item }: { item: any }) {
 			</Grid>
 		</>
 	);
-}
+};
+export default CardNFTUser;

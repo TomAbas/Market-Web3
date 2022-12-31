@@ -78,11 +78,13 @@ const ProfileUser = () => {
 							<Box>{myAddress}</Box>
 						</Stack>
 					</Box>
-					<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-						{tokens.map((item: any) => (
-							<CardNFTUser item={item} key={item.uri} />
-						))}
-					</Grid>
+					<Box py={4}>
+						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+							{tokens.map((item: any) => (
+								<CardNFTUser item={item} key={item.uri} />
+							))}
+						</Grid>
+					</Box>
 				</Box>
 			</Box>
 		</>
