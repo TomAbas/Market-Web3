@@ -165,7 +165,7 @@ export default function Marketplace() {
 				</Typography>
 				<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
 					{offers.map((offer: any) => (
-						<CardNFT offer={offer} key={offer.timestamp} />
+						<CardNFT offer={offer} setOffers={setOffers} key={offer.timestamp} />
 					))}
 				</Grid>
 			</ExploreCollection>

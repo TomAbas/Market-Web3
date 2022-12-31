@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import React from 'react';
+import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
+import { useWallet, Wallet } from '@manahippo/aptos-wallet-adapter';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
 	AvatarIcon,
 	BoxCountDown,
@@ -27,8 +30,49 @@ import HeartFullWhite from '../../../assets/icons/heart-white.svg';
 import item from '../../../assets/images/card/box.webp';
 import aptos from '../../../assets/images/card/aptos.jpg';
 
-export default function CardNFT({ offer }: { offer: any }) {
+export default function CardNFT({ offer, setOffers }: { offer: any; setOffers: any }) {
+	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
+	const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
+	const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
+	// const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
+	const MARKET_COINT_TYPE = '0x1::aptos_coin::AptosCoin';
 	const DECIMAL = 100000000;
+	const [loading, setLoading] = useState('Buy now');
+	const { account, signAndSubmitTransaction } = useWallet();
+	const claimOffer = async () => {
+		if (!account) {
+			// setModalState({ ...modalState, walletModal: true });
+			return;
+		}
+		setLoading('Buying...');
+		try {
+			const payload: TransactionPayload = {
+				type: 'entry_function_payload',
+				function: `${MARKET_ADDRESS}::market::buy_token`,
+				type_arguments: [MARKET_COINT_TYPE],
+				arguments: [
+					offer.token_id.token_data_id.creator,
+					offer.token_id.token_data_id.collection,
+					offer.token_id.token_data_id.name,
+					offer.token_id.property_version,
+				],
+			};
+			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			const fetchOffers = async () => {
+				const response: any = await axios.get(
+					`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::market::TokenInfo`
+				);
+				const offers = response.data.data?.token_list;
+				offers.reverse();
+				setOffers(offers);
+			};
+			fetchOffers();
+			setLoading('Buy now');
+		} catch {
+			setLoading('Buy now');
+		}
+	};
+
 	return (
 		<>
 			<Grid xs={6} sm={4} md={3} p={1}>
@@ -221,6 +265,7 @@ export default function CardNFT({ offer }: { offer: any }) {
 									</Box>
 
 									<Typography
+										onClick={claimOffer}
 										variant="body2"
 										sx={{
 											fontWeight: '600',
@@ -256,7 +301,7 @@ export default function CardNFT({ offer }: { offer: any }) {
 											},
 										}}
 									>
-										Buy now
+										{loading}
 									</Typography>
 								</Stack>
 							</Box>
