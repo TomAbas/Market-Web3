@@ -27,7 +27,10 @@ import HeartFullWhite from '../../../assets/icons/heart-white.svg';
 import item from '../../../assets/images/card/box.webp';
 import aptos from '../../../assets/images/card/aptos.jpg';
 
-export default function CardNFTUser({ offer }: { offer: any }) {
+export default function CardNFTUser({ item }: { item: any }) {
+	let creator =
+		item.creator.slice(0, 6) + '...' + item.creator.slice(item.length - 4, item.creator.length);
+
 	const DECIMAL = 100000000;
 	return (
 		<>
@@ -37,7 +40,7 @@ export default function CardNFTUser({ offer }: { offer: any }) {
 						{/* Item image */}
 						<ItemImage>
 							<Box className="main-img">
-								<img src={offer.uri} alt="item" />
+								<img src={item.uri} alt="item" />
 							</Box>
 							{/* Item favorite */}
 							<ItemFavorite>
@@ -71,73 +74,6 @@ export default function CardNFTUser({ offer }: { offer: any }) {
 									</Stack>
 								</Box>
 							</ItemFavorite>
-
-							{/* Item creator / owner */}
-							{/* <Stack
-							direction="row"
-							sx={{
-								position: 'absolute',
-								bottom: '-10px',
-								left: '10px',
-							}}
-						>
-							<Tooltip
-								title={`Creator: ${item.creator?.substring(
-									0,
-									10
-								)}...${item.creator?.substring(37)}`}
-								arrow
-								placement="top"
-								aria-describedby="tip1"
-							>
-								<AvatarIcon>
-									{item.creatorInfo?.avatar ===
-									'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg' ? (
-										<GradIcon
-											sx={{
-												background: creatorAvatar,
-												color: '#000',
-											}}
-										/>
-									) : (
-										<Avatar
-											sx={{ width: 25, height: 25 }}
-											src={item.creatorInfo?.avatar}
-											alt="creator"
-										/>
-									)}
-								</AvatarIcon>
-							</Tooltip>
-							{item.owner[0] && item.ownerInfo && item.ownerInfo[0] && (
-								<Tooltip
-									title={`Owner: ${
-										item.owner[0]
-											? sliceAddress(item.owner[0], 6, 6)
-											: sliceAddress(NULL_ADDRESS, 6, 6)
-									}`}
-									arrow
-									placement="top"
-									aria-describedby="tip1"
-								>
-									<AvatarIcon sx={{ marginLeft: '-10px', zIndex: 1 }}>
-										{item.ownerInfo[0].avatar ===
-										'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg' ? (
-											<GradIcon
-												sx={{
-													background: ownerAvatar,
-												}}
-											/>
-										) : (
-											<Avatar
-												sx={{ width: 25, height: 25 }}
-												src={item.ownerInfo[0].avatar}
-												alt="creator"
-											/>
-										)}
-									</AvatarIcon>
-								</Tooltip>
-							)}
-						</Stack> */}
 						</ItemImage>
 
 						{/* Item info */}
@@ -163,36 +99,11 @@ export default function CardNFTUser({ offer }: { offer: any }) {
 										noWrap
 										sx={{ cursor: 'default' }}
 									>
-										{offer.token_id.token_data_id.name}
+										{item.name}
 									</Typography>
 									<ImageBlockchain>
 										<img src={aptos} alt="aptos" />
 									</ImageBlockchain>
-									{/* <Box>
-									<Tooltip
-										title={NETWORKINFO[item.chainId].name}
-										placement="top"
-										aria-describedby="tip1"
-										arrow
-										// componentsProps={{
-										// 	tooltip: {
-										// 		sx: {
-										// 			bgcolor: 'common.black',
-										// 			'& .MuiTooltip-arrow': {
-										// 				color: 'common.black',
-										// 			},
-										// 		},
-										// 	},
-										// }}
-									>
-										<ImageBlockchain>
-											<img
-												src={NETWORKINFO[item.chainId].image}
-												alt="icon blockchain"
-											/>
-										</ImageBlockchain>
-									</Tooltip>
-								</Box> */}
 								</Box>
 							</Stack>
 							<Box sx={{ height: '21px' }}>
@@ -217,7 +128,7 @@ export default function CardNFTUser({ offer }: { offer: any }) {
 													>
 														View History
 													</span> */}
-										{offer.price / DECIMAL} APT
+										creator : {creator}
 									</Box>
 
 									<Typography

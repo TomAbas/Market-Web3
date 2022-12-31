@@ -1,11 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Grid, Stack, Typography } from '@mui/material';
+import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import CardNFTUser from 'components/Marketplace/CardNFTUser';
 import React from 'react';
+import { useTokens } from '../../hooks/useTokens';
 import banner from '../../assets/banner.png';
 import aptos from '../../assets/images/card/aptos.jpg';
 
 const ProfileUser = () => {
+	const { account } = useWallet();
+	const { tokens, loading } = useTokens(account);
+	let myAddress = account?.address?.toString() || '';
+	myAddress =
+		myAddress.slice(0, 6) + '...' + myAddress.slice(myAddress.length - 4, myAddress.length);
+	// const creator =
+	// 	item.creator.slice(0, 6) + '...' + item.creator.slice(item.length - 4, item.creator.length);
+	console.log(tokens);
 	return (
 		<>
 			<Box pt={13}>
@@ -65,14 +75,14 @@ const ProfileUser = () => {
 							}}
 						>
 							<img src={aptos} alt="aptos" />
-							<Box>0x4317...e1bc</Box>
+							<Box>{myAddress}</Box>
 						</Stack>
 					</Box>
-					{/* <Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-						{offers.map((offer: any) => (
-							<CardNFTUser offer={offer} key={offer.timestamp} />
+					<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+						{tokens.map((item: any) => (
+							<CardNFTUser item={item} key={item.uri} />
 						))}
-					</Grid> */}
+					</Grid>
 				</Box>
 			</Box>
 		</>
