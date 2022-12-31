@@ -3,11 +3,8 @@ import FooterComp from 'components/FooterComp';
 import Header from 'components/Header';
 import React, { useEffect, useState, useMemo } from 'react';
 //web3 provider
-import { Web3ReactProvider } from '@web3-react/core';
-import { Web3Provider } from '@ethersproject/providers';
+
 import SizeObserver from 'contexts/SizeObserver';
-import Marketplace from 'components/Marketplace';
-import MintTabs from './components/Mint/mint';
 
 import {
 	FewchaWalletAdapter,
@@ -17,6 +14,7 @@ import {
 	AptosWalletAdapter,
 	SpacecyWalletAdapter,
 } from '@manahippo/aptos-wallet-adapter';
+import { Outlet } from 'react-router-dom';
 
 function App() {
 	const [statePage, setStatePage] = useState(1);
@@ -35,15 +33,8 @@ function App() {
 		<>
 			<WalletProvider wallets={wallets} autoConnect={true}>
 				<SizeObserver>
-					<Header setStatePage={setStatePage} />
-					{statePage === 1 || statePage == 2 ? (
-						<div className="container">
-							<Marketplace />
-						</div>
-					) : (
-						<></>
-					)}
-
+					<Header />
+					<Outlet />
 					<FooterComp />
 				</SizeObserver>
 			</WalletProvider>

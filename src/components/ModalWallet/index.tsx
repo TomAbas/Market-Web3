@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 import { useWallet, Wallet } from '@manahippo/aptos-wallet-adapter';
 import { DropDownContent, LinkWrapper } from './WalletModalStyles';
-
+import fewcha from '../../assets/wallet/fewcha.jpeg';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
 	sellectStepsModalWallet,
@@ -24,12 +24,10 @@ const ModalWallet: React.FC = () => {
 	async function connectWallet(wallet: Wallet) {
 		connect(wallet.adapter.name);
 		dispatch(closeModal());
-		// dispatch(openSecondModal());
 	}
 	let myAddress = account?.address?.toString();
 
 	const renderListWallet = () => {
-		// console.log('oke');
 		return wallets.map((wallet: any, index: any) => {
 			return (
 				<>
@@ -41,7 +39,11 @@ const ModalWallet: React.FC = () => {
 					>
 						<Stack direction="row" justifyContent="space-between" alignItems="center">
 							<Stack direction="row" gap={2} alignItems="center">
-								<img width={48} height={48} src={wallet.adapter.icon} />
+								{wallet.adapter.name === 'Fewcha' ? (
+									<img width={48} height={48} src={fewcha} />
+								) : (
+									<img width={48} height={48} src={wallet.adapter.icon} />
+								)}
 								<Typography fontStyle="italic">{wallet.adapter.name}</Typography>
 							</Stack>
 						</Stack>

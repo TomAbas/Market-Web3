@@ -10,13 +10,27 @@ import './index.css';
 import 'swiper/swiper.min.css';
 // components
 import App from './App';
+import Marketplace from 'components/Marketplace';
+
 // service worker
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <App />,
+		children: [
+			{
+				path: '/',
+				element: <Marketplace />,
+			},
+		],
+	},
+]);
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<App />
+			<RouterProvider router={router} />
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')

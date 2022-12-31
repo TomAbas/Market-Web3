@@ -36,7 +36,7 @@ import { useSizeObersver } from '../../contexts/SizeObserver';
 import ModalInfo from './popupInfoModal';
 import MintTabs from '../Mint/mint';
 
-const Header: any = ({ setStatePage }: { setStatePage: any }) => {
+const Header: React.FC = () => {
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
 	const userInfo = useAppSelector(selectUser);
 	// const userAddress = userInfo?.userAddress;
@@ -55,10 +55,6 @@ const Header: any = ({ setStatePage }: { setStatePage: any }) => {
 	let [background, setBackground] = useState(false);
 	let [option, setOption] = useState(false);
 	const [isModalInfo, setIsModalInfo] = useState(false);
-	const handleMint = (id: any) => {
-		console.log('oke ' + id);
-		setStatePage(id);
-	};
 
 	const listNav = [
 		{
@@ -80,12 +76,7 @@ const Header: any = ({ setStatePage }: { setStatePage: any }) => {
 	const renderListNav = () => {
 		return listNav.map((item) => {
 			return (
-				<Box
-					key={item.id}
-					onClick={() => {
-						handleMint(item.id);
-					}}
-				>
+				<Box key={item.id}>
 					<Link
 						href={item.link}
 						sx={{
