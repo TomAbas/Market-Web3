@@ -42,6 +42,7 @@ export default function Marketplace() {
 				`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::market::TokenInfo`
 			);
 			const offers = response.data.data?.token_list;
+			offers.reverse();
 			setOffers(offers);
 		};
 		fetchOffers();

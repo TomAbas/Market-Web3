@@ -25,7 +25,7 @@ import TwitterIcon from '../../../assets/icons/twitter-white.svg';
 import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
 import HeartFullWhite from '../../../assets/icons/heart-white.svg';
 import item from '../../../assets/images/card/box.webp';
-import ethe from '../../../assets/images/card/Ethereum-icon.svg';
+import aptos from '../../../assets/images/card/aptos.jpg';
 
 export default function CardNFT({ offer }: { offer: any }) {
 	const DECIMAL = 100000000;
@@ -166,7 +166,7 @@ export default function CardNFT({ offer }: { offer: any }) {
 										{offer.token_id.token_data_id.name}
 									</Typography>
 									<ImageBlockchain>
-										<img src={ethe} alt="ethe" />
+										<img src={aptos} alt="aptos" />
 									</ImageBlockchain>
 									{/* <Box>
 									<Tooltip

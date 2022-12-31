@@ -17,6 +17,8 @@ import {
 import { Outlet } from 'react-router-dom';
 
 function App() {
+	const [statePage, setStatePage] = useState(1);
+
 	const wallets = useMemo(
 		() => [
 			new AptosWalletAdapter(),
@@ -29,7 +31,7 @@ function App() {
 	);
 	return (
 		<>
-			<WalletProvider wallets={wallets}>
+			<WalletProvider wallets={wallets} autoConnect={true}>
 				<SizeObserver>
 					<Header />
 					<Outlet />

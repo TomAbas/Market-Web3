@@ -65,7 +65,8 @@ const ModalInfo: React.FC = () => {
 								direction="row"
 								onClick={popupState.close}
 							>
-								<Box>APT</Box> <Box>{myBalance / 100000000} APT</Box>
+								<Box>APT</Box>{' '}
+								<Box>{Math.floor(myBalance / 1000000) / 100} APT</Box>
 							</Stack>
 							<Stack gap={1.5} pl={2}>
 								<Box onClick={popupState.close}>
