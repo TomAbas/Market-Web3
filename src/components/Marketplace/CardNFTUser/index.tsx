@@ -29,7 +29,9 @@ import aptos from '../../../assets/images/card/aptos.jpg';
 
 export default function CardNFTUser({ item }: { item: any }) {
 	let creator =
-		item.creator.slice(0, 6) + '...' + item.creator.slice(item.length - 4, item.creator.length);
+		item.creator.slice(0, 6) +
+		'...' +
+		item.creator.slice(item.creator.length - 4, item.creator.length);
 
 	const DECIMAL = 100000000;
 	return (
@@ -166,9 +168,7 @@ export default function CardNFTUser({ item }: { item: any }) {
 												opacity: '1',
 											},
 										}}
-									>
-										Buy now
-									</Typography>
+									></Typography>
 								</Stack>
 							</Box>
 						</ItemContent>
