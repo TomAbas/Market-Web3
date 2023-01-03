@@ -1,11 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.362ff519.css",
-    "main.js": "/static/js/main.6e37d0e3.js",
-    "static/js/563.f43ce967.chunk.js": "/static/js/563.f43ce967.chunk.js",
-    "static/js/942.f12ffd4e.chunk.js": "/static/js/942.f12ffd4e.chunk.js",
-    "static/js/419.8c7a3a5c.chunk.js": "/static/js/419.8c7a3a5c.chunk.js",
-    "static/js/380.c9e41abb.chunk.js": "/static/js/380.c9e41abb.chunk.js",
+    "main.js": "/static/js/main.5733b894.js",
     "static/media/banner.png": "/static/media/banner.2e7d908050b69f9e018e.png",
     "static/media/Metaspacecy-blue.svg": "/static/media/Metaspacecy-blue.5af39b2d25a1f86f45affa2d6bcc9b63.svg",
     "static/media/Asset4.webp": "/static/media/Asset4.f374ff9f94842f06bfb7.webp",
@@ -24,7 +20,6 @@
     "static/media/MSMobile-white.webp": "/static/media/MSMobile-white.feb6e115bb0e8a6926e2.webp",
     "service-worker.js": "/service-worker.js",
     "static/media/logoMetaBlue.png": "/static/media/logoMetaBlue.ff880ce767a6e2a90f93.png",
-    "static/media/metamask.svg": "/static/media/metamask.99d29d47fd227771aa97687c6fe88d0e.svg",
     "index.html": "/index.html",
     "static/media/icon-instagram.svg": "/static/media/icon-instagram.88a9a57a9badbef9f6bbd5d946dc55fa.svg",
     "static/media/mediumicon.svg": "/static/media/mediumicon.fb4b9f6506d716cf16475d5dfee7aafc.svg",
@@ -33,7 +28,6 @@
     "static/media/discord-gray.svg": "/static/media/discord-gray.831fe8b6b4083467199beb325dd09d74.svg",
     "static/media/discord-white.svg": "/static/media/discord-white.574d554a63de0fdc1823496dd698582d.svg",
     "static/media/telegram-white.svg": "/static/media/telegram-white.946a8b9fe2d697b560a7ac820ee7e140.svg",
-    "static/media/wallet-connect.svg": "/static/media/wallet-connect.ba1e33e319678055defb303c87f476ae.svg",
     "static/media/icon-connect-black.svg": "/static/media/icon-connect-black.874fd722dbdf16cd4d65b6253678504e.svg",
     "static/media/facebook-gray.svg": "/static/media/facebook-gray.a570a69d44e98d3538413e38c317a7c2.svg",
     "static/media/search.svg": "/static/media/search.64a8b92cd3c3094c1d8ee0e767575925.svg",
@@ -42,14 +36,11 @@
     "static/media/telegram-gray.svg": "/static/media/telegram-gray.f1b2cc3510e3b1136c1f92b57a65303e.svg",
     "static/media/facebook-white.svg": "/static/media/facebook-white.988bcbfa9d6d177e82e26970ae27c2f0.svg",
     "static/media/heart-full-red.svg": "/static/media/heart-full-red.6248de86e226229f47a3a22b8dc23d72.svg",
-    "static/media/coinbase.svg": "/static/media/coinbase.842e029e40d5f46784ae44091dd3f34e.svg",
     "main.362ff519.css.map": "/static/css/main.362ff519.css.map",
-    "main.6e37d0e3.js.map": "/static/js/main.6e37d0e3.js.map",
-    "419.8c7a3a5c.chunk.js.map": "/static/js/419.8c7a3a5c.chunk.js.map",
-    "380.c9e41abb.chunk.js.map": "/static/js/380.c9e41abb.chunk.js.map"
+    "main.5733b894.js.map": "/static/js/main.5733b894.js.map"
   },
   "entrypoints": [
     "static/css/main.362ff519.css",
-    "static/js/main.6e37d0e3.js"
+    "static/js/main.5733b894.js"
   ]
 }
