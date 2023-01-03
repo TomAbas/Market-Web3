@@ -14,8 +14,8 @@ import Marketplace from 'components/Marketplace';
 
 // service worker
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-const router = createBrowserRouter([
+import { createHashRouter, RouterProvider } from 'react-router-dom';
+const router = createHashRouter([
 	{
 		path: '/',
 		element: <App />,

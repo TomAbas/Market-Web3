@@ -29,7 +29,7 @@ function App() {
 	);
 	return (
 		<>
-			<WalletProvider wallets={wallets}>
+			<WalletProvider wallets={wallets} autoConnect={true}>
 				<SizeObserver>
 					<Header />
 					<Outlet />
