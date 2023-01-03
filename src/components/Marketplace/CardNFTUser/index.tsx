@@ -1,24 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { useWallet } from '@manahippo/aptos-wallet-adapter';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import {
-	AvatarIcon,
-	BoxCountDown,
-	ErrorContent,
-	GradIcon,
 	ImageBlockchain,
 	ItemCardStyle,
 	ItemContent,
 	ContentFooter,
 	ItemImage,
-	PriceChangeStyle,
-	PriceStyle,
-	StackCard,
 	ItemFavorite,
 	IconFavorite,
-	DropDownWrapper,
-	DropDownOption,
-	LinkWrapper,
 } from './styled';
 
 import TwitterIcon from '../../../assets/icons/twitter-white.svg';
@@ -27,12 +25,47 @@ import HeartFullWhite from '../../../assets/icons/heart-white.svg';
 import item from '../../../assets/images/card/box.webp';
 import aptos from '../../../assets/images/card/aptos.jpg';
 
-const CardNFTUser = ({ item }: { item: any }) => {
+const CardNFTUser = ({ item, handleItems }: { item: any; handleItems: any }) => {
+	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
+	const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
+	const MARKET_COINT_TYPE = '0x1::aptos_coin::AptosCoin';
 	let creator =
 		item.creator.slice(0, 6) +
 		'...' +
 		item.creator.slice(item.creator.length - 4, item.creator.length);
-	const DECIMAL = 100000000;
+	const { signAndSubmitTransaction } = useWallet();
+	const [open, setOpen] = useState(false);
+	const [supply, setSupply] = useState('');
+	const [price, setPrice] = useState('');
+	const [statusList, setStatusList] = useState('List');
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+	const handleListItem = async () => {
+		try {
+			setStatusList('Listing...');
+			console.log(supply + ' ' + price);
+			const payload = {
+				type: 'entry_function_payload',
+				function: `${MARKET_ADDRESS}::market::list_token`,
+				type_arguments: [MARKET_COINT_TYPE],
+				arguments: [item.creator, item.collection, item.name, '0', item.supply, price],
+			};
+			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			setStatusList('List');
+			handleItems(item.name, item.collection, item.creator);
+			setOpen(false);
+		} catch (error) {
+			setStatusList('List');
+			setOpen(false);
+		}
+	};
+
 	return (
 		<>
 			<Grid xs={6} sm={4} md={3} p={1}>
@@ -46,15 +79,6 @@ const CardNFTUser = ({ item }: { item: any }) => {
 							{/* Item favorite */}
 							<ItemFavorite>
 								<Box mr={1.5}>
-									{/* <TwitterShareButton
-									url={`${RELATED_URLS.MetaSpacecyHomePage}/#${PATH_ITEM.detail}/${item?._id}`}
-									title={`Look what I found! ${item?.itemName} collectible`}
-									hashtags={['Music', 'Game']}
-									via="Metaspacecy"
-									style={{ width: '100%' }}
-								>
-									<img src={TwitterIcon} alt="icon twitter" />
-								</TwitterShareButton> */}
 									<img src={TwitterIcon} alt="icon twitter" />
 								</Box>
 								<Box>
@@ -132,42 +156,66 @@ const CardNFTUser = ({ item }: { item: any }) => {
 										creator : {creator}
 									</Box>
 
-									<Typography
+									{/* <Typography
 										variant="body2"
 										sx={{
 											fontWeight: '600',
-											// cursor:
-											// 	item.status === ITEM_STATUS.BUY_NOW
-											// 		? 'pointer'
-											// 		: 'no-drop',
-											// opacity: '0.85',
-											// color:
-											// 	item.status === ITEM_STATUS.BUY_NOW
-											// 		? theme.palette.text.special
-											// 		: 'rgba(0,0,0,0.3)',
-
-											// ...(theme.palette.mode === 'light'
-											// 	? {
-											// 		color:
-											// 			item.status ===
-											// 				ITEM_STATUS.BUY_NOW
-											// 				? theme.palette.text
-											// 					.special
-											// 				: 'rgba(0,0,0,0.3)',
-											// 	}
-											// 	: {
-											// 		color:
-											// 			item.status ===
-											// 				ITEM_STATUS.BUY_NOW
-											// 				? theme.palette.text
-											// 					.special
-											// 				: 'rgba(255,255,255,0.5)',
-											// 	}),
 											'&:hover': {
 												opacity: '1',
 											},
 										}}
-									></Typography>
+									>
+										List Item
+									</Typography> */}
+									<div>
+										<Typography
+											variant="body2"
+											onClick={handleClickOpen}
+											sx={{
+												fontWeight: '600',
+												'&:hover': {
+													opacity: '1',
+												},
+											}}
+										>
+											List Item
+										</Typography>
+										<Dialog open={open} onClose={handleClose}>
+											<DialogTitle>List Item</DialogTitle>
+											<DialogContent>
+												<TextField
+													autoFocus
+													margin="dense"
+													id="name"
+													label="Supply"
+													type="text"
+													fullWidth
+													variant="standard"
+													value={supply}
+													onChange={(e) => setSupply(e.target.value)}
+												/>
+											</DialogContent>
+											<DialogContent>
+												<TextField
+													autoFocus
+													margin="dense"
+													id="price"
+													label="Price"
+													type="text"
+													fullWidth
+													variant="standard"
+													value={price}
+													onChange={(e) => setPrice(e.target.value)}
+												/>
+											</DialogContent>
+											<DialogActions>
+												<Button onClick={handleClose}>Cancel</Button>
+												<Button onClick={handleListItem}>
+													{statusList}
+												</Button>
+											</DialogActions>
+										</Dialog>
+									</div>
 								</Stack>
 							</Box>
 						</ItemContent>
