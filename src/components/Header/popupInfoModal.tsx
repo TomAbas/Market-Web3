@@ -3,12 +3,13 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { getBalanceUser } from '../../utils/getUser';
 import { Box, Stack, Typography } from '@mui/material';
+
 // import userIcon from '../../assets/icons/icon-user-black.svg';
 
 const ModalInfo: React.FC = () => {
 	const [myBalance, setMyBalance] = useState(0);
 	// useState
-	const { account } = useWallet();
+	const { account, disconnect } = useWallet();
 	let myAddress = account?.address?.toString();
 	const fetchBalance = async () => {
 		try {
@@ -25,6 +26,9 @@ const ModalInfo: React.FC = () => {
 	} else {
 		myAddress = '';
 	}
+	const disConnect = () => {
+		disconnect();
+	};
 	return (
 		<PopupState variant="popover" popupId="demo-popup-menu">
 			{(popupState) => (
@@ -65,12 +69,13 @@ const ModalInfo: React.FC = () => {
 								direction="row"
 								onClick={popupState.close}
 							>
-								<Box>APT</Box> <Box>{myBalance / 100000000} APT</Box>
+								<Box>APT</Box>{' '}
+								<Box>{Math.floor(myBalance / 1000000) / 100} APT</Box>
 							</Stack>
 							<Stack gap={1.5} pl={2}>
 								<Box onClick={popupState.close}>
 									<a
-										href="/profile"
+										href="/#/profile"
 										style={{
 											color: 'black',
 										}}
@@ -80,7 +85,9 @@ const ModalInfo: React.FC = () => {
 								</Box>
 								<Box onClick={popupState.close}>My Collections</Box>
 								<Box onClick={popupState.close}>Settings</Box>
-								<Box onClick={popupState.close}>Logout</Box>
+								<Box onClick={disConnect} style={{ cursor: 'pointer' }}>
+									Logout
+								</Box>
 							</Stack>
 						</Stack>
 					</Box>

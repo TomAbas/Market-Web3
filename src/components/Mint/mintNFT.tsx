@@ -2,7 +2,12 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { storage } from '../../config/firebase';
+import { useWallet } from '@manahippo/aptos-wallet-adapter';
+import { openFirstModal } from '../../redux/slices/modalWallet';
+import { useAppDispatch } from '../../redux/hooks';
 
 function RedBar() {
 	return (
@@ -19,6 +24,12 @@ function RedBar() {
 }
 
 export default function LayoutMintNFT() {
+	const [loading, setLoading] = useState('Create');
+	const [base64image, setBase64image] = useState('');
+	const { account, signAndSubmitTransaction } = useWallet();
+	const dispatch = useAppDispatch();
+	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
+	const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 	const [formInput, updateFormInput] = useState<{
 		collection: string;
 		name: string;
@@ -34,6 +45,75 @@ export default function LayoutMintNFT() {
 		royaltyFee: 0,
 		file: null,
 	});
+
+	async function onChange(e: ChangeEvent<HTMLInputElement>) {
+		const file = e.target.files![0];
+		updateFormInput({ ...formInput, file: file });
+		const reader = new FileReader();
+		reader.onload = function (event) {
+			setBase64image(event.target!.result!.toString());
+		};
+		reader.readAsDataURL(file);
+	}
+
+	const createItem = async () => {
+		const { collection, name, description, amount, royaltyFee, file } = formInput;
+		if (!account) {
+			dispatch(openFirstModal());
+			return;
+		}
+		if (!collection || !name || !description || !amount || !royaltyFee || !file) return;
+		try {
+			setLoading('Creating...');
+			const sotrageRef = ref(storage, `collection/${file.name}`);
+			const uploadTask = uploadBytesResumable(sotrageRef, file);
+			uploadTask.on(
+				'state_changed',
+				() => {},
+				(error) => console.log('err ', error),
+				() => {
+					getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+						// console.log("File available at", downloadURL);
+						try {
+							const royaltyFeeNumerator = royaltyFee * 100;
+							const royaltyFeeDenominator = 10000;
+
+							await signAndSubmitTransaction(
+								{
+									type: 'entry_function_payload',
+									function: `${MARKET_ADDRESS}::nft::mint_nft`,
+									type_arguments: [
+										MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin',
+									],
+									arguments: [
+										name,
+										description,
+										downloadURL,
+										collection,
+										amount,
+										account.address,
+										royaltyFeeNumerator,
+										royaltyFeeDenominator,
+									],
+								},
+								{
+									gas_unit_price: 100,
+								}
+							);
+							setLoading('Create');
+						} catch (error) {
+							setLoading('Create');
+						}
+					});
+				}
+			);
+		} catch (error) {
+			console.log('Error create NFT: ', error);
+			setLoading('Create');
+		} finally {
+		}
+	};
+
 	return (
 		<Box
 			sx={{
@@ -44,7 +124,7 @@ export default function LayoutMintNFT() {
 		>
 			<RedBar />
 			<TextField
-				label={'collection'}
+				label={'collection name'}
 				id="margin-none"
 				onChange={(e) => updateFormInput({ ...formInput, collection: e.target.value })}
 			/>
@@ -81,9 +161,12 @@ export default function LayoutMintNFT() {
 				}
 			/>
 			<RedBar />
-			<input type="file" name="Asset" className="my-4" />
+			<input type="file" name="Asset" className="my-4" onChange={onChange} />
+			{base64image && <img className="rounded mt-4" width="350" src={base64image} />}
 			<RedBar />
-			<Button variant="contained">Create</Button>
+			<Button variant="contained" onClick={createItem}>
+				{loading}
+			</Button>
 		</Box>
 	);
 }

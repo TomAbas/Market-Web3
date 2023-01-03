@@ -11,10 +11,11 @@ import 'swiper/swiper.min.css';
 // components
 import App from './App';
 import Marketplace from 'components/Marketplace';
-
+import Mint from 'components/Mint/mint';
 // service worker
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
+import ProfileUser from 'components/Profile/ProfileUser';
 const router = createHashRouter([
 	{
 		path: '/',
@@ -24,6 +25,11 @@ const router = createHashRouter([
 				path: '/',
 				element: <Marketplace />,
 			},
+			{
+				path: '/mint',
+				element: <Mint />,
+			},
+			{ path: '/profile', element: <ProfileUser /> },
 		],
 	},
 ]);

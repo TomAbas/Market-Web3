@@ -42,6 +42,7 @@ export default function Marketplace() {
 				`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::market::TokenInfo`
 			);
 			const offers = response.data.data?.token_list;
+			offers.reverse();
 			setOffers(offers);
 		};
 		fetchOffers();
@@ -159,12 +160,15 @@ export default function Marketplace() {
 						<Slider />
 					</Box>
 				</Box>
+				<Typography variant="h2" textAlign="center" fontWeight="500" mb={3}>
+					Explore NFT
+				</Typography>
+				<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+					{offers.map((offer: any) => (
+						<CardNFT offer={offer} setOffers={setOffers} key={offer.timestamp} />
+					))}
+				</Grid>
 			</ExploreCollection>
-			<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-				{offers.map((offer: any) => (
-					<CardNFT offer={offer} key={offer.timestamp} />
-				))}
-			</Grid>
 		</>
 	);
 }
