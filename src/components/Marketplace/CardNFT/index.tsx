@@ -31,8 +31,16 @@ import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
 import HeartFullWhite from '../../../assets/icons/heart-white.svg';
 import item from '../../../assets/images/card/box.webp';
 import aptos from '../../../assets/images/card/aptos.jpg';
-
-export default function CardNFT({ offer, setOffers }: { offer: any; setOffers: any }) {
+import ModalBuy from 'components/ModalBuy/ModalBuy';
+export default function CardNFT({
+	offer,
+	setOffers,
+	offers,
+}: {
+	offer: any;
+	setOffers: any;
+	offers: any;
+}) {
 	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 	const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
 	const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
@@ -42,12 +50,25 @@ export default function CardNFT({ offer, setOffers }: { offer: any; setOffers: a
 	const [loading, setLoading] = useState('Buy now');
 	const { account, signAndSubmitTransaction } = useWallet();
 	const dispatch = useAppDispatch();
+	const [openModalBuy, setOpenModalBuy] = useState(false);
+	const [activeStep, setActiveStep] = React.useState(0);
+	const [statusBuyNft, setStatusBuyNft] = useState({ isLoading: false, isSuccess: true });
+	const handleNext = () => {
+		setActiveStep((prevActiveStep) => prevActiveStep + 1);
+	};
+	const handleOpenModalBuy = () => {
+		setOpenModalBuy(true);
+	};
+	const handleCloseModalBuy = () => {
+		setOpenModalBuy(false);
+	};
 	const claimOffer = async () => {
 		if (!account) {
 			dispatch(openFirstModal());
 			return;
 		}
 		setLoading('Buying...');
+		setStatusBuyNft({ ...statusBuyNft, isLoading: true });
 		try {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
@@ -60,18 +81,37 @@ export default function CardNFT({ offer, setOffers }: { offer: any; setOffers: a
 					offer.token_id.property_version,
 				],
 			};
+
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+
 			const fetchOffers = async () => {
-				const response: any = await axios.get(
-					`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::market::TokenInfo`
-				);
-				const offers = response.data.data?.token_list;
-				offers.reverse();
-				setOffers(offers);
+				// const response: any = await axios.get(
+				// 	`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::market::TokenInfo`
+				// );
+				// console.log('response ' + response);
+				// const offers = response.data.data?.token_list;
+				// offers.reverse();
+				// setOffers(offers);
+				//
+				let newList = offers.filter((item: any) => {
+					return (
+						item.token_id.token_data_id.creator !==
+							offer.token_id.token_data_id.creator &&
+						item.token_id.token_data_id.collection !==
+							offer.token_id.token_data_id.collection &&
+						item.token_id.token_data_id.name !== offer.token_id.token_data_id.name &&
+						item.token_id.property_version !== offer.token_id.property_version
+					);
+				});
+				console.log(newList);
+				setOffers(newList);
 			};
 			fetchOffers();
+			setStatusBuyNft({ isSuccess: true, isLoading: false });
+			handleNext();
 			setLoading('Buy now');
 		} catch {
+			setStatusBuyNft({ isSuccess: false, isLoading: false });
 			setLoading('Buy now');
 		}
 	};
@@ -268,7 +308,7 @@ export default function CardNFT({ offer, setOffers }: { offer: any; setOffers: a
 									</Box>
 
 									<Typography
-										onClick={claimOffer}
+										onClick={handleOpenModalBuy}
 										variant="body2"
 										sx={{
 											fontWeight: '600',
@@ -312,6 +352,13 @@ export default function CardNFT({ offer, setOffers }: { offer: any; setOffers: a
 					</Box>
 				</ItemCardStyle>
 			</Grid>
+			<ModalBuy
+				openState={openModalBuy}
+				closeModal={handleCloseModalBuy}
+				funcBuyNft={claimOffer}
+				activeStep={activeStep}
+				statusBuyNft={statusBuyNft}
+			/>
 		</>
 	);
 }
