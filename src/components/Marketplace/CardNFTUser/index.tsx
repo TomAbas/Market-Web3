@@ -48,6 +48,9 @@ const CardNFTUser = ({ item, handleItems }: { item: any; handleItems: any }) => 
 	};
 	const handleListItem = async () => {
 		try {
+			if (!supply || !price || supply == '0' || price == '0') {
+				return;
+			}
 			setStatusList('Listing...');
 			console.log(supply + ' ' + price);
 			const payload = {
