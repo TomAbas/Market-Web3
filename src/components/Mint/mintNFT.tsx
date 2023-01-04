@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -8,6 +9,14 @@ import { storage } from '../../config/firebase';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { openFirstModal } from '../../redux/slices/modalWallet';
 import { useAppDispatch } from '../../redux/hooks';
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+import { InputItem, InputTitle } from './styled';
 
 function RedBar() {
 	return (
@@ -45,6 +54,12 @@ export default function LayoutMintNFT() {
 		royaltyFee: 0,
 		file: null,
 	});
+
+	const [age, setAge] = React.useState('');
+
+	const handleChange = (event: SelectChangeEvent) => {
+		setAge(event.target.value);
+	};
 
 	async function onChange(e: ChangeEvent<HTMLInputElement>) {
 		const file = e.target.files![0];
@@ -119,10 +134,9 @@ export default function LayoutMintNFT() {
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				'& .MuiTextField-root': { width: '25ch' },
 			}}
 		>
-			<RedBar />
+			{/* <RedBar />
 			<TextField
 				label={'collection name'}
 				id="margin-none"
@@ -166,7 +180,73 @@ export default function LayoutMintNFT() {
 			<RedBar />
 			<Button variant="contained" onClick={createItem}>
 				{loading}
-			</Button>
+			</Button> */}
+			<input type="file" name="Asset" className="my-4" onChange={onChange} />
+			<InputItem>
+				<InputTitle>Name</InputTitle>
+				<input type="text" placeholder="Item Name" />
+			</InputItem>
+			<InputItem>
+				<InputTitle>External link</InputTitle>
+				<input type="text" placeholder="https://yoursite.io/item/123" />
+			</InputItem>
+			<InputItem>
+				<InputTitle>Description</InputTitle>
+				<input type="text" placeholder="Provide a detailed description of your item." />
+			</InputItem>
+			<InputItem>
+				<InputTitle>Blockchain</InputTitle>
+				<FormControl sx={{ minWidth: 120, width: '100%' }}>
+					<Select
+						value={age}
+						onChange={handleChange}
+						displayEmpty
+						inputProps={{ 'aria-label': 'Without label' }}
+					>
+						<MenuItem value="">
+							<em>Aptos</em>
+						</MenuItem>
+						<MenuItem value={30}>Sui</MenuItem>
+					</Select>
+				</FormControl>
+			</InputItem>
+			<InputItem>
+				<InputTitle>Supply</InputTitle>
+				<input type="text" placeholder="1" />
+			</InputItem>
+
+			<Box
+				sx={{
+					mt: 2,
+					button: {
+						padding: '10px 30px',
+						border: '1.5px solid #e7e8ec',
+						transition: 'all 0.4s',
+						borderRadius: '12px',
+						fontWeight: 500,
+						background: '#fff',
+						fontSize: '20px',
+						cursor: 'pointer',
+						fontFamily: 'Montserrat, sans-serif !important',
+						fontStyle: 'italic !important',
+						width: '180px',
+						'&:hover': {
+							background: '#007aff',
+							borderColor: 'transparent',
+							color: '#fff',
+						},
+						a: {
+							textDecoration: 'none',
+							'&:hover': {
+								textDecoration: 'none',
+								color: '#fff',
+							},
+						},
+					},
+				}}
+			>
+				<button>Create</button>
+			</Box>
 		</Box>
 	);
 }

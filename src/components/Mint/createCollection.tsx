@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+// import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../../config/firebase';
@@ -8,6 +9,14 @@ import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useState, ChangeEvent } from 'react';
 import { openFirstModal } from '../../redux/slices/modalWallet';
 import { useAppDispatch } from '../../redux/hooks';
+// import FieldInput from 'components/CustomField/FieldInput';
+import { InputItem, InputTitle } from './styled';
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 function RedBar() {
 	return (
@@ -39,6 +48,12 @@ export default function LayoutCreateCollection() {
 		description: '',
 		file: null,
 	});
+
+	const [age, setAge] = React.useState('');
+
+	const handleChange = (event: SelectChangeEvent) => {
+		setAge(event.target.value);
+	};
 
 	async function onChange(e: ChangeEvent<HTMLInputElement>) {
 		const file = e.target.files![0];
@@ -101,30 +116,89 @@ export default function LayoutCreateCollection() {
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				'& .MuiTextField-root': { width: '25ch' },
+				// '& .MuiTextField-root': { width: '25ch' },
 			}}
 		>
-			<RedBar />
-			<TextField
+			{/* <TextField
 				label={'collection name'}
 				id="margin-dense"
 				margin="dense"
 				onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
 			/>
 			<RedBar />
+			
 			<TextField
 				label={'collection description'}
 				id="margin-normal"
 				margin="normal"
 				onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
 			/>
-			<RedBar />
+			<RedBar /> */}
 			<input type="file" name="Asset" className="my-4" onChange={onChange} />
-			{base64image && <img className="rounded mt-4" width="350" src={base64image} />}
-			<RedBar />
-			<Button variant="contained" onClick={createCollection}>
-				{loading}
-			</Button>
+			<InputItem>
+				<InputTitle>Name</InputTitle>
+				<input type="text" placeholder="Collection Name" />
+			</InputItem>
+			<InputItem>
+				<InputTitle>Description</InputTitle>
+				<input type="text" placeholder="Description" />
+			</InputItem>
+			<InputItem>
+				<InputTitle>Category</InputTitle>
+				<FormControl sx={{ minWidth: 120, width: '100%' }}>
+					<Select
+						value={age}
+						onChange={handleChange}
+						displayEmpty
+						inputProps={{ 'aria-label': 'Without label' }}
+					>
+						<MenuItem value="">
+							<em>Category Name</em>
+						</MenuItem>
+						<MenuItem value={10}>Other</MenuItem>
+						<MenuItem value={20}>Art</MenuItem>
+						<MenuItem value={30}>Sport</MenuItem>
+					</Select>
+				</FormControl>
+			</InputItem>
+			<InputItem>
+				<InputTitle>Royalty</InputTitle>
+				<input type="text" placeholder="E.g 2.5" />
+			</InputItem>
+			{/* {base64image && <img className="rounded mt-4" width="350" src={base64image} />}
+			<RedBar /> */}
+			<Box
+				sx={{
+					mt: 2,
+					button: {
+						padding: '10px 30px',
+						border: '1.5px solid #e7e8ec',
+						transition: 'all 0.4s',
+						borderRadius: '12px',
+						fontWeight: 500,
+						background: '#fff',
+						fontSize: '20px',
+						cursor: 'pointer',
+						fontFamily: 'Montserrat, sans-serif !important',
+						fontStyle: 'italic !important',
+						width: '180px',
+						'&:hover': {
+							background: '#007aff',
+							borderColor: 'transparent',
+							color: '#fff',
+						},
+						a: {
+							textDecoration: 'none',
+							'&:hover': {
+								textDecoration: 'none',
+								color: '#fff',
+							},
+						},
+					},
+				}}
+			>
+				<button>Create</button>
+			</Box>
 		</Box>
 	);
 }
