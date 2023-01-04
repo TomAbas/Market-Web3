@@ -25,7 +25,7 @@ import HeartFullWhite from '../../../assets/icons/heart-white.svg';
 import item from '../../../assets/images/card/box.webp';
 import aptos from '../../../assets/images/card/aptos.jpg';
 
-const CardNFTUser = ({ item, handleItems }: { item: any; handleItems: any }) => {
+const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any; index: any }) => {
 	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 	const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
 	const MARKET_COINT_TYPE = '0x1::aptos_coin::AptosCoin';
@@ -61,7 +61,7 @@ const CardNFTUser = ({ item, handleItems }: { item: any; handleItems: any }) => 
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
 			setStatusList('List');
-			handleItems(item.name, item.collection, item.creator);
+			handleItems(index);
 			setOpen(false);
 		} catch (error) {
 			setStatusList('List');

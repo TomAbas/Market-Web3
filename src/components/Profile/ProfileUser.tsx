@@ -19,10 +19,8 @@ const ProfileUser = () => {
 		console.log('reset');
 		setItems(tokens);
 	}, [tokens]);
-	const handleItems = (name: any, collection: any, creator: any) => {
-		let newItems = items.filter(
-			(item) => item.name != name && item.collection != collection && item.creator != creator
-		);
+	const handleItems = (index: any) => {
+		let newItems = items.filter((_item, i) => i !== index);
 		setItems(newItems);
 	};
 	console.log(items);
@@ -91,8 +89,13 @@ const ProfileUser = () => {
 					</Box>
 					<Box py={4}>
 						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-							{items.map((item: any) => (
-								<CardNFTUser item={item} handleItems={handleItems} key={item.uri} />
+							{items.map((item: any, index: any) => (
+								<CardNFTUser
+									item={item}
+									handleItems={handleItems}
+									index={index}
+									key={index}
+								/>
 							))}
 						</Grid>
 					</Box>

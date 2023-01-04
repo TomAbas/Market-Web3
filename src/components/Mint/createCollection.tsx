@@ -74,7 +74,7 @@ export default function LayoutCreateCollection() {
 		try {
 			setLoading('Creating...');
 			console.log(file);
-			const sotrageRef = ref(storage, `item/${file.name}`);
+			const sotrageRef = ref(storage, `collection/${file.name}`);
 			const uploadTask = uploadBytesResumable(sotrageRef, file);
 			uploadTask.on(
 				'state_changed',

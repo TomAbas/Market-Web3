@@ -80,7 +80,7 @@ export default function LayoutMintNFT() {
 		if (!collection || !name || !description || !amount || !royaltyFee || !file) return;
 		try {
 			setLoading('Creating...');
-			const sotrageRef = ref(storage, `collection/${file.name}`);
+			const sotrageRef = ref(storage, `item/${file.name}`);
 			const uploadTask = uploadBytesResumable(sotrageRef, file);
 			uploadTask.on(
 				'state_changed',

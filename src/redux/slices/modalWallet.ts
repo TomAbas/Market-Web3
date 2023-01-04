@@ -28,13 +28,11 @@ export const modalWalletSlice = createSlice({
 			state.steps = { ...state.steps, secondModal: false, thirdModal: true };
 		},
 		closeModal(state) {
-			console.log('chay close modal');
 			state.steps.firstModal = false;
 			state.steps.secondModal = false;
 			state.steps.thirdModal = false;
 		},
 		closeFirstModal(state) {
-			console.log('chay close modal1');
 			state.steps = { ...state.steps, firstModal: false };
 		},
 	},
