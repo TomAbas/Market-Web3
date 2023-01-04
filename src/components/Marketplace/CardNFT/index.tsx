@@ -97,8 +97,6 @@ export default function CardNFT({
 				//
 				// let value = offers.indexOf(index);
 				let newList = offers.filter((_item: any, i: any) => i !== index);
-				console.log('new list ');
-				console.log(newList);
 				setOffers(newList);
 			};
 			fetchOffers();
