@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 // import { BrowserRouter } from 'react-router-dom';
 // redux
 import { store } from './redux/store';
@@ -20,19 +21,43 @@ const router = createHashRouter([
 	{
 		path: '/',
 		element: <App />,
+		errorElement: (
+			<>
+				<h1>error test app</h1>
+			</>
+		),
 		children: [
 			{
 				path: '/',
 				element: <Marketplace />,
+				errorElement: (
+					<>
+						<h1>error test market</h1>
+					</>
+				),
 			},
 			{
-				path: '/mint',
+				path: 'mint',
 				element: <Mint />,
+				errorElement: (
+					<>
+						<h1>error test mint</h1>
+					</>
+				),
 			},
-			{ path: '/profile', element: <ProfileUser /> },
+			{
+				path: 'profile',
+				element: <ProfileUser />,
+				errorElement: (
+					<>
+						<h1>error test profile</h1>
+					</>
+				),
+			},
 		],
 	},
 ]);
+
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
@@ -41,4 +66,5 @@ ReactDOM.render(
 	</React.StrictMode>,
 	document.getElementById('root')
 );
+// ReactDOM.createRoot(document.getElementById('root')).render(<RouterProvider router={router} />);
 serviceWorkerRegistration.register();

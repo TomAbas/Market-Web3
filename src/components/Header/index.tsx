@@ -13,6 +13,7 @@ import {
 	openSecondModal,
 	closeModal,
 } from '../../redux/slices/modalWallet';
+import { selectUser, selectWeb3 } from '../../redux/slices/userInfo';
 //styled
 import userIcon from '../../assets/icons/icon-user-black.svg';
 import { AppbarHeader, LogoLink, PageLogo, IconItem, LinkWrapper, DropDownContent } from './styled';
@@ -25,32 +26,28 @@ import aptos from '../../assets/images/logo/aptos.png';
 import sui from '../../assets/images/logo/sui.png';
 import connectIcon from '../../assets/icons/icon-connect-black.svg';
 import searchIcon from '../../assets/icons/search.svg';
-import binance from '../../assets/wallet/bnb-new.webp';
 import ModalWallet from '../ModalWallet';
-import { selectUser, selectWeb3 } from '../../redux/slices/userInfo';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 //hooks
-import { useUserInfo } from '../../redux/actions/userAction';
-import { TOKEN_PAYMENT } from 'constants/token.constant';
-
+// import { useUserInfo } from '../../redux/actions/userAction';
 import { useSizeObersver } from '../../contexts/SizeObserver';
 import ModalInfo from './popupInfoModal';
-import MintTabs from '../Mint/mint';
 import { useNavigate } from 'react-router-dom';
+//component
+import NavBar from 'components/NavBar';
+import NavBarMobile from 'components/NavBarMobile';
+
 const Header: React.FC = () => {
 	const navigate = useNavigate();
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
 	const userInfo = useAppSelector(selectUser);
 	// const userAddress = userInfo?.userAddress;
-	const userBalance = userInfo?.balance;
 	const web3Info = useAppSelector(selectWeb3);
-	const chainId = web3Info.chainId;
 	const dispatch = useAppDispatch();
 	let ref: any = useRef();
 	const theme = useTheme();
 	const isLightTheme = theme.palette.mode === 'dark';
 	const { innerWidth } = useSizeObersver();
-	useUserInfo();
 	// useState
 	const { account } = useWallet();
 	let userAddress = account?.address?.toString();
@@ -75,53 +72,7 @@ const Header: React.FC = () => {
 			link: '/mint',
 		},
 	];
-	const renderListNav = () => {
-		return listNav.map((item) => {
-			return (
-				<Box key={item.id}>
-					<Link
-						onClick={() => navigate(item.link)}
-						sx={{
-							textDecoration: 'none',
-							color: '#131740',
-							fontWeight: '500',
-							transition: 'all 0.4s ',
-							cursor: 'pointer',
-							'&:hover': {
-								color: '#007aff',
-							},
-						}}
-					>
-						{item.name}
-					</Link>
-				</Box>
-			);
-		});
-	};
-	const renderListNavMobile = () => {
-		return listNav.map((item) => {
-			return (
-				<Box key={item.id} px={4} py={2}>
-					<Link
-						onClick={() => navigate(item.link)}
-						href={item.link}
-						sx={{
-							textDecoration: 'none',
-							color: '#131740',
-							fontWeight: '500',
-							transition: 'all 0.4s ',
-							cursor: 'pointer',
-							'&:hover': {
-								color: '#007aff',
-							},
-						}}
-					>
-						{item.name}
-					</Link>
-				</Box>
-			);
-		});
-	};
+
 	const openModal = () => {
 		if (!userAddress) {
 			dispatch(openFirstModal());
@@ -253,7 +204,9 @@ const Header: React.FC = () => {
 							</Stack>
 							{innerWidth > 1024 ? (
 								<Stack sx={{ flexDirection: 'row', gap: '60px' }}>
-									{renderListNav()}
+									{listNav.map((item) => (
+										<NavBar item={item} key={item.id} />
+									))}
 								</Stack>
 							) : null}
 						</Stack>
@@ -278,7 +231,9 @@ const Header: React.FC = () => {
 												}}
 											>
 												<DropDownContent ref={ref}>
-													{renderListNavMobile()}
+													{listNav.map((item) => (
+														<NavBarMobile item={item} key={item.id} />
+													))}
 												</DropDownContent>
 											</ClickAwayListener>
 										)}
