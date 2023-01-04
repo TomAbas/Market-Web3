@@ -36,10 +36,12 @@ export default function CardNFT({
 	offer,
 	setOffers,
 	offers,
+	index,
 }: {
 	offer: any;
 	setOffers: any;
 	offers: any;
+	index: any;
 }) {
 	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 	const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
@@ -93,16 +95,10 @@ export default function CardNFT({
 				// offers.reverse();
 				// setOffers(offers);
 				//
-				let newList = offers.filter((item: any) => {
-					return (
-						item.token_id.token_data_id.creator !==
-							offer.token_id.token_data_id.creator &&
-						item.token_id.token_data_id.collection !==
-							offer.token_id.token_data_id.collection &&
-						item.token_id.token_data_id.name !== offer.token_id.token_data_id.name &&
-						item.token_id.property_version !== offer.token_id.property_version
-					);
-				});
+				// let value = offers.indexOf(index);
+				let newList = offers.filter((_item: any, i: any) => i !== index);
+				console.log('new list ');
+				console.log(newList);
 				setOffers(newList);
 			};
 			fetchOffers();
