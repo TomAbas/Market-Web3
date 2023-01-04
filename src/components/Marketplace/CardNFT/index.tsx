@@ -103,7 +103,6 @@ export default function CardNFT({
 						item.token_id.property_version !== offer.token_id.property_version
 					);
 				});
-				console.log(newList);
 				setOffers(newList);
 			};
 			fetchOffers();

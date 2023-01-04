@@ -37,7 +37,6 @@ export default function Marketplace() {
 	const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
 	const [offers, setOffers] = useState<any[]>([]);
 	useEffect(() => {
-		console.log('chay');
 		const fetchOffers = async () => {
 			const response: any = await axios.get(
 				`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::market::TokenInfo`
