@@ -1,4 +1,4 @@
-import { InputItem, InputTitle } from 'components/Mint/styled';
+import { InputImage, InputItem, InputTitle } from 'components/Mint/styled';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateCollection } from 'models/common';
@@ -24,30 +24,37 @@ const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handle
 		<>
 			{' '}
 			<form onSubmit={onSubmit}>
-				<input
-					type="file"
-					className="my-4"
-					{...register('file', { required: true })}
-					onChange={handleInputFile}
-				/>
-				{errors.file && 'Image is required'}
+				<InputImage>
+					<input
+						type="file"
+						className="my-4"
+						{...register('file', { required: true })}
+						onChange={handleInputFile}
+					/>
+					{errors.file && <p>Image is required</p>}
+				</InputImage>
+
 				<InputItem>
-					<InputTitle>Name</InputTitle>
+					<InputTitle>
+						Name<span>*</span>
+					</InputTitle>
 					<input
 						type="text"
 						placeholder="Collection Name"
 						{...register('name', { required: true })}
 					/>
-					{errors.name && 'Name is required'}
+					{errors.name && <p>Name is required</p>}
 				</InputItem>
 				<InputItem>
-					<InputTitle>Description</InputTitle>
+					<InputTitle>
+						Description<span>*</span>
+					</InputTitle>
 					<input
 						type="text"
 						placeholder="Description"
 						{...register('description', { required: true })}
 					/>
-					{errors.description && 'Description is required'}
+					{errors.description && <p>Description is required</p>}
 				</InputItem>
 				<Box
 					sx={{

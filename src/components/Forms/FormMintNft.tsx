@@ -1,4 +1,4 @@
-import { InputItem, InputTitle } from 'components/Mint/styled';
+import { InputItem, InputTitle, InputImage } from 'components/Mint/styled';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateNFT } from 'models/common';
@@ -28,58 +28,71 @@ const FormMintNft: React.FC<Props> = ({
 		<>
 			{' '}
 			<form onSubmit={onSubmit}>
-				<input
-					type="file"
-					className="my-4"
-					{...register('file', { required: true })}
-					onChange={handleInputFileMintNft}
-				/>
-				{errors.file && 'Image is required'}
+				<InputImage>
+					<input
+						type="file"
+						className="my-4"
+						{...register('file', { required: true })}
+						onChange={handleInputFileMintNft}
+					/>
+					{errors.file && <p>Image is required</p>}
+				</InputImage>
+
 				<InputItem>
-					<InputTitle>Collection name</InputTitle>
+					<InputTitle>
+						Collection name<span>*</span>
+					</InputTitle>
 					<input
 						type="text"
 						placeholder="Collection Name"
 						{...register('collection', { required: true })}
 					/>
-					{errors.collection && 'Collection name is required'}
+					{errors.collection && <p>Collection name is required</p>}
 				</InputItem>
 				<InputItem>
-					<InputTitle>Item name</InputTitle>
+					<InputTitle>
+						Item name<span>*</span>
+					</InputTitle>
 					<input
 						type="text"
 						placeholder="Item name"
 						{...register('name', { required: true })}
 					/>
-					{errors.name && 'Item name is required'}
+					{errors.name && <p>Item name is required</p>}
 				</InputItem>
 				<InputItem>
-					<InputTitle>Item Description</InputTitle>
+					<InputTitle>
+						Item Description<span>*</span>
+					</InputTitle>
 					<input
 						type="text"
 						placeholder="Provide a detailed description of your item."
 						{...register('description', { required: true })}
 					/>
-					{errors.description && 'Item description is required'}
+					{errors.description && <p>Item description is required</p>}
 				</InputItem>
 
 				<InputItem>
-					<InputTitle>Royalty Fee (%)</InputTitle>
+					<InputTitle>
+						Royalty Fee (%)<span>*</span>
+					</InputTitle>
 					<input
 						type="number"
 						placeholder="1"
 						{...register('royaltyFee', { required: true, min: 1, max: 99 })}
 					/>
-					{errors.royaltyFee && 'Royalty Fee is required'}
+					{errors.royaltyFee && <p>Royalty Fee is required</p>}
 				</InputItem>
 				<InputItem>
-					<InputTitle>Supply</InputTitle>
+					<InputTitle>
+						Supply<span>*</span>
+					</InputTitle>
 					<input
 						type="number"
 						placeholder="1"
 						{...register('amount', { required: true, min: 1, max: 99 })}
 					/>
-					{errors.amount && 'Amount is required'}
+					{errors.amount && <p>Amount is required</p>}
 				</InputItem>
 				<Box
 					sx={{
