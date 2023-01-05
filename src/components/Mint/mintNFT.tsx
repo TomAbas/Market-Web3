@@ -1,172 +1,158 @@
-import * as React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import { useState, ChangeEvent } from 'react';
-import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { storage } from '../../config/firebase';
-import { useWallet } from '@manahippo/aptos-wallet-adapter';
-import { openFirstModal } from '../../redux/slices/modalWallet';
-import { useAppDispatch } from '../../redux/hooks';
-
-function RedBar() {
-	return (
-		<Box
-			sx={{
-				height: 20,
-				backgroundColor: (theme) =>
-					theme.palette.mode === 'light'
-						? 'rgba(255, 0, 0, 0)'
-						: 'rgb(255 132 132 / 25%)',
-			}}
-		/>
-	);
-}
+import { InputItem, InputTitle } from './styled';
+import useControlModal from 'hooks/useControlModal';
+import ModalBuy from 'components/ModalBuy/ModalBuy';
+import useCreateMintSell from 'hooks/useCreateMintSell';
 
 export default function LayoutMintNFT() {
-	const [loading, setLoading] = useState('Create');
-	const [base64image, setBase64image] = useState('');
-	const { account, signAndSubmitTransaction } = useWallet();
-	const dispatch = useAppDispatch();
-	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-	const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
-	const [formInput, updateFormInput] = useState<{
-		collection: string;
-		name: string;
-		description: string;
-		amount: number;
-		royaltyFee: number;
-		file: File | null;
-	}>({
-		collection: '',
-		name: '',
-		description: '',
-		amount: 1,
-		royaltyFee: 0,
-		file: null,
-	});
-
-	async function onChange(e: ChangeEvent<HTMLInputElement>) {
-		const file = e.target.files![0];
-		updateFormInput({ ...formInput, file: file });
-		const reader = new FileReader();
-		reader.onload = function (event) {
-			setBase64image(event.target!.result!.toString());
-		};
-		reader.readAsDataURL(file);
-	}
-
-	const createItem = async () => {
-		const { collection, name, description, amount, royaltyFee, file } = formInput;
-		if (!account) {
-			dispatch(openFirstModal());
-			return;
-		}
-		if (!collection || !name || !description || !amount || !royaltyFee || !file) return;
-		try {
-			setLoading('Creating...');
-			const sotrageRef = ref(storage, `item/${file.name}`);
-			const uploadTask = uploadBytesResumable(sotrageRef, file);
-			uploadTask.on(
-				'state_changed',
-				() => {},
-				(error) => console.log('err ', error),
-				() => {
-					getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-						// console.log("File available at", downloadURL);
-						try {
-							const royaltyFeeNumerator = royaltyFee * 100;
-							const royaltyFeeDenominator = 10000;
-
-							await signAndSubmitTransaction(
-								{
-									type: 'entry_function_payload',
-									function: `${MARKET_ADDRESS}::nft::mint_nft`,
-									type_arguments: [
-										MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin',
-									],
-									arguments: [
-										name,
-										description,
-										downloadURL,
-										collection,
-										amount,
-										account.address,
-										royaltyFeeNumerator,
-										royaltyFeeDenominator,
-									],
-								},
-								{
-									gas_unit_price: 100,
-								}
-							);
-							setLoading('Create');
-						} catch (error) {
-							setLoading('Create');
-						}
-					});
-				}
-			);
-		} catch (error) {
-			console.log('Error create NFT: ', error);
-			setLoading('Create');
-		} finally {
-		}
-	};
+	const {
+		handleNext,
+		handleOpenModalBuy,
+		handleCloseModalBuy,
+		startLoading,
+		completeTaskSuccess,
+		failToComplete,
+		openModalBuy,
+		activeStep,
+		statusBuyNft,
+	} = useControlModal();
+	const { createItem, setFormInputNFT, formInputNFT, handleInputFileMintNft, base64image } =
+		useCreateMintSell();
+	const steps = [
+		{
+			label: 'Confirm order',
+			description: 'Please confirm your order',
+		},
+		{
+			label: `${
+				statusBuyNft.isSuccess ? 'Congrat' : statusBuyNft.isError && 'Something went wrong'
+			}`,
+			description: `${
+				statusBuyNft.isSuccess ? 'You create your nft' : statusBuyNft.isError && 'Try again'
+			}`,
+		},
+	];
 
 	return (
 		<Box
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				'& .MuiTextField-root': { width: '25ch' },
 			}}
 		>
-			<RedBar />
-			<TextField
-				label={'collection name'}
-				id="margin-none"
-				onChange={(e) => updateFormInput({ ...formInput, collection: e.target.value })}
-			/>
-			<RedBar />
-			<TextField
-				label={'item name'}
-				id="margin-dense"
-				margin="dense"
-				onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
-			/>
-			<RedBar />
-			<TextField
-				label={'item description'}
-				id="margin-normal"
-				margin="normal"
-				onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
-			/>
-			<RedBar />
-			<TextField
-				label={'item supply'}
-				id="margin-normal"
-				margin="normal"
-				onChange={(e) =>
-					updateFormInput({ ...formInput, amount: parseInt(e.target.value) })
+			<input type="file" name="Asset" className="my-4" onChange={handleInputFileMintNft} />
+			{base64image && (
+				<img alt="item image" className="rounded mt-4" width="350" src={base64image} />
+			)}
+			<InputItem>
+				<InputTitle>Collection name</InputTitle>
+				<input
+					type="text"
+					placeholder="Collection Name"
+					onChange={(e) =>
+						setFormInputNFT({ ...formInputNFT, collection: e.target.value })
+					}
+				/>
+			</InputItem>
+			<InputItem>
+				<InputTitle>Item name</InputTitle>
+				<input
+					type="text"
+					placeholder="Item name"
+					onChange={(e) => setFormInputNFT({ ...formInputNFT, name: e.target.value })}
+				/>
+			</InputItem>
+			<InputItem>
+				<InputTitle>Item Description</InputTitle>
+				<input
+					type="text"
+					placeholder="Provide a detailed description of your item."
+					onChange={(e) =>
+						setFormInputNFT({ ...formInputNFT, description: e.target.value })
+					}
+				/>
+			</InputItem>
+			{/* <InputItem>
+				<InputTitle>Blockchain</InputTitle>
+				<FormControl sx={{ minWidth: 120, width: '100%' }}>
+					<Select
+						value={age}
+						onChange={handleChange}
+						displayEmpty
+						inputProps={{ 'aria-label': 'Without label' }}
+					>
+						<MenuItem value="">
+							<em>Aptos</em>
+						</MenuItem>
+						<MenuItem value={30}>Sui</MenuItem>
+					</Select>
+				</FormControl>
+			</InputItem> */}
+			<InputItem>
+				<InputTitle>Royalty Fee (%)</InputTitle>
+				<input
+					type="text"
+					placeholder="1"
+					onChange={(e) =>
+						setFormInputNFT({ ...formInputNFT, royaltyFee: parseInt(e.target.value) })
+					}
+				/>
+			</InputItem>
+			<InputItem>
+				<InputTitle>Supply</InputTitle>
+				<input
+					type="text"
+					placeholder="1"
+					onChange={(e) =>
+						setFormInputNFT({ ...formInputNFT, amount: parseInt(e.target.value) })
+					}
+				/>
+			</InputItem>
+
+			<Box
+				sx={{
+					mt: 2,
+					button: {
+						padding: '10px 30px',
+						border: '1.5px solid #e7e8ec',
+						transition: 'all 0.4s',
+						borderRadius: '12px',
+						fontWeight: 500,
+						background: '#fff',
+						fontSize: '20px',
+						cursor: 'pointer',
+						fontFamily: 'Montserrat, sans-serif !important',
+						fontStyle: 'italic !important',
+						width: '180px',
+						'&:hover': {
+							background: '#007aff',
+							borderColor: 'transparent',
+							color: '#fff',
+						},
+						a: {
+							textDecoration: 'none',
+							'&:hover': {
+								textDecoration: 'none',
+								color: '#fff',
+							},
+						},
+					},
+				}}
+				onClick={handleOpenModalBuy}
+			>
+				<button>Create</button>
+			</Box>
+			<ModalBuy
+				steps={steps}
+				openState={openModalBuy}
+				closeModal={handleCloseModalBuy}
+				activeStep={activeStep}
+				statusBuyNft={statusBuyNft}
+				funcBuyNft={() =>
+					createItem(startLoading, completeTaskSuccess, handleNext, failToComplete)
 				}
 			/>
-			<RedBar />
-			<TextField
-				label={'royalty fee (%)'}
-				id="margin-normal"
-				margin="normal"
-				onChange={(e) =>
-					updateFormInput({ ...formInput, royaltyFee: parseInt(e.target.value) })
-				}
-			/>
-			<RedBar />
-			<input type="file" name="Asset" className="my-4" onChange={onChange} />
-			{base64image && <img className="rounded mt-4" width="350" src={base64image} />}
-			<RedBar />
-			<Button variant="contained" onClick={createItem}>
-				{loading}
-			</Button>
 		</Box>
 	);
 }

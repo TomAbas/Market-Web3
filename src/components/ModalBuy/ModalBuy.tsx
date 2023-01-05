@@ -9,22 +9,14 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import { CircularProgress } from '@mui/material';
-const steps = [
-	{
-		label: 'Confirm order',
-		description: 'Please confirm your order',
-	},
-	{
-		label: 'Done',
-		description: `success`,
-	},
-];
+
 interface Props {
+	steps: { label: string; description: string }[];
 	openState: boolean;
 	closeModal: any;
 	funcBuyNft: any;
 	activeStep: number;
-	statusBuyNft: { isLoading: boolean; isSuccess: boolean };
+	statusBuyNft: { isLoading: boolean; isSuccess: boolean; isError: boolean };
 }
 const style = {
 	position: 'absolute' as 'absolute',
@@ -43,6 +35,7 @@ const ModalBuy: React.FC<Props> = ({
 	funcBuyNft,
 	activeStep,
 	statusBuyNft,
+	steps,
 }) => {
 	return (
 		<>
@@ -55,50 +48,63 @@ const ModalBuy: React.FC<Props> = ({
 			>
 				<Box sx={style}>
 					<Stepper activeStep={activeStep} orientation="vertical">
-						{steps.map((step, index) => (
-							<Step key={step.label}>
-								<StepLabel
-									optional={
-										index === 2 ? (
-											<Typography variant="caption">Last step</Typography>
-										) : null
-									}
-								>
-									{step.label}
-								</StepLabel>
-								<StepContent>
-									<Typography>{step.description}</Typography>
-									<Box sx={{ mb: 2 }}>
-										<div>
-											<Button
-												variant="contained"
-												onClick={
-													index === steps.length - 1
-														? closeModal
-														: funcBuyNft
-												}
-											>
+						{steps.map(
+							(step: { label: string; description: string }, index: number) => (
+								<Step key={step.label}>
+									<StepLabel
+										optional={
+											index === 2 ? (
+												<Typography variant="caption">Last step</Typography>
+											) : null
+										}
+									>
+										{step.label}
+									</StepLabel>
+									<StepContent>
+										<Typography>{step.description}</Typography>
+										<Box sx={{ mb: 2 }}>
+											<div>
 												{statusBuyNft.isLoading ? (
-													<>
-														<CircularProgress
-															sx={{ color: 'white', mr: 1 }}
-															size={16}
-														/>
-													</>
+													<Button disabled={true} variant="contained">
+														<>
+															<CircularProgress
+																sx={{ color: 'white', mr: 1 }}
+																size={16}
+															/>
+														</>
+													</Button>
+												) : statusBuyNft.isSuccess ? (
+													<Button
+														variant="contained"
+														onClick={closeModal}
+													>
+														Finish
+													</Button>
+												) : statusBuyNft.isError ? (
+													<Button
+														variant="contained"
+														onClick={closeModal}
+													>
+														Close
+													</Button>
 												) : (
-													<>
-														{' '}
-														{index === steps.length - 1
-															? 'Finish'
-															: 'Confirm'}
-													</>
+													<Button
+														variant="contained"
+														onClick={funcBuyNft}
+													>
+														<>
+															{index === steps.length - 1
+																? 'Finish'
+																: 'Confirm'}
+														</>
+													</Button>
 												)}
-											</Button>
-										</div>
-									</Box>
-								</StepContent>
-							</Step>
-						))}
+											</div>
+										</Box>
+									</StepContent>
+								</Step>
+							)
+						)}
 					</Stepper>
 				</Box>
 			</Modal>

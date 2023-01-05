@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -15,10 +16,10 @@ export default function MintTabs() {
 	};
 
 	return (
-		<Box sx={{ width: '550px', paddingTop: '150px', paddingLeft: '10%' }}>
+		<Box sx={{ maxWidth: '940px', mx: 'auto', paddingTop: '150px' }}>
 			<TabContext value={value}>
 				<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-					<TabList onChange={handleChange} aria-label="lab API tabs example">
+					<TabList centered onChange={handleChange} aria-label="lab API tabs example">
 						<Tab label="Item" value="1" />
 						<Tab label="Collection" value="2" />
 					</TabList>
