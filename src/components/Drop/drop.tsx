@@ -50,6 +50,8 @@ export default function WhiteList() {
 			const response: any = await axios.get(
 				`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::MetaspacecyTicket::WhiteList`
 			);
+			console.log(response);
+
 			setWhitelist(response.data.data.white_list);
 		};
 		fetchWhitelist();
