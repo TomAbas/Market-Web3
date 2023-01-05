@@ -1,18 +1,20 @@
 import { InputItem, InputTitle } from 'components/Mint/styled';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateNFT } from 'models/common';
-import { Box } from '@mui/material';
+import { Box, Select, FormControl, MenuItem } from '@mui/material';
 
 interface Props {
 	handleOpenModalBuy: any;
 	updateFormInput: any;
 	handleInputFileMintNft: any;
+	collections: any;
 }
 const FormMintNft: React.FC<Props> = ({
 	handleOpenModalBuy,
 	updateFormInput,
 	handleInputFileMintNft,
+	collections,
 }) => {
 	const {
 		register,
@@ -24,6 +26,9 @@ const FormMintNft: React.FC<Props> = ({
 		updateFormInput(data);
 		handleOpenModalBuy();
 	});
+
+	const [collection, setCollection] = useState('');
+
 	return (
 		<>
 			{' '}
@@ -36,13 +41,29 @@ const FormMintNft: React.FC<Props> = ({
 				/>
 				{errors.file && 'Image is required'}
 				<InputItem>
-					<InputTitle>Collection name</InputTitle>
-					<input
-						type="text"
-						placeholder="Collection Name"
-						{...register('collection', { required: true })}
-					/>
-					{errors.collection && 'Collection name is required'}
+					<InputTitle>Collection</InputTitle>
+					<FormControl sx={{ minWidth: 120, width: '100%' }}>
+						<Select
+							value={collection}
+							// onChange={handleChange}
+							displayEmpty
+							inputProps={{ 'aria-label': 'Without label' }}
+							{...register('collection', { required: true })}
+						>
+							{collections.map((collection: any, index: any) => (
+								<MenuItem
+									key={index}
+									value={collection.name}
+									onClick={() => {
+										setCollection(collection.name);
+									}}
+								>
+									<em>{collection.name}</em>
+								</MenuItem>
+							))}
+						</Select>
+						{errors.collection && 'Collection name is required'}
+					</FormControl>
 				</InputItem>
 				<InputItem>
 					<InputTitle>Item name</InputTitle>
@@ -62,7 +83,6 @@ const FormMintNft: React.FC<Props> = ({
 					/>
 					{errors.description && 'Item description is required'}
 				</InputItem>
-
 				<InputItem>
 					<InputTitle>Royalty Fee (%)</InputTitle>
 					<input
@@ -119,23 +139,25 @@ const FormMintNft: React.FC<Props> = ({
 	);
 };
 
+// const handleChange = () => {};
+
 export default FormMintNft;
 
 {
-	/* <InputItem>
-				<InputTitle>Blockchain</InputTitle>
-				<FormControl sx={{ minWidth: 120, width: '100%' }}>
-					<Select
-						value={age}
-						onChange={handleChange}
-						displayEmpty
-						inputProps={{ 'aria-label': 'Without label' }}
-					>
-						<MenuItem value="">
-							<em>Aptos</em>
-						</MenuItem>
-						<MenuItem value={30}>Sui</MenuItem>
-					</Select>
-				</FormControl>
-			</InputItem> */
+	// <InputItem>
+	// 	<InputTitle>Blockchain</InputTitle>
+	// 	<FormControl sx={{ minWidth: 120, width: '100%' }}>
+	// 		<Select
+	// 			value={'1'}
+	// 			onChange={handleChange}
+	// 			displayEmpty
+	// 			inputProps={{ 'aria-label': 'Without label' }}
+	// 		>
+	// 			<MenuItem value="">
+	// 				<em>Aptos</em>
+	// 			</MenuItem>
+	// 			<MenuItem value={30}>Sui</MenuItem>
+	// 		</Select>
+	// 	</FormControl>
+	// </InputItem>;
 }
