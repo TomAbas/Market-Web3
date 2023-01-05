@@ -50,6 +50,7 @@ const useCreateMintSell = () => {
 		failToComplete: () => void
 	) => {
 		const { name, description, file } = formInput;
+		console.log(file);
 		if (!account) {
 			dispatch(openFirstModal());
 			return;

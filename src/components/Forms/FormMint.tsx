@@ -16,10 +16,12 @@ const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handle
 		formState: { errors },
 	} = useForm<InputCreateCollection>();
 	const onSubmit = handleSubmit((data) => {
-		console.log(data);
 		updateFormInput(data);
-		handleOpenModalBuy();
+		if (!errors.file && !errors.description && !errors.name) {
+			handleOpenModalBuy();
+		}
 	});
+
 	return (
 		<>
 			{' '}
@@ -27,9 +29,13 @@ const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handle
 				<InputImage>
 					<input
 						type="file"
+						accept="image/*"
 						className="my-4"
-						{...register('file', { required: true })}
-						onChange={handleInputFile}
+						{...register(`file`, { required: true })}
+						onChange={(e) => {
+							handleInputFile(e);
+							errors.file = undefined;
+						}}
 					/>
 					{errors.file && <p>Image is required</p>}
 				</InputImage>
@@ -59,13 +65,18 @@ const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handle
 				<Box
 					sx={{
 						mt: 2,
+						pointerEvents:
+							errors.file || errors.description || errors.name ? 'none' : 'all',
 						button: {
 							padding: '10px 30px',
 							border: '1.5px solid #e7e8ec',
 							transition: 'all 0.4s',
 							borderRadius: '12px',
 							fontWeight: 500,
-							background: '#fff',
+							background:
+								errors.file || errors.description || errors.name
+									? '#e7e8ec'
+									: '#fff',
 							fontSize: '20px',
 							cursor: 'pointer',
 							fontFamily: 'Montserrat, sans-serif !important',
@@ -85,9 +96,8 @@ const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handle
 							},
 						},
 					}}
-					onClick={handleOpenModalBuy}
 				>
-					<button>Create</button>
+					<button type="submit">create</button>
 				</Box>
 			</form>
 		</>
@@ -95,3 +105,5 @@ const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handle
 };
 
 export default FormMint;
+
+// errors.file && errors.description && errors.name ? handleOpenModalBuy : () => {};
