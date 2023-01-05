@@ -5,7 +5,7 @@ export interface Response<T> {
 export interface InputCreateCollection {
 	name: string;
 	description: string;
-	file: File | null;
+	file: any;
 }
 
 export interface InputCreateNFT extends InputCreateCollection {

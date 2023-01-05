@@ -27,7 +27,7 @@ const useCreateMintSell = () => {
 	});
 	const handleInputFile = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files![0];
-		updateFormInput({ ...formInput, file: file });
+		// updateFormInput({ ...formInput, file: file });
 		const reader = new FileReader();
 		reader.onload = function (event) {
 			setBase64image(event.target!.result!.toString());
@@ -36,7 +36,7 @@ const useCreateMintSell = () => {
 	};
 	const handleInputFileMintNft = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files![0];
-		setFormInputNFT({ ...formInputNFT, file: file });
+		// setFormInputNFT({ ...formInputNFT, file: file });
 		const reader = new FileReader();
 		reader.onload = function (event) {
 			setBase64image(event.target!.result!.toString());
@@ -60,10 +60,9 @@ const useCreateMintSell = () => {
 			return;
 		}
 		try {
-			console.log(file);
 			startLoading();
-			const sotrageRef = ref(storage, `collection/${file.name}`);
-			const uploadTask = uploadBytesResumable(sotrageRef, file);
+			const sotrageRef = ref(storage, `collection/${file[0].name}`);
+			const uploadTask = uploadBytesResumable(sotrageRef, file[0]);
 			uploadTask.on(
 				'state_changed',
 				() => {},
@@ -104,7 +103,6 @@ const useCreateMintSell = () => {
 		failToComplete: () => void
 	) => {
 		const { collection, name, description, amount, royaltyFee, file } = formInputNFT;
-		console.log(formInputNFT);
 		if (!account) {
 			dispatch(openFirstModal());
 			return;
@@ -116,14 +114,15 @@ const useCreateMintSell = () => {
 		}
 		try {
 			startLoading();
-			const sotrageRef = ref(storage, `item/${file.name}`);
-			const uploadTask = uploadBytesResumable(sotrageRef, file);
+			const sotrageRef = ref(storage, `item/${file[0].name}`);
+			const uploadTask = uploadBytesResumable(sotrageRef, file[0]);
 			uploadTask.on(
 				'state_changed',
 				() => {},
 				(error) => console.log('err ', error),
 				async () => {
 					let downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+					console.log(downloadURL);
 					try {
 						const royaltyFeeNumerator = Number(royaltyFee) * 100;
 						const royaltyFeeDenominator = 10000;
