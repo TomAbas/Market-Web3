@@ -64,7 +64,7 @@ const Header: React.FC = () => {
 		{
 			id: 2,
 			name: 'Drop',
-			link: '',
+			link: '/drop',
 		},
 		{
 			id: 3,

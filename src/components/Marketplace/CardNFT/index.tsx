@@ -33,6 +33,14 @@ import item from '../../../assets/images/card/box.webp';
 import aptos from '../../../assets/images/card/aptos.jpg';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
+
+const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
+const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
+const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
+// const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
+const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
+const DECIMAL = 100000000;
+
 export default function CardNFT({
 	offer,
 	setOffers,
@@ -69,12 +77,6 @@ export default function CardNFT({
 			}`,
 		},
 	];
-	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-	const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
-	const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
-	// const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
-	const MARKET_COINT_TYPE = '0x1::aptos_coin::AptosCoin';
-	const DECIMAL = 100000000;
 
 	const { account, signAndSubmitTransaction } = useWallet();
 	const dispatch = useAppDispatch();
@@ -90,7 +92,7 @@ export default function CardNFT({
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::market::buy_token`,
-				type_arguments: [MARKET_COINT_TYPE],
+				type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
 				arguments: [
 					offer.token_id.token_data_id.creator,
 					offer.token_id.token_data_id.collection,
