@@ -9,7 +9,7 @@ import aptos from '../../assets/images/card/aptos.jpg';
 
 const ProfileUser = () => {
 	const { account } = useWallet();
-	console.log(account);
+	// console.log(account);
 	const { tokens, loading } = useTokens(account);
 	const [items, setItems] = useState<any[]>([]);
 

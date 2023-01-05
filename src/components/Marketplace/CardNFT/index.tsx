@@ -3,6 +3,7 @@ import { Box, Grid, Stack, Typography } from '@mui/material';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet, Wallet } from '@manahippo/aptos-wallet-adapter';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { openFirstModal } from '../../../redux/slices/modalWallet';
 import { useAppDispatch } from '../../../redux/hooks';
@@ -77,7 +78,7 @@ export default function CardNFT({
 			}`,
 		},
 	];
-
+	let navigate = useNavigate();
 	const { account, signAndSubmitTransaction } = useWallet();
 	const dispatch = useAppDispatch();
 
@@ -116,6 +117,11 @@ export default function CardNFT({
 		}
 	};
 
+	const handleItem = () => {
+		navigate(`/item?id=${index}`);
+		console.log('1');
+	};
+
 	return (
 		<>
 			<Grid xs={6} sm={4} md={3} p={1}>
@@ -123,7 +129,7 @@ export default function CardNFT({
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
 						<ItemImage>
-							<Box className="main-img">
+							<Box className="main-img" onClick={handleItem}>
 								<img src={offer.uri} alt="item" />
 							</Box>
 							{/* Item favorite */}
