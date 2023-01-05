@@ -15,7 +15,11 @@ export const modalWalletSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		openFirstModal(state) {
-			state.steps = { ...state.steps, firstModal: !state.steps.firstModal };
+			state.steps = {
+				secondModal: false,
+				thirdModal: false,
+				firstModal: !state.steps.firstModal,
+			};
 		},
 		openSecondModal(state) {
 			state.steps = {
@@ -25,7 +29,10 @@ export const modalWalletSlice = createSlice({
 			};
 		},
 		openThirdModal(state) {
-			state.steps = { ...state.steps, secondModal: false, thirdModal: true };
+			state.steps = {
+				...state.steps,
+				thirdModal: !state.steps.thirdModal,
+			};
 		},
 		closeModal(state) {
 			state.steps.firstModal = false;

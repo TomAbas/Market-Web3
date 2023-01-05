@@ -4,6 +4,7 @@ import { InputItem, InputTitle } from './styled';
 import useControlModal from 'hooks/useControlModal';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useCreateMintSell from 'hooks/useCreateMintSell';
+import FormMintNft from 'components/Forms/FormMintNft';
 
 export default function LayoutMintNFT() {
 	const {
@@ -41,11 +42,16 @@ export default function LayoutMintNFT() {
 				flexDirection: 'column',
 			}}
 		>
-			<input type="file" name="Asset" className="my-4" onChange={handleInputFileMintNft} />
+			{/* <input type="file" name="Asset" className="my-4" onChange={handleInputFileMintNft} /> */}
 			{base64image && (
 				<img alt="item image" className="rounded mt-4" width="350" src={base64image} />
 			)}
-			<InputItem>
+			<FormMintNft
+				handleOpenModalBuy={handleOpenModalBuy}
+				updateFormInput={setFormInputNFT}
+				handleInputFileMintNft={handleInputFileMintNft}
+			/>
+			{/* <InputItem>
 				<InputTitle>Collection name</InputTitle>
 				<input
 					type="text"
@@ -72,24 +78,9 @@ export default function LayoutMintNFT() {
 						setFormInputNFT({ ...formInputNFT, description: e.target.value })
 					}
 				/>
-			</InputItem>
-			{/* <InputItem>
-				<InputTitle>Blockchain</InputTitle>
-				<FormControl sx={{ minWidth: 120, width: '100%' }}>
-					<Select
-						value={age}
-						onChange={handleChange}
-						displayEmpty
-						inputProps={{ 'aria-label': 'Without label' }}
-					>
-						<MenuItem value="">
-							<em>Aptos</em>
-						</MenuItem>
-						<MenuItem value={30}>Sui</MenuItem>
-					</Select>
-				</FormControl>
 			</InputItem> */}
-			<InputItem>
+
+			{/* <InputItem>
 				<InputTitle>Royalty Fee (%)</InputTitle>
 				<input
 					type="text"
@@ -142,7 +133,7 @@ export default function LayoutMintNFT() {
 				onClick={handleOpenModalBuy}
 			>
 				<button>Create</button>
-			</Box>
+			</Box> */}
 			<ModalBuy
 				steps={steps}
 				openState={openModalBuy}

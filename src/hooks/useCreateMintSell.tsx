@@ -104,7 +104,7 @@ const useCreateMintSell = () => {
 		failToComplete: () => void
 	) => {
 		const { collection, name, description, amount, royaltyFee, file } = formInputNFT;
-
+		console.log(formInputNFT);
 		if (!account) {
 			dispatch(openFirstModal());
 			return;
@@ -125,7 +125,7 @@ const useCreateMintSell = () => {
 				async () => {
 					let downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 					try {
-						const royaltyFeeNumerator = royaltyFee * 100;
+						const royaltyFeeNumerator = Number(royaltyFee) * 100;
 						const royaltyFeeDenominator = 10000;
 
 						await signAndSubmitTransaction(
@@ -138,7 +138,7 @@ const useCreateMintSell = () => {
 									description,
 									downloadURL,
 									collection,
-									amount,
+									Number(amount),
 									account.address,
 									royaltyFeeNumerator,
 									royaltyFeeDenominator,
