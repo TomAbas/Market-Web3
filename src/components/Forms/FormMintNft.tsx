@@ -20,9 +20,17 @@ const FormMintNft: React.FC<Props> = ({
 		formState: { errors },
 	} = useForm<InputCreateNFT>();
 	const onSubmit = handleSubmit((data) => {
-		console.log(data);
 		updateFormInput(data);
-		handleOpenModalBuy();
+		if (
+			!errors.file &&
+			!errors.amount &&
+			!errors.collection &&
+			!errors.description &&
+			!errors.name &&
+			!errors.royaltyFee
+		) {
+			handleOpenModalBuy();
+		}
 	});
 	return (
 		<>
@@ -32,7 +40,10 @@ const FormMintNft: React.FC<Props> = ({
 					type="file"
 					className="my-4"
 					{...register('file', { required: true })}
-					onChange={handleInputFileMintNft}
+					onChange={(e) => {
+						handleInputFileMintNft(e);
+						errors.file = undefined;
+					}}
 				/>
 				{errors.file && 'Image is required'}
 				<InputItem>
@@ -68,7 +79,7 @@ const FormMintNft: React.FC<Props> = ({
 					<input
 						type="number"
 						placeholder="1"
-						{...register('royaltyFee', { required: true, min: 1, max: 99 })}
+						{...register('royaltyFee', { required: true, min: 1, max: 999 })}
 					/>
 					{errors.royaltyFee && 'Royalty Fee is required'}
 				</InputItem>
@@ -77,20 +88,37 @@ const FormMintNft: React.FC<Props> = ({
 					<input
 						type="number"
 						placeholder="1"
-						{...register('amount', { required: true, min: 1, max: 99 })}
+						{...register('amount', { required: true, min: 1, max: 999 })}
 					/>
 					{errors.amount && 'Amount is required'}
 				</InputItem>
 				<Box
 					sx={{
 						mt: 2,
+						pointerEvents:
+							errors.file ||
+							errors.amount ||
+							errors.collection ||
+							errors.description ||
+							errors.name ||
+							errors.royaltyFee
+								? 'none'
+								: 'all',
 						button: {
 							padding: '10px 30px',
 							border: '1.5px solid #e7e8ec',
 							transition: 'all 0.4s',
 							borderRadius: '12px',
 							fontWeight: 500,
-							background: '#fff',
+							background:
+								errors.file ||
+								errors.amount ||
+								errors.collection ||
+								errors.description ||
+								errors.name ||
+								errors.royaltyFee
+									? '#e7e8ec'
+									: '#fff',
 							fontSize: '20px',
 							cursor: 'pointer',
 							fontFamily: 'Montserrat, sans-serif !important',
@@ -110,9 +138,8 @@ const FormMintNft: React.FC<Props> = ({
 							},
 						},
 					}}
-					onClick={handleOpenModalBuy}
 				>
-					<button>Create</button>
+					<button type="submit">Create</button>
 				</Box>
 			</form>
 		</>
@@ -120,22 +147,3 @@ const FormMintNft: React.FC<Props> = ({
 };
 
 export default FormMintNft;
-
-{
-	/* <InputItem>
-				<InputTitle>Blockchain</InputTitle>
-				<FormControl sx={{ minWidth: 120, width: '100%' }}>
-					<Select
-						value={age}
-						onChange={handleChange}
-						displayEmpty
-						inputProps={{ 'aria-label': 'Without label' }}
-					>
-						<MenuItem value="">
-							<em>Aptos</em>
-						</MenuItem>
-						<MenuItem value={30}>Sui</MenuItem>
-					</Select>
-				</FormControl>
-			</InputItem> */
-}
