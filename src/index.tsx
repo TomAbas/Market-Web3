@@ -18,6 +18,7 @@ import WhiteList from 'components/Drop/drop';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import ProfileUser from 'components/Profile/ProfileUser';
+import MyCollection from 'components/MyCollection';
 const router = createHashRouter([
 	{
 		path: '/',
@@ -61,6 +62,15 @@ const router = createHashRouter([
 				errorElement: (
 					<>
 						<h1>error test profile</h1>
+					</>
+				),
+			},
+			{
+				path: 'myCollection',
+				element: <MyCollection />,
+				errorElement: (
+					<>
+						<h1>error test my collection</h1>
 					</>
 				),
 			},

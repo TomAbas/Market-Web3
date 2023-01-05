@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { getBalanceUser } from '../../utils/getUser';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Link, Stack, Typography } from '@mui/material';
 
 // import userIcon from '../../assets/icons/icon-user-black.svg';
 
@@ -74,16 +74,33 @@ const ModalInfo: React.FC = () => {
 							</Stack>
 							<Stack gap={1.5} pl={2}>
 								<Box onClick={popupState.close}>
-									<a
+									<Link
 										href="/#/profile"
-										style={{
+										sx={{
 											color: 'black',
+											textDecoration: 'none',
+											'&:hover': {
+												color: '#007aff',
+											},
 										}}
 									>
 										Profile
-									</a>
+									</Link>
 								</Box>
-								<Box onClick={popupState.close}>My Collections</Box>
+								<Box onClick={popupState.close}>
+									<Link
+										href="/#/myCollection"
+										sx={{
+											color: 'black',
+											textDecoration: 'none',
+											'&:hover': {
+												color: '#007aff',
+											},
+										}}
+									>
+										My Collections
+									</Link>
+								</Box>
 								<Box onClick={popupState.close}>Settings</Box>
 								<Box onClick={disConnect} style={{ cursor: 'pointer' }}>
 									Logout
