@@ -13,6 +13,7 @@ import 'swiper/swiper.min.css';
 import App from './App';
 import Marketplace from 'components/Marketplace';
 import Mint from 'components/Mint/mint';
+import WhiteList from 'components/Drop/drop';
 // service worker
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
@@ -42,6 +43,15 @@ const router = createHashRouter([
 				errorElement: (
 					<>
 						<h1>error test mint</h1>
+					</>
+				),
+			},
+			{
+				path: '/drop',
+				element: <WhiteList />,
+				errorElement: (
+					<>
+						<h1>error test market</h1>
 					</>
 				),
 			},
