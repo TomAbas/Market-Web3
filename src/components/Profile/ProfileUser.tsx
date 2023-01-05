@@ -2,7 +2,7 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import CardNFTUser from 'components/Marketplace/CardNFTUser';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import banner from '../../assets/banner.png';
 import aptos from '../../assets/images/card/aptos.jpg';
@@ -10,12 +10,21 @@ import aptos from '../../assets/images/card/aptos.jpg';
 const ProfileUser = () => {
 	const { account } = useWallet();
 	const { tokens, loading } = useTokens(account);
+	const [items, setItems] = useState<any[]>([]);
+
 	let myAddress = account?.address?.toString() || '';
 	myAddress =
 		myAddress.slice(0, 6) + '...' + myAddress.slice(myAddress.length - 4, myAddress.length);
-	// const creator =
-	// 	item.creator.slice(0, 6) + '...' + item.creator.slice(item.length - 4, item.creator.length);
-	console.log(tokens);
+	useEffect(() => {
+		console.log('reset');
+		setItems(tokens);
+	}, [tokens]);
+	const handleItems = (index: any) => {
+		let newItems = items.filter((_item, i) => i !== index);
+		setItems(newItems);
+	};
+	console.log(items);
+	// console.log(tokens);
 	return (
 		<>
 			<Box pt={13}>
@@ -80,8 +89,13 @@ const ProfileUser = () => {
 					</Box>
 					<Box py={4}>
 						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-							{tokens.map((item: any) => (
-								<CardNFTUser item={item} key={item.uri} />
+							{items.map((item: any, index: any) => (
+								<CardNFTUser
+									item={item}
+									handleItems={handleItems}
+									index={index}
+									key={index}
+								/>
 							))}
 						</Grid>
 					</Box>

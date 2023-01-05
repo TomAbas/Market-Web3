@@ -15,7 +15,9 @@ import {
 	SpacecyWalletAdapter,
 } from '@manahippo/aptos-wallet-adapter';
 import { Outlet } from 'react-router-dom';
-
+//redux
+import { store } from './redux/store';
+import { Provider } from 'react-redux';
 function App() {
 	const wallets = useMemo(
 		() => [
@@ -29,15 +31,17 @@ function App() {
 	);
 	return (
 		<>
-			<WalletProvider wallets={wallets} autoConnect={true}>
-				<SizeObserver>
-					<Header />
-					<div className="container">
-						<Outlet />
-					</div>
-					<FooterComp />
-				</SizeObserver>
-			</WalletProvider>
+			<Provider store={store}>
+				<WalletProvider wallets={wallets} autoConnect={true}>
+					<SizeObserver>
+						<Header />
+						<div className="container">
+							<Outlet />
+						</div>
+						<FooterComp />
+					</SizeObserver>
+				</WalletProvider>
+			</Provider>
 		</>
 	);
 }

@@ -164,8 +164,14 @@ export default function Marketplace() {
 					Explore NFT
 				</Typography>
 				<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-					{offers.map((offer: any) => (
-						<CardNFT offer={offer} setOffers={setOffers} key={offer.timestamp} />
+					{offers.map((offer: any, index: any) => (
+						<CardNFT
+							offers={offers}
+							offer={offer}
+							setOffers={setOffers}
+							index={index}
+							key={index}
+						/>
 					))}
 				</Grid>
 			</ExploreCollection>
