@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.da562986.css",
-    "main.js": "/static/js/main.b078737a.js",
+    "main.js": "/static/js/main.3afb5dd3.js",
     "static/media/banner.png": "/static/media/banner.2e7d908050b69f9e018e.png",
     "static/media/Metaspacecy-blue.svg": "/static/media/Metaspacecy-blue.5af39b2d25a1f86f45affa2d6bcc9b63.svg",
     "static/media/Asset4.webp": "/static/media/Asset4.f374ff9f94842f06bfb7.webp",
@@ -40,6 +40,6 @@
   },
   "entrypoints": [
     "static/css/main.da562986.css",
-    "static/js/main.b078737a.js"
+    "static/js/main.3afb5dd3.js"
   ]
 }
