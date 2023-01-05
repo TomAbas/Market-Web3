@@ -4,6 +4,7 @@ import { InputItem, InputTitle } from './styled';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
 import useCreateMintSell from 'hooks/useCreateMintSell';
+import FormMint from 'components/Forms/FormMint';
 function RedBar() {
 	return (
 		<Box
@@ -30,8 +31,7 @@ export default function LayoutCreateCollection() {
 		activeStep,
 		statusBuyNft,
 	} = useControlModal();
-	const { handleInputFile, createCollection, base64image, updateFormInput, formInput } =
-		useCreateMintSell();
+	const { handleInputFile, createCollection, base64image, updateFormInput } = useCreateMintSell();
 	const steps = [
 		{
 			label: 'Create your collection',
@@ -54,28 +54,34 @@ export default function LayoutCreateCollection() {
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				// '& .MuiTextField-root': { width: '25ch' },
 			}}
 		>
-			<input type="file" name="Asset" className="my-4" onChange={handleInputFile} />
-			<InputItem>
-				<InputTitle>Name</InputTitle>
-				<input
-					type="text"
-					placeholder="Collection Name"
-					onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
-				/>
-			</InputItem>
-			<InputItem>
-				<InputTitle>Description</InputTitle>
-				<input
-					type="text"
-					placeholder="Description"
-					onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
-				/>
-			</InputItem>
-			{/* Category */}
-			{/* <InputItem>
+			<FormMint
+				handleOpenModalBuy={handleOpenModalBuy}
+				updateFormInput={updateFormInput}
+				handleInputFile={handleInputFile}
+			/>
+			{base64image && <img className="rounded mt-4" width="350" src={base64image} />}
+			<RedBar />
+			<ModalBuy
+				steps={steps}
+				openState={openModalBuy}
+				closeModal={handleCloseModalBuy}
+				activeStep={activeStep}
+				statusBuyNft={statusBuyNft}
+				funcBuyNft={() =>
+					createCollection(startLoading, completeTaskSuccess, handleNext, failToComplete)
+				}
+			/>
+		</Box>
+	);
+}
+
+{
+	/* Category */
+}
+{
+	/* <InputItem>
 				<InputTitle>Category</InputTitle>
 				<FormControl sx={{ minWidth: 120, width: '100%' }}>
 					<Select
@@ -92,52 +98,5 @@ export default function LayoutCreateCollection() {
 						<MenuItem value={30}>Sport</MenuItem>
 					</Select>
 				</FormControl>
-			</InputItem> */}
-			{base64image && <img className="rounded mt-4" width="350" src={base64image} />}
-			<RedBar />
-			<Box
-				sx={{
-					mt: 2,
-					button: {
-						padding: '10px 30px',
-						border: '1.5px solid #e7e8ec',
-						transition: 'all 0.4s',
-						borderRadius: '12px',
-						fontWeight: 500,
-						background: '#fff',
-						fontSize: '20px',
-						cursor: 'pointer',
-						fontFamily: 'Montserrat, sans-serif !important',
-						fontStyle: 'italic !important',
-						width: '180px',
-						'&:hover': {
-							background: '#007aff',
-							borderColor: 'transparent',
-							color: '#fff',
-						},
-						a: {
-							textDecoration: 'none',
-							'&:hover': {
-								textDecoration: 'none',
-								color: '#fff',
-							},
-						},
-					},
-				}}
-				onClick={handleOpenModalBuy}
-			>
-				<button>Create</button>
-			</Box>
-			<ModalBuy
-				steps={steps}
-				openState={openModalBuy}
-				closeModal={handleCloseModalBuy}
-				activeStep={activeStep}
-				statusBuyNft={statusBuyNft}
-				funcBuyNft={() =>
-					createCollection(startLoading, completeTaskSuccess, handleNext, failToComplete)
-				}
-			/>
-		</Box>
-	);
+			</InputItem> */
 }

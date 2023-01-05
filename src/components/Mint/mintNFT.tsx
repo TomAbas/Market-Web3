@@ -4,6 +4,11 @@ import { InputItem, InputTitle } from './styled';
 import useControlModal from 'hooks/useControlModal';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useCreateMintSell from 'hooks/useCreateMintSell';
+import { useWallet } from '@manahippo/aptos-wallet-adapter';
+import React, { useState, useEffect } from 'react';
+import { useTokens } from '../../hooks/useTokens';
+import { walletClient } from '../../utils/aptos';
+import FormMintNft from 'components/Forms/FormMintNft';
 
 export default function LayoutMintNFT() {
 	const {
@@ -33,7 +38,29 @@ export default function LayoutMintNFT() {
 			}`,
 		},
 	];
+	const { account } = useWallet();
+	const { tokens } = useTokens(account);
 
+	// const [collections, setCollections] = useState<any[]>([]);
+	// useEffect(() => {
+	// 	let newCollections = new Set();
+	// 	tokens.map((item) => {
+	// 		if (item.creator == account?.address) {
+	// 			newCollections.add(item.collection);
+	// 		}
+	// 	});
+	// 	const fetch = async () => {
+	// 		const x = await walletClient.getCollection(
+	// 			'0x3b26f9187b1e0b3b266f341df74f94f38b492e7aa0883bcfed3f843c910a789c',
+	// 			'devnet'
+	// 		);
+	// 		console.log('xxxxx');
+	// 		console.log(x);
+	// 	};
+	// 	fetch();
+	// 	setCollections(Array.from(newCollections));
+	// }, [tokens, account]);
+	// console.log(tokens);
 	return (
 		<Box
 			sx={{
@@ -41,11 +68,16 @@ export default function LayoutMintNFT() {
 				flexDirection: 'column',
 			}}
 		>
-			<input type="file" name="Asset" className="my-4" onChange={handleInputFileMintNft} />
+			{/* <input type="file" name="Asset" className="my-4" onChange={handleInputFileMintNft} /> */}
 			{base64image && (
 				<img alt="item image" className="rounded mt-4" width="350" src={base64image} />
 			)}
-			<InputItem>
+			<FormMintNft
+				handleOpenModalBuy={handleOpenModalBuy}
+				updateFormInput={setFormInputNFT}
+				handleInputFileMintNft={handleInputFileMintNft}
+			/>
+			{/* <InputItem>
 				<InputTitle>Collection name</InputTitle>
 				<input
 					type="text"
@@ -72,24 +104,9 @@ export default function LayoutMintNFT() {
 						setFormInputNFT({ ...formInputNFT, description: e.target.value })
 					}
 				/>
-			</InputItem>
-			{/* <InputItem>
-				<InputTitle>Blockchain</InputTitle>
-				<FormControl sx={{ minWidth: 120, width: '100%' }}>
-					<Select
-						value={age}
-						onChange={handleChange}
-						displayEmpty
-						inputProps={{ 'aria-label': 'Without label' }}
-					>
-						<MenuItem value="">
-							<em>Aptos</em>
-						</MenuItem>
-						<MenuItem value={30}>Sui</MenuItem>
-					</Select>
-				</FormControl>
 			</InputItem> */}
-			<InputItem>
+
+			{/* <InputItem>
 				<InputTitle>Royalty Fee (%)</InputTitle>
 				<input
 					type="text"
@@ -142,7 +159,7 @@ export default function LayoutMintNFT() {
 				onClick={handleOpenModalBuy}
 			>
 				<button>Create</button>
-			</Box>
+			</Box> */}
 			<ModalBuy
 				steps={steps}
 				openState={openModalBuy}
