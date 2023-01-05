@@ -91,12 +91,15 @@ export default function DetailCard() {
 	return (
 		<>
 			<Box sx={{ pt: 16, pb: 4, maxWidth: '1440px', mx: 'auto' }}>
-				<Stack direction="row">
-					<Box sx={{ width: '50%', img: { width: '100%' } }}>
+				<Stack direction="row" gap={4}>
+					<Box sx={{ width: '50%', img: { width: '100%', borderRadius: '12px' } }}>
 						<img src={item?.uri} alt="item" />
 					</Box>
-					<Stack gap="10px" sx={{ width: '50%' }}>
-						<Typography variant="h5" fontWeight={500}>
+					<Stack gap="16px" sx={{ width: '50%' }}>
+						<Typography variant="h6" fontWeight={500} sx={{ color: '#007aff' }}>
+							{item?.token_id.token_data_id.collection}
+						</Typography>
+						<Typography variant="h4" fontWeight={500}>
 							{item?.token_id.token_data_id.name}
 						</Typography>
 						<Typography variant="body1">

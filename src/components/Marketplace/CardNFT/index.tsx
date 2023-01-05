@@ -125,11 +125,11 @@ export default function CardNFT({
 	return (
 		<>
 			<Grid xs={6} sm={4} md={3} p={1}>
-				<ItemCardStyle sx={{ boxShadow: 0 }}>
+				<ItemCardStyle sx={{ boxShadow: 0 }} onClick={handleItem}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
 						<ItemImage>
-							<Box className="main-img" onClick={handleItem}>
+							<Box className="main-img">
 								<img src={offer.uri} alt="item" />
 							</Box>
 							{/* Item favorite */}
