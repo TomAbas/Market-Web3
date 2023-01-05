@@ -3,6 +3,7 @@ import { Box, Grid, Stack, Typography } from '@mui/material';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet, Wallet } from '@manahippo/aptos-wallet-adapter';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { openFirstModal } from '../../../redux/slices/modalWallet';
 import { useAppDispatch } from '../../../redux/hooks';
@@ -33,6 +34,14 @@ import item from '../../../assets/images/card/box.webp';
 import aptos from '../../../assets/images/card/aptos.jpg';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
+
+const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
+const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
+const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
+// const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
+const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
+const DECIMAL = 100000000;
+
 export default function CardNFT({
 	offer,
 	setOffers,
@@ -69,13 +78,7 @@ export default function CardNFT({
 			}`,
 		},
 	];
-	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-	const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
-	const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
-	// const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
-	const MARKET_COINT_TYPE = '0x1::aptos_coin::AptosCoin';
-	const DECIMAL = 100000000;
-
+	let navigate = useNavigate();
 	const { account, signAndSubmitTransaction } = useWallet();
 	const dispatch = useAppDispatch();
 
@@ -90,7 +93,7 @@ export default function CardNFT({
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::market::buy_token`,
-				type_arguments: [MARKET_COINT_TYPE],
+				type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
 				arguments: [
 					offer.token_id.token_data_id.creator,
 					offer.token_id.token_data_id.collection,
@@ -114,10 +117,15 @@ export default function CardNFT({
 		}
 	};
 
+	const handleItem = () => {
+		navigate(`/item?id=${index}`);
+		console.log('1');
+	};
+
 	return (
 		<>
 			<Grid xs={6} sm={4} md={3} p={1}>
-				<ItemCardStyle sx={{ boxShadow: 0 }}>
+				<ItemCardStyle sx={{ boxShadow: 0 }} onClick={handleItem}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
 						<ItemImage>

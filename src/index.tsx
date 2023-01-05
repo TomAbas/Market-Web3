@@ -13,10 +13,14 @@ import 'swiper/swiper.min.css';
 import App from './App';
 import Marketplace from 'components/Marketplace';
 import Mint from 'components/Mint/mint';
+import WhiteList from 'components/Drop/drop';
 // service worker
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import ProfileUser from 'components/Profile/ProfileUser';
+import MyCollection from 'components/MyCollection';
+import DetailCard from 'components/Marketplace/DetailCard';
+
 const router = createHashRouter([
 	{
 		path: '/',
@@ -46,11 +50,38 @@ const router = createHashRouter([
 				),
 			},
 			{
+				path: '/item',
+				element: <DetailCard />,
+				errorElement: (
+					<>
+						<h1>error test market</h1>
+					</>
+				),
+			},
+			{
+				path: '/drop',
+				element: <WhiteList />,
+				errorElement: (
+					<>
+						<h1>error test market</h1>
+					</>
+				),
+			},
+			{
 				path: 'profile',
 				element: <ProfileUser />,
 				errorElement: (
 					<>
 						<h1>error test profile</h1>
+					</>
+				),
+			},
+			{
+				path: 'myCollection',
+				element: <MyCollection />,
+				errorElement: (
+					<>
+						<h1>error test my collection</h1>
 					</>
 				),
 			},
