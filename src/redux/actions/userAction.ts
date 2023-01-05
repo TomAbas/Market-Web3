@@ -1,10 +1,4 @@
-import {
-	startLoadingA,
-	hasErrorA,
-	getUserSuccessA,
-	logOutUserSuccessA,
-	getChainIdA,
-} from '../slices/userInfo';
+import { startLoadingA, hasErrorA, getUserSuccessA, logOutUserSuccessA } from '../slices/userInfo';
 import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { selectUser } from '../slices/userInfo';

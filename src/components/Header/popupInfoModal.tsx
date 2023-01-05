@@ -1,34 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { getBalanceUser } from '../../utils/getUser';
 import { Box, Stack, Typography } from '@mui/material';
 
 // import userIcon from '../../assets/icons/icon-user-black.svg';
-
-const ModalInfo: React.FC = () => {
+interface Props {
+	userAddress: any;
+}
+const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 	const [myBalance, setMyBalance] = useState(0);
+	const [sliceAdd, setSliceAdd] = useState('');
 	// useState
-	const { account, disconnect } = useWallet();
-	let myAddress = account?.address?.toString();
+	const { disconnect } = useWallet();
 	const fetchBalance = async () => {
-		try {
-			let balance: number = await getBalanceUser(account?.address);
-			setMyBalance(balance);
-		} catch (error) {
-			// return 0;
+		if (userAddress) {
+			let myAddress =
+				userAddress.toString().slice(0, 6) +
+				'...' +
+				userAddress
+					.toString()
+					.slice(userAddress.toString().length - 4, userAddress.toString().length);
+			setSliceAdd(myAddress);
+			try {
+				let balance: number = await getBalanceUser(userAddress);
+				setMyBalance(balance);
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	};
-	if (myAddress) {
-		myAddress =
-			myAddress.slice(0, 6) + '...' + myAddress.slice(myAddress.length - 4, myAddress.length);
-		fetchBalance();
-	} else {
-		myAddress = '';
-	}
+
 	const disConnect = () => {
 		disconnect();
 	};
+	useEffect(() => {
+		fetchBalance();
+	}, []);
 	return (
 		<PopupState variant="popover" popupId="demo-popup-menu">
 			{(popupState) => (
@@ -61,7 +69,7 @@ const ModalInfo: React.FC = () => {
 									width={50}
 									height={50}
 								/>
-								<Typography variant="body1">{myAddress}</Typography>
+								<Typography variant="body1">{sliceAdd}</Typography>
 							</Stack>
 							<Stack
 								justifyContent="space-between"
@@ -97,4 +105,5 @@ const ModalInfo: React.FC = () => {
 	);
 };
 
-export default ModalInfo;
+// export default ModalInfo;
+export default React.memo(ModalInfo);

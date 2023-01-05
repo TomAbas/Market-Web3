@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
 // mui
-import { Box, Link, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 //redux
@@ -11,9 +11,9 @@ import {
 	sellectStepsModalWallet,
 	openFirstModal,
 	openSecondModal,
+	openThirdModal,
 	closeModal,
 } from '../../redux/slices/modalWallet';
-import { selectUser, selectWeb3 } from '../../redux/slices/userInfo';
 //styled
 import userIcon from '../../assets/icons/icon-user-black.svg';
 import { AppbarHeader, LogoLink, PageLogo, IconItem, LinkWrapper, DropDownContent } from './styled';
@@ -29,7 +29,6 @@ import searchIcon from '../../assets/icons/search.svg';
 import ModalWallet from '../ModalWallet';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 //hooks
-// import { useUserInfo } from '../../redux/actions/userAction';
 import { useSizeObersver } from '../../contexts/SizeObserver';
 import ModalInfo from './popupInfoModal';
 import { useNavigate } from 'react-router-dom';
@@ -38,11 +37,7 @@ import NavBar from 'components/NavBar';
 import NavBarMobile from 'components/NavBarMobile';
 
 const Header: React.FC = () => {
-	const navigate = useNavigate();
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
-	const userInfo = useAppSelector(selectUser);
-	// const userAddress = userInfo?.userAddress;
-	const web3Info = useAppSelector(selectWeb3);
 	const dispatch = useAppDispatch();
 	let ref: any = useRef();
 	const theme = useTheme();
@@ -50,10 +45,10 @@ const Header: React.FC = () => {
 	const { innerWidth } = useSizeObersver();
 	// useState
 	const { account } = useWallet();
+
 	let userAddress = account?.address?.toString();
 	let [background, setBackground] = useState(false);
 	let [option, setOption] = useState(false);
-	const [isModalInfo, setIsModalInfo] = useState(false);
 
 	const listNav = [
 		{
@@ -80,9 +75,10 @@ const Header: React.FC = () => {
 			dispatch(openSecondModal());
 		}
 	};
-	const openModalInfo = () => {
-		setIsModalInfo((prev) => !prev);
+	const openModalInfoUser = () => {
+		dispatch(openThirdModal());
 	};
+
 	const openMoreOption = () => {
 		setOption(!option);
 	};
@@ -245,7 +241,7 @@ const Header: React.FC = () => {
 								{modalWalletSteps.steps.firstModal && !userAddress && (
 									<ClickAwayListener
 										onClickAway={() => {
-											dispatch(closeModal());
+											openModal();
 										}}
 									>
 										<DropDownContent ref={ref}>
@@ -317,7 +313,7 @@ const Header: React.FC = () => {
 								{modalWalletSteps.steps.secondModal && (
 									<ClickAwayListener
 										onClickAway={() => {
-											dispatch(closeModal());
+											openModal();
 										}}
 									>
 										<DropDownContent ref={ref}>
@@ -384,12 +380,12 @@ const Header: React.FC = () => {
 								)}
 							</IconItem>
 							{account?.address && (
-								<IconItem onClick={openModalInfo}>
+								<IconItem onClick={openModalInfoUser}>
 									<img src={userIcon} alt="model info" />
-									{isModalInfo && account?.address && (
+									{modalWalletSteps.steps.thirdModal && account?.address && (
 										<ClickAwayListener
 											onClickAway={() => {
-												openModalInfo();
+												openModalInfoUser();
 											}}
 										>
 											<DropDownContent ref={ref}>
@@ -402,7 +398,7 @@ const Header: React.FC = () => {
 													}}
 													p={4}
 												>
-													<ModalInfo />
+													<ModalInfo userAddress={account?.address} />
 												</Box>
 											</DropDownContent>
 										</ClickAwayListener>
