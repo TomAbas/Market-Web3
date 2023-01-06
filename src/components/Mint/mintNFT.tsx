@@ -9,6 +9,7 @@ import React, { useState, useEffect } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { walletClient } from '../../utils/aptos';
 import FormMintNft from 'components/Forms/FormMintNft';
+import { getListCollectionResource } from '../../utils/dataResource';
 import axios from 'axios';
 
 const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
@@ -49,10 +50,7 @@ export default function LayoutMintNFT() {
 	useEffect(() => {
 		try {
 			const fetchCollection = async () => {
-				const response: any = await axios.get(
-					`${APTOS_NODE_URL}/accounts/${account?.address}/resource/${MARKET_ADDRESS}::nft::CollectionInfo`
-				);
-				const newCollections = response.data.data?.collection_list;
+				const newCollections = await getListCollectionResource(account?.address);
 				setCollections(newCollections);
 			};
 			fetchCollection();

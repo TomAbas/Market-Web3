@@ -19,6 +19,7 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import ProfileUser from 'components/Profile/ProfileUser';
 import MyCollection from 'components/MyCollection';
+import CollectionDetail from 'components/MyCollection/collectionDetail';
 import DetailCard from 'components/Marketplace/DetailCard';
 
 const router = createHashRouter([
@@ -51,6 +52,15 @@ const router = createHashRouter([
 			{
 				path: '/item',
 				element: <DetailCard />,
+				errorElement: (
+					<>
+						<h1>error test market</h1>
+					</>
+				),
+			},
+			{
+				path: '/collection-detail',
+				element: <CollectionDetail />,
 				errorElement: (
 					<>
 						<h1>error test market</h1>

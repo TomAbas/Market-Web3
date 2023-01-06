@@ -110,7 +110,15 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									</Link>
 								</Box>
 								<Box onClick={popupState.close}>Settings</Box>
-								<Box onClick={disConnect} style={{ cursor: 'pointer' }}>
+								<Box
+									onClick={disConnect}
+									sx={{
+										cursor: 'pointer',
+										'&:hover': {
+											color: '#007aff',
+										},
+									}}
+								>
 									Logout
 								</Box>
 							</Stack>

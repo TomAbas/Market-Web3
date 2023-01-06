@@ -18,7 +18,20 @@ export default function MintTabs() {
 	return (
 		<Box sx={{ maxWidth: '940px', mx: 'auto', paddingTop: '150px' }}>
 			<TabContext value={value}>
-				<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+				<Box
+					sx={{
+						borderBottom: 1,
+						borderColor: 'divider',
+						button: {
+							fontSize: '20px',
+							textTransform: 'none',
+							color: '#131740',
+							fontFamily: 'Montserrat, sans-serif',
+							fontWeight: '600',
+							fontStyle: 'italic',
+						},
+					}}
+				>
 					<TabList centered onChange={handleChange} aria-label="lab API tabs example">
 						<Tab label="Item" value="1" />
 						<Tab label="Collection" value="2" />
