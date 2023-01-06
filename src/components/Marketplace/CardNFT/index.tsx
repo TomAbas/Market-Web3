@@ -82,6 +82,9 @@ export default function CardNFT({
 	const { account, signAndSubmitTransaction } = useWallet();
 	const dispatch = useAppDispatch();
 
+	const encodeURI = (uri: string) => {
+		return encodeURIComponent(uri);
+	};
 	const claimOffer = async () => {
 		if (!account) {
 			dispatch(openFirstModal());
@@ -118,7 +121,13 @@ export default function CardNFT({
 	};
 
 	const handleItem = () => {
-		navigate(`/item?id=${index}`);
+		navigate(
+			`/item?creator=${encodeURI(
+				offer.token_id.token_data_id.creator
+			)}&collection=${encodeURI(offer.token_id.token_data_id.collection)}&name=${encodeURI(
+				offer.token_id.token_data_id.name
+			)}`
+		);
 		console.log('1');
 	};
 
@@ -317,7 +326,7 @@ export default function CardNFT({
 										onClick={handleOpenModalBuy}
 										variant="body2"
 										sx={{
-											fontWeight: '600',
+											fontWeight: offer.is_cancle ? '300' : '600',
 											// cursor:
 											// 	item.status === ITEM_STATUS.BUY_NOW
 											// 		? 'pointer'

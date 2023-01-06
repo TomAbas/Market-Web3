@@ -3,6 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateCollection } from 'models/common';
 import { Box } from '@mui/material';
+// import UploadMediaCustom from './UploadMediaCustom';
 
 interface Props {
 	handleOpenModalBuy: any;
@@ -16,6 +17,7 @@ const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handle
 		formState: { errors },
 	} = useForm<InputCreateCollection>();
 	const onSubmit = handleSubmit((data) => {
+		console.log(data);
 		updateFormInput(data);
 		if (!errors.file && !errors.description && !errors.name) {
 			handleOpenModalBuy();
@@ -37,6 +39,18 @@ const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handle
 							errors.file = undefined;
 						}}
 					/>
+					{/* <UploadMediaCustom
+						// type="file"
+						accept={{
+							'image/*': ['.png', '.jpeg', '.jpg'],
+						}}
+						// className="my-4"
+						{...register(`file`, { required: true })}
+						onChange={(e: any) => {
+							handleInputFile(e);
+							errors.file = undefined;
+						}}
+					/> */}
 					{errors.file && <p>Image is required</p>}
 				</InputImage>
 

@@ -1,28 +1,33 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
-import CardNFTUser from 'components/Marketplace/CardNFTUser';
+import CardNFT from 'components/Marketplace/CardNFT';
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useTokens } from '../../hooks/useTokens';
+import { getListItemResource } from '../../utils/dataResource';
 import banner from '../../assets/banner.png';
 import aptos from '../../assets/images/card/aptos.jpg';
 
-const ProfileUser = () => {
-	const { account } = useWallet();
-	// console.log(account);
-	const { tokens, loading } = useTokens(account);
+const CollectionDetail = () => {
 	const [items, setItems] = useState<any[]>([]);
-
-	let myAddress = account?.address?.toString() || '';
+	const search = useLocation().search;
+	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
+	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
+	console.log({ collection, creator });
 	useEffect(() => {
-		console.log('reset');
-		setItems(tokens);
-	}, [tokens]);
-	const handleItems = (index: any) => {
-		let newItems = items.filter((_item, i) => i !== index);
-		setItems(newItems);
-	};
-	console.log(items);
+		const fetchOffers = async () => {
+			const newOffers = await getListItemResource();
+			console.log(newOffers);
+			let newItems = newOffers.filter(
+				(item: any) =>
+					item?.token_id?.token_data_id?.collection == collection &&
+					item?.token_id?.token_data_id?.creator == creator
+			);
+			setItems(newItems);
+		};
+		fetchOffers();
+	}, []);
 	// console.log(tokens);
 	return (
 		<>
@@ -84,18 +89,19 @@ const ProfileUser = () => {
 						>
 							<img src={aptos} alt="aptos" />
 							<Box>
-								{myAddress.slice(0, 6) +
+								{creator?.slice(0, 6) +
 									'...' +
-									myAddress.slice(myAddress.length - 4, myAddress.length)}
+									creator?.slice(creator?.length - 4, creator?.length)}
 							</Box>
 						</Stack>
 					</Box>
 					<Box py={4}>
 						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
 							{items.map((item: any, index: any) => (
-								<CardNFTUser
-									item={item}
-									handleItems={handleItems}
+								<CardNFT
+									offers={items}
+									offer={item}
+									setOffers={setItems}
 									index={index}
 									key={index}
 								/>
@@ -108,4 +114,4 @@ const ProfileUser = () => {
 	);
 };
 
-export default ProfileUser;
+export default CollectionDetail;
