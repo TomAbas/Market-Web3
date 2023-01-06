@@ -2,11 +2,10 @@
 import { Box, Container, Grid, Stack, Typography } from '@mui/material';
 import Slider from 'components/Slider';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-import item from '../../assets/images/card/box.webp';
-import ethe from '../../assets/images/card/Ethereum-icon.svg';
+import { useNavigate } from 'react-router-dom';
 import CardNFT from './CardNFT';
+import { getListItemResource } from '../../utils/dataResource';
+import item from '../../assets/images/card/box.webp';
 
 import {
 	ButtonBlue,
@@ -32,24 +31,61 @@ import {
 } from './styled';
 import Newsletter from './NewsLetter';
 
-const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
-const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
-
 export default function Marketplace() {
 	const [offers, setOffers] = useState<any[]>([]);
+	const [collections, setCollections] = useState<any[]>([]);
+	let navigate = useNavigate();
 	useEffect(() => {
 		const fetchOffers = async () => {
-			const response: any = await axios.get(
-				`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::market::TokenInfo`
-			);
-			const offers = response.data.data?.token_list;
-			offers.reverse();
-			setOffers(offers);
+			const newOffers = await getListItemResource();
+			setOffers(newOffers);
 		};
 		fetchOffers();
 	}, []);
+
+	useEffect(() => {
+		let newCollection = new Map();
+		offers.map((item) => {
+			let collection = newCollection.get(
+				item?.token_id.token_data_id.collection +
+					'/////' +
+					item?.token_id.token_data_id.creator
+			);
+			if (!collection) {
+				newCollection.set(
+					item?.token_id.token_data_id.collection +
+						'/////' +
+						item?.token_id.token_data_id.creator,
+					[item]
+				);
+			} else {
+				collection.push(item);
+				newCollection.set(
+					item?.token_id.token_data_id.collection +
+						'/////' +
+						item?.token_id.token_data_id.creator,
+					collection
+				);
+			}
+		});
+		let newArrCollection = Array.from(newCollection);
+		if (newArrCollection.length > 4) {
+			newArrCollection = newArrCollection.slice(0, 4);
+		}
+		setCollections(newArrCollection);
+	}, [offers]);
 	console.log(offers);
+	console.log(collections);
+
+	const handleCollectionDetail = (creator: string, collection: string) => {
+		//encodeURIComponent
+		navigate(
+			`/collection-detail?creator=${encodeURIComponent(
+				creator
+			)}&collection=${encodeURIComponent(collection)}`
+		);
+	};
+
 	return (
 		<>
 			<ExploreCollection
@@ -247,64 +283,100 @@ export default function Marketplace() {
 					</Typography>
 				</Box>
 				<Grid container spacing={1}>
-					<Grid xs={6} sm={4} md={3} p={1}>
-						<Box
-							sx={{
-								border: '1.5px solid #e7e8ec',
-								borderRadius: '12px',
-								overflow: 'hidden',
-								cursor: 'pointer',
-								transition: 'all 0.4s',
-								'&:hover': {
-									boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
-								},
+					{collections.map((collection, index: any) => (
+						<Grid
+							xs={6}
+							sm={4}
+							md={3}
+							p={1}
+							key={index}
+							onClick={() => {
+								handleCollectionDetail(
+									collection[0].split('/////')[1],
+									collection[0].split('/////')[0]
+								);
 							}}
 						>
 							<Box
 								sx={{
-									img: {
-										width: '100%',
-										minHeight: '250px',
-										objectFit: 'cover',
-										objectPosition: 'center',
-										display: 'block',
+									border: '1.5px solid #e7e8ec',
+									borderRadius: '12px',
+									overflow: 'hidden',
+									cursor: 'pointer',
+									transition: 'all 0.4s',
+									'&:hover': {
+										boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
 									},
 								}}
 							>
-								<img src={item} alt="collection" />
-							</Box>
-							<Box p={1.5}>
-								<Typography variant="h6">Box</Typography>
-								<Stack
-									mt={1}
-									direction="row"
-									alignItems="center"
-									justifyContent="space-between"
-									gap={1}
+								<Box
+									sx={{
+										img: {
+											width: '100%',
+											minHeight: '250px',
+											objectFit: 'cover',
+											objectPosition: 'center',
+											display: 'block',
+										},
+									}}
 								>
-									<Stack direction="row" gap={1} alignItems="center">
-										<Box
-											sx={{
-												img: {
-													width: '32px',
-													height: '32px',
-													objectFit: 'cover',
-													objectPosition: 'center',
-													borderRadius: '50%',
-												},
-											}}
-										>
-											<img src={item} alt="collection" />
+									<img src={collection[1][0].uri} alt="collection" />
+								</Box>
+								<Box p={1.5}>
+									<Typography variant="h6">
+										{collection[0].split('/////')[0]}
+									</Typography>
+									<Stack
+										mt={1}
+										direction="row"
+										alignItems="center"
+										justifyContent="space-between"
+										gap={1}
+									>
+										<Stack direction="row" gap={1} alignItems="center">
+											<Box
+												sx={{
+													img: {
+														width: '32px',
+														height: '32px',
+														objectFit: 'cover',
+														objectPosition: 'center',
+														borderRadius: '50%',
+													},
+												}}
+											>
+												<img src={item} alt="collection" />
+											</Box>
+											<Typography variant="body1">
+												<a
+													href={`https://explorer.aptoslabs.com/account/${
+														collection[0].split('/////')[1]
+													}`}
+													target="_blank"
+												>
+													{collection[0].split('/////')[1].slice(0, 6) +
+														'...' +
+														collection[0]
+															.split('/////')[1]
+															.slice(
+																collection[0].split('/////')[1]
+																	.length - 4,
+																collection[0].split('/////')[1]
+																	.length
+															)}
+												</a>
+											</Typography>
+										</Stack>
+										<Box>
+											<Typography variant="body1">
+												{collection[1].length} items
+											</Typography>
 										</Box>
-										<Typography variant="body1">Adam</Typography>
 									</Stack>
-									<Box>
-										<Typography variant="body1">1 items</Typography>
-									</Box>
-								</Stack>
+								</Box>
 							</Box>
-						</Box>
-					</Grid>
+						</Grid>
+					))}
 				</Grid>
 			</Box>
 		</>
