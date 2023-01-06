@@ -48,7 +48,6 @@ export default function Marketplace() {
 		};
 		fetchOffers();
 	}, []);
-	console.log(offers);
 	return (
 		<>
 			<ExploreCollection

@@ -9,6 +9,11 @@ import React, { useState, useEffect } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { walletClient } from '../../utils/aptos';
 import FormMintNft from 'components/Forms/FormMintNft';
+import axios from 'axios';
+
+const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
+const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
+const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
 
 export default function LayoutMintNFT() {
 	const {
@@ -39,28 +44,21 @@ export default function LayoutMintNFT() {
 		},
 	];
 	const { account } = useWallet();
-	const { tokens } = useTokens(account);
 
-	// const [collections, setCollections] = useState<any[]>([]);
-	// useEffect(() => {
-	// 	let newCollections = new Set();
-	// 	tokens.map((item) => {
-	// 		if (item.creator == account?.address) {
-	// 			newCollections.add(item.collection);
-	// 		}
-	// 	});
-	// 	const fetch = async () => {
-	// 		const x = await walletClient.getCollection(
-	// 			'0x3b26f9187b1e0b3b266f341df74f94f38b492e7aa0883bcfed3f843c910a789c',
-	// 			'devnet'
-	// 		);
-	// 		console.log('xxxxx');
-	// 		console.log(x);
-	// 	};
-	// 	fetch();
-	// 	setCollections(Array.from(newCollections));
-	// }, [tokens, account]);
-	// console.log(tokens);
+	const [collections, setCollections] = useState<any[]>([]);
+	useEffect(() => {
+		try {
+			const fetchCollection = async () => {
+				const response: any = await axios.get(
+					`${APTOS_NODE_URL}/accounts/${account?.address}/resource/${MARKET_ADDRESS}::nft::CollectionInfo`
+				);
+				const newCollections = response.data.data?.collection_list;
+				setCollections(newCollections);
+			};
+			fetchCollection();
+		} catch (error) {}
+	}, [account]);
+	console.log(collections);
 	return (
 		<Box
 			sx={{
@@ -76,6 +74,7 @@ export default function LayoutMintNFT() {
 				handleOpenModalBuy={handleOpenModalBuy}
 				updateFormInput={setFormInputNFT}
 				handleInputFileMintNft={handleInputFileMintNft}
+				collections={collections}
 			/>
 			{/* <InputItem>
 				<InputTitle>Collection name</InputTitle>

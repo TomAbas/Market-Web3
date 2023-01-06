@@ -26,9 +26,24 @@ export const InputItem = styled(Box)({
 			fontFamily: 'Montserrat,sans-serif',
 		},
 	},
+	'& p': {
+		marginTop: '4px',
+		color: 'red',
+	},
 });
 
 export const InputTitle = styled('h6')({
 	fontSize: '18px',
 	marginBottom: '8px',
+	'& span': {
+		marginLeft: '4px',
+		color: 'red',
+	},
+});
+
+export const InputImage = styled(Box)({
+	'& p': {
+		marginTop: '4px',
+		color: 'red',
+	},
 });
