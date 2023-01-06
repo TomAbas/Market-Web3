@@ -3,26 +3,28 @@ import React, { useState, useEffect } from 'react';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import useControlModal from 'hooks/useControlModal';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useAppDispatch } from '../../../redux/hooks';
 import { openFirstModal } from '../../../redux/slices/modalWallet';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
+import { getListItemResource } from '../../../utils/dataResource';
 
-const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const DECIMAL = 100000000;
 
 export default function DetailCard() {
 	const search = useLocation().search;
-	const id = new URLSearchParams(search).get('id');
+	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
+	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
+	const name = decodeURIComponent(new URLSearchParams(search).get('name') || '');
+	// console.log({ id });
 	const { account, signAndSubmitTransaction } = useWallet();
 	const dispatch = useAppDispatch();
 	let navigate = useNavigate();
 	const [item, setItem] = useState<any>();
+	console.log(item);
 	const {
 		handleNext,
 		handleOpenModalBuy,
@@ -50,11 +52,13 @@ export default function DetailCard() {
 	];
 	useEffect(() => {
 		const fetchOffers = async () => {
-			const response: any = await axios.get(
-				`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::market::TokenInfo`
+			const offers = await getListItemResource();
+			const newItem = offers.find(
+				(item: any) =>
+					item.token_id.token_data_id.creator === creator &&
+					item.token_id.token_data_id.collection === collection &&
+					item.token_id.token_data_id.name === name
 			);
-			const offers = response.data.data?.token_list;
-			const newItem = offers.find((item: any, index: any) => index == id);
 			setItem(newItem);
 		};
 		fetchOffers();
@@ -150,7 +154,11 @@ export default function DetailCard() {
 								},
 							}}
 						>
-							<button onClick={handleOpenModalBuy}>Buy now</button>
+							{item?.owner != account?.address ? (
+								<button onClick={handleOpenModalBuy}>Buy now</button>
+							) : (
+								<button>Cancle</button>
+							)}
 						</Box>
 					</Stack>
 				</Stack>

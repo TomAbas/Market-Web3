@@ -2,11 +2,8 @@
 import { Box, Container, Grid, Stack, Typography } from '@mui/material';
 import Slider from 'components/Slider';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-import item from '../../assets/images/card/box.webp';
-import ethe from '../../assets/images/card/Ethereum-icon.svg';
 import CardNFT from './CardNFT';
+import { getListItemResource } from '../../utils/dataResource';
 
 import {
 	ButtonBlue,
@@ -31,20 +28,12 @@ import {
 	LinkWrapper,
 } from './styled';
 
-const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
-const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
-
 export default function Marketplace() {
 	const [offers, setOffers] = useState<any[]>([]);
 	useEffect(() => {
 		const fetchOffers = async () => {
-			const response: any = await axios.get(
-				`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::market::TokenInfo`
-			);
-			const offers = response.data.data?.token_list;
-			offers.reverse();
-			setOffers(offers);
+			const newOffers = await getListItemResource();
+			setOffers(newOffers);
 		};
 		fetchOffers();
 	}, []);

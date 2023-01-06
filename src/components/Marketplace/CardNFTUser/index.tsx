@@ -18,22 +18,19 @@ import {
 	ItemFavorite,
 	IconFavorite,
 } from './styled';
+import { getBalanceUser } from '../../../utils/getUser';
 
 import TwitterIcon from '../../../assets/icons/twitter-white.svg';
 import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
-import HeartFullWhite from '../../../assets/icons/heart-white.svg';
-import item from '../../../assets/images/card/box.webp';
 import aptos from '../../../assets/images/card/aptos.jpg';
 
+const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
+const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
+const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '0x1::aptos_coin::AptosCoin';
+const DECIMAL = 100000000;
+
 const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any; index: any }) => {
-	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-	const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
-	const MARKET_COINT_TYPE = '0x1::aptos_coin::AptosCoin';
-	let creator =
-		item.creator.slice(0, 6) +
-		'...' +
-		item.creator.slice(item.creator.length - 4, item.creator.length);
-	const { signAndSubmitTransaction } = useWallet();
+	const { account, signAndSubmitTransaction } = useWallet();
 	const [open, setOpen] = useState(false);
 	const [supply, setSupply] = useState('');
 	const [price, setPrice] = useState('');
@@ -51,6 +48,8 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 			if (!supply || !price || supply == '0' || price == '0') {
 				return;
 			}
+			let newPrice = parseInt(price) * DECIMAL;
+			let myBalance = await getBalanceUser(account?.address);
 			setStatusList('Listing...');
 			console.log(supply + ' ' + price);
 			const payload = {
@@ -156,7 +155,13 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 													>
 														View History
 													</span> */}
-										creator : {creator}
+										creator :{' '}
+										{item.creator.slice(0, 6) +
+											'...' +
+											item.creator.slice(
+												item.creator.length - 4,
+												item.creator.length
+											)}
 									</Box>
 
 									{/* <Typography
@@ -181,10 +186,10 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 												},
 											}}
 										>
-											List Item
+											Sell Item
 										</Typography>
 										<Dialog open={open} onClose={handleClose}>
-											<DialogTitle>List Item</DialogTitle>
+											<DialogTitle>Sell Item</DialogTitle>
 											<DialogContent>
 												<TextField
 													autoFocus
