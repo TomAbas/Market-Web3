@@ -18,9 +18,9 @@ import WhiteList from 'components/Drop/drop';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import ProfileUser from 'components/Profile/ProfileUser';
+import MyCollection from 'components/MyCollection';
 import DetailCard from 'components/Marketplace/DetailCard';
 
-import MyCollection from 'components/MyCollection';
 const router = createHashRouter([
 	{
 		path: '/',

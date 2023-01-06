@@ -1,4 +1,4 @@
-import { InputItem, InputTitle } from 'components/Mint/styled';
+import { InputItem, InputTitle, InputImage } from 'components/Mint/styled';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateNFT } from 'models/common';
@@ -22,9 +22,17 @@ const FormMintNft: React.FC<Props> = ({
 		formState: { errors },
 	} = useForm<InputCreateNFT>();
 	const onSubmit = handleSubmit((data) => {
-		console.log(data);
 		updateFormInput(data);
-		handleOpenModalBuy();
+		if (
+			!errors.file &&
+			!errors.amount &&
+			!errors.collection &&
+			!errors.description &&
+			!errors.name &&
+			!errors.royaltyFee
+		) {
+			handleOpenModalBuy();
+		}
 	});
 
 	const [collection, setCollection] = useState('');
@@ -33,15 +41,23 @@ const FormMintNft: React.FC<Props> = ({
 		<>
 			{' '}
 			<form onSubmit={onSubmit}>
-				<input
-					type="file"
-					className="my-4"
-					{...register('file', { required: true })}
-					onChange={handleInputFileMintNft}
-				/>
-				{errors.file && 'Image is required'}
+				<InputImage>
+					<input
+						type="file"
+						className="my-4"
+						{...register('file', { required: true })}
+						onChange={(e) => {
+							handleInputFileMintNft(e);
+							errors.file = undefined;
+						}}
+					/>
+					{errors.file && <p>Image is required</p>}
+				</InputImage>
+
 				<InputItem>
-					<InputTitle>Collection</InputTitle>
+					<InputTitle>
+						Collection<span>*</span>
+					</InputTitle>
 					<FormControl sx={{ minWidth: 120, width: '100%' }}>
 						<Select
 							value={collection}
@@ -62,55 +78,80 @@ const FormMintNft: React.FC<Props> = ({
 								</MenuItem>
 							))}
 						</Select>
-						{errors.collection && 'Collection name is required'}
+						{errors.collection && <p>Collection name is required</p>}
 					</FormControl>
 				</InputItem>
 				<InputItem>
-					<InputTitle>Item name</InputTitle>
+					<InputTitle>
+						Item name<span>*</span>
+					</InputTitle>
 					<input
 						type="text"
 						placeholder="Item name"
 						{...register('name', { required: true })}
 					/>
-					{errors.name && 'Item name is required'}
+					{errors.name && <p>Item name is required</p>}
 				</InputItem>
 				<InputItem>
-					<InputTitle>Item Description</InputTitle>
+					<InputTitle>
+						Item Description<span>*</span>
+					</InputTitle>
 					<input
 						type="text"
 						placeholder="Provide a detailed description of your item."
 						{...register('description', { required: true })}
 					/>
-					{errors.description && 'Item description is required'}
+					{errors.description && <p>Item description is required</p>}
 				</InputItem>
 				<InputItem>
-					<InputTitle>Royalty Fee (%)</InputTitle>
+					<InputTitle>
+						Royalty Fee (%)<span>*</span>
+					</InputTitle>
 					<input
 						type="number"
 						placeholder="1"
-						{...register('royaltyFee', { required: true, min: 1, max: 99 })}
+						{...register('royaltyFee', { required: true, min: 1, max: 999 })}
 					/>
-					{errors.royaltyFee && 'Royalty Fee is required'}
+					{errors.royaltyFee && <p>Royalty Fee is required</p>}
 				</InputItem>
 				<InputItem>
-					<InputTitle>Supply</InputTitle>
+					<InputTitle>
+						Supply<span>*</span>
+					</InputTitle>
 					<input
 						type="number"
 						placeholder="1"
-						{...register('amount', { required: true, min: 1, max: 99 })}
+						{...register('amount', { required: true, min: 1, max: 999 })}
 					/>
-					{errors.amount && 'Amount is required'}
+					{errors.amount && <p>Amount is required</p>}
 				</InputItem>
 				<Box
 					sx={{
 						mt: 2,
+						pointerEvents:
+							errors.file ||
+							errors.amount ||
+							errors.collection ||
+							errors.description ||
+							errors.name ||
+							errors.royaltyFee
+								? 'none'
+								: 'all',
 						button: {
 							padding: '10px 30px',
 							border: '1.5px solid #e7e8ec',
 							transition: 'all 0.4s',
 							borderRadius: '12px',
 							fontWeight: 500,
-							background: '#fff',
+							background:
+								errors.file ||
+								errors.amount ||
+								errors.collection ||
+								errors.description ||
+								errors.name ||
+								errors.royaltyFee
+									? '#e7e8ec'
+									: '#fff',
 							fontSize: '20px',
 							cursor: 'pointer',
 							fontFamily: 'Montserrat, sans-serif !important',
@@ -130,9 +171,8 @@ const FormMintNft: React.FC<Props> = ({
 							},
 						},
 					}}
-					onClick={handleOpenModalBuy}
 				>
-					<button>Create</button>
+					<button type="submit">Create</button>
 				</Box>
 			</form>
 		</>
@@ -142,22 +182,3 @@ const FormMintNft: React.FC<Props> = ({
 // const handleChange = () => {};
 
 export default FormMintNft;
-
-{
-	// <InputItem>
-	// 	<InputTitle>Blockchain</InputTitle>
-	// 	<FormControl sx={{ minWidth: 120, width: '100%' }}>
-	// 		<Select
-	// 			value={'1'}
-	// 			onChange={handleChange}
-	// 			displayEmpty
-	// 			inputProps={{ 'aria-label': 'Without label' }}
-	// 		>
-	// 			<MenuItem value="">
-	// 				<em>Aptos</em>
-	// 			</MenuItem>
-	// 			<MenuItem value={30}>Sui</MenuItem>
-	// 		</Select>
-	// 	</FormControl>
-	// </InputItem>;
-}

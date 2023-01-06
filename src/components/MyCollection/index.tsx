@@ -50,7 +50,7 @@ export default function MyCollection() {
 									sx={{
 										img: {
 											width: '100%',
-											minHeight: '300px',
+											minHeight: '250px',
 											objectFit: 'cover',
 											objectPosition: 'center',
 											display: 'block',

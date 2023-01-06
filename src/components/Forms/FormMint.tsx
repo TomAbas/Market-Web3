@@ -1,4 +1,4 @@
-import { InputItem, InputTitle } from 'components/Mint/styled';
+import { InputImage, InputItem, InputTitle } from 'components/Mint/styled';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateCollection } from 'models/common';
@@ -16,49 +16,67 @@ const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handle
 		formState: { errors },
 	} = useForm<InputCreateCollection>();
 	const onSubmit = handleSubmit((data) => {
-		console.log(data);
 		updateFormInput(data);
-		handleOpenModalBuy();
+		if (!errors.file && !errors.description && !errors.name) {
+			handleOpenModalBuy();
+		}
 	});
+
 	return (
 		<>
 			{' '}
 			<form onSubmit={onSubmit}>
-				<input
-					type="file"
-					className="my-4"
-					{...register('file', { required: true })}
-					onChange={handleInputFile}
-				/>
-				{errors.file && 'Image is required'}
+				<InputImage>
+					<input
+						type="file"
+						accept="image/*"
+						className="my-4"
+						{...register(`file`, { required: true })}
+						onChange={(e) => {
+							handleInputFile(e);
+							errors.file = undefined;
+						}}
+					/>
+					{errors.file && <p>Image is required</p>}
+				</InputImage>
+
 				<InputItem>
-					<InputTitle>Name</InputTitle>
+					<InputTitle>
+						Name<span>*</span>
+					</InputTitle>
 					<input
 						type="text"
 						placeholder="Collection Name"
 						{...register('name', { required: true })}
 					/>
-					{errors.name && 'Name is required'}
+					{errors.name && <p>Name is required</p>}
 				</InputItem>
 				<InputItem>
-					<InputTitle>Description</InputTitle>
+					<InputTitle>
+						Description<span>*</span>
+					</InputTitle>
 					<input
 						type="text"
 						placeholder="Description"
 						{...register('description', { required: true })}
 					/>
-					{errors.description && 'Description is required'}
+					{errors.description && <p>Description is required</p>}
 				</InputItem>
 				<Box
 					sx={{
 						mt: 2,
+						pointerEvents:
+							errors.file || errors.description || errors.name ? 'none' : 'all',
 						button: {
 							padding: '10px 30px',
 							border: '1.5px solid #e7e8ec',
 							transition: 'all 0.4s',
 							borderRadius: '12px',
 							fontWeight: 500,
-							background: '#fff',
+							background:
+								errors.file || errors.description || errors.name
+									? '#e7e8ec'
+									: '#fff',
 							fontSize: '20px',
 							cursor: 'pointer',
 							fontFamily: 'Montserrat, sans-serif !important',
@@ -78,9 +96,8 @@ const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handle
 							},
 						},
 					}}
-					onClick={handleOpenModalBuy}
 				>
-					<button>Create</button>
+					<button type="submit">create</button>
 				</Box>
 			</form>
 		</>
@@ -88,3 +105,5 @@ const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handle
 };
 
 export default FormMint;
+
+// errors.file && errors.description && errors.name ? handleOpenModalBuy : () => {};
