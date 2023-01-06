@@ -27,6 +27,7 @@ import {
 	SubTitle,
 	LinkWrapper,
 } from './styled';
+import Newsletter from './NewsLetter';
 
 export default function Marketplace() {
 	const [offers, setOffers] = useState<any[]>([]);
@@ -165,6 +166,136 @@ export default function Marketplace() {
 					))}
 				</Grid>
 			</ExploreCollection>
+			<ExploreCollection sx={{ pt: 4 }}>
+				<Container maxWidth="xl" sx={{}}>
+					<Box sx={{ mt: 0, mb: 4 }}>
+						<HeaderSection>
+							<MainHeader variant="h2" fontWeight="500" fontStyle="italic">
+								Metaspacecy is the universal NFT marketplace
+							</MainHeader>
+						</HeaderSection>
+
+						<Newsletter />
+					</Box>
+				</Container>
+				<HotService>
+					<ServiceTitle>
+						Join our mailing list to stay in the loop with our latest feature releases,
+						<br />
+						NFT drops, and tips and tricks for navigating Metaspacecy
+					</ServiceTitle>
+					<EmailSearch
+						sx={{
+							input: {
+								'::placeholder': {
+									fontSize: '16px',
+									fontStyle: 'italic',
+								},
+							},
+						}}
+					>
+						<input type="text" placeholder="Email address" />
+						<Box
+							sx={{
+								button: {
+									padding: '10px 30px',
+									border: '1.5px solid #e7e8ec',
+									transition: 'all 0.4s',
+									borderRadius: '12px',
+									fontWeight: 500,
+									background: '#fff',
+									fontSize: '16px',
+									cursor: 'pointer',
+									fontFamily: 'Montserrat, sans-serif !important',
+									fontStyle: 'italic !important',
+									width: '180px',
+									'&:hover': {
+										background: '#007aff',
+										borderColor: 'transparent',
+										color: '#fff',
+									},
+									a: {
+										textDecoration: 'none',
+										'&:hover': {
+											textDecoration: 'none',
+											color: '#fff',
+										},
+									},
+								},
+							}}
+						>
+							<button>Subscribe</button>
+						</Box>
+					</EmailSearch>
+				</HotService>
+			</ExploreCollection>
+			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 3, pb: 4 }}>
+				<Box sx={{ textAlign: 'center', mb: 4 }}>
+					<Typography variant="h2" fontWeight={500}>
+						Featured Collections
+					</Typography>
+				</Box>
+				<Grid container spacing={1}>
+					<Grid xs={6} sm={4} md={3} p={1}>
+						<Box
+							sx={{
+								border: '1.5px solid #e7e8ec',
+								borderRadius: '12px',
+								overflow: 'hidden',
+								cursor: 'pointer',
+								transition: 'all 0.4s',
+								'&:hover': {
+									boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
+								},
+							}}
+						>
+							<Box
+								sx={{
+									img: {
+										width: '100%',
+										minHeight: '250px',
+										objectFit: 'cover',
+										objectPosition: 'center',
+										display: 'block',
+									},
+								}}
+							>
+								<img src={item} alt="collection" />
+							</Box>
+							<Box p={1.5}>
+								<Typography variant="h6">Box</Typography>
+								<Stack
+									mt={1}
+									direction="row"
+									alignItems="center"
+									justifyContent="space-between"
+									gap={1}
+								>
+									<Stack direction="row" gap={1} alignItems="center">
+										<Box
+											sx={{
+												img: {
+													width: '32px',
+													height: '32px',
+													objectFit: 'cover',
+													objectPosition: 'center',
+													borderRadius: '50%',
+												},
+											}}
+										>
+											<img src={item} alt="collection" />
+										</Box>
+										<Typography variant="body1">Adam</Typography>
+									</Stack>
+									<Box>
+										<Typography variant="body1">1 items</Typography>
+									</Box>
+								</Stack>
+							</Box>
+						</Box>
+					</Grid>
+				</Grid>
+			</Box>
 		</>
 	);
 }

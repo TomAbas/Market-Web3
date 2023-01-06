@@ -8,7 +8,9 @@ export const ItemCardStyle = styled(Card)(({ theme }) => ({
 	borderRadius: '12px',
 	border: '1.8px solid #E7E8EC',
 	cursor: 'pointer',
-	'&:hover': {},
+	'&:hover': {
+		boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
+	},
 }));
 
 export const ItemImage = styled(Box)(({ theme }) => ({
@@ -16,7 +18,7 @@ export const ItemImage = styled(Box)(({ theme }) => ({
 	width: '100%',
 	paddingTop: '100%',
 	borderRadius: '12px',
-	// overflow: 'hidden',
+	overflow: 'hidden',
 
 	'.main-img img, video': {
 		position: 'absolute',
@@ -26,6 +28,7 @@ export const ItemImage = styled(Box)(({ theme }) => ({
 		// maxHeight: '100%',
 		// maxWidth: '100%',
 		width: '100%',
+		borderRadius: '10px',
 	},
 }));
 
