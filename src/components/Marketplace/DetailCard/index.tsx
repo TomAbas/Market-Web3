@@ -24,7 +24,6 @@ export default function DetailCard() {
 	const dispatch = useAppDispatch();
 	let navigate = useNavigate();
 	const [item, setItem] = useState<any>();
-	console.log(item);
 	const {
 		handleNext,
 		handleOpenModalBuy,

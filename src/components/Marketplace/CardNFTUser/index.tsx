@@ -18,7 +18,6 @@ import {
 	ItemFavorite,
 	IconFavorite,
 } from './styled';
-import { getBalanceUser } from '../../../utils/getUser';
 
 import TwitterIcon from '../../../assets/icons/twitter-white.svg';
 import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
@@ -48,15 +47,21 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 			if (!supply || !price || supply == '0' || price == '0') {
 				return;
 			}
-			let newPrice = parseInt(price) * DECIMAL;
-			let myBalance = await getBalanceUser(account?.address);
+			let newPrice = parseFloat(price) * DECIMAL;
 			setStatusList('Listing...');
-			console.log(supply + ' ' + price);
+			console.log(supply + ' ' + newPrice);
 			const payload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::market::list_token`,
 				type_arguments: [MARKET_COINT_TYPE],
-				arguments: [item.creator, item.collection, item.name, '0', item.supply, price],
+				arguments: [
+					item.creator,
+					item.collection,
+					item.name,
+					'0',
+					item.supply,
+					newPrice.toString(),
+				],
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
 			setStatusList('List');
