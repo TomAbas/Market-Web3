@@ -172,7 +172,7 @@ export const ExploreCollection = styled(Box)(({ theme }) => ({
 	position: 'relative',
 	padding: ' 32px 0 32px',
 	color: '#131740',
-	background: 'linear-gradient(180deg, #E0F4FF 0%, #FFFFFF 100%)',
+	// background: 'linear-gradient(180deg, #E0F4FF 0%, #FFFFFF 100%)',
 	[theme.breakpoints.down(480)]: {
 		padding: '8px 0',
 	},
