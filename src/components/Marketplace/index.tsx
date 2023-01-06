@@ -28,6 +28,7 @@ import {
 	EmailSearch,
 	SubTitle,
 	LinkWrapper,
+	ItemImage,
 } from './styled';
 import Newsletter from './NewsLetter';
 
@@ -317,25 +318,19 @@ export default function Marketplace() {
 										overflow: 'hidden',
 										cursor: 'pointer',
 										transition: 'all 0.4s',
+										padding: '0 12px',
 										'&:hover': {
 											boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
 										},
 									}}
 								>
-									<Box
-										sx={{
-											img: {
-												width: '100%',
-												minHeight: '250px',
-												objectFit: 'cover',
-												objectPosition: 'center',
-												display: 'block',
-											},
-										}}
-									>
-										<img src={collection[1][0].uri} alt="collection" />
-									</Box>
-									<Box p={1.5}>
+									<ItemImage>
+										<Box className="main-img">
+											<img src={collection[1][0].uri} alt="collection" />
+										</Box>
+									</ItemImage>
+
+									<Box py={1.5}>
 										<Typography variant="h6">
 											{collection[0].split('/////')[0]}
 										</Typography>
