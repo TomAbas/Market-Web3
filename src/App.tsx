@@ -24,8 +24,8 @@ function App() {
 			new AptosWalletAdapter(),
 			new MartianWalletAdapter(),
 			new PontemWalletAdapter(),
-			new FewchaWalletAdapter(),
-			new SpacecyWalletAdapter(),
+			// new FewchaWalletAdapter(),
+			// new SpacecyWalletAdapter(),
 		],
 		[]
 	);
