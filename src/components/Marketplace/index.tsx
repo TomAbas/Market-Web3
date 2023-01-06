@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, Container, Grid, Stack, Typography } from '@mui/material';
+import { Box, Container, Grid, Link, Stack, Typography } from '@mui/material';
 import Slider from 'components/Slider';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -28,6 +28,7 @@ import {
 	EmailSearch,
 	SubTitle,
 	LinkWrapper,
+	ItemImage,
 } from './styled';
 import Newsletter from './NewsLetter';
 
@@ -297,13 +298,14 @@ export default function Marketplace() {
 								);
 							}}
 						>
-							<Box
+							<Link
+								href={`https://explorer.aptoslabs.com/account/${
+									collection[0].split('/////')[1]
+								}`}
+								target="_blank"
 								sx={{
-									border: '1.5px solid #e7e8ec',
-									borderRadius: '12px',
-									overflow: 'hidden',
-									cursor: 'pointer',
-									transition: 'all 0.4s',
+									textDecoration: 'none',
+									color: '#131740',
 									'&:hover': {
 										boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
 									},
@@ -311,49 +313,49 @@ export default function Marketplace() {
 							>
 								<Box
 									sx={{
-										img: {
-											width: '100%',
-											minHeight: '250px',
-											objectFit: 'cover',
-											objectPosition: 'center',
-											display: 'block',
+										border: '1.5px solid #e7e8ec',
+										borderRadius: '12px',
+										overflow: 'hidden',
+										cursor: 'pointer',
+										transition: 'all 0.4s',
+										padding: '0 12px',
+										'&:hover': {
+											boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
 										},
 									}}
 								>
-									<img src={collection[1][0].uri} alt="collection" />
-								</Box>
-								<Box p={1.5}>
-									<Typography variant="h6">
-										{collection[0].split('/////')[0]}
-									</Typography>
-									<Stack
-										mt={1}
-										direction="row"
-										alignItems="center"
-										justifyContent="space-between"
-										gap={1}
-									>
-										<Stack direction="row" gap={1} alignItems="center">
-											<Box
-												sx={{
-													img: {
-														width: '32px',
-														height: '32px',
-														objectFit: 'cover',
-														objectPosition: 'center',
-														borderRadius: '50%',
-													},
-												}}
-											>
-												<img src={item} alt="collection" />
-											</Box>
-											<Typography variant="body1">
-												<a
-													href={`https://explorer.aptoslabs.com/account/${
-														collection[0].split('/////')[1]
-													}`}
-													target="_blank"
+									<ItemImage>
+										<Box className="main-img">
+											<img src={collection[1][0].uri} alt="collection" />
+										</Box>
+									</ItemImage>
+
+									<Box py={1.5}>
+										<Typography variant="h6">
+											{collection[0].split('/////')[0]}
+										</Typography>
+										<Stack
+											mt={1}
+											direction="row"
+											alignItems="center"
+											justifyContent="space-between"
+											gap={1}
+										>
+											<Stack direction="row" gap={1} alignItems="center">
+												<Box
+													sx={{
+														img: {
+															width: '32px',
+															height: '32px',
+															objectFit: 'cover',
+															objectPosition: 'center',
+															borderRadius: '50%',
+														},
+													}}
 												>
+													<img src={item} alt="collection" />
+												</Box>
+												<Typography variant="body1">
 													{collection[0].split('/////')[1].slice(0, 6) +
 														'...' +
 														collection[0]
@@ -364,17 +366,17 @@ export default function Marketplace() {
 																collection[0].split('/////')[1]
 																	.length
 															)}
-												</a>
-											</Typography>
+												</Typography>
+											</Stack>
+											<Box>
+												<Typography variant="body1">
+													{collection[1].length} items
+												</Typography>
+											</Box>
 										</Stack>
-										<Box>
-											<Typography variant="body1">
-												{collection[1].length} items
-											</Typography>
-										</Box>
-									</Stack>
+									</Box>
 								</Box>
-							</Box>
+							</Link>
 						</Grid>
 					))}
 				</Grid>

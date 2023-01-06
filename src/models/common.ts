@@ -13,3 +13,9 @@ export interface InputCreateNFT extends InputCreateCollection {
 	amount: number;
 	royaltyFee: number;
 }
+
+export interface CustomFile extends File {
+	path?: string;
+	preview?: string;
+	raw?: File;
+}

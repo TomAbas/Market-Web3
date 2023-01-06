@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import item from '../../assets/images/card/box.webp';
+import { ItemImage } from 'components/Marketplace/styled';
 
 export default function MyCollection() {
 	const { account } = useWallet();
@@ -46,19 +47,11 @@ export default function MyCollection() {
 									},
 								}}
 							>
-								<Box
-									sx={{
-										img: {
-											width: '100%',
-											minHeight: '250px',
-											objectFit: 'cover',
-											objectPosition: 'center',
-											display: 'block',
-										},
-									}}
-								>
-									<img src={collection[1][0].uri} alt="collection" />
-								</Box>
+								<ItemImage>
+									<Box className="main-img">
+										<img src={collection[1][0].uri} alt="collection" />
+									</Box>
+								</ItemImage>
 								<Box p={1.5}>
 									<Typography variant="h6">
 										{collection[0].split('/////')[0]}
