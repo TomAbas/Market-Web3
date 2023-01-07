@@ -12,7 +12,7 @@ import { Typography } from '@mui/material';
 // import LayoutCreateCollection from './createCollection';
 
 export default function ViewAll() {
-	const [value, setValue] = React.useState('1');
+	const [value, setValue] = React.useState('2');
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);

@@ -40,6 +40,9 @@ const FormMint: React.FC<Props> = ({
 			{' '}
 			<form onSubmit={onSubmit}>
 				<InputImage>
+					{/* <InputTitle>
+						Image<span>*</span>
+					</InputTitle> */}
 					<UploadMediaCustom
 						onDrop={handleDropFile}
 						sx={{

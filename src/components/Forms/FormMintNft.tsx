@@ -61,6 +61,9 @@ const FormMintNft: React.FC<Props> = ({
 							errors.file = undefined;
 						}}
 					/> */}
+					{/* <InputTitle>
+						Image<span>*</span>
+					</InputTitle> */}
 					<UploadMediaCustom
 						onDrop={handleDropFile}
 						sx={{

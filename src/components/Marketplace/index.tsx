@@ -113,7 +113,7 @@ export default function Marketplace() {
 							}}
 						>
 							<LinkWrapper
-								href="#/view-all"
+								href="#/mint"
 								sx={{
 									button: {
 										padding: '10px 30px',
@@ -146,7 +146,7 @@ export default function Marketplace() {
 							</LinkWrapper>
 
 							<LinkWrapper
-								href=""
+								href="#/view-all"
 								sx={{
 									button: {
 										padding: '10px 30px',
