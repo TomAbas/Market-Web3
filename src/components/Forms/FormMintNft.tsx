@@ -3,25 +3,35 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateNFT } from 'models/common';
 import { Box, Select, FormControl, MenuItem } from '@mui/material';
+import UploadMediaCustom from './UploadMediaCustom';
 
 interface Props {
 	handleOpenModalBuy: any;
 	updateFormInput: any;
 	handleInputFileMintNft: any;
 	collections: any;
+	base64image: any;
 }
 const FormMintNft: React.FC<Props> = ({
 	handleOpenModalBuy,
 	updateFormInput,
 	handleInputFileMintNft,
 	collections,
+	base64image,
 }) => {
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
 	} = useForm<InputCreateNFT>();
+	const handleDropFile = (e: any) => {
+		handleInputFileMintNft(e[0]);
+		setValue('file', e[0]);
+		errors.file = undefined;
+	};
 	const onSubmit = handleSubmit((data) => {
+		console.log(data);
 		updateFormInput(data);
 		if (
 			!errors.file &&
@@ -42,7 +52,7 @@ const FormMintNft: React.FC<Props> = ({
 			{' '}
 			<form onSubmit={onSubmit}>
 				<InputImage>
-					<input
+					{/* <input
 						type="file"
 						className="my-4"
 						{...register('file', { required: true })}
@@ -50,6 +60,27 @@ const FormMintNft: React.FC<Props> = ({
 							handleInputFileMintNft(e);
 							errors.file = undefined;
 						}}
+					/> */}
+					<UploadMediaCustom
+						onDrop={handleDropFile}
+						sx={{
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							width: '100%',
+							height: '100%',
+							borderRadius: '12px',
+							padding: 1,
+							border: '1px dashed #5A5D79',
+							objectFit: 'contain',
+						}}
+						accept={{
+							'image/*': ['.png', '.jpeg', '.jpg'],
+						}}
+						file={base64image}
+						maxSize={10485760}
+						error={Boolean(errors.file)}
+						{...register(`file`, { required: true })}
 					/>
 					{errors.file && <p>Image is required</p>}
 				</InputImage>
