@@ -25,7 +25,6 @@ import ViewAll from 'components/Marketplace/ViewAll';
 
 const router = createHashRouter([
 	{
-		path: '/',
 		element: <App />,
 		errorElement: (
 			<>

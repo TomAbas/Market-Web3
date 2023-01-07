@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 
-import { walletsModalConnect } from '../../models/walletModal';
+import { walletsModalConnect } from '../../models/modals';
 export interface modalWalletConnect {
 	steps: walletsModalConnect;
 }

@@ -43,6 +43,7 @@ const Header: React.FC = () => {
 	const theme = useTheme();
 	const isLightTheme = theme.palette.mode === 'dark';
 	const { innerWidth } = useSizeObersver();
+	// useUserInfo();
 	// useState
 	const { account } = useWallet();
 
