@@ -18,7 +18,7 @@ export const getListItemResource = async () => {
 export const getListCollectionResource = async (address: any) => {
 	try {
 		const response: any = await axios.get(
-			`${APTOS_NODE_URL}/accounts/${address}/resource/${MARKET_ADDRESS}::nft::CollectionInfo`
+			`${APTOS_NODE_URL}accounts/${address}/resource/${MARKET_ADDRESS}::nft::CollectionInfo`
 		);
 		return response.data.data?.collection_list;
 	} catch (error) {

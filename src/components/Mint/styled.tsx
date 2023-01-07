@@ -42,6 +42,8 @@ export const InputTitle = styled('h6')({
 });
 
 export const InputImage = styled(Box)({
+	height: '300px',
+	position: 'relative',
 	'& p': {
 		marginTop: '4px',
 		color: 'red',

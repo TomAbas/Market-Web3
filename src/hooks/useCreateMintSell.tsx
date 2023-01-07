@@ -2,7 +2,7 @@ import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../config/firebase';
 import { InputCreateCollection, InputCreateNFT } from 'models/common';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch } from 'redux/hooks';
 import { openFirstModal } from 'redux/slices/modalWallet';
 
@@ -25,23 +25,31 @@ const useCreateMintSell = () => {
 		royaltyFee: 0,
 		file: null,
 	});
-	const handleInputFile = (e: ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files![0];
-		// updateFormInput({ ...formInput, file: file });
-		const reader = new FileReader();
-		reader.onload = function (event) {
-			setBase64image(event.target!.result!.toString());
-		};
-		reader.readAsDataURL(file);
+	const handleInputFile = (e: any) => {
+		// const file = e.target.files![0];
+		// // updateFormInput({ ...formInput, file: file });
+		// const reader = new FileReader();
+		// reader.onload = function (event) {
+		// 	setBase64image(event.target!.result!.toString());
+		// };
+		// reader.readAsDataURL(file);
+		if (e) {
+			const file = e;
+			setBase64image({ ...file, preview: URL.createObjectURL(file) });
+		}
 	};
-	const handleInputFileMintNft = (e: ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files![0];
-		// setFormInputNFT({ ...formInputNFT, file: file });
-		const reader = new FileReader();
-		reader.onload = function (event) {
-			setBase64image(event.target!.result!.toString());
-		};
-		reader.readAsDataURL(file);
+	const handleInputFileMintNft = (e: any) => {
+		// const file = e.target.files![0];
+		// // setFormInputNFT({ ...formInputNFT, file: file });
+		// const reader = new FileReader();
+		// reader.onload = function (event) {
+		// 	setBase64image(event.target!.result!.toString());
+		// };
+		// reader.readAsDataURL(file);
+		if (e) {
+			const file = e;
+			setBase64image({ ...file, preview: URL.createObjectURL(file) });
+		}
 	};
 	const createCollection = (
 		startLoading: () => void,
@@ -49,8 +57,9 @@ const useCreateMintSell = () => {
 		handleNext: () => void,
 		failToComplete: () => void
 	) => {
+		console.log(formInput);
 		const { name, description, file } = formInput;
-		console.log(file);
+		// console.log(file);
 		if (!account) {
 			dispatch(openFirstModal());
 			return;
@@ -62,8 +71,8 @@ const useCreateMintSell = () => {
 		}
 		try {
 			startLoading();
-			const sotrageRef = ref(storage, `collection/${file[0].name}`);
-			const uploadTask = uploadBytesResumable(sotrageRef, file[0]);
+			const sotrageRef = ref(storage, `collection/${file.name}`);
+			const uploadTask = uploadBytesResumable(sotrageRef, file);
 			uploadTask.on(
 				'state_changed',
 				() => {},
@@ -115,8 +124,8 @@ const useCreateMintSell = () => {
 		}
 		try {
 			startLoading();
-			const sotrageRef = ref(storage, `item/${file[0].name}`);
-			const uploadTask = uploadBytesResumable(sotrageRef, file[0]);
+			const sotrageRef = ref(storage, `item/${file.name}`);
+			const uploadTask = uploadBytesResumable(sotrageRef, file);
 			uploadTask.on(
 				'state_changed',
 				() => {},

@@ -43,8 +43,6 @@ export default function Marketplace() {
 		};
 		fetchOffers();
 	}, []);
-<<<<<<< HEAD
-=======
 
 	useEffect(() => {
 		let newCollection = new Map();
@@ -89,7 +87,6 @@ export default function Marketplace() {
 		);
 	};
 
->>>>>>> dev-tun
 	return (
 		<>
 			<ExploreCollection

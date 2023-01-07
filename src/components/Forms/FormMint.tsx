@@ -3,21 +3,32 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateCollection } from 'models/common';
 import { Box } from '@mui/material';
-// import UploadMediaCustom from './UploadMediaCustom';
+import UploadMediaCustom from './UploadMediaCustom';
 
 interface Props {
+	base64image: any;
 	handleOpenModalBuy: any;
 	updateFormInput: any;
 	handleInputFile: any;
 }
-const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handleInputFile }) => {
+const FormMint: React.FC<Props> = ({
+	handleOpenModalBuy,
+	updateFormInput,
+	handleInputFile,
+	base64image,
+}) => {
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
 	} = useForm<InputCreateCollection>();
+	const handleDropFile = (e: any) => {
+		handleInputFile(e[0]);
+		setValue('file', e[0]);
+		errors.file = undefined;
+	};
 	const onSubmit = handleSubmit((data) => {
-		console.log(data);
 		updateFormInput(data);
 		if (!errors.file && !errors.description && !errors.name) {
 			handleOpenModalBuy();
@@ -29,28 +40,27 @@ const FormMint: React.FC<Props> = ({ handleOpenModalBuy, updateFormInput, handle
 			{' '}
 			<form onSubmit={onSubmit}>
 				<InputImage>
-					<input
-						type="file"
-						accept="image/*"
-						className="my-4"
-						{...register(`file`, { required: true })}
-						onChange={(e) => {
-							handleInputFile(e);
-							errors.file = undefined;
+					<UploadMediaCustom
+						onDrop={handleDropFile}
+						sx={{
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							width: '100%',
+							height: '100%',
+							borderRadius: '12px',
+							padding: 1,
+							border: '1px dashed #5A5D79',
+							objectFit: 'contain',
 						}}
-					/>
-					{/* <UploadMediaCustom
-						// type="file"
 						accept={{
 							'image/*': ['.png', '.jpeg', '.jpg'],
 						}}
-						// className="my-4"
+						file={base64image}
+						maxSize={10485760}
+						error={Boolean(errors.file)}
 						{...register(`file`, { required: true })}
-						onChange={(e: any) => {
-							handleInputFile(e);
-							errors.file = undefined;
-						}}
-					/> */}
+					/>
 					{errors.file && <p>Image is required</p>}
 				</InputImage>
 
