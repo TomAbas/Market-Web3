@@ -8,19 +8,19 @@ const useAccountGuard = () => {
 	const { wallet } = useWallet();
 	let chainId = wallet?.adapter.network.chainId;
 	console.log(wallet?.adapter.network);
-	async function checkAccount() {
-		if (wallet) {
-			if (chainId?.toString() !== '2') {
-				dispatch(letGuard());
-			} else {
-				dispatch(stopGuard());
-			}
-		}
-	}
+	// async function checkAccount() {
+	// 	if (wallet) {
+	// 		if (chainId?.toString() !== '2') {
+	// 			dispatch(letGuard());
+	// 		} else {
+	// 			dispatch(stopGuard());
+	// 		}
+	// 	}
+	// }
 
-	useEffect(() => {
-		checkAccount();
-	}, [chainId]);
+	// useEffect(() => {
+	// 	checkAccount();
+	// }, [chainId]);
 };
 
 export default useAccountGuard;
