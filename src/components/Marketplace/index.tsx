@@ -113,7 +113,7 @@ export default function Marketplace() {
 							}}
 						>
 							<LinkWrapper
-								href=""
+								href="#/view-all"
 								sx={{
 									button: {
 										padding: '10px 30px',
@@ -202,7 +202,13 @@ export default function Marketplace() {
 				<Typography variant="h2" textAlign="center" fontWeight="500">
 					Explore NFT
 				</Typography>
-				<Typography variant="h4" textAlign="center" mb={3} mt={1}>
+				<Typography
+					variant="h5"
+					textAlign="center"
+					mb={3}
+					mt={1}
+					sx={{ color: 'rgba(29, 29, 31, 0.5)' }}
+				>
 					The world of digital assets in forms of NFTs{' '}
 					<Link href="#/view-all" sx={{ textDecoration: 'none' }}>
 						View All

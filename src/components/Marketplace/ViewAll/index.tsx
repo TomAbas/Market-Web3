@@ -7,6 +7,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Items from './Items';
 import Collections from './Collections';
+import { Typography } from '@mui/material';
 // import LayoutMintNFT from './mintNFT';
 // import LayoutCreateCollection from './createCollection';
 
@@ -19,6 +20,9 @@ export default function ViewAll() {
 
 	return (
 		<Box sx={{ maxWidth: '1350px', mx: 'auto', paddingTop: '150px' }}>
+			<Typography variant="h1" fontWeight={500} textAlign="center" mb={3}>
+				Marketplace
+			</Typography>
 			<TabContext value={value}>
 				<Box
 					sx={{
@@ -34,9 +38,9 @@ export default function ViewAll() {
 						},
 					}}
 				>
-					<TabList centered onChange={handleChange} aria-label="lab API tabs example">
-						<Tab label="Collections" value="1" />
+					<TabList onChange={handleChange} aria-label="lab API tabs example">
 						<Tab label="Items" value="2" />
+						<Tab label="Collections" value="1" />
 					</TabList>
 				</Box>
 				<TabPanel value="2">
