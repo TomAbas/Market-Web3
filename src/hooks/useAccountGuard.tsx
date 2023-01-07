@@ -6,11 +6,11 @@ import { letGuard, stopGuard } from 'redux/slices/modalGuard';
 const useAccountGuard = () => {
 	const dispatch = useAppDispatch();
 	const { wallet } = useWallet();
-	let network = wallet?.adapter.network.name;
+	let chainId = wallet?.adapter.network.chainId;
 	console.log(wallet?.adapter.network);
 	async function checkAccount() {
 		if (wallet) {
-			if (network?.toString() !== 'Testnet') {
+			if (chainId?.toString() !== '2') {
 				dispatch(letGuard());
 			} else {
 				dispatch(stopGuard());
@@ -20,7 +20,7 @@ const useAccountGuard = () => {
 
 	useEffect(() => {
 		checkAccount();
-	}, [network]);
+	}, [chainId]);
 };
 
 export default useAccountGuard;
