@@ -161,3 +161,59 @@ body::-webkit-scrollbar-thumb {
 }
 
 /* Style for toastify */
+
+h1 {
+	font-size: 64px !important;
+}
+h2 {
+	font-size: 44px !important;
+}
+h4 {
+	font-size: 28px !important;
+}
+h5 {
+	font-size: 24px !important;
+}
+
+@media (max-width: 1024px) {
+	h1 {
+		font-size: 56px !important;
+	}
+	h2 {
+		font-size: 38px !important;
+	}
+	h4 {
+		font-size: 26px !important;
+	}
+	h5 {
+		font-size: 22px !important;
+	}
+}
+@media (max-width: 768px) {
+	h1 {
+		font-size: 48px !important;
+	}
+	h2 {
+		font-size: 32px !important;
+	}
+	h4 {
+		font-size: 22px !important;
+	}
+	h5 {
+		font-size: 20px !important;
+	}
+}
+@media (max-width: 480px) {
+	h1 {
+		font-size: 40px !important;
+	}
+	h2 {
+		font-size: 26px !important;
+	}
+	h4 {
+		font-size: 18px !important;
+	}
+	h5 {
+		font-size: 16px !important;
+	}
+}

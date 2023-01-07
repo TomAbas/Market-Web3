@@ -3,3 +3,7 @@ export interface walletsModalConnect {
 	secondModal: boolean;
 	thirdModal: boolean;
 }
+
+export interface accountGuardModal {
+	isNeedGuard: boolean;
+}

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, SxProps, Theme, Typography } from '@mui/material';
+import { Box, Stack, SxProps, Theme, Typography } from '@mui/material';
 import isString from 'lodash/isString';
 import React, { Fragment, ReactNode, useEffect, useState } from 'react';
 import { useDropzone, DropzoneOptions } from 'react-dropzone';
@@ -7,17 +7,15 @@ import { fData, getFileType } from '../../../utils/function';
 import { DropzoneContainer, DropzoneStyle, ImageDefault } from './styled';
 import ImageInputDefault from '../../../assets/icons/image-input-default.svg';
 import { CustomFile } from '../../../models/common';
-
+import ReactPlayer from 'react-player/lazy';
 interface UploadMediaCustomProps extends DropzoneOptions {
 	error?: boolean;
 	file?: CustomFile | string | null;
 	caption?: ReactNode;
 	sx?: SxProps<Theme>;
-	onChange: any;
 }
 
 export default function UploadMediaCustom({
-	onChange,
 	error,
 	file,
 	caption,
@@ -77,17 +75,35 @@ export default function UploadMediaCustom({
 						opacity: 0,
 						cursor: 'pointer',
 					}}
-					onChange={onChange}
 				/>
 
 				{file ? (
 					<Fragment>
-						<Box
-							component="img"
-							alt="avatar"
-							src={isString(file) ? file : file.preview}
-							sx={{ zIndex: 8, objectFit: 'cover' }}
-						></Box>
+						{type === 'mp4' || type === 'mp3' ? (
+							<Stack sx={{ width: '100%' }}>
+								{type === 'mp3' && <button>Change</button>}
+								<ReactPlayer
+									url={isString(file) ? file : file.preview}
+									className="Player"
+									muted={true}
+									playing={true}
+									loop={true}
+									controls
+									width="100%"
+									height={type === 'mp3' ? 50 : '100%'}
+								/>
+							</Stack>
+						) : (
+							<Box
+								component="img"
+								alt="avatar"
+								src={isString(file) ? file : file.preview}
+								sx={{
+									zIndex: 8,
+									objectFit: 'cover',
+								}}
+							></Box>
+						)}
 					</Fragment>
 				) : (
 					<ImageDefault>

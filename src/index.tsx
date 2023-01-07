@@ -21,10 +21,10 @@ import ProfileUser from 'components/Profile/ProfileUser';
 import MyCollection from 'components/MyCollection';
 import CollectionDetail from 'components/MyCollection/collectionDetail';
 import DetailCard from 'components/Marketplace/DetailCard';
+import ViewAll from 'components/Marketplace/ViewAll';
 
 const router = createHashRouter([
 	{
-		path: '/',
 		element: <App />,
 		errorElement: (
 			<>
@@ -92,6 +92,15 @@ const router = createHashRouter([
 				errorElement: (
 					<>
 						<h1>error test my collection</h1>
+					</>
+				),
+			},
+			{
+				path: 'view-all',
+				element: <ViewAll />,
+				errorElement: (
+					<>
+						<h1>error test view all</h1>
 					</>
 				),
 			},

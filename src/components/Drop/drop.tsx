@@ -48,7 +48,7 @@ export default function WhiteList() {
 	useEffect(() => {
 		const fetchWhitelist = async () => {
 			const response: any = await axios.get(
-				`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::MetaspacecyTicket::WhiteList`
+				`${APTOS_NODE_URL}accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::MetaspacecyTicket::WhiteList`
 			);
 			console.log(response);
 

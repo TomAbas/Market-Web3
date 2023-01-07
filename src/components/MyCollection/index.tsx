@@ -42,6 +42,8 @@ export default function MyCollection() {
 									overflow: 'hidden',
 									cursor: 'pointer',
 									transition: 'all 0.4s',
+									padding: '12px 12px 0',
+									background: '#fff',
 									'&:hover': {
 										boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
 									},
@@ -52,7 +54,7 @@ export default function MyCollection() {
 										<img src={collection[1][0].uri} alt="collection" />
 									</Box>
 								</ItemImage>
-								<Box p={1.5}>
+								<Box py={1.5}>
 									<Typography variant="h6">
 										{collection[0].split('/////')[0]}
 									</Typography>
