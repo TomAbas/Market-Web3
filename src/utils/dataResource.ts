@@ -7,7 +7,7 @@ const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
 export const getListItemResource = async () => {
 	try {
 		const response: any = await axios.get(
-			`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::market::TokenInfo`
+			`${APTOS_NODE_URL}accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::market::TokenInfo`
 		);
 		return response.data.data?.token_list.reverse();
 	} catch (error) {

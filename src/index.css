@@ -168,6 +168,9 @@ h1 {
 h2 {
 	font-size: 44px !important;
 }
+h4 {
+	font-size: 28px !important;
+}
 
 @media (max-width: 1024px) {
 	h1 {
@@ -175,6 +178,9 @@ h2 {
 	}
 	h2 {
 		font-size: 38px !important;
+	}
+	h4 {
+		font-size: 26px !important;
 	}
 }
 @media (max-width: 768px) {
@@ -184,6 +190,9 @@ h2 {
 	h2 {
 		font-size: 32px !important;
 	}
+	h4 {
+		font-size: 22px !important;
+	}
 }
 @media (max-width: 480px) {
 	h1 {
@@ -191,5 +200,8 @@ h2 {
 	}
 	h2 {
 		font-size: 26px !important;
+	}
+	h4 {
+		font-size: 18px !important;
 	}
 }
