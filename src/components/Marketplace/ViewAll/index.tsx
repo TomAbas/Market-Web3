@@ -5,10 +5,12 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import LayoutMintNFT from './mintNFT';
-import LayoutCreateCollection from './createCollection';
+import Items from './Items';
+import Collections from './Collections';
+// import LayoutMintNFT from './mintNFT';
+// import LayoutCreateCollection from './createCollection';
 
-export default function MintTabs() {
+export default function ViewAll() {
 	const [value, setValue] = React.useState('1');
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -16,7 +18,7 @@ export default function MintTabs() {
 	};
 
 	return (
-		<Box sx={{ maxWidth: '940px', mx: 'auto', paddingTop: '150px' }}>
+		<Box sx={{ maxWidth: '1350px', mx: 'auto', paddingTop: '150px' }}>
 			<TabContext value={value}>
 				<Box
 					sx={{
@@ -33,15 +35,15 @@ export default function MintTabs() {
 					}}
 				>
 					<TabList centered onChange={handleChange} aria-label="lab API tabs example">
-						<Tab label="Collection" value="1" />
-						<Tab label="Item" value="2" />
+						<Tab label="Collections" value="1" />
+						<Tab label="Items" value="2" />
 					</TabList>
 				</Box>
 				<TabPanel value="2">
-					<LayoutMintNFT />
+					<Items />
 				</TabPanel>
 				<TabPanel value="1">
-					<LayoutCreateCollection />
+					<Collections />
 				</TabPanel>
 			</TabContext>
 		</Box>

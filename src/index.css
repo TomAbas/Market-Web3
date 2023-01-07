@@ -161,3 +161,35 @@ body::-webkit-scrollbar-thumb {
 }
 
 /* Style for toastify */
+
+h1 {
+	font-size: 64px !important;
+}
+h2 {
+	font-size: 44px !important;
+}
+
+@media (max-width: 1024px) {
+	h1 {
+		font-size: 56px !important;
+	}
+	h2 {
+		font-size: 38px !important;
+	}
+}
+@media (max-width: 768px) {
+	h1 {
+		font-size: 48px !important;
+	}
+	h2 {
+		font-size: 32px !important;
+	}
+}
+@media (max-width: 480px) {
+	h1 {
+		font-size: 40px !important;
+	}
+	h2 {
+		font-size: 26px !important;
+	}
+}

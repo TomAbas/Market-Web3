@@ -199,8 +199,14 @@ export default function Marketplace() {
 						<Slider />
 					</Box>
 				</Box>
-				<Typography variant="h2" textAlign="center" fontWeight="500" mb={3}>
+				<Typography variant="h2" textAlign="center" fontWeight="500">
 					Explore NFT
+				</Typography>
+				<Typography variant="h4" textAlign="center" mb={3} mt={1}>
+					The world of digital assets in forms of NFTs{' '}
+					<Link href="#/view-all" sx={{ textDecoration: 'none' }}>
+						View All
+					</Link>
 				</Typography>
 				<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
 					{offers.map((offer: any, index: any) => (
@@ -318,7 +324,8 @@ export default function Marketplace() {
 										overflow: 'hidden',
 										cursor: 'pointer',
 										transition: 'all 0.4s',
-										padding: '0 12px',
+										padding: '12px 12px 0',
+										background: '#fff',
 										'&:hover': {
 											boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
 										},
