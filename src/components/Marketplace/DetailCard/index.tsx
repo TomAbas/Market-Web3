@@ -22,6 +22,7 @@ export default function DetailCard() {
 	const name = decodeURIComponent(new URLSearchParams(search).get('name') || '');
 	// console.log({ id });
 	const { account, signAndSubmitTransaction } = useWallet();
+	const [statusWithdraw, setStatusWithdraw] = useState('Cancel');
 	const dispatch = useAppDispatch();
 	let navigate = useNavigate();
 	const [item, setItem] = useState<any>();
@@ -92,6 +93,33 @@ export default function DetailCard() {
 			handleNext();
 		}
 	};
+
+	const handleWithdrawItem = async () => {
+		if (!account) {
+			dispatch(openFirstModal());
+			return;
+		}
+		setStatusWithdraw('...');
+		try {
+			const payload: TransactionPayload = {
+				type: 'entry_function_payload',
+				function: `${MARKET_ADDRESS}::market::withdraw_token`,
+				type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
+				arguments: [
+					item?.token_id.token_data_id.creator,
+					item?.token_id.token_data_id.collection,
+					item?.token_id.token_data_id.name,
+					item?.token_id.property_version,
+				],
+			};
+
+			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			navigate('/profile');
+		} catch {
+			setStatusWithdraw('Cancel');
+		}
+	};
+
 	return (
 		<>
 			<Box sx={{ pt: 16, pb: 4, maxWidth: '1440px', mx: 'auto' }}>
@@ -157,9 +185,13 @@ export default function DetailCard() {
 							}}
 						>
 							{item?.owner != account?.address ? (
-								<button onClick={handleOpenModalBuy}>Buy now</button>
+								item?.is_cancle == false && (
+									<button onClick={handleOpenModalBuy}>Buy now</button>
+								)
 							) : (
-								<button>Cancle</button>
+								<>
+									<button onClick={handleWithdrawItem}>{statusWithdraw}</button>
+								</>
 							)}
 						</Box>
 					</Stack>
