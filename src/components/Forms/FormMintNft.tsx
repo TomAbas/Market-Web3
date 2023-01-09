@@ -105,6 +105,7 @@ const FormMintNft: React.FC<Props> = ({
 									key={index}
 									value={collection.name}
 									onClick={() => {
+										setValue('collection', collection.name);
 										setCollection(collection.name);
 									}}
 								>
