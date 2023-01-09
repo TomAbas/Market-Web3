@@ -40,14 +40,14 @@ export default function MintTabs() {
 					}}
 				>
 					<TabList centered onChange={handleChange} aria-label="lab API tabs example">
-						<Tab label="Item" value="1" />
-						<Tab label="Collection" value="2" />
+						<Tab label="Collection" value="1" />
+						<Tab label="Item" value="2" />
 					</TabList>
 				</Box>
-				<TabPanel value="1">
+				<TabPanel value="2">
 					<LayoutMintNFT />
 				</TabPanel>
-				<TabPanel value="2">
+				<TabPanel value="1">
 					<LayoutCreateCollection />
 				</TabPanel>
 			</TabContext>

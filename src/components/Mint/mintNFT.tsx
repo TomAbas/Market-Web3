@@ -9,7 +9,7 @@ import React, { useState, useEffect } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { walletClient } from '../../utils/aptos';
 import FormMintNft from 'components/Forms/FormMintNft';
-import { getListCollectionResource } from '../../utils/dataResource';
+import { getListCollectionUserResource } from '../../utils/dataResource';
 
 export default function LayoutMintNFT() {
 	const {
@@ -43,7 +43,7 @@ export default function LayoutMintNFT() {
 	const fetchCollection = async () => {
 		if (account?.address) {
 			try {
-				const newCollections = await getListCollectionResource(
+				const newCollections = await getListCollectionUserResource(
 					account?.address?.toString()
 				);
 				setCollections(newCollections);
