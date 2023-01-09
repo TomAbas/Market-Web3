@@ -54,8 +54,6 @@ export default function Marketplace() {
 		};
 		fetchCollections();
 	}, [offers]);
-	console.log(offers);
-	console.log(collections);
 
 	const handleCollectionDetail = (creator: string, collection: string) => {
 		//encodeURIComponent

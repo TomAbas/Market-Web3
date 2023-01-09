@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 import { useWallet, Wallet } from '@manahippo/aptos-wallet-adapter';
 import { DropDownContent, LinkWrapper } from './WalletModalStyles';
@@ -16,15 +16,19 @@ import {
 
 // declare let window: any;
 const ModalWallet: React.FC = () => {
+	const { wallets, connect, connected, account } = useWallet();
 	const DECIMAL = 100000000;
 	const dispatch = useAppDispatch();
-	const { wallets, connect } = useWallet();
-	const { account } = useWallet();
+
 	async function connectWallet(wallet: Wallet) {
 		connect(wallet.adapter.name);
 		dispatch(closeModal());
 	}
 	let myAddress = account?.address?.toString();
+	const connect1 = async (wallet: any) => {
+		await connectWallet(wallet);
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+	};
 
 	const renderListWallet = () => {
 		return wallets.map((wallet: any, index: any) => {
@@ -34,7 +38,9 @@ const ModalWallet: React.FC = () => {
 						my={1}
 						key={index}
 						sx={{ cursor: 'pointer', userSelect: 'none' }}
-						onClick={() => connectWallet(wallet)}
+						onClick={() => {
+							connect1(wallet);
+						}}
 					>
 						<Stack direction="row" justifyContent="space-between" alignItems="center">
 							<Stack direction="row" gap={2} alignItems="center">

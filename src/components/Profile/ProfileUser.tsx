@@ -6,8 +6,11 @@ import React, { useState, useEffect } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import banner from '../../assets/banner.png';
 import aptos from '../../assets/images/card/aptos.jpg';
+import ClientAxios from 'customAxios/ClientAxios';
+import { userInfo } from 'os';
 
 const ProfileUser = () => {
+	const [infoUser, setInfoUser] = useState<any>();
 	const { account } = useWallet();
 	// console.log(account);
 	const { tokens, loading } = useTokens(account);
@@ -22,8 +25,16 @@ const ProfileUser = () => {
 		let newItems = items.filter((_item, i) => i !== index);
 		setItems(newItems);
 	};
-	console.log(items);
-	// console.log(tokens);
+	const getInfoUser = async () => {
+		let { data } = (await ClientAxios.get(`/users/userAddress/${myAddress}`)).data;
+		setInfoUser(data);
+	};
+	useEffect(() => {
+		getInfoUser();
+	}, [myAddress]);
+	useEffect(() => {
+		console.log(infoUser);
+	}, [infoUser]);
 	return (
 		<>
 			<Box pt={13}>
@@ -38,7 +49,7 @@ const ProfileUser = () => {
 						},
 					}}
 				>
-					<img src={banner} alt="banner" />
+					<img src={infoUser?.background} alt="banner" />
 					<Box
 						sx={{
 							position: 'absolute',
@@ -56,13 +67,13 @@ const ProfileUser = () => {
 							},
 						}}
 					>
-						<img src={banner} alt="avatar" />
+						<img src={infoUser?.avatar} alt="avatar" />
 					</Box>
 				</Box>
 				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>
 					<Box sx={{ width: '100%' }}>
 						<Typography variant="h4" fontWeight="500">
-							Test
+							{infoUser?.username}
 						</Typography>
 						<Stack
 							direction="row"
