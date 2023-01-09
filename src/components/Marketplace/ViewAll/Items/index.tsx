@@ -4,7 +4,7 @@ import CardNFT from 'components/Marketplace/CardNFT';
 
 export default function Items({ offers, setOffers }: { offers: any; setOffers: any }) {
 	return (
-		<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+		<Grid container maxWidth="1440px" mx="auto" spacing={1}>
 			{offers.map((offer: any, index: any) => (
 				<CardNFT
 					offers={offers}

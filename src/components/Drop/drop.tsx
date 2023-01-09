@@ -59,7 +59,7 @@ export default function WhiteList() {
 	useEffect(() => {
 		const fetchTicket = async () => {
 			const response: any = await axios.get(
-				`${APTOS_NODE_URL}/accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::MetaspacecyTicket::TokenInfo`
+				`${APTOS_NODE_URL}accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::MetaspacecyTicket::TokenInfo`
 			);
 			let arrTicket = response.data.data.token_list;
 			arrTicket = arrTicket.filter(
