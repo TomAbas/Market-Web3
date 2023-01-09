@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.7f8000b4.css",
-    "main.js": "/static/js/main.39caa83a.js",
+    "main.css": "/static/css/main.2d08729d.css",
+    "main.js": "/static/js/main.89a62961.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.d69eb72d.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.fd7bcfd0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.a460d097.chunk.js",
@@ -36,6 +36,7 @@
     "static/media/logoMetaBlue.png": "/static/media/logoMetaBlue.ff880ce767a6e2a90f93.png",
     "static/media/image-input-default.svg": "/static/media/image-input-default.d0641a4683e1109badde624502b379f4.svg",
     "index.html": "/index.html",
+    "static/media/icon-edit.svg": "/static/media/icon-edit.df82ae632eb34faefa70cfe592e9c69d.svg",
     "static/media/icon-instagram.svg": "/static/media/icon-instagram.88a9a57a9badbef9f6bbd5d946dc55fa.svg",
     "static/media/mediumicon.svg": "/static/media/mediumicon.fb4b9f6506d716cf16475d5dfee7aafc.svg",
     "static/media/twitter-gray.svg": "/static/media/twitter-gray.b01b146fcff4628f68238c3d888304bb.svg",
@@ -57,7 +58,7 @@
     "static/media/icon-collection-help.svg": "/static/media/icon-collection-help.8483053b4d532fac22388557ff075dc4.svg"
   },
   "entrypoints": [
-    "static/css/main.7f8000b4.css",
-    "static/js/main.39caa83a.js"
+    "static/css/main.2d08729d.css",
+    "static/js/main.89a62961.js"
   ]
 }
