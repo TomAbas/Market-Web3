@@ -9,6 +9,7 @@ import { useAppDispatch } from '../../../redux/hooks';
 import { openFirstModal } from '../../../redux/slices/modalWallet';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import { getListItemResource } from '../../../utils/dataResource';
+import { ItemImage } from '../styled';
 
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -123,9 +124,11 @@ export default function DetailCard() {
 		<>
 			<Box sx={{ pt: 16, pb: 4, maxWidth: '1440px', mx: 'auto' }}>
 				<Stack direction="row" gap={4}>
-					<Box sx={{ width: '50%', img: { width: '100%', borderRadius: '12px' } }}>
-						<img src={item?.uri} alt="item" />
-					</Box>
+					<ItemImage sx={{ width: '50%', paddingTop: '50%' }}>
+						<Box className="main-img">
+							<img src={item?.uri} alt="item" />
+						</Box>
+					</ItemImage>
 					<Stack gap="16px" sx={{ width: '50%' }}>
 						<Typography variant="h6" fontWeight={500} sx={{ color: '#007aff' }}>
 							{item?.token_id.token_data_id.collection}

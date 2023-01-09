@@ -4,7 +4,7 @@ import Slider from 'components/Slider';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CardNFT from './CardNFT';
-import { getListItemResource } from '../../utils/dataResource';
+import { getListItemResource, getListCollectionMarketplace } from '../../utils/dataResource';
 import item from '../../assets/images/card/box.webp';
 
 import {
@@ -45,35 +45,14 @@ export default function Marketplace() {
 	}, []);
 
 	useEffect(() => {
-		let newCollection = new Map();
-		offers.map((item) => {
-			let collection = newCollection.get(
-				item?.token_id.token_data_id.collection +
-					'/////' +
-					item?.token_id.token_data_id.creator
-			);
-			if (!collection) {
-				newCollection.set(
-					item?.token_id.token_data_id.collection +
-						'/////' +
-						item?.token_id.token_data_id.creator,
-					[item]
-				);
-			} else {
-				collection.push(item);
-				newCollection.set(
-					item?.token_id.token_data_id.collection +
-						'/////' +
-						item?.token_id.token_data_id.creator,
-					collection
-				);
+		const fetchCollections = async () => {
+			let newArrCollection = await getListCollectionMarketplace(offers);
+			if (newArrCollection.length > 4) {
+				newArrCollection = newArrCollection.slice(0, 4);
 			}
-		});
-		let newArrCollection = Array.from(newCollection);
-		if (newArrCollection.length > 4) {
-			newArrCollection = newArrCollection.slice(0, 4);
-		}
-		setCollections(newArrCollection);
+			setCollections(newArrCollection);
+		};
+		fetchCollections();
 	}, [offers]);
 	console.log(offers);
 	console.log(collections);
@@ -113,7 +92,7 @@ export default function Marketplace() {
 							}}
 						>
 							<LinkWrapper
-								href=""
+								href="#/mint"
 								sx={{
 									button: {
 										padding: '10px 30px',
@@ -146,7 +125,7 @@ export default function Marketplace() {
 							</LinkWrapper>
 
 							<LinkWrapper
-								href=""
+								href="#/view-all"
 								sx={{
 									button: {
 										padding: '10px 30px',
@@ -199,8 +178,20 @@ export default function Marketplace() {
 						<Slider />
 					</Box>
 				</Box>
-				<Typography variant="h2" textAlign="center" fontWeight="500" mb={3}>
+				<Typography variant="h2" textAlign="center" fontWeight="500">
 					Explore NFT
+				</Typography>
+				<Typography
+					variant="h5"
+					textAlign="center"
+					mb={3}
+					mt={1}
+					sx={{ color: 'rgba(29, 29, 31, 0.5)' }}
+				>
+					The world of digital assets in forms of NFTs{' '}
+					<Link href="#/view-all" sx={{ textDecoration: 'none' }}>
+						View All
+					</Link>
 				</Typography>
 				<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
 					{offers.map((offer: any, index: any) => (
@@ -293,15 +284,15 @@ export default function Marketplace() {
 							key={index}
 							onClick={() => {
 								handleCollectionDetail(
-									collection[0].split('/////')[1],
-									collection[0].split('/////')[0]
+									collection[0].split('*/////*')[1],
+									collection[0].split('*/////*')[0]
 								);
 							}}
 						>
 							<Link
-								href={`https://explorer.aptoslabs.com/account/${
-									collection[0].split('/////')[1]
-								}`}
+								// href={`https://explorer.aptoslabs.com/account/${
+								// 	collection[0].split('*/////*')[1]
+								// }`}
 								target="_blank"
 								sx={{
 									textDecoration: 'none',
@@ -318,7 +309,8 @@ export default function Marketplace() {
 										overflow: 'hidden',
 										cursor: 'pointer',
 										transition: 'all 0.4s',
-										padding: '0 12px',
+										padding: '12px 12px 0',
+										background: '#fff',
 										'&:hover': {
 											boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
 										},
@@ -332,7 +324,7 @@ export default function Marketplace() {
 
 									<Box py={1.5}>
 										<Typography variant="h6">
-											{collection[0].split('/////')[0]}
+											{collection[0].split('*/////*')[0]}
 										</Typography>
 										<Stack
 											mt={1}
@@ -356,14 +348,14 @@ export default function Marketplace() {
 													<img src={item} alt="collection" />
 												</Box>
 												<Typography variant="body1">
-													{collection[0].split('/////')[1].slice(0, 6) +
+													{collection[0].split('*/////*')[1].slice(0, 6) +
 														'...' +
 														collection[0]
-															.split('/////')[1]
+															.split('*/////*')[1]
 															.slice(
-																collection[0].split('/////')[1]
+																collection[0].split('*/////*')[1]
 																	.length - 4,
-																collection[0].split('/////')[1]
+																collection[0].split('*/////*')[1]
 																	.length
 															)}
 												</Typography>

@@ -18,6 +18,9 @@ import { Outlet } from 'react-router-dom';
 //redux
 import { store } from './redux/store';
 import { Provider } from 'react-redux';
+import AccountGuard from 'components/AccountGuard/AccountGuard';
+import ModalGuard from 'components/ModalGuard/ModalGuard';
+
 function App() {
 	const wallets = useMemo(
 		() => [
@@ -35,10 +38,13 @@ function App() {
 				<WalletProvider wallets={wallets} autoConnect={true}>
 					<SizeObserver>
 						<Header />
-						<div className="container">
-							<Outlet />
-						</div>
+						<AccountGuard>
+							<div className="container">
+								<Outlet />
+							</div>
+						</AccountGuard>
 						<FooterComp />
+						<ModalGuard />
 					</SizeObserver>
 				</WalletProvider>
 			</Provider>

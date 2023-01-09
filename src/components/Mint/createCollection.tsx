@@ -38,9 +38,7 @@ export default function LayoutCreateCollection() {
 			description: 'Please confirm your action',
 		},
 		{
-			label: `${
-				statusBuyNft.isSuccess ? 'Congrat' : statusBuyNft.isError && 'Something went wrong'
-			}`,
+			label: `Finish`,
 			description: `${
 				statusBuyNft.isSuccess
 					? 'You create your collection'
@@ -57,11 +55,11 @@ export default function LayoutCreateCollection() {
 			}}
 		>
 			<FormMint
+				base64image={base64image}
 				handleOpenModalBuy={handleOpenModalBuy}
 				updateFormInput={updateFormInput}
 				handleInputFile={handleInputFile}
 			/>
-			{base64image && <img className="rounded mt-4" width="350" src={base64image} />}
 			<RedBar />
 			<ModalBuy
 				steps={steps}
