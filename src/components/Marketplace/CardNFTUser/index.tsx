@@ -59,7 +59,7 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 					item.collection,
 					item.name,
 					'0',
-					item.supply,
+					supply,
 					newPrice.toString(),
 				],
 			};

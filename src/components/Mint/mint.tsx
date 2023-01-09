@@ -9,7 +9,7 @@ import LayoutMintNFT from './mintNFT';
 import LayoutCreateCollection from './createCollection';
 
 export default function MintTabs() {
-	const [value, setValue] = React.useState('1');
+	const [value, setValue] = React.useState('2');
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
