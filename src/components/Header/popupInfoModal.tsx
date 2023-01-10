@@ -1,17 +1,36 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { getBalanceUser } from '../../utils/getUser';
 import { Box, Link, Stack, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { selectUser, toggleSettingModalA } from 'redux/slices/userInfo';
 // import userIcon from '../../assets/icons/icon-user-black.svg';
+//img
+//Img update
+import IconUserWhite from 'assets/icons/NavBar/icon-user-white.svg';
+import IconUserBlack from 'assets/icons/NavBar/icon-user-black.svg';
+import IconHeartWhite from 'assets/icons/NavBar/icon-heart-white.svg';
+import IconHeartBlack from 'assets/icons/NavBar/icon-heart-black.svg';
+import IconEyeWhite from 'assets/icons/NavBar/icon-eye-white.svg';
+import IconEyeBlack from 'assets/icons/NavBar/icon-eye-black.svg';
+import IconCollectionWhite from 'assets/icons/NavBar/icon-collection-white.svg';
+import IconCollectionBlack from 'assets/icons/NavBar/icon-collection-black.svg';
+import IconSettingWhite from 'assets/icons/NavBar/icon-setting-white.svg';
+import IconSettingBlack from 'assets/icons/NavBar/icon-setting-black.svg';
+import IconLogoutWhite from 'assets/icons/NavBar/icon-logout-white.svg';
+import IconLogoutBlack from 'assets/icons/NavBar/icon-logout-black.svg';
 interface Props {
 	userAddress: any;
 }
 const ModalInfo: React.FC<Props> = ({ userAddress }) => {
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const [myBalance, setMyBalance] = useState(0);
 	const [sliceAdd, setSliceAdd] = useState('');
+	const userInfo = useAppSelector(selectUser);
 	// useState
 	const { disconnect } = useWallet();
 	const fetchBalance = async () => {
@@ -64,12 +83,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									},
 								}}
 							>
-								<img
-									src="https://i.pinimg.com/736x/25/47/c7/2547c7ecb55605fbb39e04157f157021.jpg"
-									alt="Wallet"
-									width={50}
-									height={50}
-								/>
+								<img src={userInfo?.avatar} alt="Wallet" width={50} height={50} />
 								<Typography variant="body1">{sliceAdd}</Typography>
 							</Stack>
 							<Stack
@@ -83,6 +97,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 							</Stack>
 							<Stack gap={1.5} pl={2}>
 								<Box onClick={popupState.close}>
+									<img src={IconUserBlack} alt="profile" />
 									<Link
 										href="/#/profile"
 										sx={{
@@ -97,6 +112,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									</Link>
 								</Box>
 								<Box onClick={popupState.close}>
+									<img src={IconCollectionBlack} alt="collection" />
 									<Link
 										href="/#/myCollection"
 										sx={{
@@ -113,9 +129,21 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 								<Box
 									onClick={() => {
 										navigate('/profile');
+										dispatch(toggleSettingModalA());
 									}}
 								>
-									Settings
+									<img src={IconSettingBlack} alt="setting" />
+									<Link
+										sx={{
+											color: 'black',
+											textDecoration: 'none',
+											'&:hover': {
+												color: '#007aff',
+											},
+										}}
+									>
+										Settings
+									</Link>
 								</Box>
 								<Box
 									onClick={disConnect}
@@ -126,7 +154,8 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 										},
 									}}
 								>
-									Logout
+									<img src={IconLogoutBlack} alt="logout" />
+									<Box>Logout</Box>
 								</Box>
 							</Stack>
 						</Stack>

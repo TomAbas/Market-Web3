@@ -170,11 +170,11 @@ export const TitleWrapper = styled(Box)(({ theme }) => ({
 
 export const ExploreCollection = styled(Box)(({ theme }) => ({
 	position: 'relative',
-	padding: ' 32px 0 32px',
+	padding: ' 32px 16 32px',
 	color: '#131740',
 	// background: 'linear-gradient(180deg, #E0F4FF 0%, #FFFFFF 100%)',
 	[theme.breakpoints.down(480)]: {
-		padding: '8px 0',
+		padding: '8px 12px',
 	},
 	// ...(theme.palette.mode === 'light'
 	// 	? {

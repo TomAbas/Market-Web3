@@ -24,9 +24,9 @@ import { User } from 'models/user';
 import { uploadUserMedia } from 'api/uploadAPI';
 //redux
 import { updateUser } from 'api/userApi/userApi';
-import { selectUser } from '../../redux/slices/userInfo';
-import { useAppSelector } from 'redux/hooks';
-
+import { selectUser, updateInfoUserA } from '../../redux/slices/userInfo';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { toast } from 'react-toastify';
 export interface IFormEditProfileInputs {
 	avatar: any;
 	background: any;
@@ -36,12 +36,13 @@ export interface IFormEditProfileInputs {
 	social: string;
 }
 interface Props {
-	infoUser: any;
+	infoUser: User;
 	openEdit: boolean;
 	openEditModal: () => void;
 }
 const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) => {
-	const userAddress = useAppSelector(selectUser)?.userAddress;
+	const dispatch = useAppDispatch();
+
 	// useState
 	const [avatar, setAvatar] = useState<any>(null);
 	const [background, setBackground] = useState<any>(null);
@@ -73,7 +74,7 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 		resolver: yupResolver(schema),
 	});
 	const onSubmit = async (data: IFormEditProfileInputs) => {
-		if (!userAddress) return;
+		if (!infoUser) return;
 		const avatar: any = data.avatar;
 		const background: any = data.background;
 		let avatarURL: string = '';
@@ -86,7 +87,7 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 			} else {
 				const avatarForm = new FormData();
 				avatarForm.append('file', avatar.raw);
-				const res: Response<any> = await uploadUserMedia(avatarForm, userAddress);
+				const res: Response<any> = await uploadUserMedia(avatarForm, infoUser.userAddress);
 				avatarURL = res.data.data.result;
 				console.log('res', res);
 			}
@@ -97,7 +98,10 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 			} else {
 				const backgroundForm = new FormData();
 				backgroundForm.append('file', background.raw);
-				const res: Response<any> = await uploadUserMedia(backgroundForm, userAddress);
+				const res: Response<any> = await uploadUserMedia(
+					backgroundForm,
+					infoUser.userAddress
+				);
 				backgroundURL = res.data.data.result;
 			}
 
@@ -116,11 +120,13 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 				...data,
 				avatar: avatarURL,
 				background: backgroundURL,
-				userAddress,
+				userAddress: infoUser.userAddress,
 			};
 			console.log(newData);
+			dispatch(updateInfoUserA(newData));
 			updateUser(newData);
-			// dispatch(updateUser(newData, executeAfterUpdateUser));
+			openEditModal();
+			toast.success('Successfull Update Info !');
 		} catch (error: any) {
 			console.log(error);
 			// toast.error(error.message);
@@ -244,58 +250,6 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 										</InputGroup>
 									</Stack>
 								</TopPart>
-								<InputGroup sx={{ marginTop: '20px' }}>
-									<Label htmlFor=" user-username">Username</Label>
-									<Input
-										id="user-username"
-										type="text"
-										{...register('username')}
-										placeholder="Enter your username"
-									/>
-									{errors.username?.message && (
-										<ErrorMessage>{errors.username?.message}</ErrorMessage>
-									)}
-								</InputGroup>
-								<InputGroup sx={{ marginTop: '20px' }}>
-									<Label htmlFor="user-social">
-										Social Media / Portfolio Link
-									</Label>
-									<Input
-										id="user-social"
-										type="text"
-										{...register('social')}
-										placeholder="Enter your social"
-									/>
-									{errors.social?.message && (
-										<ErrorMessage>{errors.social?.message}</ErrorMessage>
-									)}
-								</InputGroup>
-
-								<InputGroup>
-									<Label htmlFor="user-bio">Bio</Label>
-
-									<Textarea
-										{...register('bio')}
-										placeholder="Please write something about yourself"
-									/>
-
-									{errors.bio?.message && (
-										<ErrorMessage>{errors.bio?.message}</ErrorMessage>
-									)}
-								</InputGroup>
-
-								<InputGroup>
-									<Label htmlFor="user-email">Email</Label>
-									<Input
-										id="user-email"
-										type="text"
-										{...register('email')}
-										placeholder="Enter your email"
-									/>
-									{errors.email?.message && (
-										<ErrorMessage>{errors.email?.message}</ErrorMessage>
-									)}
-								</InputGroup>
 
 								<InputGroup>
 									<Label>Banner</Label>
@@ -322,7 +276,18 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 								<ErrorMessage>{errors.background?.message}</ErrorMessage>
 							)} */}
 								</InputGroup>
+								<InputGroup>
+									<Label htmlFor="user-bio">Bio</Label>
 
+									<Textarea
+										{...register('bio')}
+										placeholder="Please write something about yourself"
+									/>
+
+									{errors.bio?.message && (
+										<ErrorMessage>{errors.bio?.message}</ErrorMessage>
+									)}
+								</InputGroup>
 								<Stack alignItems="center" sx={{ marginTop: '20px' }}>
 									<ButtonWhite
 										sx={{ paddingLeft: '30px', paddingRight: '30px' }}
