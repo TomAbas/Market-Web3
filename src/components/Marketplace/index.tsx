@@ -203,71 +203,8 @@ export default function Marketplace() {
 					))}
 				</Grid>
 			</ExploreCollection>
-			<ExploreCollection sx={{ pt: 4 }}>
-				<Container maxWidth="xl" sx={{}}>
-					<Box sx={{ mt: 0, mb: 4 }}>
-						<HeaderSection>
-							<MainHeader variant="h2" fontWeight="500" fontStyle="italic">
-								Metaspacecy is the universal NFT marketplace
-							</MainHeader>
-						</HeaderSection>
-
-						<Newsletter />
-					</Box>
-				</Container>
-				<HotService>
-					<ServiceTitle>
-						Join our mailing list to stay in the loop with our latest feature releases,
-						<br />
-						NFT drops, and tips and tricks for navigating Metaspacecy
-					</ServiceTitle>
-					<EmailSearch
-						sx={{
-							input: {
-								'::placeholder': {
-									fontSize: '16px',
-									fontStyle: 'italic',
-								},
-							},
-						}}
-					>
-						<input type="text" placeholder="Email address" />
-						<Box
-							sx={{
-								button: {
-									padding: '10px 30px',
-									border: '1.5px solid #e7e8ec',
-									transition: 'all 0.4s',
-									borderRadius: '12px',
-									fontWeight: 500,
-									background: '#fff',
-									fontSize: '16px',
-									cursor: 'pointer',
-									fontFamily: 'Montserrat, sans-serif !important',
-									fontStyle: 'italic !important',
-									width: '180px',
-									'&:hover': {
-										background: '#007aff',
-										borderColor: 'transparent',
-										color: '#fff',
-									},
-									a: {
-										textDecoration: 'none',
-										'&:hover': {
-											textDecoration: 'none',
-											color: '#fff',
-										},
-									},
-								},
-							}}
-						>
-							<button>Subscribe</button>
-						</Box>
-					</EmailSearch>
-				</HotService>
-			</ExploreCollection>
-			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 3, pb: 4, px: 2 }}>
-				<Box sx={{ textAlign: 'center', mb: 4 }}>
+			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 4, pb: 4, px: 2 }}>
+				<Box sx={{ textAlign: 'center', mb: 2 }}>
 					<Typography variant="h2" fontWeight={500}>
 						Featured Collections
 					</Typography>
@@ -371,6 +308,69 @@ export default function Marketplace() {
 					))}
 				</Grid>
 			</Box>
+			<ExploreCollection sx={{ py: 4 }}>
+				<Container maxWidth="xl" sx={{}}>
+					<Box sx={{ mt: 0, mb: 4 }}>
+						<HeaderSection>
+							<MainHeader variant="h2" fontWeight="500" fontStyle="italic">
+								Metaspacecy is the universal NFT marketplace
+							</MainHeader>
+						</HeaderSection>
+
+						<Newsletter />
+					</Box>
+				</Container>
+				<HotService>
+					<ServiceTitle>
+						Join our mailing list to stay in the loop with our latest feature releases,
+						<br />
+						NFT drops, and tips and tricks for navigating Metaspacecy
+					</ServiceTitle>
+					<EmailSearch
+						sx={{
+							input: {
+								'::placeholder': {
+									fontSize: '16px',
+									fontStyle: 'italic',
+								},
+							},
+						}}
+					>
+						<input type="text" placeholder="Email address" />
+						<Box
+							sx={{
+								button: {
+									padding: '10px 30px',
+									border: '1.5px solid #e7e8ec',
+									transition: 'all 0.4s',
+									borderRadius: '12px',
+									fontWeight: 500,
+									background: '#fff',
+									fontSize: '16px',
+									cursor: 'pointer',
+									fontFamily: 'Montserrat, sans-serif !important',
+									fontStyle: 'italic !important',
+									width: '180px',
+									'&:hover': {
+										background: '#007aff',
+										borderColor: 'transparent',
+										color: '#fff',
+									},
+									a: {
+										textDecoration: 'none',
+										'&:hover': {
+											textDecoration: 'none',
+											color: '#fff',
+										},
+									},
+								},
+							}}
+						>
+							<button>Subscribe</button>
+						</Box>
+					</EmailSearch>
+				</HotService>
+			</ExploreCollection>
 		</>
 	);
 }
