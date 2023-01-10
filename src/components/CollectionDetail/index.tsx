@@ -86,7 +86,7 @@ const MyCollectionDetail = () => {
 				>
 					<ClickAwayListener onClickAway={handleClickAway}>
 						<img
-							src={banner}
+							src={items ? items[0]?.uri : banner}
 							alt="banner"
 							onClick={() => {
 								setViewFull(true);
@@ -114,7 +114,7 @@ const MyCollectionDetail = () => {
 					>
 						<ClickAwayListener onClickAway={handleClickAvatar}>
 							<img
-								src={banner}
+								src={items ? items[0]?.uri : banner}
 								alt="avatar"
 								onClick={() => {
 									setViewAvatar(true);
