@@ -39,7 +39,11 @@ const ProfileUser = () => {
 		setViewAvatar(false);
 	};
 	const openEditModal = () => {
-		setOpenEdit(!openEdit);
+		setOpenEdit(true);
+	};
+	const closeEditModal = () => {
+		console.log('123');
+		setOpenEdit(false);
 	};
 	const handleToggleModalSetting = () => {
 		dispatch(toggleSettingModalA());
@@ -208,7 +212,7 @@ const ProfileUser = () => {
 			{infoUser && (
 				<EditInfoUser
 					infoUser={infoUser}
-					openEditModal={openEditModal}
+					openEditModal={closeEditModal}
 					openEdit={openEdit}
 				/>
 			)}

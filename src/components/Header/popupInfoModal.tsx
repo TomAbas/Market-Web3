@@ -22,6 +22,7 @@ import IconSettingWhite from 'assets/icons/NavBar/icon-setting-white.svg';
 import IconSettingBlack from 'assets/icons/NavBar/icon-setting-black.svg';
 import IconLogoutWhite from 'assets/icons/NavBar/icon-logout-white.svg';
 import IconLogoutBlack from 'assets/icons/NavBar/icon-logout-black.svg';
+import { toast } from 'react-toastify';
 interface Props {
 	userAddress: any;
 }
@@ -52,7 +53,13 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 	};
 
 	const disConnect = () => {
-		disconnect();
+		try {
+			disconnect();
+			toast.success('Log out success');
+			navigate('/');
+		} catch (error: any) {
+			toast.error(error.message);
+		}
 	};
 	useEffect(() => {
 		fetchBalance();

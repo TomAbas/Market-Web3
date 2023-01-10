@@ -166,6 +166,7 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 		},
 		[setValue]
 	);
+
 	//end drop images
 	useEffect(() => {
 		if (infoUser) {
@@ -181,144 +182,130 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [infoUser]);
 	return (
-		<>
-			<Modal
-				open={openEdit}
-				onClose={openEditModal}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
+		<Modal
+			open={openEdit}
+			onClose={openEditModal}
+			aria-labelledby="modal-modal-title"
+			aria-describedby="modal-modal-description"
+		>
+			<Box
+				sx={{
+					maxWidth: '500px',
+					minWidth: '300px',
+					pb: 2,
+					overflowY: 'auto',
+					display: 'flex',
+					margin: ' 0 auto',
+					height: '100vh',
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}
 			>
-				<>
-					<Box
-						sx={{
-							maxWidth: '500px',
-							minWidth: '300px',
-							pb: 2,
-							overflowY: 'auto',
-							display: 'flex',
-							margin: ' 0 auto',
-							height: '100vh',
-							justifyContent: 'center',
-							alignItems: 'center',
-						}}
-					>
-						<form
-							action=""
-							onSubmit={handleSubmit(onSubmit)}
-							style={{
-								backgroundColor: '#fff',
-								padding: '20px 20px',
-								width: '100%',
-								borderRadius: '15px',
-							}}
-						>
-							<TopModal direction="row" gap="10px" alignItems="center">
-								<TopTitleModal style={{ fontWeight: 500 }}>
-									Edit Profile
-								</TopTitleModal>
-							</TopModal>
-							<Box sx={{ padding: '20px' }}>
-								<TopPart>
-									<Stack direction="column" alignItems="center">
-										<InputGroup sx={{ margin: 0 }}>
-											<UploadMediaCustom
-												accept={{
-													'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
-												}}
-												file={avatar}
-												maxSize={10485760}
-												onDrop={handleDropAvatar}
-												error={Boolean(errors.avatar)}
-												sx={{
-													width: 120,
-													height: 120,
-													margin: 'auto',
-													borderRadius: '10px',
-													border: '1px dashed #E7E8EC',
-													overflow: 'hidden',
-													'.placeholder-img': {
-														borderRadius: '50%',
-														width: 50,
-														height: 50,
-													},
-												}}
-											/>
-
-											{/* {errors.avatar?.message && (
-										<ErrorMessage>{errors.avatar?.message}</ErrorMessage>
-									)} */}
-										</InputGroup>
-									</Stack>
-								</TopPart>
-
-								<InputGroup>
-									<Label>Banner</Label>
-
+				<form
+					action=""
+					onSubmit={handleSubmit(onSubmit)}
+					style={{
+						backgroundColor: '#fff',
+						padding: '20px 20px',
+						width: '100%',
+						borderRadius: '15px',
+					}}
+				>
+					<TopModal direction="row" gap="10px" alignItems="center">
+						<TopTitleModal style={{ fontWeight: 500 }}>Edit Profile</TopTitleModal>
+					</TopModal>
+					<Box sx={{ padding: '20px' }}>
+						<TopPart>
+							<Stack direction="column" alignItems="center">
+								<InputGroup sx={{ margin: 0 }}>
 									<UploadMediaCustom
-										file={background}
 										accept={{
 											'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
 										}}
+										file={avatar}
 										maxSize={10485760}
-										onDrop={handleDropBackground}
-										error={Boolean(errors.background)}
+										onDrop={handleDropAvatar}
+										error={Boolean(errors.avatar)}
 										sx={{
-											width: '100%',
-											height: 180,
+											width: 120,
+											height: 120,
 											margin: 'auto',
-											borderRadius: '5px',
+											borderRadius: '50%',
 											border: '1px dashed #E7E8EC',
 											overflow: 'hidden',
+											'.placeholder-img': {
+												borderRadius: '50%',
+												width: 50,
+												height: 50,
+											},
 										}}
 									/>
 
-									{/* {errors.background?.message && (
+									{/* {errors.avatar?.message && (
+										<ErrorMessage>{errors.avatar?.message}</ErrorMessage>
+									)} */}
+								</InputGroup>
+							</Stack>
+						</TopPart>
+
+						<InputGroup>
+							<Label>Banner</Label>
+
+							<UploadMediaCustom
+								file={background}
+								accept={{
+									'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
+								}}
+								maxSize={10485760}
+								onDrop={handleDropBackground}
+								error={Boolean(errors.background)}
+								sx={{
+									width: '100%',
+									height: 180,
+									margin: 'auto',
+									borderRadius: '5px',
+									border: '1px dashed #E7E8EC',
+									overflow: 'hidden',
+								}}
+							/>
+
+							{/* {errors.background?.message && (
 								<ErrorMessage>{errors.background?.message}</ErrorMessage>
 							)} */}
-								</InputGroup>
-								<InputGroup>
-									<Label htmlFor="user-bio">Bio</Label>
+						</InputGroup>
+						<InputGroup>
+							<Label htmlFor="user-bio">Bio</Label>
 
-									<Textarea
-										{...register('bio')}
-										placeholder="Please write something about yourself"
-									/>
+							<Textarea
+								{...register('bio')}
+								placeholder="Please write something about yourself"
+							/>
 
-									{errors.bio?.message && (
-										<ErrorMessage>{errors.bio?.message}</ErrorMessage>
+							{errors.bio?.message && (
+								<ErrorMessage>{errors.bio?.message}</ErrorMessage>
+							)}
+						</InputGroup>
+						<Stack alignItems="center" sx={{ marginTop: '20px' }}>
+							<ButtonWhite
+								sx={{ paddingLeft: '30px', paddingRight: '30px' }}
+								type="submit"
+								disabled={isSubmitting || isLoading}
+							>
+								<Stack direction="row" alignItems="center">
+									{(isSubmitting || isLoading) && (
+										<CircularProgress
+											sx={{ color: 'white', mr: 1 }}
+											size={25}
+										/>
 									)}
-								</InputGroup>
-								<Stack alignItems="center" sx={{ marginTop: '20px' }}>
-									<ButtonWhite
-										sx={{
-											paddingLeft: '30px',
-											paddingRight: '30px',
-										}}
-										type="submit"
-										disabled={isSubmitting || isLoading}
-									>
-										<Stack direction="row" alignItems="center">
-											{(isSubmitting || isLoading) && (
-												<CircularProgress
-													sx={{ color: 'white', mr: 1 }}
-													size={25}
-												/>
-											)}
-											<Typography
-												variant="button"
-												sx={{ textTransform: 'none' }}
-											>
-												Submit
-											</Typography>
-										</Stack>
-									</ButtonWhite>
+									<Typography variant="button">Submit</Typography>
 								</Stack>
-							</Box>
-						</form>
+							</ButtonWhite>
+						</Stack>
 					</Box>
-				</>
-			</Modal>
-		</>
+				</form>
+			</Box>
+		</Modal>
 	);
 };
 
