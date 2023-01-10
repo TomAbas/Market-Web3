@@ -4,11 +4,14 @@ import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { getBalanceUser } from '../../utils/getUser';
 import { Box, Link, Stack, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'redux/hooks';
+import { toggleSettingModalA } from 'redux/slices/userInfo';
 // import userIcon from '../../assets/icons/icon-user-black.svg';
 interface Props {
 	userAddress: any;
 }
 const ModalInfo: React.FC<Props> = ({ userAddress }) => {
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const [myBalance, setMyBalance] = useState(0);
 	const [sliceAdd, setSliceAdd] = useState('');
@@ -113,6 +116,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 								<Box
 									onClick={() => {
 										navigate('/profile');
+										dispatch(toggleSettingModalA());
 									}}
 								>
 									Settings

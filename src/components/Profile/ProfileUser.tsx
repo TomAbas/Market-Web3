@@ -9,11 +9,13 @@ import aptos from '../../assets/images/card/aptos.jpg';
 import ClientAxios from 'customAxios/ClientAxios';
 import { useSizeObersver } from 'contexts/SizeObserver';
 import editIcon from '../../assets/icons/icon-edit.svg';
+import SettingInfoUser from 'components/SettingInfoUser/SettingInfoUser';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { selectSettingModal, selectUser, toggleSettingModalA } from 'redux/slices/userInfo';
 import EditInfoUser from 'components/EditInfoUser/EditInfoUser';
-import { useAppSelector } from 'redux/hooks';
-import { selectUser } from 'redux/slices/userInfo';
 const ProfileUser = () => {
-	const [infoUser, setInfoUser] = useState<any>();
+	const dispatch = useAppDispatch();
+	// const [infoUser, setInfoUser] = useState<any>();
 	const [openEdit, setOpenEdit] = useState(false);
 	const { account } = useWallet();
 	const { innerWidth } = useSizeObersver();
@@ -23,17 +25,13 @@ const ProfileUser = () => {
 	const { tokens, loading } = useTokens(account);
 	const [items, setItems] = useState<any[]>([]);
 	const innerHeight = innerWidth / 4.5;
-	const userAddress = useAppSelector(selectUser)?.userAddress;
-	let myAddress = account?.address?.toString() || '';
-
+	const infoUser = useAppSelector(selectUser);
+	const isSettingModal = useAppSelector(selectSettingModal);
 	const handleItems = (index: any) => {
 		let newItems = items.filter((_item, i) => i !== index);
 		setItems(newItems);
 	};
-	const getInfoUser = async () => {
-		let { data } = (await ClientAxios.get(`/users/userAddress/${myAddress}`)).data;
-		setInfoUser(data);
-	};
+
 	const handleClickAway = () => {
 		setViewFull(false);
 	};
@@ -43,11 +41,14 @@ const ProfileUser = () => {
 	const openEditModal = () => {
 		setOpenEdit(!openEdit);
 	};
-	useEffect(() => {
-		if (userAddress) {
-			getInfoUser();
-		}
-	}, [userAddress]);
+	const handleToggleModalSetting = () => {
+		dispatch(toggleSettingModalA());
+	};
+	// useEffect(() => {
+	// 	if (userAddress) {
+	// 		getInfoUser();
+	// 	}
+	// }, [userAddress]);
 	useEffect(() => {
 		setItems(tokens);
 	}, [tokens]);
@@ -169,9 +170,12 @@ const ProfileUser = () => {
 						>
 							<img src={aptos} alt="aptos" />
 							<Box>
-								{myAddress.slice(0, 6) +
+								{infoUser?.userAddress.slice(0, 6) +
 									'...' +
-									myAddress.slice(myAddress.length - 4, myAddress.length)}
+									infoUser?.userAddress.slice(
+										infoUser.userAddress.length - 4,
+										infoUser.userAddress.length
+									)}
 							</Box>
 						</Stack>
 					</Box>
@@ -189,7 +193,21 @@ const ProfileUser = () => {
 					</Box>
 				</Box>
 			</Box>
-			<EditInfoUser infoUser={infoUser} openEditModal={openEditModal} openEdit={openEdit} />
+			{infoUser && (
+				<SettingInfoUser
+					infoUser={infoUser}
+					openEditModal={handleToggleModalSetting}
+					openEdit={isSettingModal}
+				/>
+			)}
+			{infoUser && (
+				<EditInfoUser
+					infoUser={infoUser}
+					openEditModal={openEditModal}
+					openEdit={openEdit}
+				/>
+			)}
+
 			<Box
 				sx={{
 					position: 'fixed',
