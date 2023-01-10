@@ -233,7 +233,7 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 													width: 120,
 													height: 120,
 													margin: 'auto',
-													borderRadius: '50%',
+													borderRadius: '10px',
 													border: '1px dashed #E7E8EC',
 													overflow: 'hidden',
 													'.placeholder-img': {
@@ -290,7 +290,10 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 								</InputGroup>
 								<Stack alignItems="center" sx={{ marginTop: '20px' }}>
 									<ButtonWhite
-										sx={{ paddingLeft: '30px', paddingRight: '30px' }}
+										sx={{
+											paddingLeft: '30px',
+											paddingRight: '30px',
+										}}
 										type="submit"
 										disabled={isSubmitting || isLoading}
 									>
@@ -301,7 +304,12 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 													size={25}
 												/>
 											)}
-											<Typography variant="button">Submit</Typography>
+											<Typography
+												variant="button"
+												sx={{ textTransform: 'none' }}
+											>
+												Submit
+											</Typography>
 										</Stack>
 									</ButtonWhite>
 								</Stack>

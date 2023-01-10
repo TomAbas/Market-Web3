@@ -94,6 +94,7 @@ const ProfileUser = () => {
 								objectPosition: 'center',
 								borderRadius: '10px',
 								display: 'block',
+								cursor: 'pointer',
 							},
 						}}
 					>
@@ -178,6 +179,9 @@ const ProfileUser = () => {
 									)}
 							</Box>
 						</Stack>
+						<Typography variant="body1" mt={2}>
+							{infoUser?.bio}
+						</Typography>
 					</Box>
 					<Box py={4}>
 						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
