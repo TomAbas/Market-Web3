@@ -31,13 +31,30 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 //hooks
 import { useSizeObersver } from '../../contexts/SizeObserver';
 import ModalInfo from './popupInfoModal';
-import { useNavigate } from 'react-router-dom';
+import useLogin from '../../hooks/useLogin';
 //component
 import NavBar from 'components/NavBar';
 import NavBarMobile from 'components/NavBarMobile';
 import { loginUser } from 'hooks/useUserLogin';
 import { getUserSuccessA } from 'redux/slices/userInfo';
 
+const listNav = [
+	{
+		id: 1,
+		name: 'Marketplace',
+		link: '/',
+	},
+	{
+		id: 2,
+		name: 'Drop',
+		link: '/drop',
+	},
+	{
+		id: 3,
+		name: 'Mint',
+		link: '/mint',
+	},
+];
 const Header: React.FC = () => {
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
 	const dispatch = useAppDispatch();
@@ -45,31 +62,10 @@ const Header: React.FC = () => {
 	const theme = useTheme();
 	const isLightTheme = theme.palette.mode === 'dark';
 	const { innerWidth } = useSizeObersver();
-	// useUserInfo();
-	// useState
-	const { account } = useWallet();
 
-	let userAddress = account?.address?.toString();
+	const { loginSuccess, userAddress } = useLogin();
 	let [background, setBackground] = useState(false);
 	let [option, setOption] = useState(false);
-
-	const listNav = [
-		{
-			id: 1,
-			name: 'Marketplace',
-			link: '/',
-		},
-		{
-			id: 2,
-			name: 'Drop',
-			link: '/drop',
-		},
-		{
-			id: 3,
-			name: 'Mint',
-			link: '/mint',
-		},
-	];
 
 	const openModal = () => {
 		if (!userAddress) {
@@ -85,13 +81,7 @@ const Header: React.FC = () => {
 	const openMoreOption = () => {
 		setOption(!option);
 	};
-	useEffect(() => {
-		if (userAddress) {
-			dispatch(getUserSuccessA({ userAddress }));
-			loginUser({ userAddress });
-			console.log(userAddress);
-		}
-	}, [userAddress]);
+
 	useEffect(() => {
 		// Handler to call on window scroll
 		const handleScroll = () => {
@@ -389,30 +379,32 @@ const Header: React.FC = () => {
 									</ClickAwayListener>
 								)}
 							</IconItem>
-							{account?.address && (
+							{userAddress && (
 								<IconItem onClick={openModalInfoUser}>
 									<img src={userIcon} alt="model info" />
-									{modalWalletSteps.steps.thirdModal && account?.address && (
-										<ClickAwayListener
-											onClickAway={() => {
-												openModalInfoUser();
-											}}
-										>
-											<DropDownContent ref={ref}>
-												<Box
-													sx={{
-														width: '330px',
-														boxShadow:
-															'rgb(0 0 0 / 40%) 0px 0px 5px 0px',
-														borderRadius: '12px',
-													}}
-													p={4}
-												>
-													<ModalInfo userAddress={account?.address} />
-												</Box>
-											</DropDownContent>
-										</ClickAwayListener>
-									)}
+									{modalWalletSteps.steps.thirdModal &&
+										loginSuccess &&
+										userAddress && (
+											<ClickAwayListener
+												onClickAway={() => {
+													openModalInfoUser();
+												}}
+											>
+												<DropDownContent ref={ref}>
+													<Box
+														sx={{
+															width: '330px',
+															boxShadow:
+																'rgb(0 0 0 / 40%) 0px 0px 5px 0px',
+															borderRadius: '12px',
+														}}
+														p={4}
+													>
+														<ModalInfo userAddress={userAddress} />
+													</Box>
+												</DropDownContent>
+											</ClickAwayListener>
+										)}
 								</IconItem>
 							)}
 						</Stack>
