@@ -5,6 +5,8 @@ import { InputCreateCollection, InputCreateNFT } from 'models/common';
 import { useState } from 'react';
 import { useAppDispatch } from 'redux/hooks';
 import { openFirstModal } from 'redux/slices/modalWallet';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const useCreateMintSell = () => {
 	const dispatch = useAppDispatch();
@@ -25,27 +27,14 @@ const useCreateMintSell = () => {
 		royaltyFee: 0,
 		file: null,
 	});
+
 	const handleInputFile = (e: any) => {
-		// const file = e.target.files![0];
-		// // updateFormInput({ ...formInput, file: file });
-		// const reader = new FileReader();
-		// reader.onload = function (event) {
-		// 	setBase64image(event.target!.result!.toString());
-		// };
-		// reader.readAsDataURL(file);
 		if (e) {
 			const file = e;
 			setBase64image({ ...file, preview: URL.createObjectURL(file) });
 		}
 	};
 	const handleInputFileMintNft = (e: any) => {
-		// const file = e.target.files![0];
-		// // setFormInputNFT({ ...formInputNFT, file: file });
-		// const reader = new FileReader();
-		// reader.onload = function (event) {
-		// 	setBase64image(event.target!.result!.toString());
-		// };
-		// reader.readAsDataURL(file);
 		if (e) {
 			const file = e;
 			setBase64image({ ...file, preview: URL.createObjectURL(file) });
@@ -57,9 +46,7 @@ const useCreateMintSell = () => {
 		handleNext: () => void,
 		failToComplete: () => void
 	) => {
-		console.log(formInput);
 		const { name, description, file } = formInput;
-		// console.log(file);
 		if (!account) {
 			dispatch(openFirstModal());
 			return;
@@ -91,17 +78,20 @@ const useCreateMintSell = () => {
 								gas_unit_price: 100,
 							}
 						);
+						toast.success('Create collection success');
 						completeTaskSuccess();
 						handleNext();
-					} catch (error) {
+					} catch (error: any) {
 						console.log('Error create collection NFT: ', error);
+						toast.error(error.message);
 						failToComplete();
 						handleNext();
 					}
 				}
 			);
-		} catch (error) {
+		} catch (error: any) {
 			console.log('Error create NFT: ', error);
+			toast.error(error.message);
 			failToComplete();
 			handleNext();
 		}
@@ -157,17 +147,20 @@ const useCreateMintSell = () => {
 								gas_unit_price: 100,
 							}
 						);
+						toast.success('Create collection success');
 						completeTaskSuccess();
 						handleNext();
-					} catch (error) {
+					} catch (error: any) {
 						console.log('Error create collection NFT: ', error);
+						toast.error(error.message);
 						failToComplete();
 						handleNext();
 					}
 				}
 			);
-		} catch (error) {
+		} catch (error: any) {
 			console.log('Error create collection NFT: ', error);
+			toast.error(error.message);
 			failToComplete();
 			handleNext();
 		}
