@@ -15,7 +15,7 @@ const CollectionDetail = () => {
 	const search = useLocation().search;
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
-	console.log({ collection, creator });
+	// console.log({ collection, creator });
 	useEffect(() => {
 		const fetchOffers = async () => {
 			const newOffers = await getListItemResource();

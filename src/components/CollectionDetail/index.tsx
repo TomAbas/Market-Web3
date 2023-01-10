@@ -27,7 +27,7 @@ const MyCollectionDetail = () => {
 		let newItems = items.filter((_item, i) => i !== index);
 		setItems(newItems);
 	};
-	console.log(creator, collection);
+	// console.log(creator, collection);
 	// useEffect(() => {
 	// 	console.log('reset');
 	// 	setItems(tokens);
@@ -50,7 +50,7 @@ const MyCollectionDetail = () => {
 		setItems(found[1]);
 		setCollectionInfo(found[0] ? found[0].split('*/////*') : ['', '']);
 	}, [tokens]);
-	console.log(collectionInfo);
+	// console.log(collectionInfo);
 
 	// useEffect(() => {
 	// 	console.log(collections);
