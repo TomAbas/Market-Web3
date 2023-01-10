@@ -62,10 +62,10 @@ export default function ViewAll() {
 						<Tab label="Collections" value="1" />
 					</TabList>
 				</Box>
-				<TabPanel value="2">
+				<TabPanel value="2" sx={{ px: 0 }}>
 					<Items offers={offers} setOffers={setOffers} />
 				</TabPanel>
-				<TabPanel value="1">
+				<TabPanel value="1" sx={{ px: 0 }}>
 					<Collections collections={collections} />
 				</TabPanel>
 			</TabContext>

@@ -3,12 +3,13 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { getBalanceUser } from '../../utils/getUser';
 import { Box, Link, Stack, Typography } from '@mui/material';
-
+import { useNavigate } from 'react-router-dom';
 // import userIcon from '../../assets/icons/icon-user-black.svg';
 interface Props {
 	userAddress: any;
 }
 const ModalInfo: React.FC<Props> = ({ userAddress }) => {
+	const navigate = useNavigate();
 	const [myBalance, setMyBalance] = useState(0);
 	const [sliceAdd, setSliceAdd] = useState('');
 	// useState
@@ -109,7 +110,13 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 										My Collections
 									</Link>
 								</Box>
-								<Box onClick={popupState.close}>Settings</Box>
+								<Box
+									onClick={() => {
+										navigate('/profile');
+									}}
+								>
+									Settings
+								</Box>
 								<Box
 									onClick={disConnect}
 									sx={{

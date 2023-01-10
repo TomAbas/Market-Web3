@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import item from '../../assets/images/card/box.webp';
 import { ItemImage } from 'components/Marketplace/styled';
-
+import ButtonWhite from 'customCompoents/ButtonWhite/ButtonWhite';
+import { useNavigate } from 'react-router-dom';
 export default function MyCollection() {
+	const navigate = useNavigate();
 	const { account } = useWallet();
 	const { tokens } = useTokens(account);
 	const [collections, setCollections] = useState<any[]>([]);
@@ -26,11 +29,30 @@ export default function MyCollection() {
 	return (
 		<>
 			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 16, pb: 4 }}>
-				<Box sx={{ textAlign: 'center', mb: 4 }}>
+				<Box sx={{ textAlign: 'left', mb: 4 }}>
 					<Typography variant="h2" fontWeight={500}>
 						My Collections
 					</Typography>
+					<Typography variant="body1">
+						Create, curate, and manage collections of unique NFTs to share and sell.
+					</Typography>
+					<Stack
+						direction="row"
+						alignItems="stretch"
+						sx={{ width: '100%', marginTop: '20px' }}
+						spacing={2}
+					>
+						<Box sx={{ width: '230px' }}>
+							<ButtonWhite
+								sx={{ height: '100%', mb: 0 }}
+								onClick={() => navigate(`/mint?query=1`)}
+							>
+								<span>Create a collection</span>
+							</ButtonWhite>
+						</Box>
+					</Stack>
 				</Box>
+
 				<Grid container spacing={1}>
 					{' '}
 					{collections.map((collection, index) => (

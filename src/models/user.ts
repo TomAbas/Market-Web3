@@ -11,3 +11,8 @@ export interface User {
 	createdAt?: string;
 	balance: string;
 }
+
+export interface UserLoginModel {
+	userAddress: string | undefined;
+	signature?: string;
+}

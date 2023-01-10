@@ -7,7 +7,6 @@ const useAccountGuard = () => {
 	const dispatch = useAppDispatch();
 	const { wallet } = useWallet();
 	let chainId = wallet?.adapter.network.chainId;
-	console.log(wallet?.adapter.network);
 	// async function checkAccount() {
 	// 	if (wallet) {
 	// 		if (chainId?.toString() !== '2') {

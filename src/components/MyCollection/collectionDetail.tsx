@@ -8,8 +8,9 @@ import { useTokens } from '../../hooks/useTokens';
 import { getListItemResource } from '../../utils/dataResource';
 import banner from '../../assets/banner.png';
 import aptos from '../../assets/images/card/aptos.jpg';
-
+import { useSearchParams } from 'react-router-dom';
 const CollectionDetail = () => {
+	let [searchParams, setSearchParams] = useSearchParams();
 	const [items, setItems] = useState<any[]>([]);
 	const search = useLocation().search;
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');

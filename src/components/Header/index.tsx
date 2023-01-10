@@ -35,6 +35,7 @@ import { useNavigate } from 'react-router-dom';
 //component
 import NavBar from 'components/NavBar';
 import NavBarMobile from 'components/NavBarMobile';
+import { loginUser } from 'hooks/useUserLogin';
 
 const Header: React.FC = () => {
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
@@ -83,6 +84,12 @@ const Header: React.FC = () => {
 	const openMoreOption = () => {
 		setOption(!option);
 	};
+	useEffect(() => {
+		if (userAddress) {
+			loginUser({ userAddress });
+			console.log(userAddress);
+		}
+	}, [userAddress]);
 	useEffect(() => {
 		// Handler to call on window scroll
 		const handleScroll = () => {
