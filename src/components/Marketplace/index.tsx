@@ -266,7 +266,7 @@ export default function Marketplace() {
 					</EmailSearch>
 				</HotService>
 			</ExploreCollection>
-			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 3, pb: 4 }}>
+			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 3, pb: 4, px: 2 }}>
 				<Box sx={{ textAlign: 'center', mb: 4 }}>
 					<Typography variant="h2" fontWeight={500}>
 						Featured Collections

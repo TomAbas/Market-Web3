@@ -122,7 +122,7 @@ export default function DetailCard() {
 
 	return (
 		<>
-			<Box sx={{ pt: 16, pb: 4, maxWidth: '1440px', mx: 'auto' }}>
+			<Box sx={{ pt: 16, pb: 4, maxWidth: '1440px', mx: 'auto', px: 2 }}>
 				<Stack direction="row" gap={4}>
 					<ItemImage sx={{ width: '50%', paddingTop: '50%' }}>
 						<Box className="main-img">
