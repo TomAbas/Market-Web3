@@ -2,6 +2,7 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -33,7 +34,8 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 	const [open, setOpen] = useState(false);
 	const [supply, setSupply] = useState('');
 	const [price, setPrice] = useState('');
-	const [statusList, setStatusList] = useState('List');
+	const [statusList, setStatusList] = useState('Sell Item');
+	const navigate = useNavigate();
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -48,7 +50,7 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 				return;
 			}
 			let newPrice = parseFloat(price) * DECIMAL;
-			setStatusList('Listing...');
+			setStatusList('Processing...');
 			console.log(supply + ' ' + newPrice);
 			const payload = {
 				type: 'entry_function_payload',
@@ -64,13 +66,21 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 				],
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
-			setStatusList('List');
+			setStatusList('Sell Item');
 			handleItems(index);
 			setOpen(false);
 		} catch (error) {
-			setStatusList('List');
+			setStatusList('Sell Item');
 			setOpen(false);
 		}
+	};
+	const handleClickItem = () => {
+		navigate(
+			`/my-item?creator=${encodeURIComponent(item?.creator)}&collection=${encodeURIComponent(
+				item?.collection
+			)}&name=${encodeURIComponent(item?.name)}`
+		);
+		console.log('1');
 	};
 
 	return (
@@ -79,7 +89,7 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
-						<ItemImage>
+						<ItemImage onClick={handleClickItem}>
 							<Box className="main-img">
 								<img src={item.uri} alt="item" />
 							</Box>

@@ -95,8 +95,18 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 								<Box>APT</Box>{' '}
 								<Box>{Math.floor(myBalance / 1000000) / 100} APT</Box>
 							</Stack>
-							<Stack gap={1.5} pl={2}>
-								<Box onClick={popupState.close}>
+							<Stack gap={2} pl={2}>
+								<Stack
+									direction="row"
+									gap="10px"
+									alignItems="center"
+									onClick={popupState.close}
+									sx={{
+										img: {
+											width: '20px',
+										},
+									}}
+								>
 									<img src={IconUserBlack} alt="profile" />
 									<Link
 										href="/#/profile"
@@ -110,8 +120,18 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									>
 										Profile
 									</Link>
-								</Box>
-								<Box onClick={popupState.close}>
+								</Stack>
+								<Stack
+									direction="row"
+									gap="10px"
+									alignItems="center"
+									sx={{
+										img: {
+											width: '20px',
+										},
+									}}
+									onClick={popupState.close}
+								>
 									<img src={IconCollectionBlack} alt="collection" />
 									<Link
 										href="/#/myCollection"
@@ -125,8 +145,16 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									>
 										My Collections
 									</Link>
-								</Box>
-								<Box
+								</Stack>
+								<Stack
+									direction="row"
+									gap="10px"
+									alignItems="center"
+									sx={{
+										img: {
+											width: '20px',
+										},
+									}}
 									onClick={() => {
 										navigate('/profile');
 										dispatch(toggleSettingModalA());
@@ -144,19 +172,25 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									>
 										Settings
 									</Link>
-								</Box>
-								<Box
-									onClick={disConnect}
+								</Stack>
+								<Stack
+									direction="row"
+									gap="10px"
+									alignItems="center"
 									sx={{
+										img: {
+											width: '20px',
+										},
 										cursor: 'pointer',
 										'&:hover': {
 											color: '#007aff',
 										},
 									}}
+									onClick={disConnect}
 								>
 									<img src={IconLogoutBlack} alt="logout" />
 									<Box>Logout</Box>
-								</Box>
+								</Stack>
 							</Stack>
 						</Stack>
 					</Box>

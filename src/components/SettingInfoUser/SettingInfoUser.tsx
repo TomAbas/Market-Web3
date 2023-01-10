@@ -232,7 +232,7 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 													width: 120,
 													height: 120,
 													margin: 'auto',
-													borderRadius: '50%',
+													borderRadius: '10px',
 													border: '1px dashed #E7E8EC',
 													overflow: 'hidden',
 													'.placeholder-img': {
@@ -341,7 +341,12 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 													size={25}
 												/>
 											)}
-											<Typography variant="button">Submit</Typography>
+											<Typography
+												variant="button"
+												sx={{ textTransform: 'none' }}
+											>
+												Submit
+											</Typography>
 										</Stack>
 									</ButtonWhite>
 								</Stack>

@@ -23,6 +23,7 @@ import Header from 'components/Header';
 function App() {
 	const wallets = useMemo(
 		() => [
+			new SpacecyWalletAdapter(),
 			new AptosWalletAdapter(),
 			new MartianWalletAdapter(),
 			new PontemWalletAdapter(),
