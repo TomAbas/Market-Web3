@@ -9,7 +9,7 @@ export interface User {
 	nonce?: number;
 	totalItems?: number;
 	createdAt?: string;
-	balance: string;
+	balance?: string;
 }
 
 export interface UserLoginModel {
