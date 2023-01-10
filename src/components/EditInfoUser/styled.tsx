@@ -1,4 +1,5 @@
 import { styled, Box, Typography } from '@mui/material';
+import { Stack } from '@mui/system';
 
 export const TopPart = styled(Box)(({ theme }) => ({
 	paddingBottom: '25px',
@@ -61,4 +62,53 @@ export const ErrorMessage = styled(Typography)(({ theme }) => ({
 	'&::before': {
 		content: '"*"',
 	},
+}));
+
+export const Input = styled('input')(({ theme }) => ({
+	display: 'block',
+	borderRadius: '12px',
+	padding: '15px',
+	outline: 'none',
+	width: '100%',
+	fontSize: '16px',
+	fontWeight: '500',
+	lineHeight: '16px',
+	color: '#131740',
+	fontStyle: 'italic',
+	background: '#fff',
+	border: '1px solid #E7E8EC',
+	fontFamily: 'Montserrat sans-serif',
+}));
+
+export const Textarea = styled('textarea')(({ theme }) => ({
+	display: 'block',
+	border: ' 1px solid #E7E8EC',
+	outline: 'none',
+	width: '100%',
+	borderRadius: '5px',
+	padding: '15px',
+	fontSize: '16px',
+	color: '#1D1D1F',
+	background: '#fff',
+	fontStyle: 'italic',
+	fontFamily: 'Montserrat sans-serif',
+}));
+
+export const TopModal = styled(Stack)(({ theme }) => ({
+	width: '100%',
+	position: 'relative',
+	height: '4rem',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	borderBottom: '1px solid #E7E8EC',
+}));
+
+export const TopTitleModal = styled('span')(({ theme }) => ({
+	fontStyle: 'italic',
+	fontWeight: '500',
+	alignSelf: 'center',
+	fontSize: '32px',
+	padding: '10px 40px',
+	textAlign: 'center',
 }));

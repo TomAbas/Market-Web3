@@ -9,8 +9,12 @@ import aptos from '../../assets/images/card/aptos.jpg';
 import ClientAxios from 'customAxios/ClientAxios';
 import { useSizeObersver } from 'contexts/SizeObserver';
 import editIcon from '../../assets/icons/icon-edit.svg';
+import EditInfoUser from 'components/EditInfoUser/EditInfoUser';
+import { useAppSelector } from 'redux/hooks';
+import { selectUser } from 'redux/slices/userInfo';
 const ProfileUser = () => {
 	const [infoUser, setInfoUser] = useState<any>();
+	const [openEdit, setOpenEdit] = useState(false);
 	const { account } = useWallet();
 	const { innerWidth } = useSizeObersver();
 	const [viewFull, setViewFull] = useState(false);
@@ -18,14 +22,10 @@ const ProfileUser = () => {
 	// console.log(account);
 	const { tokens, loading } = useTokens(account);
 	const [items, setItems] = useState<any[]>([]);
-
 	const innerHeight = innerWidth / 4.5;
-
+	const userAddress = useAppSelector(selectUser)?.userAddress;
 	let myAddress = account?.address?.toString() || '';
-	useEffect(() => {
-		console.log('reset');
-		setItems(tokens);
-	}, [tokens]);
+
 	const handleItems = (index: any) => {
 		let newItems = items.filter((_item, i) => i !== index);
 		setItems(newItems);
@@ -34,15 +34,23 @@ const ProfileUser = () => {
 		let { data } = (await ClientAxios.get(`/users/userAddress/${myAddress}`)).data;
 		setInfoUser(data);
 	};
-	useEffect(() => {
-		getInfoUser();
-	}, [myAddress]);
 	const handleClickAway = () => {
 		setViewFull(false);
 	};
 	const handleClickAvatar = () => {
 		setViewAvatar(false);
 	};
+	const openEditModal = () => {
+		setOpenEdit(!openEdit);
+	};
+	useEffect(() => {
+		if (userAddress) {
+			getInfoUser();
+		}
+	}, [userAddress]);
+	useEffect(() => {
+		setItems(tokens);
+	}, [tokens]);
 	return (
 		<>
 			<Box pt={13}>
@@ -130,7 +138,7 @@ const ProfileUser = () => {
 						}}
 					>
 						{/* <img src={infoUser?.avatar} alt="avatar" /> */}
-						<button>
+						<button onClick={openEditModal}>
 							<img src={editIcon} alt="edit" />
 							<Box>Edit Profile</Box>
 						</button>
@@ -181,7 +189,7 @@ const ProfileUser = () => {
 					</Box>
 				</Box>
 			</Box>
-
+			<EditInfoUser infoUser={infoUser} openEditModal={openEditModal} openEdit={openEdit} />
 			<Box
 				sx={{
 					position: 'fixed',
