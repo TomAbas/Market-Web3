@@ -26,6 +26,28 @@ export const getListCollectionUserResource = async (address: any) => {
 	}
 };
 
+export const getWhiteListDropResource = async () => {
+	try {
+		const response: any = await axios.get(
+			`${APTOS_NODE_URL}accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::MetaspacecyTicket::WhiteList`
+		);
+		return response.data.data?.white_list;
+	} catch (error) {
+		return [];
+	}
+};
+
+export const getTicketDropResource = async () => {
+	try {
+		const response: any = await axios.get(
+			`${APTOS_NODE_URL}accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::MetaspacecyTicket::TokenInfo`
+		);
+		return response.data.data?.token_list;
+	} catch (error) {
+		return [];
+	}
+};
+
 export const getListCollectionMarketplace = async (offers: any[]) => {
 	try {
 		if (!offers) {

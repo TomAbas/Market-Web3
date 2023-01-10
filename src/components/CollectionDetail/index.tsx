@@ -1,22 +1,65 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, ClickAwayListener, Grid, Stack, Typography } from '@mui/material';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
+import { useNavigate } from 'react-router-dom';
 import CardNFTUser from 'components/Marketplace/CardNFTUser';
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useTokens } from '../../hooks/useTokens';
 import banner from '../../assets/banner.png';
 import aptos from '../../assets/images/card/aptos.jpg';
 import { useSizeObersver } from 'contexts/SizeObserver';
-import CardNFTCollection from 'components/Marketplace/CardNFTCollection';
 
-const CollectionDetail = () => {
+const MyCollectionDetail = () => {
+	const search = useLocation().search;
+	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
+	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
 	const { innerWidth } = useSizeObersver();
 	const [viewFull, setViewFull] = useState(false);
+	const navigate = useNavigate();
+	const { account } = useWallet();
 	const [viewAvatar, setViewAvatar] = useState(false);
+	const { tokens } = useTokens(account);
+	const [collectionInfo, setCollectionInfo] = useState<any[]>(['', '']);
 	const [items, setItems] = useState<any[]>([]);
 
-	const innerHeight = innerWidth / 4.5;
+	const handleItems = (index: any) => {
+		let newItems = items.filter((_item, i) => i !== index);
+		setItems(newItems);
+	};
+	console.log(creator, collection);
+	// useEffect(() => {
+	// 	console.log('reset');
+	// 	setItems(tokens);
+	// }, [tokens]);
+	useEffect(() => {
+		let newCollection = new Map();
+		tokens.map((item: any) => {
+			let collection = newCollection.get(item?.collection + '*/////*' + item?.creator);
+			if (!collection) {
+				newCollection.set(item?.collection + '*/////*' + item?.creator, [item]);
+			} else {
+				collection.push(item);
+				newCollection.set(item?.collection + '*/////*' + item?.creator, collection);
+			}
+		});
+		const collections = Array.from(newCollection);
+		const found =
+			collections.find((value) => value[0] == `${collection}*/////*${creator}`) || [];
+		console.log(found);
+		setItems(found[1]);
+		setCollectionInfo(found[0] ? found[0].split('*/////*') : ['', '']);
+	}, [tokens]);
+	console.log(collectionInfo);
 
-	// console.log(tokens);
+	// useEffect(() => {
+	// 	console.log(collections);
+	// 	const found = collections.find((value) => value[0] == `${collection}*/////*${creator}`);
+	// 	setItems(found);
+	// }, [collections]);
+
+	const innerHeight = innerWidth / 4.5;
+	// console.log(items);
 	const handleClickAway = () => {
 		setViewFull(false);
 	};
@@ -82,7 +125,7 @@ const CollectionDetail = () => {
 				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>
 					<Box sx={{ width: '100%' }}>
 						<Typography variant="h4" fontWeight="500">
-							Test
+							{collectionInfo[0]}
 						</Typography>
 						<Stack
 							direction="row"
@@ -103,20 +146,27 @@ const CollectionDetail = () => {
 							}}
 						>
 							<img src={aptos} alt="aptos" />
-							<Box></Box>
+							<Box>
+								{collectionInfo[1]?.slice(0, 6) +
+									'...' +
+									collectionInfo[1]?.slice(
+										collectionInfo[1].length - 4,
+										collectionInfo[1].length
+									)}
+							</Box>
 						</Stack>
 					</Box>
 					<Box py={4}>
-						{/* <Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-							{items.map((item: any, index: any) => (
-								<CardNFTCollection
+						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+							{items?.map((item: any, index: any) => (
+								<CardNFTUser
 									item={item}
 									handleItems={handleItems}
 									index={index}
 									key={index}
 								/>
 							))}
-						</Grid> */}
+						</Grid>
 					</Box>
 				</Box>
 			</Box>
@@ -181,4 +231,4 @@ const CollectionDetail = () => {
 	);
 };
 
-export default CollectionDetail;
+export default MyCollectionDetail;

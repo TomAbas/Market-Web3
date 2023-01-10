@@ -4,10 +4,10 @@ import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import CardNFT from 'components/Marketplace/CardNFT';
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useTokens } from '../../hooks/useTokens';
-import { getListItemResource } from '../../utils/dataResource';
-import banner from '../../assets/banner.png';
-import aptos from '../../assets/images/card/aptos.jpg';
+import { useTokens } from '../../../hooks/useTokens';
+import { getListItemResource } from '../../../utils/dataResource';
+import banner from '../../../assets/banner.png';
+import aptos from '../../../assets/images/card/aptos.jpg';
 import { useSearchParams } from 'react-router-dom';
 const CollectionDetail = () => {
 	let [searchParams, setSearchParams] = useSearchParams();
@@ -68,7 +68,7 @@ const CollectionDetail = () => {
 				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>
 					<Box sx={{ width: '100%' }}>
 						<Typography variant="h4" fontWeight="500">
-							Test
+							{collection}
 						</Typography>
 						<Stack
 							direction="row"

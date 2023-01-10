@@ -15,12 +15,12 @@ export default function MyCollection() {
 	useEffect(() => {
 		let newCollection = new Map();
 		tokens.map((item) => {
-			let collection = newCollection.get(item?.collection + '/////' + item?.creator);
+			let collection = newCollection.get(item?.collection + '*/////*' + item?.creator);
 			if (!collection) {
-				newCollection.set(item?.collection + '/////' + item?.creator, [item]);
+				newCollection.set(item?.collection + '*/////*' + item?.creator, [item]);
 			} else {
 				collection.push(item);
-				newCollection.set(item?.collection + '/////' + item?.creator, collection);
+				newCollection.set(item?.collection + '*/////*' + item?.creator, collection);
 			}
 		});
 		setCollections(Array.from(newCollection));
@@ -56,7 +56,20 @@ export default function MyCollection() {
 				<Grid container spacing={1}>
 					{' '}
 					{collections.map((collection, index) => (
-						<Grid xs={6} sm={4} md={3} p={1} key={index}>
+						<Grid
+							xs={6}
+							sm={4}
+							md={3}
+							p={1}
+							key={index}
+							onClick={() => {
+								navigate(
+									`/myCollection/detail?collection=${
+										collection[0].split('*/////*')[0]
+									}&creator=${collection[0].split('*/////*')[1]}`
+								);
+							}}
+						>
 							<Box
 								sx={{
 									border: '1.5px solid #e7e8ec',
@@ -78,7 +91,7 @@ export default function MyCollection() {
 								</ItemImage>
 								<Box py={1.5}>
 									<Typography variant="h6">
-										{collection[0].split('/////')[0]}
+										{collection[0].split('*/////*')[0]}
 									</Typography>
 									<Stack
 										mt={1}
@@ -104,18 +117,18 @@ export default function MyCollection() {
 											<Typography variant="body1">
 												<a
 													href={`https://explorer.aptoslabs.com/account/${
-														collection[0].split('/////')[1]
+														collection[0].split('*/////*')[1]
 													}`}
 													target="_blank"
 												>
-													{collection[0].split('/////')[1].slice(0, 6) +
+													{collection[0].split('*/////*')[1].slice(0, 6) +
 														'...' +
 														collection[0]
-															.split('/////')[1]
+															.split('*/////*')[1]
 															.slice(
-																collection[0].split('/////')[1]
+																collection[0].split('*/////*')[1]
 																	.length - 4,
-																collection[0].split('/////')[1]
+																collection[0].split('*/////*')[1]
 																	.length
 															)}
 												</a>

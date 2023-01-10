@@ -11,9 +11,9 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
-import axios from 'axios';
 import { useAppDispatch } from '../../redux/hooks';
 import { openFirstModal } from '../../redux/slices/modalWallet';
+import { getWhiteListDropResource, getTicketDropResource } from '../../utils/dataResource';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -35,9 +35,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	},
 }));
 
-const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 
 export default function WhiteList() {
@@ -47,21 +45,14 @@ export default function WhiteList() {
 	const { account, signAndSubmitTransaction } = useWallet();
 	useEffect(() => {
 		const fetchWhitelist = async () => {
-			const response: any = await axios.get(
-				`${APTOS_NODE_URL}accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::MetaspacecyTicket::WhiteList`
-			);
-			console.log(response);
-
-			setWhitelist(response.data.data.white_list);
+			const whiteList = await getWhiteListDropResource();
+			setWhitelist(whiteList);
 		};
 		fetchWhitelist();
 	}, []);
 	useEffect(() => {
 		const fetchTicket = async () => {
-			const response: any = await axios.get(
-				`${APTOS_NODE_URL}accounts/${MARKET_RESOURCE_ADDRESS}/resource/${MARKET_ADDRESS}::MetaspacecyTicket::TokenInfo`
-			);
-			let arrTicket = response.data.data.token_list;
+			let arrTicket = await getTicketDropResource();
 			arrTicket = arrTicket.filter(
 				(item: any) => item.owner.toString() == account?.address?.toString()
 			);
@@ -96,6 +87,7 @@ export default function WhiteList() {
 			};
 
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			setTotalTicket(totalTicket + 1);
 			setLoading('Claim Tickets');
 		} catch {
 			setLoading('Claim Tickets');
