@@ -36,6 +36,7 @@ import { useNavigate } from 'react-router-dom';
 import NavBar from 'components/NavBar';
 import NavBarMobile from 'components/NavBarMobile';
 import { loginUser } from 'hooks/useUserLogin';
+import { getUserSuccessA } from 'redux/slices/userInfo';
 
 const Header: React.FC = () => {
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
@@ -86,6 +87,7 @@ const Header: React.FC = () => {
 	};
 	useEffect(() => {
 		if (userAddress) {
+			dispatch(getUserSuccessA({ userAddress }));
 			loginUser({ userAddress });
 			console.log(userAddress);
 		}
