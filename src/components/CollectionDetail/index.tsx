@@ -66,6 +66,7 @@ const MyCollectionDetail = () => {
 	const handleClickAvatar = () => {
 		setViewAvatar(false);
 	};
+	// console.log(items[0] ? items[0] : '');
 	return (
 		<>
 			<Box pt={13}>

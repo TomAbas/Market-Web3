@@ -13,6 +13,8 @@ import SettingInfoUser from 'components/SettingInfoUser/SettingInfoUser';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectSettingModal, selectUser, toggleSettingModalA } from 'redux/slices/userInfo';
 import EditInfoUser from 'components/EditInfoUser/EditInfoUser';
+import { walletClient } from '../../utils/aptos';
+
 const ProfileUser = () => {
 	const dispatch = useAppDispatch();
 	// const [infoUser, setInfoUser] = useState<any>();
@@ -44,11 +46,35 @@ const ProfileUser = () => {
 	const handleToggleModalSetting = () => {
 		dispatch(toggleSettingModalA());
 	};
-	// useEffect(() => {
-	// 	if (userAddress) {
-	// 		getInfoUser();
-	// 	}
-	// }, [userAddress]);
+	useEffect(() => {
+		const fetchData = async () => {
+			const data = await walletClient.getTokenIds(
+				'0xfcb2cd3831d4715633c43219d6b7a5396b2fbabd0cb1158fc778ae99837c5dd4',
+				100,
+				0,
+				0
+			);
+			const tokens = await Promise.all(
+				data.tokenIds
+					.filter((i) => i.difference != 0)
+					.map(async (i) => {
+						const token = await walletClient.getToken(i.data);
+						return {
+							propertyVersion: i.data.property_version,
+							creator: i.data.token_data_id.creator,
+							collection: token.collection,
+							name: token.name,
+							description: token.description,
+							uri: token.uri,
+							maximum: token.maximum,
+							supply: token.supply,
+						};
+					})
+			);
+			// console.log(tokens);
+		};
+		fetchData();
+	}, []);
 	useEffect(() => {
 		setItems(tokens);
 	}, [tokens]);
