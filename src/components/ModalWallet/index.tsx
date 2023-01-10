@@ -49,7 +49,12 @@ const ModalWallet: React.FC = () => {
 								) : (
 									<img width={48} height={48} src={wallet.adapter.icon} />
 								)}
-								<Typography fontStyle="italic">{wallet.adapter.name}</Typography>
+
+								<Typography fontStyle="italic">
+									{wallet.adapter.name === 'Spacecy'
+										? `${wallet.adapter.name} Wallet`
+										: wallet.adapter.name}
+								</Typography>
 							</Stack>
 						</Stack>
 					</Box>

@@ -24,6 +24,7 @@ import ModalGuard from 'components/ModalGuard/ModalGuard';
 function App() {
 	const wallets = useMemo(
 		() => [
+			new SpacecyWalletAdapter(),
 			new AptosWalletAdapter(),
 			new MartianWalletAdapter(),
 			new PontemWalletAdapter(),

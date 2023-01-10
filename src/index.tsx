@@ -23,6 +23,7 @@ import CollectionDetail from 'components/Marketplace/CollectionDetail/collection
 import DetailCard from 'components/Marketplace/DetailCard';
 import ViewAll from 'components/Marketplace/ViewAll';
 import MyCollectionDetail from 'components/CollectionDetail';
+import MyItemDetail from 'components/Marketplace/MyItemdetail';
 
 const router = createHashRouter([
 	{
@@ -54,6 +55,15 @@ const router = createHashRouter([
 			{
 				path: '/item',
 				element: <DetailCard />,
+				errorElement: (
+					<>
+						<h1>error test market</h1>
+					</>
+				),
+			},
+			{
+				path: '/my-item',
+				element: <MyItemDetail />,
 				errorElement: (
 					<>
 						<h1>error test market</h1>

@@ -120,7 +120,7 @@ export default function CardNFT({
 		}
 	};
 
-	const handleItem = () => {
+	const handleClickItem = () => {
 		navigate(
 			`/item?creator=${encodeURI(
 				offer.token_id.token_data_id.creator
@@ -134,7 +134,7 @@ export default function CardNFT({
 	return (
 		<>
 			<Grid xs={6} sm={4} md={3} p={1}>
-				<ItemCardStyle sx={{ boxShadow: 0 }} onClick={handleItem}>
+				<ItemCardStyle sx={{ boxShadow: 0 }} onClick={handleClickItem}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
 						<ItemImage>

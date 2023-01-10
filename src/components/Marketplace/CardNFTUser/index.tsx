@@ -2,6 +2,7 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -34,6 +35,7 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 	const [supply, setSupply] = useState('');
 	const [price, setPrice] = useState('');
 	const [statusList, setStatusList] = useState('List');
+	const navigate = useNavigate();
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -72,10 +74,18 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 			setOpen(false);
 		}
 	};
+	const handleClickItem = () => {
+		navigate(
+			`/my-item?creator=${encodeURIComponent(item?.creator)}&collection=${encodeURIComponent(
+				item?.collection
+			)}&name=${encodeURIComponent(item?.name)}`
+		);
+		console.log('1');
+	};
 
 	return (
 		<>
-			<Grid xs={6} sm={4} md={3} p={1}>
+			<Grid xs={6} sm={4} md={3} p={1} onClick={handleClickItem}>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
