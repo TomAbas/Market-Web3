@@ -87,7 +87,8 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 				const avatarForm = new FormData();
 				avatarForm.append('file', avatar.raw);
 				const res: Response<any> = await uploadUserMedia(avatarForm, userAddress);
-				avatarURL = res.data;
+				avatarURL = res.data.data.result;
+				console.log('res', res);
 			}
 
 			if (typeof background === 'string') {
@@ -97,7 +98,7 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 				const backgroundForm = new FormData();
 				backgroundForm.append('file', background.raw);
 				const res: Response<any> = await uploadUserMedia(backgroundForm, userAddress);
-				backgroundURL = res.data;
+				backgroundURL = res.data.data.result;
 			}
 
 			// const executeAfterUpdateUser = (globalStateNewest: RootState) => {
