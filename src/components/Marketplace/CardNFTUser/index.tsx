@@ -34,7 +34,7 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 	const [open, setOpen] = useState(false);
 	const [supply, setSupply] = useState('');
 	const [price, setPrice] = useState('');
-	const [statusList, setStatusList] = useState('List');
+	const [statusList, setStatusList] = useState('Sell Item');
 	const navigate = useNavigate();
 
 	const handleClickOpen = () => {
@@ -50,7 +50,7 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 				return;
 			}
 			let newPrice = parseFloat(price) * DECIMAL;
-			setStatusList('Listing...');
+			setStatusList('Processing...');
 			console.log(supply + ' ' + newPrice);
 			const payload = {
 				type: 'entry_function_payload',
@@ -66,11 +66,11 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 				],
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
-			setStatusList('List');
+			setStatusList('Sell Item');
 			handleItems(index);
 			setOpen(false);
 		} catch (error) {
-			setStatusList('List');
+			setStatusList('Sell Item');
 			setOpen(false);
 		}
 	};
@@ -85,11 +85,11 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 
 	return (
 		<>
-			<Grid xs={6} sm={4} md={3} p={1} onClick={handleClickItem}>
+			<Grid xs={6} sm={4} md={3} p={1}>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
-						<ItemImage>
+						<ItemImage onClick={handleClickItem}>
 							<Box className="main-img">
 								<img src={item.uri} alt="item" />
 							</Box>

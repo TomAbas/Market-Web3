@@ -3,11 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 // import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 // import useControlModal from 'hooks/useControlModal';
@@ -33,7 +29,7 @@ export default function MyItemDetail() {
 	const [supply, setSupply] = useState('');
 	const [price, setPrice] = useState('');
 	const [open, setOpen] = useState(false);
-	const [statusSell, setStatusSell] = useState('Sell');
+	const [statusSell, setStatusSell] = useState('Sell Item');
 	// const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const [item, setItem] = useState<any>();
@@ -63,7 +59,7 @@ export default function MyItemDetail() {
 				return;
 			}
 			let newPrice = parseFloat(price) * DECIMAL;
-			setStatusSell('Listing...');
+			setStatusSell('Processing...');
 			console.log(supply + ' ' + newPrice);
 			const payload = {
 				type: 'entry_function_payload',
@@ -105,6 +101,7 @@ export default function MyItemDetail() {
 							{item?.name}
 						</Typography>
 						<p>{item?.description}</p>
+						<p>Owned Quantity : {item?.supply}</p>
 						<Typography variant="body1">
 							Owner:{' '}
 							<a
@@ -169,38 +166,124 @@ export default function MyItemDetail() {
 						>
 							Sell Item
 						</Typography> */}
-						<Dialog open={open} onClose={handleClose}>
-							<DialogTitle>Sell Item</DialogTitle>
-							<DialogContent>
-								<TextField
-									autoFocus
-									margin="dense"
-									id="name"
-									label="Supply"
-									type="text"
-									fullWidth
-									variant="standard"
-									value={supply}
-									onChange={(e) => setSupply(e.target.value)}
-								/>
-							</DialogContent>
-							<DialogContent>
-								<TextField
-									autoFocus
-									margin="dense"
-									id="price"
-									label="Price"
-									type="text"
-									fullWidth
-									variant="standard"
-									value={price}
-									onChange={(e) => setPrice(e.target.value)}
-								/>
-							</DialogContent>
-							<DialogActions>
-								<Button onClick={handleClose}>Cancel</Button>
-								<Button onClick={handleListItem}>{statusSell}</Button>
-							</DialogActions>
+						<Dialog
+							open={open}
+							onClose={handleClose}
+							sx={{
+								'.MuiDialog-container': {
+									width: '440px',
+									mx: 'auto',
+									'.MuiDialog-paper': {
+										width: '100%',
+										borderRadius: '10px',
+									},
+								},
+							}}
+						>
+							<DialogTitle sx={{ textAlign: 'center' }}>Sell Item</DialogTitle>
+							<Box px={3} py={2}>
+								<Typography variant="body1" fontWeight={500} mb={1}>
+									Supply
+								</Typography>
+								<Box
+									sx={{
+										input: {
+											border: '1.5px solid #e7e8ec',
+											padding: '10px 24px',
+											outline: 'none',
+											borderRadius: '10px',
+											fontSize: '18px',
+											fontStyle: 'italic',
+											width: '100%',
+										},
+									}}
+								>
+									<input
+										type="number"
+										value={supply}
+										onChange={(e) => setSupply(e.target.value)}
+										id="name"
+										placeholder="0"
+									/>
+								</Box>
+							</Box>
+							<Box px={3} py={2}>
+								<Typography variant="body1" fontWeight={500} mb={1}>
+									Price
+								</Typography>
+								<Box
+									sx={{
+										input: {
+											border: '1.5px solid #e7e8ec',
+											padding: '10px 24px',
+											outline: 'none',
+											borderRadius: '10px',
+											fontSize: '18px',
+											fontStyle: 'italic',
+											width: '100%',
+										},
+									}}
+								>
+									<input
+										type="number"
+										onChange={(e) => setPrice(e.target.value)}
+										value={price}
+										id="price"
+										placeholder="0"
+									/>
+								</Box>
+							</Box>
+
+							<Stack direction="row" pt={3} pb={4} justifyContent="center" gap="10px">
+								<Box
+									onClick={handleClose}
+									sx={{
+										button: {
+											padding: '8px 30px',
+											border: '1.5px solid #e7e8ec',
+											transition: 'all 0.4s',
+											borderRadius: '12px',
+											fontWeight: 500,
+											background: '#fff',
+											fontSize: '16px',
+											cursor: 'pointer',
+											fontFamily: 'Montserrat, sans-serif !important',
+											fontStyle: 'italic !important',
+											'&:hover': {
+												background: '#007aff',
+												borderColor: 'transparent',
+												color: '#fff',
+											},
+										},
+									}}
+								>
+									<button>Cancel</button>
+								</Box>
+								<Box
+									onClick={handleListItem}
+									sx={{
+										button: {
+											padding: '8px 30px',
+											border: '1.5px solid #e7e8ec',
+											transition: 'all 0.4s',
+											borderRadius: '12px',
+											fontWeight: 500,
+											background: '#fff',
+											fontSize: '16px',
+											cursor: 'pointer',
+											fontFamily: 'Montserrat, sans-serif !important',
+											fontStyle: 'italic !important',
+											'&:hover': {
+												background: '#007aff',
+												borderColor: 'transparent',
+												color: '#fff',
+											},
+										},
+									}}
+								>
+									<button>{statusSell}</button>
+								</Box>
+							</Stack>
 						</Dialog>
 					</div>
 				</Stack>
