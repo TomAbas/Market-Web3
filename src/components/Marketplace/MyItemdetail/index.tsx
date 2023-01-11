@@ -95,7 +95,7 @@ export default function MyItemDetail() {
 							{item?.name}
 						</Typography>
 						<p>{item?.description}</p>
-						<p>Owned Quantity : {item?.supply}</p>
+						{/* <p>Owned Quantity : {item?.supply}</p> */}
 						<Typography variant="body1">
 							Owner:{' '}
 							<a

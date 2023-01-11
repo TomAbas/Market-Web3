@@ -6,7 +6,7 @@ import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import item from '../../assets/images/card/box.webp';
 import { ItemImage } from 'components/Marketplace/styled';
 import ButtonWhite from 'customCompoents/ButtonWhite/ButtonWhite';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 export default function MyCollection() {
 	const navigate = useNavigate();
 	const { account } = useWallet();

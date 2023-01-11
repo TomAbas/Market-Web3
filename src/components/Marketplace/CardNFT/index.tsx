@@ -138,7 +138,7 @@ export default function CardNFT({
 
 	return (
 		<>
-			<Grid xs={6} sm={4} md={3} p={1}>
+			<Grid xs={6} sm={4} md={3} p={1} onClick={handleClickItem}>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
@@ -255,7 +255,6 @@ export default function CardNFT({
 								alignItems="center"
 								justifyContent="space-between"
 								spacing={1}
-								onClick={handleClickItem}
 							>
 								<Box
 									sx={{
@@ -329,7 +328,10 @@ export default function CardNFT({
 										{offer.price / DECIMAL} APT
 									</Box>
 									<Typography
-										onClick={handleOpenModalBuy}
+										onClick={(e) => {
+											e.stopPropagation();
+											handleOpenModalBuy();
+										}}
 										variant="body2"
 										sx={{
 											fontWeight: offer.is_cancle ? '300' : '600',

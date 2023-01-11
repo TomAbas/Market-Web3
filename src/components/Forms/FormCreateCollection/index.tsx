@@ -89,6 +89,7 @@ const FormMint: React.FC<Props> = ({
 					/>
 				</InputImage>
 				{errors.file && <ErrorMessage>Image is required</ErrorMessage>}
+
 				<InputItem>
 					<InputTitle>
 						Name <Asterisk />

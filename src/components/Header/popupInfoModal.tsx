@@ -14,6 +14,7 @@ import IconUserWhite from 'assets/icons/NavBar/icon-user-white.svg';
 import IconUserBlack from 'assets/icons/NavBar/icon-user-black.svg';
 import IconHeartWhite from 'assets/icons/NavBar/icon-heart-white.svg';
 import IconHeartBlack from 'assets/icons/NavBar/icon-heart-black.svg';
+import aptos from 'assets/images/card/aptos.jpg';
 import IconEyeWhite from 'assets/icons/NavBar/icon-eye-white.svg';
 import IconEyeBlack from 'assets/icons/NavBar/icon-eye-black.svg';
 import IconCollectionWhite from 'assets/icons/NavBar/icon-collection-white.svg';
@@ -98,9 +99,21 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 								justifyContent="space-between"
 								alignItems="center"
 								direction="row"
-								onClick={popupState.close}
+								pl={2}
 							>
-								<Box>APT</Box>{' '}
+								<Stack
+									direction="row"
+									alignItems="center"
+									gap={1.5}
+									sx={{
+										img: {
+											borderRadius: '50%',
+										},
+									}}
+								>
+									<img src={aptos} alt="Aptos" width={20} height={20} />
+									<Box>APT</Box>
+								</Stack>
 								<Box>{Math.floor(myBalance / 1000000) / 100} APT</Box>
 							</Stack>
 							<Stack gap={2} pl={2}>

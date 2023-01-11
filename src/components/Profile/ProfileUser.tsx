@@ -20,6 +20,7 @@ const ProfileUser = () => {
 	const [viewFull, setViewFull] = useState(false);
 	const [viewAvatar, setViewAvatar] = useState(false);
 	const { tokens, loading } = useTokens(account);
+	console.log(tokens);
 	const [items, setItems] = useState<any[]>([]);
 	const innerHeight = innerWidth / 4.5;
 	const infoUser = useAppSelector(selectUser);
