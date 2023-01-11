@@ -87,8 +87,8 @@ const FormMint: React.FC<Props> = ({
 						error={Boolean(errors.file)}
 						{...register(`file`, { required: true })}
 					/>
-					{errors.file && <ErrorMessage>Image is required</ErrorMessage>}
 				</InputImage>
+				{errors.file && <ErrorMessage>Image is required</ErrorMessage>}
 
 				<InputItem>
 					<InputTitle>
@@ -110,11 +110,7 @@ const FormMint: React.FC<Props> = ({
 					<InputTitle>
 						Description<span>*</span>
 					</InputTitle>
-					<input
-						type="text"
-						placeholder="Description: 0 of 1500 characters used"
-						{...register('description', { required: true })}
-					/>
+					<input type="text" placeholder="Description: 0 of 1500 characters used" />
 					{errors.description && <ErrorMessage>Description is required</ErrorMessage>}
 				</InputItem>
 				<Box
