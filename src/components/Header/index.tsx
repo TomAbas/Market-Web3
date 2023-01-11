@@ -86,9 +86,12 @@ const Header: React.FC = () => {
 		if (network?.name?.toLowerCase() === 'testnet' || network?.name?.toLowerCase() === 'null') {
 			setChainId('Testnet');
 		} else {
-			setChainId('Mainnet');
+			let a = network?.name;
+			if (a) {
+				setChainId(a);
+			}
 		}
-	}, [network]);
+	}, [network?.name]);
 	useEffect(() => {
 		// Handler to call on window scroll
 		const handleScroll = () => {
