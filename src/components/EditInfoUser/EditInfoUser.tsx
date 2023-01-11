@@ -138,6 +138,7 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 	const handleDropAvatar = useCallback(
 		(acceptedFiles: any) => {
 			const file = acceptedFiles[0];
+			console.log(acceptedFiles);
 			if (file) {
 				setValue('avatar', {
 					...file,

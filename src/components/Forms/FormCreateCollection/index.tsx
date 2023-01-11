@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { InputImage, InputItem, InputTitle } from 'components/Mint/styled';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateCollection } from 'models/common';
 import { Box } from '@mui/material';
@@ -32,7 +32,7 @@ const FormMint: React.FC<Props> = ({
 		clearErrors,
 	} = useForm<InputCreateCollection>();
 	const handleDropFile = (e: any) => {
-		handleInputFile(e[0]);
+		handleInputFile(e);
 		setValue('file', e[0]);
 		errors.file = undefined;
 	};
@@ -88,9 +88,8 @@ const FormMint: React.FC<Props> = ({
 						error={Boolean(errors.file)}
 						{...register(`file`, { required: true })}
 					/>
-					{errors.file && <ErrorMessage>Image is required</ErrorMessage>}
 				</InputImage>
-
+				{errors.file && <ErrorMessage>Image is required</ErrorMessage>}
 				<InputItem>
 					<InputTitle>
 						Name <Asterisk />

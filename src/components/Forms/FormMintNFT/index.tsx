@@ -98,9 +98,8 @@ const FormMintNft: React.FC<Props> = ({
 						error={Boolean(errors.file)}
 						{...register(`file`, { required: true })}
 					/>
-					{errors.file && <ErrorMessage>Image is required</ErrorMessage>}
 				</InputImage>
-
+				{errors.file && <ErrorMessage>Image is required</ErrorMessage>}
 				<InputItem>
 					<InputTitle>
 						Collection
