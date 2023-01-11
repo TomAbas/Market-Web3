@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
-import { useWallet, Wallet } from '@manahippo/aptos-wallet-adapter';
-import React, { useState, useEffect } from 'react';
+import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
 import { openFirstModal } from '../../../redux/slices/modalWallet';
 import { useAppDispatch } from '../../../redux/hooks';
@@ -28,8 +27,6 @@ import {
 
 import TwitterIcon from '../../../assets/icons/twitter-white.svg';
 import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
-import HeartFullWhite from '../../../assets/icons/heart-white.svg';
-import item from '../../../assets/images/card/box.webp';
 import aptos from '../../../assets/images/card/aptos.jpg';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';

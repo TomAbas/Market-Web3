@@ -2,28 +2,23 @@
 import { Box, ClickAwayListener, Grid, Stack, Typography } from '@mui/material';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import CardNFTUser from 'components/Marketplace/CardNFTUser';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTokens } from '../../hooks/useTokens';
-import banner from '../../assets/banner.png';
 import aptos from '../../assets/images/card/aptos.jpg';
-import ClientAxios from 'customAxios/ClientAxios';
 import { useSizeObersver } from 'contexts/SizeObserver';
 import editIcon from '../../assets/icons/icon-edit.svg';
 import SettingInfoUser from 'components/SettingInfoUser/SettingInfoUser';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectSettingModal, selectUser, toggleSettingModalA } from 'redux/slices/userInfo';
 import EditInfoUser from 'components/EditInfoUser/EditInfoUser';
-import { walletClient } from '../../utils/aptos';
 
 const ProfileUser = () => {
 	const dispatch = useAppDispatch();
-	// const [infoUser, setInfoUser] = useState<any>();
 	const [openEdit, setOpenEdit] = useState(false);
 	const { account } = useWallet();
 	const { innerWidth } = useSizeObersver();
 	const [viewFull, setViewFull] = useState(false);
 	const [viewAvatar, setViewAvatar] = useState(false);
-	// console.log(account);
 	const { tokens, loading } = useTokens(account);
 	const [items, setItems] = useState<any[]>([]);
 	const innerHeight = innerWidth / 4.5;

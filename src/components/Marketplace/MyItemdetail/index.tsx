@@ -4,12 +4,7 @@ import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
-// import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-// import useControlModal from 'hooks/useControlModal';
-// import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
-// import { useAppDispatch } from '../../../redux/hooks';
-// import { openFirstModal } from '../../../redux/slices/modalWallet';
 import { useTokens } from '../../../hooks/useTokens';
 import { ItemImage } from '../styled';
 
