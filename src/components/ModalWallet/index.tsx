@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 import { useWallet, Wallet } from '@manahippo/aptos-wallet-adapter';
 import { DropDownContent, LinkWrapper } from './WalletModalStyles';

@@ -8,17 +8,19 @@ import { useTokens } from '../../../hooks/useTokens';
 import { getListItemResource } from '../../../utils/dataResource';
 import banner from '../../../assets/banner.png';
 import aptos from '../../../assets/images/card/aptos.jpg';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useOutletContext } from 'react-router-dom';
+
 const CollectionDetail = () => {
 	let [searchParams, setSearchParams] = useSearchParams();
 	const [items, setItems] = useState<any[]>([]);
+	const [offers] = useOutletContext<any>();
 	const search = useLocation().search;
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
 	// console.log({ collection, creator });
 	useEffect(() => {
 		const fetchOffers = async () => {
-			const newOffers = await getListItemResource();
+			const newOffers = offers;
 			console.log(newOffers);
 			let newItems = newOffers.filter(
 				(item: any) =>

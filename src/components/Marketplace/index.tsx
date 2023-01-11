@@ -31,9 +31,10 @@ import {
 	ItemImage,
 } from './styled';
 import Newsletter from './NewsLetter';
+import { useOutletContext } from 'react-router-dom';
 
 export default function Marketplace() {
-	const [offers, setOffers] = useState<any[]>([]);
+	const [offers, setOffers] = useOutletContext<any>();
 	const [collections, setCollections] = useState<any[]>([]);
 	let navigate = useNavigate();
 	useEffect(() => {
