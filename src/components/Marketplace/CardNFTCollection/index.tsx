@@ -42,7 +42,7 @@ const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const DECIMAL = 100000000;
 
-export default function CardNFT({
+export default function CardNFTCollection({
 	offer,
 	setOffers,
 	offers,
@@ -120,7 +120,7 @@ export default function CardNFT({
 		}
 	};
 
-	const handleClickItem = () => {
+	const handleItem = () => {
 		navigate(
 			`/item?creator=${encodeURI(
 				offer.token_id.token_data_id.creator
@@ -134,7 +134,7 @@ export default function CardNFT({
 	return (
 		<>
 			<Grid xs={6} sm={4} md={3} p={1}>
-				<ItemCardStyle sx={{ boxShadow: 0 }} onClick={handleClickItem}>
+				<ItemCardStyle sx={{ boxShadow: 0 }} onClick={handleItem}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
 						<ItemImage>

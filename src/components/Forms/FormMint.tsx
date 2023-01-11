@@ -124,7 +124,7 @@ const FormMint: React.FC<Props> = ({
 						},
 					}}
 				>
-					<button type="submit">create</button>
+					<button type="submit">Create</button>
 				</Box>
 			</form>
 		</>

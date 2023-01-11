@@ -40,6 +40,11 @@ export const InputTitle = styled('h6')({
 		color: 'red',
 	},
 });
+export const InputSubTitle = styled('p')({
+	fontSize: '18px',
+	marginBottom: '8px',
+	opacity: 0.8,
+});
 
 export const InputImage = styled(Box)({
 	height: '300px',

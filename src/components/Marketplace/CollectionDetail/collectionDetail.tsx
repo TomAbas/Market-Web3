@@ -4,10 +4,10 @@ import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import CardNFT from 'components/Marketplace/CardNFT';
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useTokens } from '../../hooks/useTokens';
-import { getListItemResource } from '../../utils/dataResource';
-import banner from '../../assets/banner.png';
-import aptos from '../../assets/images/card/aptos.jpg';
+import { useTokens } from '../../../hooks/useTokens';
+import { getListItemResource } from '../../../utils/dataResource';
+import banner from '../../../assets/banner.png';
+import aptos from '../../../assets/images/card/aptos.jpg';
 import { useSearchParams } from 'react-router-dom';
 const CollectionDetail = () => {
 	let [searchParams, setSearchParams] = useSearchParams();
@@ -15,7 +15,7 @@ const CollectionDetail = () => {
 	const search = useLocation().search;
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
-	console.log({ collection, creator });
+	// console.log({ collection, creator });
 	useEffect(() => {
 		const fetchOffers = async () => {
 			const newOffers = await getListItemResource();
@@ -44,7 +44,7 @@ const CollectionDetail = () => {
 						},
 					}}
 				>
-					<img src={banner} alt="banner" />
+					<img src={items[0]?.uri} alt="banner" />
 					<Box
 						sx={{
 							position: 'absolute',
@@ -62,13 +62,13 @@ const CollectionDetail = () => {
 							},
 						}}
 					>
-						<img src={banner} alt="avatar" />
+						<img src={items[0]?.uri} alt="avatar" />
 					</Box>
 				</Box>
 				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>
 					<Box sx={{ width: '100%' }}>
 						<Typography variant="h4" fontWeight="500">
-							Test
+							{collection}
 						</Typography>
 						<Stack
 							direction="row"

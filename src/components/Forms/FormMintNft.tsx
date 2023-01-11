@@ -11,6 +11,7 @@ interface Props {
 	handleInputFileMintNft: any;
 	collections: any;
 	base64image: any;
+	setDataFormInput: any;
 }
 const FormMintNft: React.FC<Props> = ({
 	handleOpenModalBuy,
@@ -18,6 +19,7 @@ const FormMintNft: React.FC<Props> = ({
 	handleInputFileMintNft,
 	collections,
 	base64image,
+	setDataFormInput,
 }) => {
 	const {
 		register,
@@ -43,6 +45,7 @@ const FormMintNft: React.FC<Props> = ({
 		) {
 			handleOpenModalBuy();
 		}
+		setDataFormInput(data);
 	});
 
 	const [collection, setCollection] = useState('');
@@ -105,6 +108,7 @@ const FormMintNft: React.FC<Props> = ({
 									key={index}
 									value={collection.name}
 									onClick={() => {
+										setValue('collection', collection.name);
 										setCollection(collection.name);
 									}}
 								>

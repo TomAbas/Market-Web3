@@ -19,9 +19,11 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import ProfileUser from 'components/Profile/ProfileUser';
 import MyCollection from 'components/MyCollection';
-import CollectionDetail from 'components/MyCollection/collectionDetail';
+import CollectionDetail from 'components/Marketplace/CollectionDetail/collectionDetail';
 import DetailCard from 'components/Marketplace/DetailCard';
 import ViewAll from 'components/Marketplace/ViewAll';
+import MyCollectionDetail from 'components/CollectionDetail';
+import MyItemDetail from 'components/Marketplace/MyItemdetail';
 
 const router = createHashRouter([
 	{
@@ -53,6 +55,15 @@ const router = createHashRouter([
 			{
 				path: '/item',
 				element: <DetailCard />,
+				errorElement: (
+					<>
+						<h1>error test market</h1>
+					</>
+				),
+			},
+			{
+				path: '/my-item',
+				element: <MyItemDetail />,
 				errorElement: (
 					<>
 						<h1>error test market</h1>
@@ -98,6 +109,15 @@ const router = createHashRouter([
 			{
 				path: 'view-all',
 				element: <ViewAll />,
+				errorElement: (
+					<>
+						<h1>error test view all</h1>
+					</>
+				),
+			},
+			{
+				path: 'myCollection/detail',
+				element: <MyCollectionDetail />,
 				errorElement: (
 					<>
 						<h1>error test view all</h1>

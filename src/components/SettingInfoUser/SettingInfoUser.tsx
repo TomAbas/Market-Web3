@@ -182,171 +182,169 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [infoUser]);
 	return (
-		<>
-			<Modal
-				open={openEdit}
-				onClose={openEditModal}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
+		<Modal
+			open={openEdit}
+			onClose={openEditModal}
+			aria-labelledby="modal-modal-title"
+			aria-describedby="modal-modal-description"
+		>
+			<Box
+				sx={{
+					maxWidth: '500px',
+					minWidth: '300px',
+					pb: 2,
+					overflowY: 'auto',
+					display: 'flex',
+					margin: ' 0 auto',
+					height: '100vh',
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}
 			>
-				<Box
-					sx={{
-						maxWidth: '500px',
-						minWidth: '300px',
-						pb: 2,
-						overflowY: 'auto',
-						display: 'flex',
-						margin: ' 0 auto',
-						height: '100vh',
-						justifyContent: 'center',
-						alignItems: 'center',
+				<form
+					action=""
+					onSubmit={handleSubmit(onSubmit)}
+					style={{
+						backgroundColor: '#fff',
+						padding: '20px 20px',
+						width: '100%',
+						borderRadius: '15px',
 					}}
 				>
-					<form
-						action=""
-						onSubmit={handleSubmit(onSubmit)}
-						style={{
-							backgroundColor: '#fff',
-							padding: '20px 20px',
-							width: '100%',
-							borderRadius: '15px',
-						}}
-					>
-						<TopModal direction="row" gap="10px" alignItems="center">
-							<TopTitleModal style={{ fontWeight: 500 }}>Setting</TopTitleModal>
-						</TopModal>
-						<Box sx={{ padding: '20px' }}>
-							<TopPart>
-								<Stack direction="column" alignItems="center">
-									<InputGroup sx={{ margin: 0 }}>
-										<UploadMediaCustom
-											accept={{
-												'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
-											}}
-											file={avatar}
-											maxSize={10485760}
-											onDrop={handleDropAvatar}
-											error={Boolean(errors.avatar)}
-											sx={{
-												width: 120,
-												height: 120,
-												margin: 'auto',
+					<TopModal direction="row" gap="10px" alignItems="center">
+						<TopTitleModal style={{ fontWeight: 500 }}>Setting</TopTitleModal>
+					</TopModal>
+					<Box sx={{ padding: '20px' }}>
+						<TopPart>
+							<Stack direction="column" alignItems="center">
+								<InputGroup sx={{ margin: 0 }}>
+									<UploadMediaCustom
+										accept={{
+											'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
+										}}
+										file={avatar}
+										maxSize={10485760}
+										onDrop={handleDropAvatar}
+										error={Boolean(errors.avatar)}
+										sx={{
+											width: 120,
+											height: 120,
+											margin: 'auto',
+											borderRadius: '50%',
+											border: '1px dashed #E7E8EC',
+											overflow: 'hidden',
+											'.placeholder-img': {
 												borderRadius: '50%',
-												border: '1px dashed #E7E8EC',
-												overflow: 'hidden',
-												'.placeholder-img': {
-													borderRadius: '50%',
-													width: 50,
-													height: 50,
-												},
-											}}
-										/>
+												width: 50,
+												height: 50,
+											},
+										}}
+									/>
 
-										{/* {errors.avatar?.message && (
+									{/* {errors.avatar?.message && (
 										<ErrorMessage>{errors.avatar?.message}</ErrorMessage>
 									)} */}
-									</InputGroup>
-								</Stack>
-							</TopPart>
-							<InputGroup sx={{ marginTop: '20px' }}>
-								<Label htmlFor=" user-username">Username</Label>
-								<Input
-									id="user-username"
-									type="text"
-									{...register('username')}
-									placeholder="Enter your username"
-								/>
-								{errors.username?.message && (
-									<ErrorMessage>{errors.username?.message}</ErrorMessage>
-								)}
-							</InputGroup>
-							<InputGroup sx={{ marginTop: '20px' }}>
-								<Label htmlFor="user-social">Social Media / Portfolio Link</Label>
-								<Input
-									id="user-social"
-									type="text"
-									{...register('social')}
-									placeholder="Enter your social"
-								/>
-								{errors.social?.message && (
-									<ErrorMessage>{errors.social?.message}</ErrorMessage>
-								)}
-							</InputGroup>
+								</InputGroup>
+							</Stack>
+						</TopPart>
+						<InputGroup sx={{ marginTop: '20px' }}>
+							<Label htmlFor=" user-username">Username</Label>
+							<Input
+								id="user-username"
+								type="text"
+								{...register('username')}
+								placeholder="Enter your username"
+							/>
+							{errors.username?.message && (
+								<ErrorMessage>{errors.username?.message}</ErrorMessage>
+							)}
+						</InputGroup>
+						<InputGroup sx={{ marginTop: '20px' }}>
+							<Label htmlFor="user-social">Social Media / Portfolio Link</Label>
+							<Input
+								id="user-social"
+								type="text"
+								{...register('social')}
+								placeholder="Enter your social"
+							/>
+							{errors.social?.message && (
+								<ErrorMessage>{errors.social?.message}</ErrorMessage>
+							)}
+						</InputGroup>
 
-							<InputGroup>
-								<Label htmlFor="user-bio">Bio</Label>
+						<InputGroup>
+							<Label htmlFor="user-bio">Bio</Label>
 
-								<Textarea
-									{...register('bio')}
-									placeholder="Please write something about yourself"
-								/>
+							<Textarea
+								{...register('bio')}
+								placeholder="Please write something about yourself"
+							/>
 
-								{errors.bio?.message && (
-									<ErrorMessage>{errors.bio?.message}</ErrorMessage>
-								)}
-							</InputGroup>
+							{errors.bio?.message && (
+								<ErrorMessage>{errors.bio?.message}</ErrorMessage>
+							)}
+						</InputGroup>
 
-							<InputGroup>
-								<Label htmlFor="user-email">Email</Label>
-								<Input
-									id="user-email"
-									type="text"
-									{...register('email')}
-									placeholder="Enter your email"
-								/>
-								{errors.email?.message && (
-									<ErrorMessage>{errors.email?.message}</ErrorMessage>
-								)}
-							</InputGroup>
+						<InputGroup>
+							<Label htmlFor="user-email">Email</Label>
+							<Input
+								id="user-email"
+								type="text"
+								{...register('email')}
+								placeholder="Enter your email"
+							/>
+							{errors.email?.message && (
+								<ErrorMessage>{errors.email?.message}</ErrorMessage>
+							)}
+						</InputGroup>
 
-							<InputGroup>
-								<Label>Banner</Label>
+						<InputGroup>
+							<Label>Banner</Label>
 
-								<UploadMediaCustom
-									file={background}
-									accept={{
-										'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
-									}}
-									maxSize={10485760}
-									onDrop={handleDropBackground}
-									error={Boolean(errors.background)}
-									sx={{
-										width: '100%',
-										height: 180,
-										margin: 'auto',
-										borderRadius: '5px',
-										border: '1px dashed #E7E8EC',
-										overflow: 'hidden',
-									}}
-								/>
+							<UploadMediaCustom
+								file={background}
+								accept={{
+									'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
+								}}
+								maxSize={10485760}
+								onDrop={handleDropBackground}
+								error={Boolean(errors.background)}
+								sx={{
+									width: '100%',
+									height: 180,
+									margin: 'auto',
+									borderRadius: '5px',
+									border: '1px dashed #E7E8EC',
+									overflow: 'hidden',
+								}}
+							/>
 
-								{/* {errors.background?.message && (
+							{/* {errors.background?.message && (
 								<ErrorMessage>{errors.background?.message}</ErrorMessage>
 							)} */}
-							</InputGroup>
+						</InputGroup>
 
-							<Stack alignItems="center" sx={{ marginTop: '20px' }}>
-								<ButtonWhite
-									sx={{ paddingLeft: '30px', paddingRight: '30px' }}
-									type="submit"
-									disabled={isSubmitting || isLoading}
-								>
-									<Stack direction="row" alignItems="center">
-										{(isSubmitting || isLoading) && (
-											<CircularProgress
-												sx={{ color: 'white', mr: 1 }}
-												size={25}
-											/>
-										)}
-										<Typography variant="button">Submit</Typography>
-									</Stack>
-								</ButtonWhite>
-							</Stack>
-						</Box>
-					</form>
-				</Box>
-			</Modal>
-		</>
+						<Stack alignItems="center" sx={{ marginTop: '20px' }}>
+							<ButtonWhite
+								sx={{ paddingLeft: '30px', paddingRight: '30px' }}
+								type="submit"
+								disabled={isSubmitting || isLoading}
+							>
+								<Stack direction="row" alignItems="center">
+									{(isSubmitting || isLoading) && (
+										<CircularProgress
+											sx={{ color: 'white', mr: 1 }}
+											size={25}
+										/>
+									)}
+									<Typography variant="button">Submit</Typography>
+								</Stack>
+							</ButtonWhite>
+						</Stack>
+					</Box>
+				</form>
+			</Box>
+		</Modal>
 	);
 };
 

@@ -1,86 +1,72 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, ClickAwayListener, Grid, Stack, Typography } from '@mui/material';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
+import { useNavigate } from 'react-router-dom';
 import CardNFTUser from 'components/Marketplace/CardNFTUser';
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useTokens } from '../../hooks/useTokens';
 import banner from '../../assets/banner.png';
 import aptos from '../../assets/images/card/aptos.jpg';
-import ClientAxios from 'customAxios/ClientAxios';
 import { useSizeObersver } from 'contexts/SizeObserver';
-import editIcon from '../../assets/icons/icon-edit.svg';
-import SettingInfoUser from 'components/SettingInfoUser/SettingInfoUser';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { selectSettingModal, selectUser, toggleSettingModalA } from 'redux/slices/userInfo';
-import EditInfoUser from 'components/EditInfoUser/EditInfoUser';
-import { walletClient } from '../../utils/aptos';
 
-const ProfileUser = () => {
-	const dispatch = useAppDispatch();
-	// const [infoUser, setInfoUser] = useState<any>();
-	const [openEdit, setOpenEdit] = useState(false);
-	const { account } = useWallet();
+const MyCollectionDetail = () => {
+	const search = useLocation().search;
+	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
+	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
 	const { innerWidth } = useSizeObersver();
 	const [viewFull, setViewFull] = useState(false);
+	const navigate = useNavigate();
+	const { account } = useWallet();
 	const [viewAvatar, setViewAvatar] = useState(false);
-	// console.log(account);
-	const { tokens, loading } = useTokens(account);
+	const { tokens } = useTokens(account);
+	const [collectionInfo, setCollectionInfo] = useState<any[]>(['', '']);
 	const [items, setItems] = useState<any[]>([]);
-	const innerHeight = innerWidth / 4.5;
-	const infoUser = useAppSelector(selectUser);
-	const isSettingModal = useAppSelector(selectSettingModal);
+
 	const handleItems = (index: any) => {
 		let newItems = items.filter((_item, i) => i !== index);
 		setItems(newItems);
 	};
+	// console.log(creator, collection);
+	// useEffect(() => {
+	// 	console.log('reset');
+	// 	setItems(tokens);
+	// }, [tokens]);
+	useEffect(() => {
+		let newCollection = new Map();
+		tokens.map((item: any) => {
+			let collection = newCollection.get(item?.collection + '*/////*' + item?.creator);
+			if (!collection) {
+				newCollection.set(item?.collection + '*/////*' + item?.creator, [item]);
+			} else {
+				collection.push(item);
+				newCollection.set(item?.collection + '*/////*' + item?.creator, collection);
+			}
+		});
+		const collections = Array.from(newCollection);
+		const found =
+			collections.find((value) => value[0] == `${collection}*/////*${creator}`) || [];
+		console.log(found);
+		setItems(found[1]);
+		setCollectionInfo(found[0] ? found[0].split('*/////*') : ['', '']);
+	}, [tokens]);
+	// console.log(collectionInfo);
 
+	// useEffect(() => {
+	// 	console.log(collections);
+	// 	const found = collections.find((value) => value[0] == `${collection}*/////*${creator}`);
+	// 	setItems(found);
+	// }, [collections]);
+
+	const innerHeight = innerWidth / 4.5;
+	// console.log(items);
 	const handleClickAway = () => {
 		setViewFull(false);
 	};
 	const handleClickAvatar = () => {
 		setViewAvatar(false);
 	};
-	const openEditModal = () => {
-		setOpenEdit(true);
-	};
-	const closeEditModal = () => {
-		setOpenEdit(false);
-	};
-	const handleToggleModalSetting = () => {
-		dispatch(toggleSettingModalA());
-	};
-	useEffect(() => {
-		const fetchData = async () => {
-			const data = await walletClient.getTokenIds(
-				'0xfcb2cd3831d4715633c43219d6b7a5396b2fbabd0cb1158fc778ae99837c5dd4',
-				100,
-				0,
-				0
-			);
-			const tokens = await Promise.all(
-				data.tokenIds
-					.filter((i) => i.difference != 0)
-					.map(async (i) => {
-						const token = await walletClient.getToken(i.data);
-						return {
-							propertyVersion: i.data.property_version,
-							creator: i.data.token_data_id.creator,
-							collection: token.collection,
-							name: token.name,
-							description: token.description,
-							uri: token.uri,
-							maximum: token.maximum,
-							supply: token.supply,
-						};
-					})
-			);
-			// console.log(tokens);
-		};
-		fetchData();
-	}, []);
-	useEffect(() => {
-		setItems(tokens);
-	}, [tokens]);
+	// console.log(items[0] ? items[0] : '');
 	return (
 		<>
 			<Box pt={13}>
@@ -100,7 +86,7 @@ const ProfileUser = () => {
 				>
 					<ClickAwayListener onClickAway={handleClickAway}>
 						<img
-							src={infoUser?.background}
+							src={items ? items[0]?.uri : banner}
 							alt="banner"
 							onClick={() => {
 								setViewFull(true);
@@ -123,13 +109,12 @@ const ProfileUser = () => {
 								objectPosition: 'center',
 								borderRadius: '10px',
 								display: 'block',
-								cursor: 'pointer',
 							},
 						}}
 					>
 						<ClickAwayListener onClickAway={handleClickAvatar}>
 							<img
-								src={infoUser?.avatar}
+								src={items ? items[0]?.uri : banner}
 								alt="avatar"
 								onClick={() => {
 									setViewAvatar(true);
@@ -137,48 +122,11 @@ const ProfileUser = () => {
 							/>
 						</ClickAwayListener>
 					</Box>
-					<Box
-						sx={{
-							position: 'absolute',
-							right: '30px',
-							bottom: '20px',
-							button: {
-								padding: '10px 30px',
-								border: '1.5px solid #e7e8ec',
-								transition: 'all 0.4s',
-								borderRadius: '12px',
-								fontWeight: 500,
-								background: 'rgba(157, 195, 230, 0.6)',
-								fontSize: '16px',
-								cursor: 'pointer',
-								fontFamily: 'Montserrat, sans-serif !important',
-								fontStyle: 'italic !important',
-								width: '180px',
-								color: '#fff',
-								'&:hover': {
-									background: '#9DC3E6',
-									borderColor: 'transparent',
-								},
-								img: {
-									width: '20px',
-								},
-								display: 'flex',
-								alignItems: 'center',
-								gap: '6px',
-							},
-						}}
-					>
-						{/* <img src={infoUser?.avatar} alt="avatar" /> */}
-						<button onClick={openEditModal}>
-							<img src={editIcon} alt="edit" />
-							<Box>Edit Profile</Box>
-						</button>
-					</Box>
 				</Box>
 				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>
 					<Box sx={{ width: '100%' }}>
 						<Typography variant="h4" fontWeight="500">
-							{infoUser?.username}
+							{collectionInfo[0]}
 						</Typography>
 						<Stack
 							direction="row"
@@ -200,21 +148,18 @@ const ProfileUser = () => {
 						>
 							<img src={aptos} alt="aptos" />
 							<Box>
-								{infoUser?.userAddress.slice(0, 6) +
+								{collectionInfo[1]?.slice(0, 6) +
 									'...' +
-									infoUser?.userAddress.slice(
-										infoUser.userAddress.length - 4,
-										infoUser.userAddress.length
+									collectionInfo[1]?.slice(
+										collectionInfo[1].length - 4,
+										collectionInfo[1].length
 									)}
 							</Box>
 						</Stack>
-						<Typography variant="body1" mt={2}>
-							{infoUser?.bio}
-						</Typography>
 					</Box>
 					<Box py={4}>
 						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-							{items.map((item: any, index: any) => (
+							{items?.map((item: any, index: any) => (
 								<CardNFTUser
 									item={item}
 									handleItems={handleItems}
@@ -226,20 +171,6 @@ const ProfileUser = () => {
 					</Box>
 				</Box>
 			</Box>
-			{infoUser && (
-				<SettingInfoUser
-					infoUser={infoUser}
-					openEditModal={handleToggleModalSetting}
-					openEdit={isSettingModal}
-				/>
-			)}
-			{infoUser && (
-				<EditInfoUser
-					infoUser={infoUser}
-					openEditModal={closeEditModal}
-					openEdit={openEdit}
-				/>
-			)}
 
 			<Box
 				sx={{
@@ -266,7 +197,7 @@ const ProfileUser = () => {
 						},
 					}}
 				>
-					<img src={infoUser?.background} alt="banner" />
+					<img src={banner} alt="banner" />
 				</Box>
 			</Box>
 			<Box
@@ -294,11 +225,11 @@ const ProfileUser = () => {
 						},
 					}}
 				>
-					<img src={infoUser?.avatar} alt="banner" />
+					<img src={banner} alt="banner" />
 				</Box>
 			</Box>
 		</>
 	);
 };
 
-export default ProfileUser;
+export default MyCollectionDetail;
