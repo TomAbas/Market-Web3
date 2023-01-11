@@ -22,6 +22,7 @@ export default function UploadMediaCustom({
 	sx,
 	...other
 }: UploadMediaCustomProps) {
+	const [reject, setReject] = useState<any>();
 	const [type, setType] = useState<string>('');
 	const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone(
 		{
@@ -35,10 +36,15 @@ export default function UploadMediaCustom({
 		const fileType = getFileType(file);
 		setType(fileType);
 	}, [file]);
-
+	useEffect(() => {
+		if (fileRejections.length > 0) {
+			console.log(fileRejections);
+			setReject(fileRejections);
+		}
+	}, [fileRejections]);
 	const ShowRejectionItems = () => (
 		<Box>
-			{fileRejections.map(({ file, errors }) => {
+			{reject.map(({ file, errors }: any) => {
 				const { path, size }: CustomFile = file;
 				return (
 					<Box key={path} sx={{ my: 1 }}>
@@ -123,14 +129,13 @@ export default function UploadMediaCustom({
 								fontWeight: 500,
 							}}
 						>
-							JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100
-							MB
+							JPG, PNG, GIF, SVG, WEBM, WAV, OGG, GLB, GLTF. Max size: 10 MB
 						</Box>
 					</ImageDefault>
 				)}
 			</DropzoneStyle>
 
-			{fileRejections.length > 0 && <ShowRejectionItems />}
+			{reject?.length > 0 && <ShowRejectionItems />}
 		</DropzoneContainer>
 	);
 }

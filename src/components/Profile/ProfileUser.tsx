@@ -44,7 +44,6 @@ const ProfileUser = () => {
 		setOpenEdit(true);
 	};
 	const closeEditModal = () => {
-		console.log('123');
 		setOpenEdit(false);
 	};
 	const handleToggleModalSetting = () => {
