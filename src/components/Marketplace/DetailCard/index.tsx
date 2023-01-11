@@ -135,7 +135,7 @@ export default function DetailCard() {
 							{item?.token_id.token_data_id.name}
 						</Typography>
 						<p>{item?.description}</p>
-						<p>Owned Quantity : {item?.supply}</p>
+						<p>Owned Quantity : {item?.amount}</p>
 						<Typography variant="body1">
 							Owner:{' '}
 							<a

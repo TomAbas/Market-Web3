@@ -212,7 +212,7 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 					}}
 				>
 					<TopModal direction="row" gap="10px" alignItems="center">
-						<TopTitleModal style={{ fontWeight: 500 }}>Setting</TopTitleModal>
+						<TopTitleModal style={{ fontWeight: 500 }}>Settings</TopTitleModal>
 					</TopModal>
 					<Box sx={{ padding: '20px' }}>
 						<TopPart>
@@ -337,7 +337,7 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 											size={25}
 										/>
 									)}
-									<Typography variant="button">Submit</Typography>
+									<Typography>Submit</Typography>
 								</Stack>
 							</ButtonWhite>
 						</Stack>

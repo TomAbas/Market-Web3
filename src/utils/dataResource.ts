@@ -17,24 +17,20 @@ export const getListItemResource = async () => {
 		const mapItems = new Map();
 		itemsResource.map((item: any) => {
 			if (item.collection !== 'Metaspacecy ticket' && item.creator !== MARKET_ADDRESS)
-				mapItems.set(`${item.collection}&${item.name}&${item.creator}`, [
-					item.description,
-					item.supply,
-				]);
+				mapItems.set(`${item.collection}&${item.name}&${item.creator}`, [item.description]);
 		});
 		// console.log(mapItems);
-		const newListItem = response.data.data?.token_list.reverse();
+		const newListItem = response.data.data?.token_list;
 		newListItem.map((item: any, index: any, newListItem: any) => {
 			const foundItem = mapItems.get(
 				`${item.token_id.token_data_id.collection}&${item.token_id.token_data_id.name}&${item.token_id.token_data_id.creator}`
 			);
 			if (foundItem) {
 				newListItem[index].description = foundItem[0];
-				newListItem[index].supply = foundItem[1];
 			}
 		});
 		// console.log(newListItem);
-		return response.data.data?.token_list.reverse();
+		return newListItem.reverse();
 	} catch (error) {
 		return [];
 	}
