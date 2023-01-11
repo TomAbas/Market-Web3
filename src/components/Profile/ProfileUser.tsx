@@ -50,35 +50,6 @@ const ProfileUser = () => {
 		dispatch(toggleSettingModalA());
 	};
 	useEffect(() => {
-		const fetchData = async () => {
-			const data = await walletClient.getTokenIds(
-				'0xfcb2cd3831d4715633c43219d6b7a5396b2fbabd0cb1158fc778ae99837c5dd4',
-				100,
-				0,
-				0
-			);
-			const tokens = await Promise.all(
-				data.tokenIds
-					.filter((i) => i.difference != 0)
-					.map(async (i) => {
-						const token = await walletClient.getToken(i.data);
-						return {
-							propertyVersion: i.data.property_version,
-							creator: i.data.token_data_id.creator,
-							collection: token.collection,
-							name: token.name,
-							description: token.description,
-							uri: token.uri,
-							maximum: token.maximum,
-							supply: token.supply,
-						};
-					})
-			);
-			// console.log(tokens);
-		};
-		fetchData();
-	}, []);
-	useEffect(() => {
 		setItems(tokens);
 	}, [tokens]);
 	return (
