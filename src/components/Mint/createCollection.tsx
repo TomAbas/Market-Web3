@@ -5,9 +5,9 @@ import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
 import useCreateMintSell from 'hooks/useCreateMintSell';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
-import FormMint from 'components/Forms/FormMint';
 import React, { useState, useEffect } from 'react';
 import { getListCollectionUserResource } from '../../utils/dataResource';
+import FormMint from 'components/Forms/FormCreateCollection';
 function RedBar() {
 	return (
 		<Box

@@ -44,7 +44,7 @@ const CollectionDetail = () => {
 						},
 					}}
 				>
-					<img src={banner} alt="banner" />
+					<img src={items[0]?.uri} alt="banner" />
 					<Box
 						sx={{
 							position: 'absolute',
@@ -62,7 +62,7 @@ const CollectionDetail = () => {
 							},
 						}}
 					>
-						<img src={banner} alt="avatar" />
+						<img src={items[0]?.uri} alt="avatar" />
 					</Box>
 				</Box>
 				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>

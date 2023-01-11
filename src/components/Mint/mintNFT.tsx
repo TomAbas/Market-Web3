@@ -5,13 +5,16 @@ import useControlModal from 'hooks/useControlModal';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useCreateMintSell from 'hooks/useCreateMintSell';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
+import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { walletClient } from '../../utils/aptos';
-import FormMintNft from 'components/Forms/FormMintNft';
+import FormMintNft from 'components/Forms/FormMintNFT';
 import { getListCollectionUserResource } from '../../utils/dataResource';
 
 export default function LayoutMintNFT() {
+	const navigate = useNavigate();
+	const [dataFormInput, setDataFormInput] = useState<any>();
 	const {
 		handleNext,
 		handleOpenModalBuy,
@@ -38,6 +41,7 @@ export default function LayoutMintNFT() {
 		},
 	];
 	const { account } = useWallet();
+	const userAddress = account?.address?.toString() || '';
 
 	const [collections, setCollections] = useState<any[]>([]);
 	const fetchCollection = async () => {
@@ -69,11 +73,22 @@ export default function LayoutMintNFT() {
 				updateFormInput={setFormInputNFT}
 				handleInputFileMintNft={handleInputFileMintNft}
 				collections={collections}
+				setDataFormInput={setDataFormInput}
 			/>
 			<ModalBuy
 				steps={steps}
 				openState={openModalBuy}
-				closeModal={handleCloseModalBuy}
+				closeModal={() => {
+					handleCloseModalBuy(
+						navigate(
+							`/my-item?creator=${encodeURIComponent(
+								userAddress
+							)}&collection=${encodeURIComponent(
+								dataFormInput?.collection
+							)}&name=${encodeURIComponent(dataFormInput?.name)}`
+						)
+					);
+				}}
 				activeStep={activeStep}
 				statusBuyNft={statusBuyNft}
 				funcBuyNft={() =>

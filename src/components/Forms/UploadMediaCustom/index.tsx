@@ -22,6 +22,7 @@ export default function UploadMediaCustom({
 	sx,
 	...other
 }: UploadMediaCustomProps) {
+	const [reject, setReject] = useState<any>();
 	const [type, setType] = useState<string>('');
 	const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone(
 		{
@@ -34,29 +35,32 @@ export default function UploadMediaCustom({
 		if (!file) return;
 		const fileType = getFileType(file);
 		setType(fileType);
+		setReject('');
 	}, [file]);
+	useEffect(() => {
+		if (fileRejections.length > 0) {
+			console.log(fileRejections);
+			setReject(fileRejections);
+		}
+	}, [fileRejections]);
+	const ShowRejectionItems = () =>
+		reject.map(({ file, errors }: any) => {
+			const { path, size }: CustomFile = file;
+			return (
+				<Box key={path} sx={{ my: 1, zIndex: '2' }}>
+					<Typography variant="body1" noWrap>
+						{path} - {fData(size)}
+					</Typography>
 
-	const ShowRejectionItems = () => (
-		<Box>
-			{fileRejections.map(({ file, errors }) => {
-				const { path, size }: CustomFile = file;
-				return (
-					<Box key={path} sx={{ my: 1 }}>
-						<Typography variant="body1" noWrap>
-							{path} - {fData(size)}
-						</Typography>
-
-						<Typography variant="body1" noWrap sx={{ color: 'red' }}>
-							File is larger than 10MB
-						</Typography>
-					</Box>
-				);
-			})}
-		</Box>
-	);
+					<Typography variant="body1" noWrap sx={{ color: 'red' }}>
+						File is larger than 10MB
+					</Typography>
+				</Box>
+			);
+		});
 
 	return (
-		<DropzoneContainer sx={sx}>
+		<DropzoneContainer sx={reject ? { width: '100%' } : sx}>
 			<DropzoneStyle
 				{...getRootProps()}
 				sx={{
@@ -93,6 +97,8 @@ export default function UploadMediaCustom({
 									height={type === 'mp3' ? 50 : '100%'}
 								/>
 							</Stack>
+						) : file && reject ? (
+							<ShowRejectionItems />
 						) : (
 							<Box
 								component="img"
@@ -121,16 +127,16 @@ export default function UploadMediaCustom({
 								color: '#000',
 								opacity: '0.5',
 								fontWeight: 500,
+								zIndex: '1',
 							}}
 						>
-							JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100
-							MB
+							JPG, PNG, GIF, SVG, WEBM, WAV, OGG, GLB, GLTF. Max size: 10 MB
 						</Box>
 					</ImageDefault>
 				)}
 			</DropzoneStyle>
 
-			{fileRejections.length > 0 && <ShowRejectionItems />}
+			{/* {reject?.length > 0 && <ShowRejectionItems />} */}
 		</DropzoneContainer>
 	);
 }

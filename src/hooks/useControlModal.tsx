@@ -14,9 +14,10 @@ const useControlModal = () => {
 	const handleOpenModalBuy = () => {
 		setOpenModalBuy(true);
 	};
-	const handleCloseModalBuy = () => {
+	const handleCloseModalBuy = (func?: any) => {
 		resetState();
 		setOpenModalBuy(false);
+		func();
 	};
 	const startLoading = () => {
 		setStatusBuyNft({ ...statusBuyNft, isLoading: true });

@@ -66,6 +66,7 @@ const MyCollectionDetail = () => {
 	const handleClickAvatar = () => {
 		setViewAvatar(false);
 	};
+	// console.log(items[0] ? items[0] : '');
 	return (
 		<>
 			<Box pt={13}>
@@ -85,7 +86,7 @@ const MyCollectionDetail = () => {
 				>
 					<ClickAwayListener onClickAway={handleClickAway}>
 						<img
-							src={banner}
+							src={items ? items[0]?.uri : banner}
 							alt="banner"
 							onClick={() => {
 								setViewFull(true);
@@ -113,7 +114,7 @@ const MyCollectionDetail = () => {
 					>
 						<ClickAwayListener onClickAway={handleClickAvatar}>
 							<img
-								src={banner}
+								src={items ? items[0]?.uri : banner}
 								alt="avatar"
 								onClick={() => {
 									setViewAvatar(true);

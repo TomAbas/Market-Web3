@@ -3,7 +3,7 @@ import axios from 'axios';
 const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
-
+axios.defaults.headers.common.Origin = '*';
 export const getListItemResource = async () => {
 	try {
 		const response: any = await axios.get(

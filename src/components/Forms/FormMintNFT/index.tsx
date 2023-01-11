@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateNFT } from 'models/common';
 import { Box, Select, FormControl, MenuItem } from '@mui/material';
-import UploadMediaCustom from './UploadMediaCustom';
+import UploadMediaCustom from '../UploadMediaCustom';
+import { FieldSubTitle, FieldTitleName } from './styled';
+import { Asterisk, ErrorMessage } from '../Common/styled';
 
 interface Props {
 	handleOpenModalBuy: any;
@@ -11,6 +13,7 @@ interface Props {
 	handleInputFileMintNft: any;
 	collections: any;
 	base64image: any;
+	setDataFormInput: any;
 }
 const FormMintNft: React.FC<Props> = ({
 	handleOpenModalBuy,
@@ -18,6 +21,7 @@ const FormMintNft: React.FC<Props> = ({
 	handleInputFileMintNft,
 	collections,
 	base64image,
+	setDataFormInput,
 }) => {
 	const {
 		register,
@@ -43,6 +47,7 @@ const FormMintNft: React.FC<Props> = ({
 		) {
 			handleOpenModalBuy();
 		}
+		setDataFormInput(data);
 	});
 
 	const [collection, setCollection] = useState('');
@@ -51,9 +56,13 @@ const FormMintNft: React.FC<Props> = ({
 		<>
 			{' '}
 			<form onSubmit={onSubmit}>
-				<InputTitle>
-					Image<span>*</span>
-				</InputTitle>
+				<FieldTitleName>
+					Image, Video, Audio, or 3D Model <Asterisk />
+				</FieldTitleName>
+				{/* <FieldSubTitle>
+						Recommended file types: JPG, PNG, GIF, SVG, WEBM, MP4, MP3. Max size: 10 MB.
+					</FieldSubTitle> */}
+				<FieldSubTitle>Drag or choose your file to upload</FieldSubTitle>
 				<InputImage>
 					{/* <input
 						type="file"
@@ -81,19 +90,20 @@ const FormMintNft: React.FC<Props> = ({
 							objectFit: 'contain',
 						}}
 						accept={{
-							'image/*': ['.png', '.jpeg', '.jpg'],
+							'image/*': ['.png', '.gif', '.jpeg', '.jpg', '.mp3', '.mp4', '.glb'],
 						}}
 						file={base64image}
 						maxSize={10485760}
 						error={Boolean(errors.file)}
 						{...register(`file`, { required: true })}
 					/>
-					{errors.file && <p>Image is required</p>}
+					{errors.file && <ErrorMessage>Image is required</ErrorMessage>}
 				</InputImage>
 
 				<InputItem>
 					<InputTitle>
-						Collection<span>*</span>
+						Collection
+						<Asterisk />
 					</InputTitle>
 					<FormControl sx={{ minWidth: 120, width: '100%' }}>
 						<Select
@@ -116,52 +126,56 @@ const FormMintNft: React.FC<Props> = ({
 								</MenuItem>
 							))}
 						</Select>
-						{errors.collection && <p>Collection name is required</p>}
+						{errors.collection && (
+							<ErrorMessage>Collection name is required</ErrorMessage>
+						)}
 					</FormControl>
 				</InputItem>
 				<InputItem>
 					<InputTitle>
-						Item name<span>*</span>
+						Item name <Asterisk />
 					</InputTitle>
 					<input
 						type="text"
-						placeholder="Item name"
+						placeholder="Example: Metaspacecy item"
 						{...register('name', { required: true })}
 					/>
-					{errors.name && <p>Item name is required</p>}
+					{errors.name && <ErrorMessage>Item name is required</ErrorMessage>}
 				</InputItem>
 				<InputItem>
 					<InputTitle>
-						Item Description<span>*</span>
+						Item Description <Asterisk />
 					</InputTitle>
 					<input
 						type="text"
-						placeholder="Provide a detailed description of your item."
+						placeholder="Description: 0 of 1500 characters used"
 						{...register('description', { required: true })}
 					/>
-					{errors.description && <p>Item description is required</p>}
+					{errors.description && (
+						<ErrorMessage>Item description is required</ErrorMessage>
+					)}
 				</InputItem>
 				<InputItem>
 					<InputTitle>
-						Royalty Fee (%)<span>*</span>
+						Royalty Fee (%) <Asterisk />
 					</InputTitle>
 					<input
 						type="number"
-						placeholder="1"
-						{...register('royaltyFee', { required: true, min: 1, max: 999 })}
+						placeholder="E.g. 2"
+						{...register('royaltyFee', { required: true, min: 1, max: 100 })}
 					/>
-					{errors.royaltyFee && <p>Royalty Fee is required</p>}
+					{errors.royaltyFee && <ErrorMessage>Royalty Fee is required</ErrorMessage>}
 				</InputItem>
 				<InputItem>
 					<InputTitle>
-						Supply<span>*</span>
+						Supply <Asterisk />
 					</InputTitle>
 					<input
 						type="number"
-						placeholder="1"
-						{...register('amount', { required: true, min: 1, max: 999 })}
+						placeholder="Min: 1 - Max: 999999999"
+						{...register('amount', { required: true, min: 1, max: 999999999 })}
 					/>
-					{errors.amount && <p>Amount is required</p>}
+					{errors.amount && <ErrorMessage>Amount is required</ErrorMessage>}
 				</InputItem>
 				<Box
 					sx={{
