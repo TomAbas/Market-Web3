@@ -13,7 +13,7 @@ const useLogin = () => {
 	async function login() {
 		try {
 			let { data } = (await loginUser({ userAddress })).data;
-			console.log(data);
+
 			dispatch(getUserSuccessA(data));
 			setLoginSuccess(true);
 			toast.success('Login Success');
@@ -26,9 +26,7 @@ const useLogin = () => {
 			login();
 		}
 	}, [userAddress]);
-	useEffect(() => {
-		console.log(loginSuccess);
-	}, [loginSuccess]);
+
 	return { loginSuccess, userAddress };
 };
 
