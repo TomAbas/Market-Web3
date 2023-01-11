@@ -47,7 +47,7 @@ export default function UploadMediaCustom({
 		reject.map(({ file, errors }: any) => {
 			const { path, size }: CustomFile = file;
 			return (
-				<Box key={path} sx={{ my: 1 }}>
+				<Box key={path} sx={{ my: 1, zIndex: '2' }}>
 					<Typography variant="body1" noWrap>
 						{path} - {fData(size)}
 					</Typography>
@@ -127,6 +127,7 @@ export default function UploadMediaCustom({
 								color: '#000',
 								opacity: '0.5',
 								fontWeight: 500,
+								zIndex: '1',
 							}}
 						>
 							JPG, PNG, GIF, SVG, WEBM, WAV, OGG, GLB, GLTF. Max size: 10 MB
