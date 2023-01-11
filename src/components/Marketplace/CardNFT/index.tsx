@@ -134,9 +134,10 @@ export default function CardNFT({
 	return (
 		<>
 			<Grid xs={6} sm={4} md={3} p={1}>
-				<ItemCardStyle sx={{ boxShadow: 0 }} onClick={handleClickItem}>
+				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
+
 						<ItemImage>
 							<Box className="main-img">
 								<img src={offer.uri} alt="item" />
@@ -249,6 +250,7 @@ export default function CardNFT({
 								alignItems="center"
 								justifyContent="space-between"
 								spacing={1}
+								onClick={handleClickItem}
 							>
 								<Box
 									sx={{
@@ -321,39 +323,11 @@ export default function CardNFT({
 													</span> */}
 										{offer.price / DECIMAL} APT
 									</Box>
-
 									<Typography
 										onClick={handleOpenModalBuy}
 										variant="body2"
 										sx={{
 											fontWeight: offer.is_cancle ? '300' : '600',
-											// cursor:
-											// 	item.status === ITEM_STATUS.BUY_NOW
-											// 		? 'pointer'
-											// 		: 'no-drop',
-											// opacity: '0.85',
-											// color:
-											// 	item.status === ITEM_STATUS.BUY_NOW
-											// 		? theme.palette.text.special
-											// 		: 'rgba(0,0,0,0.3)',
-
-											// ...(theme.palette.mode === 'light'
-											// 	? {
-											// 		color:
-											// 			item.status ===
-											// 				ITEM_STATUS.BUY_NOW
-											// 				? theme.palette.text
-											// 					.special
-											// 				: 'rgba(0,0,0,0.3)',
-											// 	}
-											// 	: {
-											// 		color:
-											// 			item.status ===
-											// 				ITEM_STATUS.BUY_NOW
-											// 				? theme.palette.text
-											// 					.special
-											// 				: 'rgba(255,255,255,0.5)',
-											// 	}),
 											'&:hover': {
 												opacity: '1',
 											},
