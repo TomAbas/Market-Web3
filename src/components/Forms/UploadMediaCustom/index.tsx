@@ -35,7 +35,7 @@ export default function UploadMediaCustom({
 		const fileType = getFileType(file);
 		setType(fileType);
 	}, [file]);
-
+	console.log(fileRejections);
 	const ShowRejectionItems = () => (
 		<Box>
 			{fileRejections.map(({ file, errors }) => {

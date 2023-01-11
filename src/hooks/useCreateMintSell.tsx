@@ -5,7 +5,6 @@ import { InputCreateCollection, InputCreateNFT } from 'models/common';
 import { useState } from 'react';
 import { useAppDispatch } from 'redux/hooks';
 import { openFirstModal } from 'redux/slices/modalWallet';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const useCreateMintSell = () => {

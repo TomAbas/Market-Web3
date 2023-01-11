@@ -9,7 +9,6 @@ import React, { useState, useEffect } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { walletClient } from '../../utils/aptos';
 import FormMintNft from 'components/Forms/FormMintNft';
-import { getListCollectionUserResource } from '../../utils/dataResource';
 
 export default function LayoutMintNFT() {
 	const {
