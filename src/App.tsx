@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import SizeObserver from 'contexts/SizeObserver';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,7 +20,16 @@ import AccountGuard from 'components/AccountGuard/AccountGuard';
 import ModalGuard from 'components/ModalGuard/ModalGuard';
 import FooterComp from 'components/FooterComp';
 import Header from 'components/Header';
+import { getListItemResource } from 'utils/dataResource';
 function App() {
+	const [offers, setOffers] = useState<any[]>([]);
+	useEffect(() => {
+		const fetchOffers = async () => {
+			const newOffers = await getListItemResource();
+			setOffers(newOffers);
+		};
+		fetchOffers();
+	}, []);
 	const wallets = useMemo(
 		() => [
 			new SpacecyWalletAdapter(),
@@ -40,7 +49,7 @@ function App() {
 						<Header />
 						<AccountGuard>
 							<div className="container">
-								<Outlet />
+								<Outlet context={[offers, setOffers]} />
 							</div>
 						</AccountGuard>
 						<FooterComp />

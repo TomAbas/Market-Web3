@@ -25,7 +25,6 @@ export default function MyItemDetail() {
 	const { account, signAndSubmitTransaction } = useWallet();
 	const { tokens } = useTokens(account);
 	let myAddress = account?.address?.toString() || '';
-	console.log(tokens);
 	const [supply, setSupply] = useState('');
 	const [price, setPrice] = useState('');
 	const [open, setOpen] = useState(false);

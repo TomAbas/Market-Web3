@@ -82,7 +82,6 @@ const ProfileUser = () => {
 	useEffect(() => {
 		setItems(tokens);
 	}, [tokens]);
-	console.log(items);
 	return (
 		<>
 			<Box pt={13}>
