@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { InputImage, InputItem, InputTitle } from 'components/Mint/styled';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateCollection } from 'models/common';
 import { Box } from '@mui/material';
 import UploadMediaCustom from '../UploadMediaCustom';
 import { FieldSubTitle, FieldTitleName } from './styled';
 import { Asterisk, ErrorMessage } from '../Common/styled';
-
 interface Props {
 	base64image: any;
 	handleOpenModalBuy: any;
@@ -27,7 +26,7 @@ const FormMint: React.FC<Props> = ({
 		formState: { errors },
 	} = useForm<InputCreateCollection>();
 	const handleDropFile = (e: any) => {
-		handleInputFile(e[0]);
+		handleInputFile(e);
 		setValue('file', e[0]);
 		errors.file = undefined;
 	};

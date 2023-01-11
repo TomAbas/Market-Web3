@@ -30,7 +30,7 @@ export default function UploadMediaCustom({
 			...other,
 		}
 	);
-
+	console.log('file' + file);
 	useEffect(() => {
 		if (!file) return;
 		const fileType = getFileType(file);
@@ -39,7 +39,6 @@ export default function UploadMediaCustom({
 	}, [file]);
 	useEffect(() => {
 		if (fileRejections.length > 0) {
-			console.log(fileRejections);
 			setReject(fileRejections);
 		}
 	}, [fileRejections]);
@@ -47,7 +46,7 @@ export default function UploadMediaCustom({
 		reject.map(({ file, errors }: any) => {
 			const { path, size }: CustomFile = file;
 			return (
-				<Box key={path} sx={{ my: 1, zIndex: '2' }}>
+				<Box key={path} sx={{ my: 1 }}>
 					<Typography variant="body1" noWrap>
 						{path} - {fData(size)}
 					</Typography>
@@ -60,7 +59,7 @@ export default function UploadMediaCustom({
 		});
 
 	return (
-		<DropzoneContainer sx={reject ? { width: '100%' } : sx}>
+		<DropzoneContainer sx={reject ? { width: '100%', height: '100%' } : sx}>
 			<DropzoneStyle
 				{...getRootProps()}
 				sx={{
@@ -97,7 +96,7 @@ export default function UploadMediaCustom({
 									height={type === 'mp3' ? 50 : '100%'}
 								/>
 							</Stack>
-						) : file && reject ? (
+						) : reject ? (
 							<ShowRejectionItems />
 						) : (
 							<Box
@@ -127,7 +126,6 @@ export default function UploadMediaCustom({
 								color: '#000',
 								opacity: '0.5',
 								fontWeight: 500,
-								zIndex: '1',
 							}}
 						>
 							JPG, PNG, GIF, SVG, WEBM, WAV, OGG, GLB, GLTF. Max size: 10 MB
