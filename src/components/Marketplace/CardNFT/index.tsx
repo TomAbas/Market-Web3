@@ -30,6 +30,7 @@ import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
 import aptos from '../../../assets/images/card/aptos.jpg';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
+import { toast } from 'react-toastify';
 
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 // const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -65,10 +66,18 @@ export default function CardNFT({
 		},
 		{
 			label: `${
-				statusBuyNft.isSuccess ? 'Congrat' : statusBuyNft.isError && 'Something went wrong'
+				statusBuyNft.isSuccess
+					? 'Congrat'
+					: statusBuyNft.isError
+					? 'Something went wrong'
+					: 'Result'
 			}`,
 			description: `${
-				statusBuyNft.isSuccess ? 'You bought your NFT' : statusBuyNft.isError && 'Try again'
+				statusBuyNft.isSuccess
+					? 'You bought your NFT'
+					: statusBuyNft.isError
+					? 'Try again'
+					: '123'
 			}`,
 		},
 	];
@@ -107,8 +116,10 @@ export default function CardNFT({
 			};
 			fetchOffers();
 			completeTaskSuccess();
+			toast.success('success buy item');
 			handleNext();
 		} catch {
+			toast.error('try again');
 			failToComplete();
 			handleNext();
 		}
@@ -127,7 +138,7 @@ export default function CardNFT({
 
 	return (
 		<>
-			<Grid xs={6} sm={4} md={3} p={1}>
+			<Grid xs={6} sm={4} md={3} p={1} onClick={handleClickItem}>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
@@ -244,7 +255,6 @@ export default function CardNFT({
 								alignItems="center"
 								justifyContent="space-between"
 								spacing={1}
-								onClick={handleClickItem}
 							>
 								<Box
 									sx={{
@@ -318,7 +328,10 @@ export default function CardNFT({
 										{offer.price / DECIMAL} APT
 									</Box>
 									<Typography
-										onClick={handleOpenModalBuy}
+										onClick={(e) => {
+											e.stopPropagation();
+											handleOpenModalBuy();
+										}}
 										variant="body2"
 										sx={{
 											fontWeight: offer.is_cancle ? '300' : '600',

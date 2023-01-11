@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { InputCreateNFT } from 'models/common';
 import { Box, Select, FormControl, MenuItem } from '@mui/material';
 import UploadMediaCustom from '../UploadMediaCustom';
-import { FieldSubTitle, FieldTitleName } from './styled';
+import { FieldSubTitle } from './styled';
 import { Asterisk, ErrorMessage } from '../Common/styled';
 import { TextArea } from 'customCompoents/FieldTextArea/styled';
 
@@ -28,12 +28,13 @@ const FormMintNft: React.FC<Props> = ({
 		register,
 		handleSubmit,
 		setValue,
+		clearErrors,
 		formState: { errors },
 	} = useForm<InputCreateNFT>();
 	const handleDropFile = (e: any) => {
 		handleInputFileMintNft(e[0]);
 		setValue('file', e[0]);
-		errors.file = undefined;
+		clearErrors('file');
 	};
 	const onSubmit = handleSubmit((data) => {
 		console.log(data);
@@ -57,9 +58,9 @@ const FormMintNft: React.FC<Props> = ({
 		<>
 			{' '}
 			<form onSubmit={onSubmit}>
-				<FieldTitleName>
+				<InputTitle>
 					Image, Video, Audio, or 3D Model <Asterisk />
-				</FieldTitleName>
+				</InputTitle>
 				{/* <FieldSubTitle>
 						Recommended file types: JPG, PNG, GIF, SVG, WEBM, MP4, MP3. Max size: 10 MB.
 					</FieldSubTitle> */}
@@ -133,7 +134,7 @@ const FormMintNft: React.FC<Props> = ({
 				</InputItem>
 				<InputItem>
 					<InputTitle>
-						Item name <Asterisk />
+						Item Name <Asterisk />
 					</InputTitle>
 					<input
 						type="text"
@@ -173,8 +174,8 @@ const FormMintNft: React.FC<Props> = ({
 					</InputTitle>
 					<input
 						type="number"
-						placeholder="Min: 1 - Max: 999999999"
-						{...register('amount', { required: true, min: 1, max: 999999999 })}
+						placeholder="Min: 1 - Max: 100"
+						{...register('amount', { required: true, min: 1, max: 100 })}
 					/>
 					{errors.amount && <ErrorMessage>Amount is required</ErrorMessage>}
 				</InputItem>

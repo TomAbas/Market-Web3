@@ -1,6 +1,6 @@
 import { styled, Box, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-
+import CloseIcon from '@mui/icons-material/Close';
 export const TopPart = styled(Box)(({ theme }) => ({
 	paddingBottom: '25px',
 	position: 'relative',
@@ -111,4 +111,10 @@ export const TopTitleModal = styled('span')(({ theme }) => ({
 	fontSize: '32px',
 	padding: '10px 40px',
 	textAlign: 'center',
+}));
+
+export const CloseIconButton = styled(CloseIcon)(({ theme }) => ({
+	position: 'absolute',
+	right: '10px',
+	frontSize: '16px',
 }));

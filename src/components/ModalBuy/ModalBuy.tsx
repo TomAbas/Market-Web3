@@ -78,6 +78,7 @@ const ModalBuy: React.FC<Props> = ({
 													<Button
 														variant="contained"
 														onClick={closeModal}
+														sx={{ textTransform: 'capitalize' }}
 													>
 														Finish
 													</Button>
@@ -85,6 +86,7 @@ const ModalBuy: React.FC<Props> = ({
 													<Button
 														variant="contained"
 														onClick={closeModal}
+														sx={{ textTransform: 'capitalize' }}
 													>
 														Close
 													</Button>
@@ -92,6 +94,7 @@ const ModalBuy: React.FC<Props> = ({
 													<Button
 														variant="contained"
 														onClick={funcBuyNft}
+														sx={{ textTransform: 'capitalize' }}
 													>
 														<>
 															{index === steps.length - 1

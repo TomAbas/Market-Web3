@@ -2,6 +2,7 @@
 import { Box, CircularProgress, Modal, Stack, Typography } from '@mui/material';
 import UploadMediaCustom from 'components/Forms/UploadMediaCustom';
 import ButtonWhite from 'customCompoents/ButtonWhite/ButtonWhite';
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
@@ -13,6 +14,7 @@ import {
 	Textarea,
 	TopModal,
 	TopTitleModal,
+	CloseIconButton,
 } from './styled';
 // yup
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -214,7 +216,9 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 				>
 					<TopModal direction="row" gap="10px" alignItems="center">
 						<TopTitleModal style={{ fontWeight: 500 }}>Edit Profile</TopTitleModal>
+						<CloseIconButton onClick={openEditModal} sx={{ cursor: 'pointer' }} />
 					</TopModal>
+
 					<Box sx={{ padding: '20px' }}>
 						<TopPart>
 							<Stack direction="column" alignItems="center">
@@ -299,7 +303,7 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 											size={25}
 										/>
 									)}
-									<Typography variant="button">Submit</Typography>
+									<Typography>Submit</Typography>
 								</Stack>
 							</ButtonWhite>
 						</Stack>

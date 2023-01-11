@@ -14,6 +14,7 @@ import IconUserWhite from 'assets/icons/NavBar/icon-user-white.svg';
 import IconUserBlack from 'assets/icons/NavBar/icon-user-black.svg';
 import IconHeartWhite from 'assets/icons/NavBar/icon-heart-white.svg';
 import IconHeartBlack from 'assets/icons/NavBar/icon-heart-black.svg';
+import aptos from 'assets/images/card/aptos.jpg';
 import IconEyeWhite from 'assets/icons/NavBar/icon-eye-white.svg';
 import IconEyeBlack from 'assets/icons/NavBar/icon-eye-black.svg';
 import IconCollectionWhite from 'assets/icons/NavBar/icon-collection-white.svg';
@@ -55,7 +56,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 	const disConnect = () => {
 		try {
 			disconnect();
-			toast.success('Log out success');
+			toast.success('Logout Success');
 			navigate('/');
 		} catch (error: any) {
 			toast.error(error.message);
@@ -85,6 +86,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 								alignItems="center"
 								gap={2}
 								sx={{
+									cursor: 'pointer',
 									img: {
 										borderRadius: '50%',
 									},
@@ -97,9 +99,21 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 								justifyContent="space-between"
 								alignItems="center"
 								direction="row"
-								onClick={popupState.close}
+								pl={2}
 							>
-								<Box>APT</Box>{' '}
+								<Stack
+									direction="row"
+									alignItems="center"
+									gap={1.5}
+									sx={{
+										img: {
+											borderRadius: '50%',
+										},
+									}}
+								>
+									<img src={aptos} alt="Aptos" width={20} height={20} />
+									<Box>APT</Box>
+								</Stack>
 								<Box>{Math.floor(myBalance / 1000000) / 100} APT</Box>
 							</Stack>
 							<Stack gap={2} pl={2}>
@@ -107,8 +121,12 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									direction="row"
 									gap="10px"
 									alignItems="center"
-									onClick={popupState.close}
+									onClick={() => {
+										navigate('/profile');
+										popupState.close();
+									}}
 									sx={{
+										cursor: 'pointer',
 										img: {
 											width: '20px',
 										},
@@ -116,7 +134,6 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 								>
 									<img src={IconUserBlack} alt="profile" />
 									<Link
-										href="/#/profile"
 										sx={{
 											color: 'black',
 											textDecoration: 'none',
@@ -133,15 +150,18 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									gap="10px"
 									alignItems="center"
 									sx={{
+										cursor: 'pointer',
 										img: {
 											width: '20px',
 										},
 									}}
-									onClick={popupState.close}
+									onClick={() => {
+										navigate('/myCollection');
+										popupState.close();
+									}}
 								>
 									<img src={IconCollectionBlack} alt="collection" />
 									<Link
-										href="/#/myCollection"
 										sx={{
 											color: 'black',
 											textDecoration: 'none',
@@ -158,6 +178,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									gap="10px"
 									alignItems="center"
 									sx={{
+										cursor: 'pointer',
 										img: {
 											width: '20px',
 										},
@@ -189,14 +210,19 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 											width: '20px',
 										},
 										cursor: 'pointer',
-										'&:hover': {
-											color: '#007aff',
-										},
 									}}
 									onClick={disConnect}
 								>
 									<img src={IconLogoutBlack} alt="logout" />
-									<Box>Logout</Box>
+									<Box
+										sx={{
+											'&:hover': {
+												color: '#007aff',
+											},
+										}}
+									>
+										Logout
+									</Box>
 								</Stack>
 							</Stack>
 						</Stack>

@@ -13,6 +13,7 @@ import {
 	Textarea,
 	TopModal,
 	TopTitleModal,
+	CloseIconButton,
 } from './styled';
 // yup
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -209,10 +210,13 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 						padding: '20px 20px',
 						width: '100%',
 						borderRadius: '15px',
+						maxHeight: '700px',
+						overflow: 'scroll',
 					}}
 				>
 					<TopModal direction="row" gap="10px" alignItems="center">
-						<TopTitleModal style={{ fontWeight: 500 }}>Setting</TopTitleModal>
+						<TopTitleModal style={{ fontWeight: 500 }}>Settings</TopTitleModal>
+						<CloseIconButton onClick={openEditModal} sx={{ cursor: 'pointer' }} />
 					</TopModal>
 					<Box sx={{ padding: '20px' }}>
 						<TopPart>
@@ -337,7 +341,7 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 											size={25}
 										/>
 									)}
-									<Typography variant="button">Submit</Typography>
+									<Typography>Submit</Typography>
 								</Stack>
 							</ButtonWhite>
 						</Stack>
