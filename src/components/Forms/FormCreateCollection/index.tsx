@@ -7,6 +7,7 @@ import { Box } from '@mui/material';
 import UploadMediaCustom from '../UploadMediaCustom';
 import { FieldSubTitle, FieldTitleName } from './styled';
 import { Asterisk, ErrorMessage } from '../Common/styled';
+import { TextArea } from 'customCompoents/FieldTextArea/styled';
 
 interface Props {
 	base64image: any;
@@ -92,7 +93,7 @@ const FormMint: React.FC<Props> = ({
 
 				<InputItem>
 					<InputTitle>
-						Name<span>*</span>
+						Name <Asterisk />
 					</InputTitle>
 					<input
 						type="text"
@@ -108,10 +109,11 @@ const FormMint: React.FC<Props> = ({
 				</InputItem>
 				<InputItem>
 					<InputTitle>
-						Description<span>*</span>
+						Description <Asterisk />
 					</InputTitle>
-					<input
-						type="text"
+					<TextArea
+						rows={6}
+						cols={4}
 						placeholder="Description: 0 of 1500 characters used"
 						{...register('description', { required: true })}
 					/>
