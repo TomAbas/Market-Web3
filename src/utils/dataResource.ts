@@ -33,7 +33,7 @@ export const getListItemResource = async () => {
 				newListItem[index].supply = foundItem[1];
 			}
 		});
-		console.log(newListItem);
+		// console.log(newListItem);
 		return response.data.data?.token_list.reverse();
 	} catch (error) {
 		return [];
