@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.2d08729d.css",
-    "main.js": "/static/js/main.abf2bb14.js",
+    "main.css": "/static/css/main.daaf3fd5.css",
+    "main.js": "/static/js/main.c216170c.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.d69eb72d.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.fd7bcfd0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.a460d097.chunk.js",
@@ -35,14 +35,18 @@
     "static/media/Asset4.webp": "/static/media/Asset4.60b9700c2ddc864894de.webp",
     "static/media/logoMetaBlue.png": "/static/media/logoMetaBlue.ff880ce767a6e2a90f93.png",
     "static/media/image-input-default.svg": "/static/media/image-input-default.d0641a4683e1109badde624502b379f4.svg",
+    "static/media/icon-setting-black.svg": "/static/media/icon-setting-black.7b0cb55a14c78aa650b60c147552129f.svg",
     "index.html": "/index.html",
     "static/media/icon-edit.svg": "/static/media/icon-edit.df82ae632eb34faefa70cfe592e9c69d.svg",
+    "static/media/icon-logout-black.svg": "/static/media/icon-logout-black.03bf7c0648288faf5d5ab2fd957bc43d.svg",
     "static/media/icon-instagram.svg": "/static/media/icon-instagram.88a9a57a9badbef9f6bbd5d946dc55fa.svg",
     "static/media/mediumicon.svg": "/static/media/mediumicon.fb4b9f6506d716cf16475d5dfee7aafc.svg",
     "static/media/twitter-gray.svg": "/static/media/twitter-gray.b01b146fcff4628f68238c3d888304bb.svg",
     "static/media/twitter-white.svg": "/static/media/twitter-white.095eba5f0d4aad7bdc4354dbd1204386.svg",
     "static/media/discord-gray.svg": "/static/media/discord-gray.831fe8b6b4083467199beb325dd09d74.svg",
     "static/media/discord-white.svg": "/static/media/discord-white.574d554a63de0fdc1823496dd698582d.svg",
+    "static/media/icon-user-black.svg": "/static/media/icon-user-black.a7233eba8183f6e349b804b761099af1.svg",
+    "static/media/icon-collection-black.svg": "/static/media/icon-collection-black.a2a50ac1c4e1c6d7649f04d36ed7c3ab.svg",
     "static/media/telegram-white.svg": "/static/media/telegram-white.946a8b9fe2d697b560a7ac820ee7e140.svg",
     "static/media/icon-nft-help.svg": "/static/media/icon-nft-help.f066eb1be7be2cf1bdc4e330b6f4c580.svg",
     "static/media/icon-tag-help.svg": "/static/media/icon-tag-help.f50fd83fa0509ae38d06dc8d2ebc9bfd.svg",
@@ -51,14 +55,13 @@
     "static/media/facebook-gray.svg": "/static/media/facebook-gray.a570a69d44e98d3538413e38c317a7c2.svg",
     "static/media/search.svg": "/static/media/search.64a8b92cd3c3094c1d8ee0e767575925.svg",
     "static/media/youtubeicon.svg": "/static/media/youtubeicon.2c5308a46e1dff035bdffaa2abb09f66.svg",
-    "static/media/icon-user-black.svg": "/static/media/icon-user-black.a7233eba8183f6e349b804b761099af1.svg",
     "static/media/telegram-gray.svg": "/static/media/telegram-gray.f1b2cc3510e3b1136c1f92b57a65303e.svg",
     "static/media/facebook-white.svg": "/static/media/facebook-white.988bcbfa9d6d177e82e26970ae27c2f0.svg",
     "static/media/heart-full-red.svg": "/static/media/heart-full-red.6248de86e226229f47a3a22b8dc23d72.svg",
     "static/media/icon-collection-help.svg": "/static/media/icon-collection-help.8483053b4d532fac22388557ff075dc4.svg"
   },
   "entrypoints": [
-    "static/css/main.2d08729d.css",
-    "static/js/main.abf2bb14.js"
+    "static/css/main.daaf3fd5.css",
+    "static/js/main.c216170c.js"
   ]
 }

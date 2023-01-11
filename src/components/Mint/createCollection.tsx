@@ -4,7 +4,7 @@ import { InputItem, InputTitle } from './styled';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
 import useCreateMintSell from 'hooks/useCreateMintSell';
-import FormMint from 'components/Forms/FormMint';
+import FormMint from 'components/Forms/FormCreateCollection';
 function RedBar() {
 	return (
 		<Box

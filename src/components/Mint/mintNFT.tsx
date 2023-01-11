@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { walletClient } from '../../utils/aptos';
-import FormMintNft from 'components/Forms/FormMintNft';
+import FormMintNft from 'components/Forms/FormMintNFT';
 import { getListCollectionUserResource } from '../../utils/dataResource';
 
 export default function LayoutMintNFT() {
