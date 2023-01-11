@@ -34,7 +34,7 @@ const FormMint: React.FC<Props> = ({
 	const handleDropFile = (e: any) => {
 		handleInputFile(e);
 		setValue('file', e[0]);
-		errors.file = undefined;
+		clearErrors('file');
 	};
 	const onSubmit = handleSubmit((data) => {
 		updateFormInput(data);
@@ -47,7 +47,6 @@ const FormMint: React.FC<Props> = ({
 		let isExist = collections.findIndex((collection: any) => collection.name === value);
 		if (isExist >= 0) setError('name', { type: 'required', message: 'Name is used' });
 		else clearErrors('name');
-		console.log(errors, isExist);
 		// if (isExist < 0) errors.name = {};
 	};
 

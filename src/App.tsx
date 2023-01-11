@@ -21,6 +21,7 @@ import ModalGuard from 'components/ModalGuard/ModalGuard';
 import FooterComp from 'components/FooterComp';
 import Header from 'components/Header';
 import { getListItemResource } from 'utils/dataResource';
+import ScrollToTop from 'hooks/useScrollToTop';
 function App() {
 	const [offers, setOffers] = useState<any[]>([]);
 	useEffect(() => {
@@ -48,9 +49,11 @@ function App() {
 					<SizeObserver>
 						<Header />
 						<AccountGuard>
-							<div className="container">
-								<Outlet context={[offers, setOffers]} />
-							</div>
+							<ScrollToTop>
+								<div className="container">
+									<Outlet context={[offers, setOffers]} />
+								</div>
+							</ScrollToTop>
 						</AccountGuard>
 						<FooterComp />
 						<ModalGuard />

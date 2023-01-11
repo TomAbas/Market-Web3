@@ -55,7 +55,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 	const disConnect = () => {
 		try {
 			disconnect();
-			toast.success('Log out success');
+			toast.success('Logout Success');
 			navigate('/');
 		} catch (error: any) {
 			toast.error(error.message);
@@ -85,6 +85,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 								alignItems="center"
 								gap={2}
 								sx={{
+									cursor: 'pointer',
 									img: {
 										borderRadius: '50%',
 									},
@@ -107,8 +108,12 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									direction="row"
 									gap="10px"
 									alignItems="center"
-									onClick={popupState.close}
+									onClick={() => {
+										navigate('/profile');
+										popupState.close();
+									}}
 									sx={{
+										cursor: 'pointer',
 										img: {
 											width: '20px',
 										},
@@ -116,7 +121,6 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 								>
 									<img src={IconUserBlack} alt="profile" />
 									<Link
-										href="/#/profile"
 										sx={{
 											color: 'black',
 											textDecoration: 'none',
@@ -133,15 +137,18 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									gap="10px"
 									alignItems="center"
 									sx={{
+										cursor: 'pointer',
 										img: {
 											width: '20px',
 										},
 									}}
-									onClick={popupState.close}
+									onClick={() => {
+										navigate('/myCollection');
+										popupState.close();
+									}}
 								>
 									<img src={IconCollectionBlack} alt="collection" />
 									<Link
-										href="/#/myCollection"
 										sx={{
 											color: 'black',
 											textDecoration: 'none',
@@ -158,6 +165,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									gap="10px"
 									alignItems="center"
 									sx={{
+										cursor: 'pointer',
 										img: {
 											width: '20px',
 										},
@@ -189,14 +197,19 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 											width: '20px',
 										},
 										cursor: 'pointer',
-										'&:hover': {
-											color: '#007aff',
-										},
 									}}
 									onClick={disConnect}
 								>
 									<img src={IconLogoutBlack} alt="logout" />
-									<Box>Logout</Box>
+									<Box
+										sx={{
+											'&:hover': {
+												color: '#007aff',
+											},
+										}}
+									>
+										Logout
+									</Box>
 								</Stack>
 							</Stack>
 						</Stack>

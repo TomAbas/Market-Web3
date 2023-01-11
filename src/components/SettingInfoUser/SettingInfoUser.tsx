@@ -209,6 +209,8 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 						padding: '20px 20px',
 						width: '100%',
 						borderRadius: '15px',
+						maxHeight: '700px',
+						overflow: 'scroll',
 					}}
 				>
 					<TopModal direction="row" gap="10px" alignItems="center">

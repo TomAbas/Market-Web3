@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
 // mui
-import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Stack, Tooltip, Typography, useTheme } from '@mui/material';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 //redux
@@ -62,11 +62,11 @@ const Header: React.FC = () => {
 	const theme = useTheme();
 	const isLightTheme = theme.palette.mode === 'dark';
 	const { innerWidth } = useSizeObersver();
-
 	const { loginSuccess, userAddress } = useLogin();
 	let [background, setBackground] = useState(false);
 	let [option, setOption] = useState(false);
-
+	const [chainId, setChainId] = useState('Testnet');
+	const { network } = useWallet();
 	const openModal = () => {
 		if (!userAddress) {
 			dispatch(openFirstModal());
@@ -81,7 +81,14 @@ const Header: React.FC = () => {
 	const openMoreOption = () => {
 		setOption(!option);
 	};
-
+	useEffect(() => {
+		console.log(network);
+		if (network?.name?.toLowerCase() === 'testnet' || network?.name?.toLowerCase() === 'null') {
+			setChainId('Testnet');
+		} else {
+			setChainId('Mainnet');
+		}
+	}, [network]);
 	useEffect(() => {
 		// Handler to call on window scroll
 		const handleScroll = () => {
@@ -319,7 +326,7 @@ const Header: React.FC = () => {
 										<DropDownContent ref={ref}>
 											<Box
 												sx={{
-													width: '330px',
+													width: '260px',
 													boxShadow: 'rgb(0 0 0 / 40%) 0px 0px 5px 0px',
 													borderRadius: '12px',
 												}}
@@ -338,41 +345,57 @@ const Header: React.FC = () => {
 													Switch Network
 												</Typography>
 												<Stack
-													direction="row"
+													direction="column"
 													justifyContent="space-between"
+													sx={{ width: 'fit-content', margin: '0 auto' }}
 												>
-													<Stack
-														direction="row"
-														gap={1}
-														alignItems="center"
-														sx={{
-															cursor: 'pointer',
-															padding: '4px 12px',
-															borderRadius: '10px',
-															img: { width: 32 },
-														}}
+													<Tooltip
+														title={chainId}
+														placement="right"
+														arrow
 													>
-														<img src={sui} alt="sui" />
-														<Typography variant="body1">Sui</Typography>
-													</Stack>
-													<Stack
-														direction="row"
-														gap={1}
-														alignItems="center"
-														sx={{
-															cursor: 'pointer',
-															background:
-																'rgba(157, 195, 230, 0.537)',
-															padding: '4px 12px',
-															borderRadius: '10px',
-															img: { width: 32 },
-														}}
+														<Stack
+															direction="row"
+															gap={1}
+															alignItems="center"
+															sx={{
+																cursor: 'pointer',
+																background:
+																	'rgba(157, 195, 230, 0.537)',
+																padding: '4px 12px',
+																borderRadius: '10px',
+																marginBottom: '15px',
+																img: { width: 32 },
+															}}
+														>
+															<img src={aptos} alt="aptos" />
+															<Typography variant="body1">
+																Aptos
+															</Typography>
+														</Stack>
+													</Tooltip>
+													<Tooltip
+														title="coming soon"
+														placement="right"
+														arrow
 													>
-														<img src={aptos} alt="aptos" />
-														<Typography variant="body1">
-															Aptos
-														</Typography>
-													</Stack>
+														<Stack
+															direction="row"
+															gap={1}
+															alignItems="center"
+															sx={{
+																padding: '4px 12px',
+																cursor: 'pointer',
+																borderRadius: '10px',
+																img: { width: 32 },
+															}}
+														>
+															<img src={sui} alt="sui" />
+															<Typography variant="body1">
+																Sui
+															</Typography>
+														</Stack>
+													</Tooltip>
 												</Stack>
 											</Box>
 										</DropDownContent>

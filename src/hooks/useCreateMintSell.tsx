@@ -149,11 +149,11 @@ const useCreateMintSell = () => {
 								gas_unit_price: 100,
 							}
 						);
-						toast.success('Create collection success');
+						toast.success('Create item success');
 						completeTaskSuccess();
 						handleNext();
 					} catch (error: any) {
-						console.log('Error create collection NFT: ', error);
+						console.log('Error create item NFT: ', error);
 						toast.error(error.message);
 						failToComplete();
 						handleNext();
