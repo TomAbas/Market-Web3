@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { InputImage, InputItem, InputTitle } from 'components/Mint/styled';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateCollection } from 'models/common';
 import { Box } from '@mui/material';
 import UploadMediaCustom from '../UploadMediaCustom';
 import { FieldSubTitle, FieldTitleName } from './styled';
 import { Asterisk, ErrorMessage } from '../Common/styled';
+import { TextArea } from 'customCompoents/FieldTextArea/styled';
 
 interface Props {
 	base64image: any;
@@ -31,7 +32,7 @@ const FormMint: React.FC<Props> = ({
 		clearErrors,
 	} = useForm<InputCreateCollection>();
 	const handleDropFile = (e: any) => {
-		handleInputFile(e[0]);
+		handleInputFile(e);
 		setValue('file', e[0]);
 		errors.file = undefined;
 	};
@@ -92,7 +93,7 @@ const FormMint: React.FC<Props> = ({
 
 				<InputItem>
 					<InputTitle>
-						Name<span>*</span>
+						Name <Asterisk />
 					</InputTitle>
 					<input
 						type="text"
@@ -108,9 +109,14 @@ const FormMint: React.FC<Props> = ({
 				</InputItem>
 				<InputItem>
 					<InputTitle>
-						Description<span>*</span>
+						Description <Asterisk />
 					</InputTitle>
-					<input type="text" placeholder="Description: 0 of 1500 characters used" />
+					<TextArea
+						rows={6}
+						cols={4}
+						placeholder="Description: 0 of 1500 characters used"
+						{...register('description', { required: true })}
+					/>
 					{errors.description && <ErrorMessage>Description is required</ErrorMessage>}
 				</InputItem>
 				<Box

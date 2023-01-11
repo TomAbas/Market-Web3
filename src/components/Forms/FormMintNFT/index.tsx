@@ -6,6 +6,7 @@ import { Box, Select, FormControl, MenuItem } from '@mui/material';
 import UploadMediaCustom from '../UploadMediaCustom';
 import { FieldSubTitle, FieldTitleName } from './styled';
 import { Asterisk, ErrorMessage } from '../Common/styled';
+import { TextArea } from 'customCompoents/FieldTextArea/styled';
 
 interface Props {
 	handleOpenModalBuy: any;
@@ -99,7 +100,6 @@ const FormMintNft: React.FC<Props> = ({
 					/>
 				</InputImage>
 				{errors.file && <ErrorMessage>Image is required</ErrorMessage>}
-
 				<InputItem>
 					<InputTitle>
 						Collection
@@ -146,8 +146,9 @@ const FormMintNft: React.FC<Props> = ({
 					<InputTitle>
 						Item Description <Asterisk />
 					</InputTitle>
-					<input
-						type="text"
+					<TextArea
+						rows={6}
+						cols={4}
 						placeholder="Description: 0 of 1500 characters used"
 						{...register('description', { required: true })}
 					/>

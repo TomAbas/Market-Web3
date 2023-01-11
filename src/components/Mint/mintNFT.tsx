@@ -6,9 +6,7 @@ import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useCreateMintSell from 'hooks/useCreateMintSell';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
-import { useTokens } from '../../hooks/useTokens';
-import { walletClient } from '../../utils/aptos';
+import { useState, useEffect } from 'react';
 import FormMintNft from 'components/Forms/FormMintNFT';
 import { getListCollectionUserResource } from '../../utils/dataResource';
 

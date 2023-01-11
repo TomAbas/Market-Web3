@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.daaf3fd5.css",
-    "main.js": "/static/js/main.c216170c.js",
+    "main.js": "/static/js/main.3a1defa3.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.d69eb72d.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.fd7bcfd0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.a460d097.chunk.js",
@@ -26,10 +26,12 @@
     "static/media/MSMobile-blue.webp": "/static/media/MSMobile-blue.f51a76bea02ba8daa5f2.webp",
     "static/media/MSMobile-white.webp": "/static/media/MSMobile-white.feb6e115bb0e8a6926e2.webp",
     "service-worker.js": "/service-worker.js",
+    "static/media/default-img-input2.png": "/static/media/default-img-input2.9b6cd16b4b75e92d4b8c.png",
     "static/media/Asset5.webp": "/static/media/Asset5.f665022a9620334872a6.webp",
     "static/media/Asset6.webp": "/static/media/Asset6.acf57e7b8c1e547d2b4e.webp",
     "static/media/box.webp": "/static/media/box.6cd23e2a6b9d4d3a7fd5.webp",
     "static/media/Asset10.webp": "/static/media/Asset10.3ab1baa662cd903be010.webp",
+    "static/media/avatar_default.png": "/static/media/avatar_default.bace53df3c8ea0517a39.png",
     "static/media/Asset9.webp": "/static/media/Asset9.11ceabc91760ce784306.webp",
     "static/media/Asset3.webp": "/static/media/Asset3.08f01d8bd2bbb8daa8de.webp",
     "static/media/Asset4.webp": "/static/media/Asset4.60b9700c2ddc864894de.webp",
@@ -62,6 +64,6 @@
   },
   "entrypoints": [
     "static/css/main.daaf3fd5.css",
-    "static/js/main.c216170c.js"
+    "static/js/main.3a1defa3.js"
   ]
 }

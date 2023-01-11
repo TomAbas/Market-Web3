@@ -1,14 +1,13 @@
 import { Box, Stack, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
-import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext, useLocation } from 'react-router-dom';
 import useControlModal from 'hooks/useControlModal';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useAppDispatch } from '../../../redux/hooks';
 import { openFirstModal } from '../../../redux/slices/modalWallet';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
-import { getListItemResource } from '../../../utils/dataResource';
+// import { getListItemResource } from '../../../utils/dataResource';
 import { ItemImage } from '../styled';
 
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
@@ -20,7 +19,7 @@ export default function DetailCard() {
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
 	const name = decodeURIComponent(new URLSearchParams(search).get('name') || '');
-	// console.log({ id });
+	const [offers] = useOutletContext<any>();
 	const { account, signAndSubmitTransaction } = useWallet();
 	const [statusWithdraw, setStatusWithdraw] = useState('Cancel');
 	const dispatch = useAppDispatch();
@@ -53,7 +52,6 @@ export default function DetailCard() {
 	];
 	useEffect(() => {
 		const fetchOffers = async () => {
-			const offers = await getListItemResource();
 			const newItem = offers.find(
 				(item: any) =>
 					item.token_id.token_data_id.creator === creator &&
@@ -63,7 +61,7 @@ export default function DetailCard() {
 			setItem(newItem);
 		};
 		fetchOffers();
-	}, []);
+	}, [offers]);
 
 	const claimOffer = async () => {
 		if (!account) {
@@ -136,6 +134,8 @@ export default function DetailCard() {
 						<Typography variant="h4" fontWeight={500}>
 							{item?.token_id.token_data_id.name}
 						</Typography>
+						<p>{item?.description}</p>
+						<p>Owned Quantity : {item?.supply}</p>
 						<Typography variant="body1">
 							Owner:{' '}
 							<a

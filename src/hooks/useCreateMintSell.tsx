@@ -6,13 +6,13 @@ import { useState } from 'react';
 import { useAppDispatch } from 'redux/hooks';
 import { openFirstModal } from 'redux/slices/modalWallet';
 import { toast } from 'react-toastify';
-
+import ImageInputDefault from '../assets/icons/default-img-input2.png';
 const useCreateMintSell = () => {
 	const dispatch = useAppDispatch();
 	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 	const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 	const { account, signAndSubmitTransaction } = useWallet();
-	const [base64image, setBase64image] = useState('');
+	const [base64image, setBase64image] = useState<any>(ImageInputDefault);
 	const [formInput, updateFormInput] = useState<InputCreateCollection>({
 		name: '',
 		description: '',
@@ -28,8 +28,11 @@ const useCreateMintSell = () => {
 	});
 
 	const handleInputFile = (e: any) => {
-		if (e) {
-			const file = e;
+		console.log(e);
+		const file = e[0];
+		if (file) {
+			console.log('chay');
+			// const file = e[0];
 			setBase64image({ ...file, preview: URL.createObjectURL(file) });
 		}
 	};

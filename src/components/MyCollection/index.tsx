@@ -25,7 +25,7 @@ export default function MyCollection() {
 		});
 		setCollections(Array.from(newCollection));
 	}, [tokens]);
-	console.log(collections);
+	// console.log(collections);
 	return (
 		<>
 			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 16, pb: 4 }}>

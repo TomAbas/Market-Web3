@@ -25,7 +25,6 @@ import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
 import aptos from '../../../assets/images/card/aptos.jpg';
 
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '0x1::aptos_coin::AptosCoin';
 const DECIMAL = 100000000;
 

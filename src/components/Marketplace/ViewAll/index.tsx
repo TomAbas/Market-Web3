@@ -9,21 +9,15 @@ import TabPanel from '@mui/lab/TabPanel';
 import Items from './Items';
 import Collections from './Collections';
 import { Typography } from '@mui/material';
-import { getListItemResource, getListCollectionMarketplace } from 'utils/dataResource';
+import { useOutletContext } from 'react-router-dom';
+import { getListCollectionMarketplace } from 'utils/dataResource';
 // import LayoutMintNFT from './mintNFT';
 // import LayoutCreateCollection from './createCollection';
 
 export default function ViewAll() {
 	const [value, setValue] = React.useState('2');
-	const [offers, setOffers] = useState<any[]>([]);
+	const [offers, setOffers] = useOutletContext<any>();
 	const [collections, setCollections] = useState<any[]>([]);
-	useEffect(() => {
-		const fetchOffers = async () => {
-			const newOffers = await getListItemResource();
-			setOffers(newOffers);
-		};
-		fetchOffers();
-	}, []);
 
 	useEffect(() => {
 		const fetchCollections = async () => {
