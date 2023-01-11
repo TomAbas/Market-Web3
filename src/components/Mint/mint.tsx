@@ -22,6 +22,12 @@ export default function MintTabs() {
 		setValue(newValue);
 	};
 
+	const handleCreateItem = (status: boolean) => {
+		if (status === true) {
+			setValue('2');
+		}
+	};
+
 	return (
 		<Box sx={{ maxWidth: '940px', mx: 'auto', paddingTop: '150px' }}>
 			<TabContext value={value}>
@@ -48,7 +54,10 @@ export default function MintTabs() {
 					<LayoutMintNFT />
 				</TabPanel>
 				<TabPanel value="1">
-					<LayoutCreateCollection />
+					<LayoutCreateCollection
+						setValue={setValue}
+						handleCreateItem={handleCreateItem}
+					/>
 				</TabPanel>
 			</TabContext>
 		</Box>

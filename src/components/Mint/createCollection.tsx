@@ -21,8 +21,11 @@ function RedBar() {
 		/>
 	);
 }
-
-export default function LayoutCreateCollection() {
+interface Props {
+	setValue: any;
+	handleCreateItem: any;
+}
+const LayoutCreateCollection: React.FC<Props> = ({ setValue, handleCreateItem }) => {
 	const {
 		handleNext,
 		handleOpenModalBuy,
@@ -85,7 +88,7 @@ export default function LayoutCreateCollection() {
 			<ModalBuy
 				steps={steps}
 				openState={openModalBuy}
-				closeModal={handleCloseModalBuy}
+				closeModal={() => handleCloseModalBuy(handleCreateItem(statusBuyNft.isSuccess))}
 				activeStep={activeStep}
 				statusBuyNft={statusBuyNft}
 				funcBuyNft={() =>
@@ -94,7 +97,7 @@ export default function LayoutCreateCollection() {
 			/>
 		</Box>
 	);
-}
+};
 
 {
 	/* Category */
@@ -119,3 +122,4 @@ export default function LayoutCreateCollection() {
 				</FormControl>
 			</InputItem> */
 }
+export default LayoutCreateCollection;
