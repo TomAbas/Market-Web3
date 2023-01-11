@@ -4,7 +4,10 @@ import { InputItem, InputTitle } from './styled';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
 import useCreateMintSell from 'hooks/useCreateMintSell';
+import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import FormMint from 'components/Forms/FormMint';
+import React, { useState, useEffect } from 'react';
+import { getListCollectionUserResource } from '../../utils/dataResource';
 function RedBar() {
 	return (
 		<Box
@@ -46,6 +49,23 @@ export default function LayoutCreateCollection() {
 			}`,
 		},
 	];
+	const { account } = useWallet();
+	const [collections, setCollections] = useState<any[]>([]);
+	const fetchCollection = async () => {
+		if (account?.address) {
+			try {
+				const newCollections = await getListCollectionUserResource(
+					account?.address?.toString()
+				);
+				setCollections(newCollections);
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	};
+	useEffect(() => {
+		fetchCollection();
+	}, [account]);
 
 	return (
 		<Box
@@ -59,6 +79,7 @@ export default function LayoutCreateCollection() {
 				handleOpenModalBuy={handleOpenModalBuy}
 				updateFormInput={updateFormInput}
 				handleInputFile={handleInputFile}
+				collections={collections}
 			/>
 			<RedBar />
 			<ModalBuy

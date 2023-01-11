@@ -10,18 +10,22 @@ interface Props {
 	handleOpenModalBuy: any;
 	updateFormInput: any;
 	handleInputFile: any;
+	collections: any;
 }
 const FormMint: React.FC<Props> = ({
 	handleOpenModalBuy,
 	updateFormInput,
 	handleInputFile,
 	base64image,
+	collections,
 }) => {
 	const {
 		register,
 		handleSubmit,
 		setValue,
 		formState: { errors },
+		setError,
+		clearErrors,
 	} = useForm<InputCreateCollection>();
 	const handleDropFile = (e: any) => {
 		handleInputFile(e[0]);
@@ -34,15 +38,22 @@ const FormMint: React.FC<Props> = ({
 			handleOpenModalBuy();
 		}
 	});
+	const checkCollectionNameValid = (e: any) => {
+		let value = e.target.value;
+		let isExist = collections.findIndex((collection: any) => collection.name === value);
+		if (isExist >= 0) setError('name', { type: 'required', message: 'Name is used' });
+		else clearErrors('name');
+		console.log(errors, isExist);
+		// if (isExist < 0) errors.name = {};
+	};
 
 	return (
 		<>
-			{' '}
 			<form onSubmit={onSubmit}>
+				<InputTitle>
+					Image<span>*</span>
+				</InputTitle>
 				<InputImage>
-					{/* <InputTitle>
-						Image<span>*</span>
-					</InputTitle> */}
 					<UploadMediaCustom
 						onDrop={handleDropFile}
 						sx={{
@@ -75,8 +86,11 @@ const FormMint: React.FC<Props> = ({
 						type="text"
 						placeholder="Collection Name"
 						{...register('name', { required: true })}
+						onChange={checkCollectionNameValid}
 					/>
-					{errors.name && <p>Name is required</p>}
+					{errors.name && (
+						<p>{errors.name.message ? errors.name.message : 'Name is required'}</p>
+					)}
 				</InputItem>
 				<InputItem>
 					<InputTitle>

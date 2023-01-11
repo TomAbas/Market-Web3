@@ -51,6 +51,9 @@ const FormMintNft: React.FC<Props> = ({
 		<>
 			{' '}
 			<form onSubmit={onSubmit}>
+				<InputTitle>
+					Image<span>*</span>
+				</InputTitle>
 				<InputImage>
 					{/* <input
 						type="file"
