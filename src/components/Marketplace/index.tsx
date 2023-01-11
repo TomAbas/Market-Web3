@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CardNFT from './CardNFT';
 import { getListItemResource, getListCollectionMarketplace } from '../../utils/dataResource';
-import item from '../../assets/images/card/box.webp';
+import item from '../../assets/avatar_default.png';
 
 import {
 	ButtonBlue,

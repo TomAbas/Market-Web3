@@ -111,7 +111,7 @@ export default function UploadMediaCustom({
 							></Box>
 						)}
 					</Fragment>
-				) : reject ? (
+				) : (
 					<ImageDefault>
 						<img
 							src={ImageInputDefault}
@@ -129,12 +129,9 @@ export default function UploadMediaCustom({
 								fontWeight: 500,
 							}}
 						>
-							JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100
-							MB
+							JPG, PNG, GIF, SVG, WEBM, WAV, OGG, GLB, GLTF. Max size: 10 MB
 						</Box>
 					</ImageDefault>
-				) : (
-					''
 				)}
 			</DropzoneStyle>
 

@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { InputImage, InputItem, InputTitle } from 'components/Mint/styled';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateCollection } from 'models/common';
 import { Box } from '@mui/material';
-import UploadMediaCustom from './UploadMediaCustom';
+import UploadMediaCustom from '../UploadMediaCustom';
+import { FieldSubTitle, FieldTitleName } from './styled';
+import { Asterisk, ErrorMessage } from '../Common/styled';
 
 interface Props {
 	base64image: any;
@@ -39,10 +42,19 @@ const FormMint: React.FC<Props> = ({
 		<>
 			{' '}
 			<form onSubmit={onSubmit}>
-				<InputImage>
+				<FieldTitleName>
+					Banner Image <Asterisk />
+				</FieldTitleName>
+				<FieldSubTitle>
+					This image will appear at the top of your collection page. Avoid including too
+					much text in this banner image, as the dimensions change on different devices.
+					1800 x 400 recommended.
+				</FieldSubTitle>
+				<InputImage sx={{ mt: 2 }}>
 					{/* <InputTitle>
 						Image<span>*</span>
 					</InputTitle> */}
+
 					<UploadMediaCustom
 						onDrop={handleDropFile}
 						sx={{
@@ -64,7 +76,7 @@ const FormMint: React.FC<Props> = ({
 						error={Boolean(errors.file)}
 						{...register(`file`, { required: true })}
 					/>
-					{errors.file && <p>Image is required</p>}
+					{errors.file && <ErrorMessage>Image is required</ErrorMessage>}
 				</InputImage>
 
 				<InputItem>
@@ -73,10 +85,10 @@ const FormMint: React.FC<Props> = ({
 					</InputTitle>
 					<input
 						type="text"
-						placeholder="Collection Name"
+						placeholder="Example: Metaspacecy collection"
 						{...register('name', { required: true })}
 					/>
-					{errors.name && <p>Name is required</p>}
+					{errors.name && <ErrorMessage>Name is required</ErrorMessage>}
 				</InputItem>
 				<InputItem>
 					<InputTitle>
@@ -84,10 +96,10 @@ const FormMint: React.FC<Props> = ({
 					</InputTitle>
 					<input
 						type="text"
-						placeholder="Description"
+						placeholder="Description: 0 of 1500 characters used"
 						{...register('description', { required: true })}
 					/>
-					{errors.description && <p>Description is required</p>}
+					{errors.description && <ErrorMessage>Description is required</ErrorMessage>}
 				</InputItem>
 				<Box
 					sx={{
