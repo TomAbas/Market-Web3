@@ -35,6 +35,7 @@ export default function UploadMediaCustom({
 		if (!file) return;
 		const fileType = getFileType(file);
 		setType(fileType);
+		setReject('');
 	}, [file]);
 	useEffect(() => {
 		if (fileRejections.length > 0) {
@@ -42,27 +43,24 @@ export default function UploadMediaCustom({
 			setReject(fileRejections);
 		}
 	}, [fileRejections]);
-	const ShowRejectionItems = () => (
-		<Box>
-			{reject.map(({ file, errors }: any) => {
-				const { path, size }: CustomFile = file;
-				return (
-					<Box key={path} sx={{ my: 1 }}>
-						<Typography variant="body1" noWrap>
-							{path} - {fData(size)}
-						</Typography>
+	const ShowRejectionItems = () =>
+		reject.map(({ file, errors }: any) => {
+			const { path, size }: CustomFile = file;
+			return (
+				<Box key={path} sx={{ my: 1 }}>
+					<Typography variant="body1" noWrap>
+						{path} - {fData(size)}
+					</Typography>
 
-						<Typography variant="body1" noWrap sx={{ color: 'red' }}>
-							File is larger than 10MB
-						</Typography>
-					</Box>
-				);
-			})}
-		</Box>
-	);
+					<Typography variant="body1" noWrap sx={{ color: 'red' }}>
+						File is larger than 10MB
+					</Typography>
+				</Box>
+			);
+		});
 
 	return (
-		<DropzoneContainer sx={sx}>
+		<DropzoneContainer sx={reject ? { width: '100%' } : sx}>
 			<DropzoneStyle
 				{...getRootProps()}
 				sx={{
@@ -99,6 +97,8 @@ export default function UploadMediaCustom({
 									height={type === 'mp3' ? 50 : '100%'}
 								/>
 							</Stack>
+						) : file && reject ? (
+							<ShowRejectionItems />
 						) : (
 							<Box
 								component="img"
@@ -111,7 +111,9 @@ export default function UploadMediaCustom({
 							></Box>
 						)}
 					</Fragment>
-				) : reject ? (
+				) : file && reject ? (
+					<ShowRejectionItems />
+				) : (
 					<ImageDefault>
 						<img
 							src={ImageInputDefault}
@@ -133,12 +135,10 @@ export default function UploadMediaCustom({
 							MB
 						</Box>
 					</ImageDefault>
-				) : (
-					''
 				)}
 			</DropzoneStyle>
 
-			{reject?.length > 0 && <ShowRejectionItems />}
+			{/* {reject?.length > 0 && <ShowRejectionItems />} */}
 		</DropzoneContainer>
 	);
 }
