@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTokens } from '../../hooks/useTokens';
 import banner from '../../assets/banner.png';
+import { getCollectionData } from '../../service/aptos.service';
 import aptos from '../../assets/images/card/aptos.jpg';
 import { useSizeObersver } from 'contexts/SizeObserver';
 
@@ -20,7 +21,7 @@ const MyCollectionDetail = () => {
 	const { account } = useWallet();
 	const [viewAvatar, setViewAvatar] = useState(false);
 	const { tokens } = useTokens(account);
-	const [collectionInfo, setCollectionInfo] = useState<any[]>(['', '']);
+	const [collectionInfo, setCollectionInfo] = useState<any>('');
 	const [items, setItems] = useState<any[]>([]);
 
 	const handleItems = (index: any) => {
@@ -46,9 +47,13 @@ const MyCollectionDetail = () => {
 		const collections = Array.from(newCollection);
 		const found =
 			collections.find((value) => value[0] == `${collection}*/////*${creator}`) || [];
-		console.log(found);
 		setItems(found[1]);
-		setCollectionInfo(found[0] ? found[0].split('*/////*') : ['', '']);
+		const fetchData = async () => {
+			let coll = await getCollectionData(creator, collection);
+			console.log(coll);
+			setCollectionInfo(coll);
+		};
+		fetchData();
 	}, [tokens]);
 	// console.log(collectionInfo);
 
@@ -86,7 +91,7 @@ const MyCollectionDetail = () => {
 				>
 					<ClickAwayListener onClickAway={handleClickAway}>
 						<img
-							src={items ? items[0]?.uri : banner}
+							src={collectionInfo?.uri}
 							alt="banner"
 							onClick={() => {
 								setViewFull(true);
@@ -114,7 +119,7 @@ const MyCollectionDetail = () => {
 					>
 						<ClickAwayListener onClickAway={handleClickAvatar}>
 							<img
-								src={items ? items[0]?.uri : banner}
+								src={collectionInfo?.uri}
 								alt="avatar"
 								onClick={() => {
 									setViewAvatar(true);
@@ -126,7 +131,7 @@ const MyCollectionDetail = () => {
 				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>
 					<Box sx={{ width: '100%' }}>
 						<Typography variant="h4" fontWeight="500">
-							{collectionInfo[0]}
+							{collection}
 						</Typography>
 						<Stack
 							direction="row"
@@ -148,12 +153,9 @@ const MyCollectionDetail = () => {
 						>
 							<img src={aptos} alt="aptos" />
 							<Box>
-								{collectionInfo[1]?.slice(0, 6) +
+								{creator?.slice(0, 6) +
 									'...' +
-									collectionInfo[1]?.slice(
-										collectionInfo[1].length - 4,
-										collectionInfo[1].length
-									)}
+									creator?.slice(creator.length - 4, creator.length)}
 							</Box>
 						</Stack>
 					</Box>
