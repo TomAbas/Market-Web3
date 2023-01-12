@@ -37,6 +37,15 @@ export default function MyItemDetail() {
 		setOpen(false);
 	};
 
+	const navigateCollection = () => {
+		// console.log(name, creater);
+		navigate(
+			`/myCollection/detail?collection=${new URLSearchParams(search).get(
+				'collection'
+			)}&creator=${new URLSearchParams(search).get('creator')}`
+		);
+	};
+
 	useEffect(() => {
 		const fetchOffers = async () => {
 			const newItem = tokens.find(
@@ -93,7 +102,12 @@ export default function MyItemDetail() {
 						</Box>
 					</ItemImage>
 					<Stack gap="16px" sx={{ width: '50%' }}>
-						<Typography variant="h6" fontWeight={500} sx={{ color: '#007aff' }}>
+						<Typography
+							variant="h6"
+							fontWeight={500}
+							sx={{ color: '#007aff', cursor: 'pointer' }}
+							onClick={navigateCollection}
+						>
 							{item?.collection}
 						</Typography>
 						<Typography variant="h4" fontWeight={500}>
