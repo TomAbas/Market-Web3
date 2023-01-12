@@ -44,11 +44,19 @@ const LayoutCreateCollection: React.FC<Props> = ({ setValue, handleCreateItem })
 			description: 'Please confirm your action',
 		},
 		{
-			label: `Finish`,
+			label: `${
+				statusBuyNft.isSuccess
+					? 'Congrat'
+					: statusBuyNft.isError
+					? 'Something went wrong'
+					: 'Result'
+			}`,
 			description: `${
 				statusBuyNft.isSuccess
 					? 'You create your collection'
-					: statusBuyNft.isError && 'Try again'
+					: statusBuyNft.isError
+					? 'Try again'
+					: '123'
 			}`,
 		},
 	];

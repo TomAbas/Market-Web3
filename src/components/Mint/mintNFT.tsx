@@ -32,9 +32,19 @@ export default function LayoutMintNFT() {
 			description: 'Please confirm your order',
 		},
 		{
-			label: `Finish`,
+			label: `${
+				statusBuyNft.isSuccess
+					? 'Congrat'
+					: statusBuyNft.isError
+					? 'Something went wrong'
+					: 'Result'
+			}`,
 			description: `${
-				statusBuyNft.isSuccess ? 'You create your nft' : statusBuyNft.isError && 'Try again'
+				statusBuyNft.isSuccess
+					? 'You create your NFT'
+					: statusBuyNft.isError
+					? 'Try again'
+					: '123'
 			}`,
 		},
 	];

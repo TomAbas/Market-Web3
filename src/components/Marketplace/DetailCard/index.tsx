@@ -43,10 +43,18 @@ export default function DetailCard() {
 		},
 		{
 			label: `${
-				statusBuyNft.isSuccess ? 'Congrat' : statusBuyNft.isError && 'Something went wrong'
+				statusBuyNft.isSuccess
+					? 'Congrat'
+					: statusBuyNft.isError
+					? 'Something went wrong'
+					: 'Result'
 			}`,
 			description: `${
-				statusBuyNft.isSuccess ? 'You bought your NFT' : statusBuyNft.isError && 'Try again'
+				statusBuyNft.isSuccess
+					? 'You bought your NFT'
+					: statusBuyNft.isError
+					? 'Try again'
+					: '123'
 			}`,
 		},
 	];
