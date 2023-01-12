@@ -44,10 +44,12 @@ const FormMint: React.FC<Props> = ({
 	});
 	const checkCollectionNameValid = (e: any) => {
 		let value = e.target.value;
+		console.log(value);
 		let isExist = collections.findIndex((collection: any) => collection.name === value);
 		if (isExist >= 0) setError('name', { type: 'required', message: 'Name is used' });
+		else if (value === '') setError('name', { type: 'custom', message: 'Name is required' });
 		else clearErrors('name');
-		// if (isExist < 0) errors.name = {};
+		console.log(errors.description);
 	};
 
 	return (
@@ -114,9 +116,17 @@ const FormMint: React.FC<Props> = ({
 						rows={6}
 						cols={4}
 						placeholder="Description: 0 of 1500 characters used"
-						{...register('description', { required: true })}
+						{...register('description', {
+							required: 'Description is required.',
+							maxLength: {
+								value: 1500,
+								message: 'Description: 0 of 1500 characters used.',
+							},
+						})}
 					/>
-					{errors.description && <ErrorMessage>Description is required</ErrorMessage>}
+					{errors.description && (
+						<ErrorMessage>{errors.description?.message}</ErrorMessage>
+					)}
 				</InputItem>
 				<Box
 					sx={{

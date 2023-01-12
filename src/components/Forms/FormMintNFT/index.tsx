@@ -151,10 +151,16 @@ const FormMintNft: React.FC<Props> = ({
 						rows={6}
 						cols={4}
 						placeholder="Description: 0 of 1500 characters used"
-						{...register('description', { required: true })}
+						{...register('description', {
+							required: 'Item description is required',
+							maxLength: {
+								value: 1500,
+								message: 'Item description: 0 of 1500 characters used',
+							},
+						})}
 					/>
 					{errors.description && (
-						<ErrorMessage>Item description is required</ErrorMessage>
+						<ErrorMessage>{errors.description?.message}</ErrorMessage>
 					)}
 				</InputItem>
 				<InputItem>
