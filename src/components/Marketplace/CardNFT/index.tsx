@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, Grid, Stack, Typography } from '@mui/material';
+import { Box, Grid, Skeleton, Stack, Typography } from '@mui/material';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
@@ -42,11 +42,13 @@ export default function CardNFT({
 	setOffers,
 	offers,
 	index,
+	loadingOffers,
 }: {
 	offer: any;
 	setOffers: any;
 	offers: any;
 	index: any;
+	loadingOffers: any;
 }) {
 	const {
 		handleNext,
@@ -348,6 +350,7 @@ export default function CardNFT({
 					</Box>
 				</ItemCardStyle>
 			</Grid>
+
 			<ModalBuy
 				openState={openModalBuy}
 				closeModal={handleCloseModalBuy}

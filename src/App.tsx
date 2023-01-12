@@ -23,11 +23,13 @@ import Header from 'components/Header';
 import { getListItemResource } from 'utils/dataResource';
 import ScrollToTop from 'hooks/useScrollToTop';
 function App() {
+	const [loadingOffers, setLoadingOffers] = useState(true);
 	const [offers, setOffers] = useState<any[]>([]);
 	useEffect(() => {
 		const fetchOffers = async () => {
 			const newOffers = await getListItemResource();
 			setOffers(newOffers);
+			setLoadingOffers(false);
 		};
 		fetchOffers();
 	}, []);
@@ -51,7 +53,7 @@ function App() {
 						<AccountGuard>
 							<ScrollToTop>
 								<div className="container">
-									<Outlet context={[offers, setOffers]} />
+									<Outlet context={[offers, setOffers, loadingOffers]} />
 								</div>
 							</ScrollToTop>
 						</AccountGuard>

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, Container, Grid, Link, Stack, Typography } from '@mui/material';
+import { Box, Container, Grid, Link, Stack, Typography, Skeleton } from '@mui/material';
 import Slider from 'components/Slider';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -31,10 +31,12 @@ import {
 	ItemImage,
 } from './styled';
 import Newsletter from './NewsLetter';
+import SkeletonCardNft from 'components/SkeletonCardNft';
 import { useOutletContext } from 'react-router-dom';
 
 export default function Marketplace() {
-	const [offers, setOffers] = useOutletContext<any>();
+	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 	const [collections, setCollections] = useState<any[]>([]);
 	let navigate = useNavigate();
 	useEffect(() => {
@@ -193,15 +195,26 @@ export default function Marketplace() {
 					</Link>
 				</Typography>
 				<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-					{offers.map((offer: any, index: any) => (
-						<CardNFT
-							offers={offers}
-							offer={offer}
-							setOffers={setOffers}
-							index={index}
-							key={index}
-						/>
-					))}
+					{loadingOffers ? (
+						<>
+							{arr.map((item, idx) => (
+								<SkeletonCardNft key={idx} />
+							))}
+						</>
+					) : (
+						<>
+							{offers.map((offer: any, index: any) => (
+								<CardNFT
+									offers={offers}
+									offer={offer}
+									setOffers={setOffers}
+									index={index}
+									key={index}
+									loadingOffers={loadingOffers}
+								/>
+							))}
+						</>
+					)}
 				</Grid>
 			</ExploreCollection>
 			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 4, pb: 4, px: 2 }}>

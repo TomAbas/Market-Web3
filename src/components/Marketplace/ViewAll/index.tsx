@@ -16,9 +16,8 @@ import { getListCollectionMarketplace } from 'utils/dataResource';
 
 export default function ViewAll() {
 	const [value, setValue] = React.useState('2');
-	const [offers, setOffers] = useOutletContext<any>();
+	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 	const [collections, setCollections] = useState<any[]>([]);
-
 	useEffect(() => {
 		const fetchCollections = async () => {
 			let newArrCollection = await getListCollectionMarketplace(offers);
@@ -57,7 +56,7 @@ export default function ViewAll() {
 					</TabList>
 				</Box>
 				<TabPanel value="2" sx={{ px: 0 }}>
-					<Items offers={offers} setOffers={setOffers} />
+					<Items offers={offers} setOffers={setOffers} loadingOffers={loadingOffers} />
 				</TabPanel>
 				<TabPanel value="1" sx={{ px: 0 }}>
 					<Collections collections={collections} />

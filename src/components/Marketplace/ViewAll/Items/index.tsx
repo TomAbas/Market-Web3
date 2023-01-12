@@ -3,7 +3,15 @@ import { Grid } from '@mui/material';
 import CardNFT from 'components/Marketplace/CardNFT';
 import FilterItem from 'components/Marketplace/FilterItem';
 
-export default function Items({ offers, setOffers }: { offers: any; setOffers: any }) {
+export default function Items({
+	offers,
+	setOffers,
+	loadingOffers,
+}: {
+	offers: any;
+	setOffers: any;
+	loadingOffers: any;
+}) {
 	return (
 		<>
 			{/* <FilterItem /> */}
@@ -15,6 +23,7 @@ export default function Items({ offers, setOffers }: { offers: any; setOffers: a
 						setOffers={setOffers}
 						index={index}
 						key={index}
+						loadingOffers={loadingOffers}
 					/>
 				))}
 			</Grid>

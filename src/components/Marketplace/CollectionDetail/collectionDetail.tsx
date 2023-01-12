@@ -8,12 +8,11 @@ import { useTokens } from '../../../hooks/useTokens';
 import { getListItemResource } from '../../../utils/dataResource';
 import banner from '../../../assets/banner.png';
 import aptos from '../../../assets/images/card/aptos.jpg';
-import { useSearchParams, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 
 const CollectionDetail = () => {
-	let [searchParams, setSearchParams] = useSearchParams();
 	const [items, setItems] = useState<any[]>([]);
-	const [offers] = useOutletContext<any>();
+	const [offers, loadingOffers] = useOutletContext<any>();
 	const search = useLocation().search;
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
@@ -107,6 +106,7 @@ const CollectionDetail = () => {
 									setOffers={setItems}
 									index={index}
 									key={index}
+									loadingOffers={loadingOffers}
 								/>
 							))}
 						</Grid>
