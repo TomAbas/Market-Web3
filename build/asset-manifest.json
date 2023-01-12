@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.daaf3fd5.css",
-    "main.js": "/static/js/main.b0192446.js",
+    "main.js": "/static/js/main.8a698a4c.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.d69eb72d.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.fd7bcfd0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.a460d097.chunk.js",
@@ -15,7 +15,6 @@
     "reactPlayerKaltura.js": "/static/js/reactPlayerKaltura.f408ea22.chunk.js",
     "reactPlayerFilePlayer.js": "/static/js/reactPlayerFilePlayer.99a73733.chunk.js",
     "reactPlayerPreview.js": "/static/js/reactPlayerPreview.26a7f5a6.chunk.js",
-    "static/media/banner.png": "/static/media/banner.2e7d908050b69f9e018e.png",
     "static/media/Metaspacecy-blue.svg": "/static/media/Metaspacecy-blue.5af39b2d25a1f86f45affa2d6bcc9b63.svg",
     "static/media/logo-metaspacecy-gray-moblie.webp": "/static/media/logo-metaspacecy-gray-moblie.24d43050f1a6e8f1e08c.webp",
     "static/media/Asset8.webp": "/static/media/Asset8.fa9e2c095872c8a33f89.webp",
@@ -64,6 +63,6 @@
   },
   "entrypoints": [
     "static/css/main.daaf3fd5.css",
-    "static/js/main.b0192446.js"
+    "static/js/main.8a698a4c.js"
   ]
 }
