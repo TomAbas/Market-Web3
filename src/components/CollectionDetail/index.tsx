@@ -11,6 +11,7 @@ import aptos from '../../assets/images/card/aptos.jpg';
 import { useSizeObersver } from 'contexts/SizeObserver';
 
 const MyCollectionDetail = () => {
+	const [loadingCollectionImg, setLoadingCollectionImg] = useState(true);
 	const search = useLocation().search;
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
@@ -27,11 +28,6 @@ const MyCollectionDetail = () => {
 		let newItems = items.filter((_item, i) => i !== index);
 		setItems(newItems);
 	};
-	// console.log(creator, collection);
-	// useEffect(() => {
-	// 	console.log('reset');
-	// 	setItems(tokens);
-	// }, [tokens]);
 	useEffect(() => {
 		let newCollection = new Map();
 		tokens.map((item: any) => {
@@ -46,27 +42,19 @@ const MyCollectionDetail = () => {
 		const collections = Array.from(newCollection);
 		const found =
 			collections.find((value) => value[0] == `${collection}*/////*${creator}`) || [];
-		console.log(found);
 		setItems(found[1]);
 		setCollectionInfo(found[0] ? found[0].split('*/////*') : ['', '']);
 	}, [tokens]);
-	// console.log(collectionInfo);
-
-	// useEffect(() => {
-	// 	console.log(collections);
-	// 	const found = collections.find((value) => value[0] == `${collection}*/////*${creator}`);
-	// 	setItems(found);
-	// }, [collections]);
 
 	const innerHeight = innerWidth / 4.5;
-	// console.log(items);
+
 	const handleClickAway = () => {
 		setViewFull(false);
 	};
 	const handleClickAvatar = () => {
 		setViewAvatar(false);
 	};
-	// console.log(items[0] ? items[0] : '');
+
 	return (
 		<>
 			<Box pt={13}>

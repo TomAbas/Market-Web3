@@ -26,6 +26,7 @@ function App() {
 	const [loadingOffers, setLoadingOffers] = useState(true);
 	const [offers, setOffers] = useState<any[]>([]);
 	useEffect(() => {
+		console.log('chay in app');
 		const fetchOffers = async () => {
 			const newOffers = await getListItemResource();
 			setOffers(newOffers);
