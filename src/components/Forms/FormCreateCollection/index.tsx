@@ -51,6 +51,17 @@ const FormMint: React.FC<Props> = ({
 		else clearErrors('name');
 		console.log(errors.description);
 	};
+	const checkCollectionDesValid = (e: any) => {
+		let value = e.target.value;
+		if (value.length > 1500) {
+			setError('description', {
+				type: 'custom',
+				message: 'Description: 0 of 1500 characters used',
+			});
+		} else {
+			clearErrors('description');
+		}
+	};
 
 	return (
 		<>
@@ -118,11 +129,12 @@ const FormMint: React.FC<Props> = ({
 						placeholder="Description: 0 of 1500 characters used"
 						{...register('description', {
 							required: 'Description is required.',
-							maxLength: {
-								value: 1500,
-								message: 'Description: 0 of 1500 characters used.',
-							},
+							// maxLength: {
+							// 	value: 15,
+							// 	message: 'Description: 0 of 1500 characters used.',
+							// },
 						})}
+						onChange={checkCollectionDesValid}
 					/>
 					{errors.description && (
 						<ErrorMessage>{errors.description?.message}</ErrorMessage>

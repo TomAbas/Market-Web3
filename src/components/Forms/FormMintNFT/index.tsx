@@ -29,6 +29,7 @@ const FormMintNft: React.FC<Props> = ({
 		handleSubmit,
 		setValue,
 		clearErrors,
+		setError,
 		formState: { errors },
 	} = useForm<InputCreateNFT>();
 	const handleDropFile = (e: any) => {
@@ -53,7 +54,17 @@ const FormMintNft: React.FC<Props> = ({
 	});
 
 	const [collection, setCollection] = useState('');
-
+	const checkCollectionDesValid = (e: any) => {
+		let value = e.target.value;
+		if (value.length > 1500) {
+			setError('description', {
+				type: 'custom',
+				message: 'Description: 0 of 1500 characters used',
+			});
+		} else {
+			clearErrors('description');
+		}
+	};
 	return (
 		<>
 			{' '}
@@ -153,11 +164,12 @@ const FormMintNft: React.FC<Props> = ({
 						placeholder="Description: 0 of 1500 characters used"
 						{...register('description', {
 							required: 'Item description is required',
-							maxLength: {
-								value: 1500,
-								message: 'Item description: 0 of 1500 characters used',
-							},
+							// maxLength: {
+							// 	value: 1500,
+							// 	message: 'Item description: 0 of 1500 characters used',
+							// },
 						})}
+						onChange={checkCollectionDesValid}
 					/>
 					{errors.description && (
 						<ErrorMessage>{errors.description?.message}</ErrorMessage>
