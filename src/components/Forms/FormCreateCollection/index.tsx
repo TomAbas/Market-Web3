@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { InputImage, InputItem, InputTitle } from 'components/Mint/styled';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateCollection } from 'models/common';
 import { Box } from '@mui/material';
@@ -51,8 +51,10 @@ const FormMint: React.FC<Props> = ({
 		else clearErrors('name');
 		console.log(errors.description);
 	};
+	const longDescription = useRef();
 	const checkCollectionDesValid = (e: any) => {
 		let value = e.target.value;
+		longDescription.current = value.length;
 		if (value.length > 1500) {
 			setError('description', {
 				type: 'custom',
@@ -120,8 +122,13 @@ const FormMint: React.FC<Props> = ({
 					)}
 				</InputItem>
 				<InputItem>
-					<InputTitle>
+					<InputTitle sx={{ display: 'flex' }}>
 						Description <Asterisk />
+						<Box sx={{ marginLeft: '10px', color: '#c4c4c4', fontWeight: 'normal' }}>
+							{longDescription?.current
+								? `${longDescription?.current} / 1500 char`
+								: '0 / 1500 char'}
+						</Box>
 					</InputTitle>
 					<TextArea
 						rows={6}

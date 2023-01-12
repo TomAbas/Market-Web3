@@ -30,7 +30,6 @@ export default function UploadMediaCustom({
 			...other,
 		}
 	);
-	console.log('file' + file);
 	useEffect(() => {
 		if (!file) return;
 		const fileType = getFileType(file);
