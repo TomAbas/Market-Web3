@@ -1,5 +1,5 @@
 import { InputItem, InputTitle, InputImage } from 'components/Mint/styled';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateNFT } from 'models/common';
 import { Box, Select, FormControl, MenuItem } from '@mui/material';
@@ -52,10 +52,13 @@ const FormMintNft: React.FC<Props> = ({
 		}
 		setDataFormInput(data);
 	});
-
+	// const [long, setLong] = useState();
+	const longDescription = useRef();
 	const [collection, setCollection] = useState('');
 	const checkCollectionDesValid = (e: any) => {
 		let value = e.target.value;
+		// setLong(value.length);
+		longDescription.current = value.length;
 		if (value.length > 1500) {
 			setError('description', {
 				type: 'custom',
@@ -155,9 +158,15 @@ const FormMintNft: React.FC<Props> = ({
 					{errors.name && <ErrorMessage>Item name is required</ErrorMessage>}
 				</InputItem>
 				<InputItem>
-					<InputTitle>
-						Item Description <Asterisk />
+					<InputTitle sx={{ display: 'flex' }}>
+						Item Description <Asterisk />{' '}
+						<Box sx={{ marginLeft: '10px', color: '#c4c4c4', fontWeight: 'normal' }}>
+							{longDescription?.current
+								? `${longDescription?.current} / 1500 char`
+								: '0 / 1500 char'}
+						</Box>
 					</InputTitle>
+
 					<TextArea
 						rows={6}
 						cols={4}

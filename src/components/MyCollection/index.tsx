@@ -3,7 +3,7 @@ import { Box, Grid, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
-import item from '../../assets/images/card/box.webp';
+import item from '../../assets/avatar_default.png';
 import { ItemImage } from 'components/Marketplace/styled';
 import ButtonWhite from 'customCompoents/ButtonWhite/ButtonWhite';
 import { Outlet, useNavigate } from 'react-router-dom';
