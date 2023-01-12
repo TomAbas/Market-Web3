@@ -8,12 +8,14 @@ import { useTokens } from '../../../hooks/useTokens';
 import { getListItemResource } from '../../../utils/dataResource';
 import banner from '../../../assets/banner.png';
 import aptos from '../../../assets/images/card/aptos.jpg';
-import { useOutletContext } from 'react-router-dom';
 
+import { useSearchParams, useOutletContext } from 'react-router-dom';
+import { getCollectionData } from '../../../service/aptos.service';
 const CollectionDetail = () => {
 	const [items, setItems] = useState<any[]>([]);
 	const [offers, loadingOffers] = useOutletContext<any>();
 	const search = useLocation().search;
+	const [collectImage, setCollectionImage] = useState('');
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
 	// console.log({ collection, creator });
@@ -27,6 +29,8 @@ const CollectionDetail = () => {
 					item?.token_id?.token_data_id?.creator == creator
 			);
 			setItems(newItems);
+			let collectionInfo = await getCollectionData(creator, collection);
+			setCollectionImage(collectionInfo.uri);
 		};
 		fetchOffers();
 	}, []);
@@ -45,7 +49,7 @@ const CollectionDetail = () => {
 						},
 					}}
 				>
-					<img src={items[0]?.uri} alt="banner" />
+					<img src={collectImage} alt="banner" />
 					<Box
 						sx={{
 							position: 'absolute',
@@ -63,7 +67,7 @@ const CollectionDetail = () => {
 							},
 						}}
 					>
-						<img src={items[0]?.uri} alt="avatar" />
+						<img src={collectImage} alt="avatar" />
 					</Box>
 				</Box>
 				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>
