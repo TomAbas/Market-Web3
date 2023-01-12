@@ -199,7 +199,7 @@ const MyCollectionDetail = () => {
 						},
 					}}
 				>
-					<img src={banner} alt="banner" />
+					<img src={collectionInfo?.uri} alt="banner" />
 				</Box>
 			</Box>
 			<Box
@@ -227,7 +227,7 @@ const MyCollectionDetail = () => {
 						},
 					}}
 				>
-					<img src={banner} alt="banner" />
+					<img src={collectionInfo?.uri} alt="banner" />
 				</Box>
 			</Box>
 		</>
