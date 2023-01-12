@@ -2,7 +2,7 @@ import { InputItem, InputTitle, InputImage } from 'components/Mint/styled';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateNFT } from 'models/common';
-import { Box, Select, FormControl, MenuItem } from '@mui/material';
+import { Box, Select, FormControl, MenuItem, Typography } from '@mui/material';
 import UploadMediaCustom from '../UploadMediaCustom';
 import { FieldSubTitle } from './styled';
 import { Asterisk, ErrorMessage } from '../Common/styled';
@@ -160,11 +160,18 @@ const FormMintNft: React.FC<Props> = ({
 				<InputItem>
 					<InputTitle sx={{ display: 'flex' }}>
 						Item Description <Asterisk />{' '}
-						<Box sx={{ marginLeft: '10px', color: '#c4c4c4', fontWeight: 'normal' }}>
+						<Typography
+							sx={{
+								marginLeft: '10px',
+								color: '#c4c4c4',
+								fontSize: '12px',
+								fontWeight: 'normal',
+							}}
+						>
 							{longDescription?.current
-								? `${longDescription?.current} / 1500 char`
-								: '0 / 1500 char'}
-						</Box>
+								? `${longDescription?.current} of 1500 characters used`
+								: '0 of 1500 characters used'}
+						</Typography>
 					</InputTitle>
 
 					<TextArea

@@ -3,7 +3,7 @@ import { InputImage, InputItem, InputTitle } from 'components/Mint/styled';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputCreateCollection } from 'models/common';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import UploadMediaCustom from '../UploadMediaCustom';
 import { FieldSubTitle, FieldTitleName } from './styled';
 import { Asterisk, ErrorMessage } from '../Common/styled';
@@ -124,11 +124,18 @@ const FormMint: React.FC<Props> = ({
 				<InputItem>
 					<InputTitle sx={{ display: 'flex' }}>
 						Description <Asterisk />
-						<Box sx={{ marginLeft: '10px', color: '#c4c4c4', fontWeight: 'normal' }}>
+						<Typography
+							sx={{
+								marginLeft: '10px',
+								color: '#c4c4c4',
+								fontSize: '12px',
+								fontWeight: 'normal',
+							}}
+						>
 							{longDescription?.current
-								? `${longDescription?.current} / 1500 char`
-								: '0 / 1500 char'}
-						</Box>
+								? `${longDescription?.current} of 1500 characters used`
+								: '0 of 1500 characters used'}
+						</Typography>
 					</InputTitle>
 					<TextArea
 						rows={6}
