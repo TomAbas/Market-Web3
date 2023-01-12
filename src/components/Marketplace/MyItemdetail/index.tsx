@@ -1,4 +1,5 @@
-import { Box, Stack, Typography } from '@mui/material';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Box, Stack, Typography, Skeleton } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useLocation } from 'react-router-dom';
@@ -13,6 +14,7 @@ const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '';
 const DECIMAL = 100000000;
 
 export default function MyItemDetail() {
+	const [loading, setLoading] = useState(true);
 	const search = useLocation().search;
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
@@ -53,6 +55,9 @@ export default function MyItemDetail() {
 					item.creator === creator && item.collection === collection && item.name === name
 			);
 			setItem(newItem);
+			if (newItem) {
+				setLoading(false);
+			}
 			if (myAddress) {
 				let amountInfo = await getBalanceToken(myAddress, creator, collection, name, '2');
 				setAmount(amountInfo);
@@ -96,90 +101,112 @@ export default function MyItemDetail() {
 		<>
 			<Box sx={{ pt: 16, pb: 4, maxWidth: '1440px', mx: 'auto' }}>
 				<Stack direction="row" gap={4}>
-					<ItemImage sx={{ width: '50%', paddingTop: '50%' }}>
-						<Box className="main-img">
-							<img src={item?.uri} alt="item" />
+					{loading ? (
+						<Box>
+							<Skeleton sx={{ width: '100%', transform: 'translateY(0px)' }}>
+								<ItemImage sx={{ width: '50%', paddingTop: '0' }}>
+									<Box
+										className="main-img"
+										sx={{ width: '600px', height: '600px' }}
+									>
+										<img src={item?.uri} alt="item" />
+									</Box>
+								</ItemImage>
+							</Skeleton>
 						</Box>
-					</ItemImage>
-					<Stack gap="16px" sx={{ width: '50%' }}>
-						<Typography
-							variant="h6"
-							fontWeight={500}
-							sx={{ color: '#007aff', cursor: 'pointer' }}
-							onClick={navigateCollection}
-						>
-							{item?.collection}
-						</Typography>
-						<Typography variant="h4" fontWeight={500}>
-							{item?.name}
-						</Typography>
-						<p>{item?.description}</p>
-						{/* <p>Owned Quantity : {item?.supply}</p> */}
-						<Typography variant="body1">Amount: {amount}</Typography>
-						<Typography variant="body1">
-							Owner:{' '}
-							<a
-								href={`https://explorer.aptoslabs.com/account/${item?.owner}`}
-								target="_blank"
-							>
-								{myAddress?.slice(0, 6) +
-									'...' +
-									myAddress?.slice(myAddress?.length - 4, myAddress?.length)}
-							</a>
-						</Typography>
-						<Typography variant="body1">
-							Creator:
-							<a
-								href={`https://explorer.aptoslabs.com/account/${item?.creator}`}
-								target="_blank"
-							>
-								{item?.creator.slice(0, 6) +
-									'...' +
-									item?.creator.slice(
-										item?.creator.length - 4,
-										item?.creator.length
-									)}
-							</a>
-						</Typography>
-						<Typography variant="body1"></Typography>
-						<Box
-							sx={{
-								button: {
-									padding: '10px 30px',
-									border: '1.5px solid #e7e8ec',
-									transition: 'all 0.4s',
-									borderRadius: '12px',
-									fontWeight: 500,
-									background: '#fff',
-									fontSize: '20px',
-									cursor: 'pointer',
-									fontFamily: 'Montserrat, sans-serif !important',
-									fontStyle: 'italic !important',
-									width: '180px',
-									'&:hover': {
-										background: '#007aff',
-										borderColor: 'transparent',
-										color: '#fff',
-									},
-								},
-							}}
-						>
-							<button onClick={handleClickOpen}>{statusSell}</button>
-						</Box>
-					</Stack>
+					) : (
+						<ItemImage sx={{ width: '50%', paddingTop: '50%' }}>
+							<Box className="main-img">
+								<img src={item?.uri} alt="item" />
+							</Box>
+						</ItemImage>
+					)}
+					{loading ? (
+						<>
+							{' '}
+							<Stack gap="16px" sx={{ width: '50%' }}>
+								<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+								<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+								<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+								<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+								<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+							</Stack>
+						</>
+					) : (
+						<>
+							{' '}
+							<Stack gap="16px" sx={{ width: '50%' }}>
+								<Typography
+									variant="h6"
+									fontWeight={500}
+									sx={{ color: '#007aff', cursor: 'pointer' }}
+									onClick={navigateCollection}
+								>
+									{item?.collection}
+								</Typography>
+								<Typography variant="h4" fontWeight={500}>
+									{item?.name}
+								</Typography>
+								<p>{item?.description}</p>
+								{/* <p>Owned Quantity : {item?.supply}</p> */}
+								<Typography variant="body1">Amount: {amount}</Typography>
+								<Typography variant="body1">
+									Owner:{' '}
+									<a
+										href={`https://explorer.aptoslabs.com/account/${item?.owner}`}
+										target="_blank"
+									>
+										{myAddress?.slice(0, 6) +
+											'...' +
+											myAddress?.slice(
+												myAddress?.length - 4,
+												myAddress?.length
+											)}
+									</a>
+								</Typography>
+								<Typography variant="body1">
+									Creator:
+									<a
+										href={`https://explorer.aptoslabs.com/account/${item?.creator}`}
+										target="_blank"
+									>
+										{item?.creator.slice(0, 6) +
+											'...' +
+											item?.creator.slice(
+												item?.creator.length - 4,
+												item?.creator.length
+											)}
+									</a>
+								</Typography>
+								<Typography variant="body1"></Typography>
+								<Box
+									sx={{
+										button: {
+											padding: '10px 30px',
+											border: '1.5px solid #e7e8ec',
+											transition: 'all 0.4s',
+											borderRadius: '12px',
+											fontWeight: 500,
+											background: '#fff',
+											fontSize: '20px',
+											cursor: 'pointer',
+											fontFamily: 'Montserrat, sans-serif !important',
+											fontStyle: 'italic !important',
+											width: '180px',
+											'&:hover': {
+												background: '#007aff',
+												borderColor: 'transparent',
+												color: '#fff',
+											},
+										},
+									}}
+								>
+									<button onClick={handleClickOpen}>{statusSell}</button>
+								</Box>
+							</Stack>
+						</>
+					)}
 					<div>
-						{/* <Typography
-							variant="body2"
-							onClick={handleClickOpen}
-							sx={{
-								fontWeight: '600',
-								'&:hover': {
-									opacity: '1',
-								},
-							}}
-						>
-							Sell Item
-						</Typography> */}
 						<Dialog
 							open={open}
 							onClose={handleClose}

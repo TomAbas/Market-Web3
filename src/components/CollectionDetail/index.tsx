@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, ClickAwayListener, Grid, Stack, Typography } from '@mui/material';
+import { Box, ClickAwayListener, Grid, Stack, Typography, Skeleton } from '@mui/material';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
 import CardNFTUser from 'components/Marketplace/CardNFTUser';
@@ -10,9 +10,11 @@ import banner from '../../assets/banner.png';
 import { getCollectionData } from '../../service/aptos.service';
 import aptos from '../../assets/images/card/aptos.jpg';
 import { useSizeObersver } from 'contexts/SizeObserver';
-
+import SkeletonCardNft from 'components/SkeletonCardNft';
 const MyCollectionDetail = () => {
+	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	const [loadingCollectionImg, setLoadingCollectionImg] = useState(true);
+	const [loadingItem, setLoadingItem] = useState(true);
 	const search = useLocation().search;
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
@@ -44,10 +46,13 @@ const MyCollectionDetail = () => {
 		const found =
 			collections.find((value) => value[0] == `${collection}*/////*${creator}`) || [];
 		setItems(found[1]);
+		if (found.length > 0) {
+			setLoadingItem(false);
+		}
 		const fetchData = async () => {
 			let coll = await getCollectionData(creator, collection);
-			console.log(coll);
 			setCollectionInfo(coll);
+			setLoadingCollectionImg(false);
 		};
 		fetchData();
 	}, [tokens]);
@@ -64,59 +69,113 @@ const MyCollectionDetail = () => {
 	return (
 		<>
 			<Box pt={13}>
-				<Box
-					sx={{
-						position: 'relative',
-						display: 'flex',
-						justifyContent: 'center',
-						'& > img': {
-							width: '100%',
-							objectFit: 'cover',
-							objectPosition: 'center',
-							height: innerHeight,
-							cursor: 'pointer',
-						},
-					}}
-				>
-					<ClickAwayListener onClickAway={handleClickAway}>
-						<img
-							src={collectionInfo?.uri}
-							alt="banner"
-							onClick={() => {
-								setViewFull(true);
+				{loadingCollectionImg ? (
+					<>
+						{' '}
+						<Box
+							sx={{
+								position: 'relative',
+								display: 'flex',
+								justifyContent: 'center',
+								'& > img': {
+									width: '100%',
+									objectFit: 'cover',
+									objectPosition: 'center',
+									height: innerHeight,
+									cursor: 'pointer',
+								},
 							}}
-						/>
-					</ClickAwayListener>
+						>
+							<Skeleton width="100%">
+								<Box sx={{ height: '400px' }}>
+									<img src={collectionInfo?.uri} alt="banner" />
+								</Box>
+							</Skeleton>
 
-					<Box
-						sx={{
-							position: 'absolute',
-							left: '50%',
-							bottom: '-60px',
-							transform: 'translateX(-50%)',
-							border: '2px solid #fff',
-							borderRadius: '10px',
-							img: {
-								width: '120px',
-								height: '120px',
-								objectFit: 'cover',
-								objectPosition: 'center',
-								borderRadius: '10px',
-								display: 'block',
-							},
-						}}
-					>
-						<ClickAwayListener onClickAway={handleClickAvatar}>
-							<img
-								src={collectionInfo?.uri}
-								alt="avatar"
-								onClick={() => {
-									setViewAvatar(true);
+							<Box
+								sx={{
+									position: 'absolute',
+									left: '50%',
+									bottom: '0px',
+									transform: 'translateX(-50%)',
+									border: '2px solid #fff',
+									borderRadius: '10px',
+									img: {
+										width: '100px',
+										height: '100px',
+										objectFit: 'cover',
+										objectPosition: 'center',
+										borderRadius: '10px',
+									},
 								}}
-							/>
-						</ClickAwayListener>
-					</Box>
-				</Box>
+							>
+								<Skeleton width="100%">
+									<Box sx={{ width: '100px', height: '100px' }}>
+										<img src={collectionInfo?.uri} alt="avatar" />
+									</Box>
+								</Skeleton>
+							</Box>
+						</Box>
+					</>
+				) : (
+					<>
+						{' '}
+						<Box
+							sx={{
+								position: 'relative',
+								display: 'flex',
+								justifyContent: 'center',
+								'& > img': {
+									width: '100%',
+									objectFit: 'cover',
+									objectPosition: 'center',
+									height: innerHeight,
+									cursor: 'pointer',
+								},
+							}}
+						>
+							<ClickAwayListener onClickAway={handleClickAway}>
+								<img
+									src={collectionInfo?.uri}
+									alt="banner"
+									onClick={() => {
+										setViewFull(true);
+									}}
+								/>
+							</ClickAwayListener>
+
+							<Box
+								sx={{
+									position: 'absolute',
+									left: '50%',
+									bottom: '-60px',
+									transform: 'translateX(-50%)',
+									border: '2px solid #fff',
+									borderRadius: '10px',
+									img: {
+										width: '120px',
+										height: '120px',
+										objectFit: 'cover',
+										objectPosition: 'center',
+										borderRadius: '10px',
+										display: 'block',
+									},
+								}}
+							>
+								<ClickAwayListener onClickAway={handleClickAvatar}>
+									<img
+										src={collectionInfo?.uri}
+										alt="avatar"
+										onClick={() => {
+											setViewAvatar(true);
+										}}
+									/>
+								</ClickAwayListener>
+							</Box>
+						</Box>
+					</>
+				)}
+
 				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>
 					<Box sx={{ width: '100%' }}>
 						<Typography variant="h4" fontWeight="500">
@@ -150,14 +209,24 @@ const MyCollectionDetail = () => {
 					</Box>
 					<Box py={4}>
 						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-							{items?.map((item: any, index: any) => (
-								<CardNFTUser
-									item={item}
-									handleItems={handleItems}
-									index={index}
-									key={index}
-								/>
-							))}
+							{loadingItem ? (
+								<>
+									{arr.map((item, idx) => (
+										<SkeletonCardNft key={idx} />
+									))}
+								</>
+							) : (
+								<>
+									{items?.map((item: any, index: any) => (
+										<CardNFTUser
+											item={item}
+											handleItems={handleItems}
+											index={index}
+											key={index}
+										/>
+									))}
+								</>
+							)}
 						</Grid>
 					</Box>
 				</Box>
