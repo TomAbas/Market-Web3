@@ -7,7 +7,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useTokens } from '../../../hooks/useTokens';
 import { ItemImage } from '../styled';
-
+import { getBalanceToken } from '../../../service/aptos.service';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '';
 const DECIMAL = 100000000;
@@ -23,6 +23,7 @@ export default function MyItemDetail() {
 	const [supply, setSupply] = useState('');
 	const [price, setPrice] = useState('');
 	const [open, setOpen] = useState(false);
+	const [amount, setAmount] = useState('0');
 	const [statusSell, setStatusSell] = useState('Sell Item');
 	// const dispatch = useAppDispatch();
 	const navigate = useNavigate();
@@ -43,6 +44,10 @@ export default function MyItemDetail() {
 					item.creator === creator && item.collection === collection && item.name === name
 			);
 			setItem(newItem);
+			if (myAddress) {
+				let amountInfo = await getBalanceToken(myAddress, creator, collection, name, '2');
+				setAmount(amountInfo);
+			}
 		};
 		fetchOffers();
 	}, [tokens]);
@@ -96,6 +101,7 @@ export default function MyItemDetail() {
 						</Typography>
 						<p>{item?.description}</p>
 						{/* <p>Owned Quantity : {item?.supply}</p> */}
+						<Typography variant="body1">Amount: {amount}</Typography>
 						<Typography variant="body1">
 							Owner:{' '}
 							<a

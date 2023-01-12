@@ -4,20 +4,17 @@ import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate, useOutletContext, useLocation } from 'react-router-dom';
 import useControlModal from 'hooks/useControlModal';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch } from '../../../redux/hooks';
 import { openFirstModal } from '../../../redux/slices/modalWallet';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 // import { getListItemResource } from '../../../utils/dataResource';
 import { ItemImage } from '../styled';
-import { getBalanceToken } from '../../../service/aptos.service';
-import { selectUser } from 'redux/slices/userInfo';
 
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const DECIMAL = 100000000;
 
 export default function DetailCard() {
-	const user = useAppSelector(selectUser)?.userAddress;
 	const search = useLocation().search;
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
@@ -25,7 +22,6 @@ export default function DetailCard() {
 	const [offers] = useOutletContext<any>();
 	const { account, signAndSubmitTransaction } = useWallet();
 	const [statusWithdraw, setStatusWithdraw] = useState('Cancel');
-	const [amount, setAmount] = useState('0');
 	const dispatch = useAppDispatch();
 	let navigate = useNavigate();
 	const [item, setItem] = useState<any>();
@@ -71,10 +67,6 @@ export default function DetailCard() {
 					item.token_id.token_data_id.name === name
 			);
 			setItem(newItem);
-			if (user) {
-				let amountInfo = await getBalanceToken(user, creator, collection, name, '2');
-				setAmount(amountInfo);
-			}
 		};
 		fetchOffers();
 	}, [offers]);
@@ -165,7 +157,7 @@ export default function DetailCard() {
 							{item?.token_id.token_data_id.name}
 						</Typography>
 						<p>{item?.description}</p>
-						<p>Amount : {amount}</p>
+
 						<p>Owned Quantity : {item?.amount}</p>
 						<Typography variant="body1">
 							Owner:{' '}
