@@ -67,6 +67,17 @@ export default function LayoutMintNFT() {
 			}
 		}
 	};
+	const handleNavigate = (status: boolean) => {
+		if (status) {
+			navigate(
+				`/my-item?creator=${encodeURIComponent(
+					userAddress
+				)}&collection=${encodeURIComponent(
+					dataFormInput?.collection
+				)}&name=${encodeURIComponent(dataFormInput?.name)}`
+			);
+		}
+	};
 	useEffect(() => {
 		fetchCollection();
 	}, [account]);
@@ -87,18 +98,11 @@ export default function LayoutMintNFT() {
 				setDataFormInput={setDataFormInput}
 			/>
 			<ModalBuy
+				title="Create NFT"
 				steps={steps}
 				openState={openModalBuy}
 				closeModal={() => {
-					handleCloseModalBuy(
-						navigate(
-							`/my-item?creator=${encodeURIComponent(
-								userAddress
-							)}&collection=${encodeURIComponent(
-								dataFormInput?.collection
-							)}&name=${encodeURIComponent(dataFormInput?.name)}`
-						)
-					);
+					handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess));
 				}}
 				activeStep={activeStep}
 				statusBuyNft={statusBuyNft}

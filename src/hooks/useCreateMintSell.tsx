@@ -13,6 +13,7 @@ import {
 } from 'api/mintApi/collectionApi';
 import { Collection, Item } from '../models/collection';
 import { selectUser } from 'redux/slices/userInfo';
+
 const useCreateMintSell = () => {
 	const infoUser = useAppSelector(selectUser);
 	const dispatch = useAppDispatch();
@@ -79,7 +80,7 @@ const useCreateMintSell = () => {
 				async () => {
 					let downLoadUrl = await getDownloadURL(uploadTask.snapshot.ref);
 					try {
-						await signAndSubmitTransaction(
+						let txHash = await signAndSubmitTransaction(
 							{
 								type: 'entry_function_payload',
 								function: `${MARKET_ADDRESS}::nft::create_collection`,
@@ -89,15 +90,17 @@ const useCreateMintSell = () => {
 							{
 								gas_unit_price: 100,
 							}
-						);
+						).then((res) => res.hash);
 						toast.success('Create collection success');
 						let collectionInfo: Collection = {
 							chainId: '2',
 							collectionName: name,
 							userAddress: infoUser?.userAddress || '',
-							uri: downLoadUrl,
+							logo: downLoadUrl,
 							category: category,
 							description: description,
+							txHash: txHash,
+							to: MARKET_ADDRESS!,
 						};
 						CreateCollectionApi(collectionInfo);
 						completeTaskSuccess();
@@ -149,7 +152,7 @@ const useCreateMintSell = () => {
 						const royaltyFeeNumerator = Number(royaltyFee) * 100;
 						const royaltyFeeDenominator = 10000;
 
-						await signAndSubmitTransaction(
+						let txHash = await signAndSubmitTransaction(
 							{
 								type: 'entry_function_payload',
 								function: `${MARKET_ADDRESS}::nft::mint_nft`,
@@ -168,19 +171,19 @@ const useCreateMintSell = () => {
 							{
 								gas_unit_price: 100,
 							}
-						).then((res) => {
-							console.log(res);
-						});
+						).then((res) => res.hash);
 						toast.success('Create item success');
 						completeTaskSuccess();
 						let ItemInfo: Item = {
-							creator: account?.address?.toString() || '',
+							creator: account?.address?.toString()!,
 							chainId: '2',
 							itemName: name,
 							itemMedia: downloadURL,
 							royalties: royaltyFeeNumerator,
 							description: description,
 							collectionId: collectionId,
+							txHash: txHash,
+							to: MARKET_ADDRESS!,
 						};
 						await createItemApi(ItemInfo);
 						handleNext();
