@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, CircularProgress, Modal, Stack, Typography } from '@mui/material';
 import UploadMediaCustom from 'components/Forms/UploadMediaCustom';
-import ButtonWhite from 'customCompoents/ButtonWhite/ButtonWhite';
+import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';

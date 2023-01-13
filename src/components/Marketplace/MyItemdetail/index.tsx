@@ -91,7 +91,7 @@ export default function MyItemDetail() {
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
 			setStatusSell('Sell');
 			toast.success('Successfully listed an item');
-			navigate('/');
+			navigate('/view-all');
 			setOpen(false);
 		} catch (error) {
 			setStatusSell('Sell');

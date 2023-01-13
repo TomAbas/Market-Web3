@@ -3,11 +3,18 @@ import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../config/firebase';
 import { InputCreateCollection, InputCreateNFT } from 'models/common';
 import { useState } from 'react';
-import { useAppDispatch } from 'redux/hooks';
 import { openFirstModal } from 'redux/slices/modalWallet';
 import { toast } from 'react-toastify';
 import ImageInputDefault from '../assets/icons/default-img-input2.png';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import {
+	createCollection as CreateCollectionApi,
+	createItem as createItemApi,
+} from 'api/mintApi/collectionApi';
+import { Collection, Item } from '../models/collection';
+import { selectUser } from 'redux/slices/userInfo';
 const useCreateMintSell = () => {
+	const infoUser = useAppSelector(selectUser);
 	const dispatch = useAppDispatch();
 	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 	const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -17,14 +24,17 @@ const useCreateMintSell = () => {
 		name: '',
 		description: '',
 		file: null,
+		category: 0,
 	});
 	const [formInputNFT, setFormInputNFT] = useState<InputCreateNFT>({
 		collection: '',
-		name: '',
-		description: '',
 		amount: 1,
 		royaltyFee: 0,
+		name: '',
+		description: '',
 		file: null,
+		category: 0,
+		collectionId: '',
 	});
 
 	const handleInputFile = (e: any) => {
@@ -48,12 +58,12 @@ const useCreateMintSell = () => {
 		handleNext: () => void,
 		failToComplete: () => void
 	) => {
-		const { name, description, file } = formInput;
+		const { name, description, file, category } = formInput;
 		if (!account) {
 			dispatch(openFirstModal());
 			return;
 		}
-		if (!name || !description || !file) {
+		if (!name || !description || !file || !category) {
 			failToComplete();
 			handleNext();
 			return;
@@ -81,6 +91,15 @@ const useCreateMintSell = () => {
 							}
 						);
 						toast.success('Successfully created a collection');
+						let collectionInfo: Collection = {
+							chainId: '2',
+							collectionName: name,
+							userAddress: infoUser?.userAddress || '',
+							uri: downLoadUrl,
+							category: category,
+							description: description,
+						};
+						CreateCollectionApi(collectionInfo);
 						completeTaskSuccess();
 						handleNext();
 					} catch (error: any) {
@@ -104,7 +123,8 @@ const useCreateMintSell = () => {
 		handleNext: () => void,
 		failToComplete: () => void
 	) => {
-		const { collection, name, description, amount, royaltyFee, file } = formInputNFT;
+		const { collection, name, description, amount, royaltyFee, file, collectionId } =
+			formInputNFT;
 		if (!account) {
 			dispatch(openFirstModal());
 			return;
@@ -151,6 +171,16 @@ const useCreateMintSell = () => {
 						);
 						toast.success('Successfully created an item');
 						completeTaskSuccess();
+						let ItemInfo: Item = {
+							creator: account?.address?.toString() || '',
+							chainId: '2',
+							itemName: name,
+							itemMedia: downloadURL,
+							royalties: royaltyFeeNumerator,
+							description: description,
+							collectionId: collectionId,
+						};
+						await createItemApi(ItemInfo);
 						handleNext();
 					} catch (error: any) {
 						console.log('Error creating item NFT: ', error);

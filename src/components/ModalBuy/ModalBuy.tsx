@@ -11,6 +11,7 @@ import StepContent from '@mui/material/StepContent';
 import { CircularProgress } from '@mui/material';
 
 interface Props {
+	title: string;
 	steps: { label: string; description: string }[];
 	openState: boolean;
 	closeModal: any;
@@ -31,6 +32,7 @@ const style = {
 	p: 4,
 };
 const ModalBuy: React.FC<Props> = ({
+	title,
 	openState,
 	closeModal,
 	funcBuyNft,
@@ -48,6 +50,11 @@ const ModalBuy: React.FC<Props> = ({
 				aria-describedby="modal-modal-description"
 			>
 				<Box sx={style}>
+					<Box sx={{ textAlign: 'center', marginBottom: '15px' }}>
+						<Typography variant="h5" sx={{ fontWeight: '500' }}>
+							{title}
+						</Typography>
+					</Box>
 					<Stepper activeStep={activeStep} orientation="vertical">
 						{steps.map(
 							(step: { label: string; description: string }, index: number) => (

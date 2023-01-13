@@ -6,7 +6,7 @@ import { Box, Select, FormControl, MenuItem, Typography } from '@mui/material';
 import UploadMediaCustom from '../UploadMediaCustom';
 import { FieldSubTitle } from './styled';
 import { Asterisk, ErrorMessage } from '../Common/styled';
-import { TextArea } from 'customCompoents/FieldTextArea/styled';
+import { TextArea } from 'customComponents/FieldTextArea/styled';
 
 interface Props {
 	handleOpenModalBuy: any;
@@ -57,9 +57,11 @@ const FormMintNft: React.FC<Props> = ({
 	const [collection, setCollection] = useState('');
 	const checkCollectionDesValid = (e: any) => {
 		let value = e.target.value;
-		// setLong(value.length);
+		value = value.slice(0, 1500);
+		setValue('description', value);
 		longDescription.current = value.length;
 		if (value.length > 1500) {
+			setValue('description', value.slice(0, 1499));
 			setError('description', {
 				type: 'custom',
 				message: 'Description: 0 of 1500 characters used',
@@ -107,6 +109,7 @@ const FormMintNft: React.FC<Props> = ({
 						}}
 						accept={{
 							'image/*': ['.png', '.gif', '.jpeg', '.jpg', '.mp3', '.mp4', '.glb'],
+							'video/*': ['.mp3', '.mp4', '.glb'],
 						}}
 						file={base64image}
 						maxSize={10485760}
@@ -131,13 +134,14 @@ const FormMintNft: React.FC<Props> = ({
 							{collections.map((collection: any, index: any) => (
 								<MenuItem
 									key={index}
-									value={collection.name}
+									value={collection.collectionName}
 									onClick={() => {
-										setValue('collection', collection.name);
-										setCollection(collection.name);
+										setValue('collection', collection.collectionName);
+										setValue('collectionId', collection._id);
+										setCollection(collection.collectionName);
 									}}
 								>
-									<em>{collection.name}</em>
+									<em>{collection.collectionName}</em>
 								</MenuItem>
 							))}
 						</Select>
@@ -180,10 +184,6 @@ const FormMintNft: React.FC<Props> = ({
 						placeholder="Description: 0 of 1500 characters used"
 						{...register('description', {
 							required: 'Item description is required',
-							// maxLength: {
-							// 	value: 1500,
-							// 	message: 'Item description: 0 of 1500 characters used',
-							// },
 						})}
 						onChange={checkCollectionDesValid}
 					/>

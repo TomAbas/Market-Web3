@@ -12,6 +12,8 @@ import ModalBuy from 'components/ModalBuy/ModalBuy';
 import { ItemImage } from '../styled';
 import { toast } from 'react-toastify';
 
+import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
+import defaultImg from '../../../assets/icons/default-img-input2.png';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const DECIMAL = 100000000;
@@ -60,6 +62,11 @@ export default function DetailCard() {
 			}`,
 		},
 	];
+	const handleNavigate = (status: boolean) => {
+		if (status) {
+			navigate('/profile');
+		}
+	};
 	useEffect(() => {
 		const fetchOffers = async () => {
 			const newItem = offers.find(
@@ -168,7 +175,12 @@ export default function DetailCard() {
 						<>
 							<ItemImage sx={{ width: '50%', paddingTop: '50%' }}>
 								<Box className="main-img">
-									<img src={item?.uri} alt="item" />
+									{/* <img src={item?.uri} alt="item" /> */}
+									<MediaDisplayCard
+										media={item?.uri}
+										preview={defaultImg}
+										name={item?.token_id.token_data_id.name}
+									/>
 								</Box>
 							</ItemImage>
 							<Stack gap="16px" sx={{ width: '50%' }}>
@@ -286,8 +298,9 @@ export default function DetailCard() {
 				</Box> */}
 			</Box>
 			<ModalBuy
+				title="Buy Item"
 				openState={openModalBuy}
-				closeModal={handleCloseModalBuy}
+				closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
 				funcBuyNft={claimOffer}
 				activeStep={activeStep}
 				statusBuyNft={statusBuyNft}

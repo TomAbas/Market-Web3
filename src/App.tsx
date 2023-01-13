@@ -22,14 +22,16 @@ import FooterComp from 'components/FooterComp';
 import Header from 'components/Header';
 import { getListItemResource } from 'utils/dataResource';
 import ScrollToTop from 'hooks/useScrollToTop';
+//context
+import AudioProvider from './contexts/AudioContext';
 function App() {
 	const [loadingOffers, setLoadingOffers] = useState(true);
 	const [offers, setOffers] = useState<any[]>([]);
 	useEffect(() => {
-		console.log('chay in app');
 		const fetchOffers = async () => {
 			const newOffers = await getListItemResource();
-			setOffers(newOffers);
+			const tOffers = newOffers.slice(0, 12);
+			setOffers(tOffers);
 			setLoadingOffers(false);
 		};
 		fetchOffers();
@@ -49,19 +51,21 @@ function App() {
 		<>
 			<Provider store={store}>
 				<WalletProvider wallets={wallets} autoConnect={true}>
-					<SizeObserver>
-						<Header />
-						<AccountGuard>
-							<ScrollToTop>
-								<div className="container">
-									<Outlet context={[offers, setOffers, loadingOffers]} />
-								</div>
-							</ScrollToTop>
-						</AccountGuard>
-						<FooterComp />
-						<ModalGuard />
-						<ToastContainer />
-					</SizeObserver>
+					<AudioProvider>
+						<SizeObserver>
+							<Header />
+							<AccountGuard>
+								<ScrollToTop>
+									<div className="container">
+										<Outlet context={[offers, setOffers, loadingOffers]} />
+									</div>
+								</ScrollToTop>
+							</AccountGuard>
+							<FooterComp />
+							<ModalGuard />
+							<ToastContainer />
+						</SizeObserver>
+					</AudioProvider>
 				</WalletProvider>
 			</Provider>
 		</>

@@ -82,7 +82,6 @@ const Header: React.FC = () => {
 		setOption(!option);
 	};
 	useEffect(() => {
-		console.log(network);
 		if (network?.name?.toLowerCase() === 'testnet' || network?.name?.toLowerCase() === 'null') {
 			setChainId('Testnet');
 		} else {

@@ -32,6 +32,7 @@ import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
 import { toast } from 'react-toastify';
 
+import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const DECIMAL = 100000000;
@@ -122,6 +123,11 @@ export default function CardNFTCollection({
 			handleNext();
 		}
 	};
+	const handleNavigate = (status: boolean) => {
+		if (status) {
+			navigate('/profile');
+		}
+	};
 
 	const handleItem = () => {
 		navigate(
@@ -142,7 +148,12 @@ export default function CardNFTCollection({
 						{/* Item image */}
 						<ItemImage>
 							<Box className="main-img">
-								<img src={offer.uri} alt="item" />
+								{/* <img src={offer.uri} alt="item" /> */}
+								<MediaDisplayCard
+									media={offer?.uri}
+									preview={TwitterIcon}
+									name={offer?.token_id.token_data_id.name}
+								/>
 							</Box>
 							{/* Item favorite */}
 							<ItemFavorite>
@@ -371,8 +382,9 @@ export default function CardNFTCollection({
 				</ItemCardStyle>
 			</Grid>
 			<ModalBuy
+				title="Buy Item"
 				openState={openModalBuy}
-				closeModal={handleCloseModalBuy}
+				closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
 				funcBuyNft={claimOffer}
 				activeStep={activeStep}
 				statusBuyNft={statusBuyNft}
