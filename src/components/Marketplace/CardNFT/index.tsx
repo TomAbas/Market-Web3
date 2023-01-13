@@ -357,6 +357,7 @@ export default function CardNFT({
 			</Grid>
 
 			<ModalBuy
+				title="Buy Item"
 				openState={openModalBuy}
 				closeModal={handleCloseModalBuy}
 				funcBuyNft={claimOffer}

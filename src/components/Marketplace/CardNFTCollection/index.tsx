@@ -374,6 +374,7 @@ export default function CardNFTCollection({
 				</ItemCardStyle>
 			</Grid>
 			<ModalBuy
+				title="Buy Item"
 				openState={openModalBuy}
 				closeModal={handleCloseModalBuy}
 				funcBuyNft={claimOffer}

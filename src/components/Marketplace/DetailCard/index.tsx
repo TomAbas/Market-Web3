@@ -290,6 +290,7 @@ export default function DetailCard() {
 				</Box> */}
 			</Box>
 			<ModalBuy
+				title="Buy Item"
 				openState={openModalBuy}
 				closeModal={handleCloseModalBuy}
 				funcBuyNft={claimOffer}

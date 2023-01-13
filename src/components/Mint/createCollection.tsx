@@ -94,6 +94,7 @@ const LayoutCreateCollection: React.FC<Props> = ({ setValue, handleCreateItem })
 			/>
 			<RedBar />
 			<ModalBuy
+				title="Create Collection"
 				steps={steps}
 				openState={openModalBuy}
 				closeModal={() => handleCloseModalBuy(handleCreateItem(statusBuyNft.isSuccess))}

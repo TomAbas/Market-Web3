@@ -30,7 +30,7 @@ function App() {
 	useEffect(() => {
 		const fetchOffers = async () => {
 			const newOffers = await getListItemResource();
-			const tOffers = newOffers.slice(0, 13);
+			const tOffers = newOffers.slice(0, 12);
 			setOffers(tOffers);
 			setLoadingOffers(false);
 		};
