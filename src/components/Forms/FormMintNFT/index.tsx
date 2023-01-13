@@ -196,22 +196,46 @@ const FormMintNft: React.FC<Props> = ({
 						Royalty Fee (%) <Asterisk />
 					</InputTitle>
 					<input
+						min="0"
+						onInput={(e: any) => (e.target.value = Math.abs(e.target.value))}
 						type="number"
 						placeholder="E.g. 2"
-						{...register('royaltyFee', { required: true, min: 1, max: 100 })}
+						{...register('royaltyFee', {
+							required: 'Royalty fee is required',
+							max: {
+								value: 50,
+								message: 'royalty must smaller than 50%',
+							},
+							min: {
+								value: 0,
+								message: 'royalty must be positive',
+							},
+						})}
 					/>
-					{errors.royaltyFee && <ErrorMessage>Royalty Fee is required</ErrorMessage>}
+					{errors.royaltyFee && <ErrorMessage>{errors.royaltyFee?.message}</ErrorMessage>}
 				</InputItem>
 				<InputItem>
 					<InputTitle>
 						Supply <Asterisk />
 					</InputTitle>
 					<input
+						min="0"
+						onInput={(e: any) => (e.target.value = Math.abs(e.target.value))}
 						type="number"
 						placeholder="Min: 1 - Max: 100"
-						{...register('amount', { required: true, min: 1, max: 100 })}
+						{...register('amount', {
+							required: 'Amount  is required',
+							max: {
+								value: 100,
+								message: 'Amount must less than 100',
+							},
+							min: {
+								value: 1,
+								message: 'Amount must be more than 1',
+							},
+						})}
 					/>
-					{errors.amount && <ErrorMessage>Amount is required</ErrorMessage>}
+					{errors.amount && <ErrorMessage>{errors.amount?.message}</ErrorMessage>}
 				</InputItem>
 				<Box
 					sx={{
