@@ -9,6 +9,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useTokens } from '../../../hooks/useTokens';
 import { ItemImage } from '../styled';
 import { getBalanceToken } from '../../../service/aptos.service';
+import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
+import defaultImg from '../../../assets/icons/default-img-input2.png';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '';
 const DECIMAL = 100000000;
@@ -118,6 +120,11 @@ export default function MyItemDetail() {
 						<ItemImage sx={{ width: '50%', paddingTop: '50%' }}>
 							<Box className="main-img">
 								<img src={item?.uri} alt="item" />
+								<MediaDisplayCard
+									media={item?.uri}
+									preview={defaultImg}
+									name={item?.name}
+								/>
 							</Box>
 						</ItemImage>
 					)}
