@@ -5,13 +5,16 @@ import { useTokens } from '../../hooks/useTokens';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import item from '../../assets/avatar_default.png';
 import { ItemImage } from 'components/Marketplace/styled';
-import ButtonWhite from 'customCompoents/ButtonWhite/ButtonWhite';
+import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import { Outlet, useNavigate } from 'react-router-dom';
+import SkeletonCardNft from 'components/SkeletonCardNft';
 export default function MyCollection() {
+	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	const navigate = useNavigate();
 	const { account } = useWallet();
 	const { tokens } = useTokens(account);
 	const [collections, setCollections] = useState<any[]>([]);
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		let newCollection = new Map();
 		tokens.map((item) => {
@@ -24,6 +27,9 @@ export default function MyCollection() {
 			}
 		});
 		setCollections(Array.from(newCollection));
+		if (tokens.length > 0) {
+			setLoading(false);
+		}
 	}, [tokens]);
 	// console.log(collections);
 	return (
@@ -55,95 +61,109 @@ export default function MyCollection() {
 
 				<Grid container spacing={1}>
 					{' '}
-					{collections.map((collection, index) => (
-						<Grid
-							xs={6}
-							sm={4}
-							md={3}
-							p={1}
-							key={index}
-							onClick={() => {
-								navigate(
-									`/myCollection/detail?collection=${
-										collection[0].split('*/////*')[0]
-									}&creator=${collection[0].split('*/////*')[1]}`
-								);
-							}}
-						>
-							<Box
-								sx={{
-									border: '1.5px solid #e7e8ec',
-									borderRadius: '12px',
-									overflow: 'hidden',
-									cursor: 'pointer',
-									transition: 'all 0.4s',
-									padding: '12px 12px 0',
-									background: '#fff',
-									'&:hover': {
-										boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
-									},
-								}}
-							>
-								<ItemImage>
-									<Box className="main-img">
-										<img src={collection[1][0].uri} alt="collection" />
-									</Box>
-								</ItemImage>
-								<Box py={1.5}>
-									<Typography variant="h6">
-										{collection[0].split('*/////*')[0]}
-									</Typography>
-									<Stack
-										mt={1}
-										direction="row"
-										alignItems="center"
-										justifyContent="space-between"
-										gap={1}
+					{loading ? (
+						<>
+							{arr.map((item, idx) => (
+								<SkeletonCardNft key={idx} />
+							))}
+						</>
+					) : (
+						<>
+							{collections.map((collection, index) => (
+								<Grid
+									xs={6}
+									sm={4}
+									md={3}
+									p={1}
+									key={index}
+									onClick={() => {
+										navigate(
+											`/myCollection/detail?collection=${
+												collection[0].split('*/////*')[0]
+											}&creator=${collection[0].split('*/////*')[1]}`
+										);
+									}}
+								>
+									<Box
+										sx={{
+											border: '1.5px solid #e7e8ec',
+											borderRadius: '12px',
+											overflow: 'hidden',
+											cursor: 'pointer',
+											transition: 'all 0.4s',
+											padding: '12px 12px 0',
+											background: '#fff',
+											'&:hover': {
+												boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
+											},
+										}}
 									>
-										<Stack direction="row" gap={1} alignItems="center">
-											<Box
-												sx={{
-													img: {
-														width: '32px',
-														height: '32px',
-														objectFit: 'cover',
-														objectPosition: 'center',
-														borderRadius: '50%',
-													},
-												}}
-											>
-												<img src={item} alt="collection" />
+										<ItemImage>
+											<Box className="main-img">
+												<img src={collection[1][0].uri} alt="collection" />
 											</Box>
-											<Typography variant="body1">
-												<a
-													href={`https://explorer.aptoslabs.com/account/${
-														collection[0].split('*/////*')[1]
-													}`}
-													target="_blank"
-												>
-													{collection[0].split('*/////*')[1].slice(0, 6) +
-														'...' +
-														collection[0]
-															.split('*/////*')[1]
-															.slice(
-																collection[0].split('*/////*')[1]
-																	.length - 4,
-																collection[0].split('*/////*')[1]
-																	.length
-															)}
-												</a>
+										</ItemImage>
+										<Box py={1.5}>
+											<Typography variant="h6">
+												{collection[0].split('*/////*')[0]}
 											</Typography>
-										</Stack>
-										<Box>
-											<Typography variant="body1">
-												{collection[1].length} items
-											</Typography>
+											<Stack
+												mt={1}
+												direction="row"
+												alignItems="center"
+												justifyContent="space-between"
+												gap={1}
+											>
+												<Stack direction="row" gap={1} alignItems="center">
+													<Box
+														sx={{
+															img: {
+																width: '32px',
+																height: '32px',
+																objectFit: 'cover',
+																objectPosition: 'center',
+																borderRadius: '50%',
+															},
+														}}
+													>
+														<img src={item} alt="collection" />
+													</Box>
+													<Typography variant="body1">
+														<a
+															href={`https://explorer.aptoslabs.com/account/${
+																collection[0].split('*/////*')[1]
+															}`}
+															target="_blank"
+														>
+															{collection[0]
+																.split('*/////*')[1]
+																.slice(0, 6) +
+																'...' +
+																collection[0]
+																	.split('*/////*')[1]
+																	.slice(
+																		collection[0].split(
+																			'*/////*'
+																		)[1].length - 4,
+																		collection[0].split(
+																			'*/////*'
+																		)[1].length
+																	)}
+														</a>
+													</Typography>
+												</Stack>
+												<Box>
+													<Typography variant="body1">
+														{collection[1].length} items
+													</Typography>
+												</Box>
+											</Stack>
 										</Box>
-									</Stack>
-								</Box>
-							</Box>
-						</Grid>
-					))}
+									</Box>
+								</Grid>
+							))}
+						</>
+					)}
 				</Grid>
 			</Box>
 		</>

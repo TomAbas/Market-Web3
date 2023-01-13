@@ -7,10 +7,11 @@ import { Box, Typography } from '@mui/material';
 import UploadMediaCustom from '../UploadMediaCustom';
 import { FieldSubTitle, FieldTitleName } from './styled';
 import { Asterisk, ErrorMessage } from '../Common/styled';
-import { TextArea } from 'customCompoents/FieldTextArea/styled';
 import AutoCompleteCustom from '../../CustomField/AutoCompleteCustom';
 import { listCategory, Category } from '../../../constants/category.constant';
 import { OptionSelectCustom } from '../../../models/common';
+import { TextArea } from 'customComponents/FieldTextArea/styled';
+
 interface Props {
 	base64image: any;
 	handleOpenModalBuy: any;

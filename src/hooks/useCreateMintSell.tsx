@@ -168,7 +168,9 @@ const useCreateMintSell = () => {
 							{
 								gas_unit_price: 100,
 							}
-						);
+						).then((res) => {
+							console.log(res);
+						});
 						toast.success('Create item success');
 						completeTaskSuccess();
 						let ItemInfo: Item = {

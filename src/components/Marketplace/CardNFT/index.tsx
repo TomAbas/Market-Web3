@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, Grid, Stack, Typography } from '@mui/material';
+import { Box, Grid, Skeleton, Stack, Typography } from '@mui/material';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +31,7 @@ import aptos from '../../../assets/images/card/aptos.jpg';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
 import { toast } from 'react-toastify';
-
+import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 // const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -42,11 +42,13 @@ export default function CardNFT({
 	setOffers,
 	offers,
 	index,
+	loadingOffers,
 }: {
 	offer: any;
 	setOffers: any;
 	offers: any;
 	index: any;
+	loadingOffers: any;
 }) {
 	const {
 		handleNext,
@@ -145,7 +147,12 @@ export default function CardNFT({
 
 						<ItemImage>
 							<Box className="main-img">
-								<img src={offer.uri} alt="item" />
+								<MediaDisplayCard
+									media={offer.uri}
+									preview={TwitterIcon}
+									name={offer.token_id.token_data_id.name}
+								/>
+								{/* <img src={offer.uri} alt="item" /> */}
 							</Box>
 							{/* Item favorite */}
 							<ItemFavorite>
@@ -348,6 +355,7 @@ export default function CardNFT({
 					</Box>
 				</ItemCardStyle>
 			</Grid>
+
 			<ModalBuy
 				openState={openModalBuy}
 				closeModal={handleCloseModalBuy}

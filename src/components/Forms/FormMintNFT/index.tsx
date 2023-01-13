@@ -6,7 +6,7 @@ import { Box, Select, FormControl, MenuItem, Typography } from '@mui/material';
 import UploadMediaCustom from '../UploadMediaCustom';
 import { FieldSubTitle } from './styled';
 import { Asterisk, ErrorMessage } from '../Common/styled';
-import { TextArea } from 'customCompoents/FieldTextArea/styled';
+import { TextArea } from 'customComponents/FieldTextArea/styled';
 
 interface Props {
 	handleOpenModalBuy: any;
@@ -109,6 +109,7 @@ const FormMintNft: React.FC<Props> = ({
 						}}
 						accept={{
 							'image/*': ['.png', '.gif', '.jpeg', '.jpg', '.mp3', '.mp4', '.glb'],
+							'video/*': ['.mp3', '.mp4', '.glb'],
 						}}
 						file={base64image}
 						maxSize={10485760}
