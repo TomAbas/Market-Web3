@@ -197,7 +197,7 @@ const FooterComp: React.FC = () => {
 				},
 				{
 					id: 4,
-					name: 'Drop',
+					name: 'Auction',
 					link: ``,
 					target: '',
 				},
