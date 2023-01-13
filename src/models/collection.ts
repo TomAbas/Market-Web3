@@ -2,9 +2,11 @@ export interface Collection {
 	userAddress: string;
 	chainId?: string;
 	collectionName?: string;
-	uri?: string;
+	logo?: string;
 	category: number;
 	description: string;
+	txHash?: string;
+	to?: string;
 }
 
 export interface Item {
@@ -15,4 +17,6 @@ export interface Item {
 	itemMedia: string;
 	royalties: number;
 	collectionId: string;
+	txHash?: string;
+	to?: string;
 }

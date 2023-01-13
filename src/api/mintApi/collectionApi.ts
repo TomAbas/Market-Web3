@@ -5,14 +5,7 @@ import { Collection, Item } from '../../models/collection';
 async function createCollection(collectionInfo: Collection): Promise<Response<any>> {
 	// let urlData = await uploadUserMedia(data, userAddress);
 	const url = `/collection/create/userAddress/${collectionInfo.userAddress}/chainId/${collectionInfo.chainId}`;
-	const body = {
-		logo: collectionInfo.uri,
-		collectionName: collectionInfo.collectionName,
-		category: collectionInfo.category,
-		description: collectionInfo.description,
-	};
-	console.log(collectionInfo);
-	return ClientAxios.post(url, body);
+	return ClientAxios.post(url, collectionInfo);
 }
 
 async function getCollectionByUserAddress(userAddress: string, chainId: number = 2) {
