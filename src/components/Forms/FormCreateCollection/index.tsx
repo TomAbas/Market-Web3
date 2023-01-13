@@ -190,8 +190,7 @@ const FormMint: React.FC<Props> = ({
 
 				<FieldSubTitle>
 					A type of characteristics that the collection belongs to. Typically, artwork,
-					fan tokens, music, etc. In alpha release only artwork and its relative are
-					supported.
+					sport, music, etc. In alpha release only artwork and its relative are supported.
 				</FieldSubTitle>
 
 				<AutoCompleteCustom
