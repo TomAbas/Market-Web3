@@ -90,8 +90,13 @@ const useCreateMintSell = () => {
 							{
 								gas_unit_price: 100,
 							}
+<<<<<<< HEAD
 						).then((res) => res.hash);
 						toast.success('Create collection success');
+=======
+						);
+						toast.success('Successfully created a collection');
+>>>>>>> dev
 						let collectionInfo: Collection = {
 							chainId: '2',
 							collectionName: name,
@@ -106,7 +111,7 @@ const useCreateMintSell = () => {
 						completeTaskSuccess();
 						handleNext();
 					} catch (error: any) {
-						console.log('Error create collection NFT: ', error);
+						console.log('Error creating collection NFT: ', error);
 						toast.error(error.message);
 						failToComplete();
 						handleNext();
@@ -114,7 +119,7 @@ const useCreateMintSell = () => {
 				}
 			);
 		} catch (error: any) {
-			console.log('Error create NFT: ', error);
+			console.log('Error creating NFT: ', error);
 			toast.error(error.message);
 			failToComplete();
 			handleNext();
@@ -171,8 +176,13 @@ const useCreateMintSell = () => {
 							{
 								gas_unit_price: 100,
 							}
+<<<<<<< HEAD
 						).then((res) => res.hash);
 						toast.success('Create item success');
+=======
+						);
+						toast.success('Successfully created an item');
+>>>>>>> dev
 						completeTaskSuccess();
 						let ItemInfo: Item = {
 							creator: account?.address?.toString()!,
@@ -188,7 +198,7 @@ const useCreateMintSell = () => {
 						await createItemApi(ItemInfo);
 						handleNext();
 					} catch (error: any) {
-						console.log('Error create item NFT: ', error);
+						console.log('Error creating item NFT: ', error);
 						toast.error(error.message);
 						failToComplete();
 						handleNext();
@@ -196,7 +206,7 @@ const useCreateMintSell = () => {
 				}
 			);
 		} catch (error: any) {
-			console.log('Error create collection NFT: ', error);
+			console.log('Error creating collection NFT: ', error);
 			toast.error(error.message);
 			failToComplete();
 			handleNext();

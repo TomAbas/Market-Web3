@@ -23,6 +23,7 @@ import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import TwitterIcon from '../../../assets/icons/twitter-white.svg';
 import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
 import aptos from '../../../assets/images/card/aptos.jpg';
+import { toast } from 'react-toastify';
 
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '0x1::aptos_coin::AptosCoin';
@@ -66,6 +67,8 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
 			setStatusList('Sell Item');
+			toast.success('Successfully listed an item');
+			navigate('/view-all');
 			handleItems(index);
 			setOpen(false);
 		} catch (error) {

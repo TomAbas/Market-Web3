@@ -9,8 +9,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useTokens } from '../../../hooks/useTokens';
 import { ItemImage } from '../styled';
 import { getBalanceToken } from '../../../service/aptos.service';
+<<<<<<< HEAD
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import defaultImg from '../../../assets/icons/default-img-input2.png';
+=======
+import { toast } from 'react-toastify';
+>>>>>>> dev
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '';
 const DECIMAL = 100000000;
@@ -91,7 +95,8 @@ export default function MyItemDetail() {
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
 			setStatusSell('Sell');
-			navigate('/');
+			toast.success('Successfully listed an item');
+			navigate('/view-all');
 			setOpen(false);
 		} catch (error) {
 			setStatusSell('Sell');

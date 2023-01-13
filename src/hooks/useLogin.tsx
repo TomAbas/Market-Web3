@@ -16,7 +16,7 @@ const useLogin = () => {
 
 			dispatch(getUserSuccessA(data));
 			setLoginSuccess(true);
-			toast.success('Login Success');
+			toast.success('Successful login');
 		} catch (error: any) {
 			toast.error(error.message);
 		}

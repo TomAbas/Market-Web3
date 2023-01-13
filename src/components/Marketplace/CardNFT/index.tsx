@@ -69,14 +69,14 @@ export default function CardNFT({
 		{
 			label: `${
 				statusBuyNft.isSuccess
-					? 'Congrat'
+					? 'Congrats'
 					: statusBuyNft.isError
 					? 'Something went wrong'
 					: 'Result'
 			}`,
 			description: `${
 				statusBuyNft.isSuccess
-					? 'You bought your NFT'
+					? 'Successfully bought NFT item'
 					: statusBuyNft.isError
 					? 'Try again'
 					: '123'
@@ -111,19 +111,25 @@ export default function CardNFT({
 			};
 
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
-
+			toast.success('Successfully purchased an item');
 			const fetchOffers = async () => {
 				let newList = offers.filter((_item: any, i: any) => i !== index);
 				setOffers(newList);
 			};
 			fetchOffers();
 			completeTaskSuccess();
-			toast.success('success buy item');
+
 			handleNext();
 		} catch {
-			toast.error('try again');
+			toast.error('Something went wrong. Try again!');
 			failToComplete();
 			handleNext();
+		}
+	};
+
+	const handleNavigate = (status: boolean) => {
+		if (status) {
+			navigate('/profile');
 		}
 	};
 
@@ -148,9 +154,9 @@ export default function CardNFT({
 						<ItemImage>
 							<Box className="main-img">
 								<MediaDisplayCard
-									media={offer.uri}
+									media={offer?.uri}
 									preview={TwitterIcon}
-									name={offer.token_id.token_data_id.name}
+									name={offer?.token_id.token_data_id.name}
 								/>
 								{/* <img src={offer.uri} alt="item" /> */}
 							</Box>
@@ -359,7 +365,7 @@ export default function CardNFT({
 			<ModalBuy
 				title="Buy Item"
 				openState={openModalBuy}
-				closeModal={handleCloseModalBuy}
+				closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
 				funcBuyNft={claimOffer}
 				activeStep={activeStep}
 				statusBuyNft={statusBuyNft}
