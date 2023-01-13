@@ -90,13 +90,8 @@ const useCreateMintSell = () => {
 							{
 								gas_unit_price: 100,
 							}
-<<<<<<< HEAD
 						).then((res) => res.hash);
-						toast.success('Create collection success');
-=======
-						);
 						toast.success('Successfully created a collection');
->>>>>>> dev
 						let collectionInfo: Collection = {
 							chainId: '2',
 							collectionName: name,
@@ -176,13 +171,9 @@ const useCreateMintSell = () => {
 							{
 								gas_unit_price: 100,
 							}
-<<<<<<< HEAD
 						).then((res) => res.hash);
-						toast.success('Create item success');
-=======
-						);
+
 						toast.success('Successfully created an item');
->>>>>>> dev
 						completeTaskSuccess();
 						let ItemInfo: Item = {
 							creator: account?.address?.toString()!,

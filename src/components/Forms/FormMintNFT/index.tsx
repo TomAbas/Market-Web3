@@ -199,7 +199,7 @@ const FormMintNft: React.FC<Props> = ({
 						min="0"
 						onInput={(e: any) => (e.target.value = Math.abs(e.target.value))}
 						type="number"
-						placeholder="E.g. 2"
+						placeholder="Max is 50 percentage"
 						{...register('royaltyFee', {
 							required: 'Royalty fee is required',
 							max: {
@@ -211,6 +211,17 @@ const FormMintNft: React.FC<Props> = ({
 								message: 'royalty must be positive',
 							},
 						})}
+						onChange={(e) => {
+							if (parseInt(e.target.value) > 50) {
+								e.target.value = '50';
+								setError('royaltyFee', {
+									type: 'custom',
+									message: 'Royalty fee must be less than 50 percentage',
+								});
+							} else {
+								clearErrors('royaltyFee');
+							}
+						}}
 					/>
 					{errors.royaltyFee && <ErrorMessage>{errors.royaltyFee?.message}</ErrorMessage>}
 				</InputItem>
@@ -234,6 +245,17 @@ const FormMintNft: React.FC<Props> = ({
 								message: 'Amount must be more than 1',
 							},
 						})}
+						onChange={(e) => {
+							if (parseInt(e.target.value) > 100) {
+								e.target.value = '100';
+								setError('amount', {
+									type: 'custom',
+									message: 'Supply must be less than 100',
+								});
+							} else {
+								clearErrors('amount');
+							}
+						}}
 					/>
 					{errors.amount && <ErrorMessage>{errors.amount?.message}</ErrorMessage>}
 				</InputItem>

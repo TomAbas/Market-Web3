@@ -9,12 +9,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useTokens } from '../../../hooks/useTokens';
 import { ItemImage } from '../styled';
 import { getBalanceToken } from '../../../service/aptos.service';
-<<<<<<< HEAD
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import defaultImg from '../../../assets/icons/default-img-input2.png';
-=======
 import { toast } from 'react-toastify';
->>>>>>> dev
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '';
 const DECIMAL = 100000000;
