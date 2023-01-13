@@ -10,6 +10,7 @@ import { openFirstModal } from '../../../redux/slices/modalWallet';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 // import { getListItemResource } from '../../../utils/dataResource';
 import { ItemImage } from '../styled';
+import { toast } from 'react-toastify';
 
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -45,14 +46,14 @@ export default function DetailCard() {
 		{
 			label: `${
 				statusBuyNft.isSuccess
-					? 'Congrat'
+					? 'Congrats'
 					: statusBuyNft.isError
 					? 'Something went wrong'
 					: 'Result'
 			}`,
 			description: `${
 				statusBuyNft.isSuccess
-					? 'You bought your NFT'
+					? 'Successfully bought NFT item'
 					: statusBuyNft.isError
 					? 'Try again'
 					: '123'
@@ -130,6 +131,7 @@ export default function DetailCard() {
 			};
 
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			toast.success('Successfully canceled listing');
 			navigate('/profile');
 		} catch {
 			setStatusWithdraw('Cancel');

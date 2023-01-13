@@ -30,6 +30,7 @@ import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
 import aptos from '../../../assets/images/card/aptos.jpg';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
+import { toast } from 'react-toastify';
 
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -65,14 +66,14 @@ export default function CardNFTCollection({
 		{
 			label: `${
 				statusBuyNft.isSuccess
-					? 'Congrat'
+					? 'Congrats'
 					: statusBuyNft.isError
 					? 'Something went wrong'
 					: 'Result'
 			}`,
 			description: `${
 				statusBuyNft.isSuccess
-					? 'You bought your NFT'
+					? 'Successfully bought NFT item'
 					: statusBuyNft.isError
 					? 'Try again'
 					: '123'
@@ -114,6 +115,7 @@ export default function CardNFTCollection({
 			};
 			fetchOffers();
 			completeTaskSuccess();
+			toast.success('Successfully purchased an item');
 			handleNext();
 		} catch {
 			failToComplete();

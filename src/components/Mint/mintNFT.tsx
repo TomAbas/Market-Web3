@@ -28,20 +28,20 @@ export default function LayoutMintNFT() {
 		useCreateMintSell();
 	const steps = [
 		{
-			label: 'Confirm order',
-			description: 'Please confirm your order',
+			label: 'Create your item',
+			description: 'Please confirm your transaction',
 		},
 		{
 			label: `${
 				statusBuyNft.isSuccess
-					? 'Congrat'
+					? 'Congrats'
 					: statusBuyNft.isError
 					? 'Something went wrong'
 					: 'Result'
 			}`,
 			description: `${
 				statusBuyNft.isSuccess
-					? 'You create your NFT'
+					? 'Successfully created an item'
 					: statusBuyNft.isError
 					? 'Try again'
 					: '123'

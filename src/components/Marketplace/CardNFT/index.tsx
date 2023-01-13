@@ -69,14 +69,14 @@ export default function CardNFT({
 		{
 			label: `${
 				statusBuyNft.isSuccess
-					? 'Congrat'
+					? 'Congrats'
 					: statusBuyNft.isError
 					? 'Something went wrong'
 					: 'Result'
 			}`,
 			description: `${
 				statusBuyNft.isSuccess
-					? 'You bought your NFT'
+					? 'Successfully bought NFT item'
 					: statusBuyNft.isError
 					? 'Try again'
 					: '123'
@@ -111,17 +111,17 @@ export default function CardNFT({
 			};
 
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
-
+			toast.success('Successfully purchased an item');
 			const fetchOffers = async () => {
 				let newList = offers.filter((_item: any, i: any) => i !== index);
 				setOffers(newList);
 			};
 			fetchOffers();
 			completeTaskSuccess();
-			toast.success('success buy item');
+
 			handleNext();
 		} catch {
-			toast.error('try again');
+			toast.error('Something went wrong. Try again!');
 			failToComplete();
 			handleNext();
 		}
