@@ -19,7 +19,7 @@ import {
 	ItemFavorite,
 	IconFavorite,
 } from './styled';
-
+import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import TwitterIcon from '../../../assets/icons/twitter-white.svg';
 import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
 import aptos from '../../../assets/images/card/aptos.jpg';
@@ -90,7 +90,12 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 						{/* Item image */}
 						<ItemImage onClick={handleClickItem}>
 							<Box className="main-img">
-								<img src={item.uri} alt="item" />
+								{/* <img src={item.uri} alt="item" /> */}
+								<MediaDisplayCard
+									media={item?.uri}
+									preview={TwitterIcon}
+									name={item?.name}
+								/>
 							</Box>
 							{/* Item favorite */}
 							<ItemFavorite>

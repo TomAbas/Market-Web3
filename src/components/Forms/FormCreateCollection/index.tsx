@@ -7,7 +7,7 @@ import { Box, Typography } from '@mui/material';
 import UploadMediaCustom from '../UploadMediaCustom';
 import { FieldSubTitle, FieldTitleName } from './styled';
 import { Asterisk, ErrorMessage } from '../Common/styled';
-import { TextArea } from 'customCompoents/FieldTextArea/styled';
+import { TextArea } from 'customComponents/FieldTextArea/styled';
 
 interface Props {
 	base64image: any;
