@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import {
 	createCollection as CreateCollectionApi,
 	createItem as createItemApi,
-} from 'api/mintApi/collectionApi';
+} from 'api/collectionApi';
 import { Collection, Item } from '../models/collection';
 import { selectUser } from 'redux/slices/userInfo';
 const useCreateMintSell = () => {

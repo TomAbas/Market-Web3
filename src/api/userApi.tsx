@@ -1,15 +1,15 @@
-import ClientAxios from 'customAxios/ClientAxios';
+import axiosClient from './axiosClient';
 import { User, UserLoginModel } from 'models/user';
-import { Response } from '../../models/common';
+import { Response } from '../models/common';
 const baseURL = '/users';
 
 function updateUser(data: User): Promise<Response<User>> {
 	const { userAddress } = data;
 	const url = baseURL + `/userAddress/${userAddress}`;
-	return ClientAxios.put(url, data);
+	return axiosClient.put(url, data);
 }
 function loginUser(data: UserLoginModel) {
-	return ClientAxios.post('/users/login', data);
+	return axiosClient.post('/users/login', data);
 }
 
 export { updateUser, loginUser };
