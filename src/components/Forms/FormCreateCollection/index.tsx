@@ -8,7 +8,9 @@ import UploadMediaCustom from '../UploadMediaCustom';
 import { FieldSubTitle, FieldTitleName } from './styled';
 import { Asterisk, ErrorMessage } from '../Common/styled';
 import { TextArea } from 'customComponents/FieldTextArea/styled';
-
+import AutoCompleteCustom from '../../CustomField/AutoCompleteCustom';
+import { listCategory, Category } from '../../../constants/category.constant';
+import { OptionSelectCustom } from '../../../models/common';
 interface Props {
 	base64image: any;
 	handleOpenModalBuy: any;
@@ -27,6 +29,7 @@ const FormMint: React.FC<Props> = ({
 		register,
 		handleSubmit,
 		setValue,
+		getValues,
 		formState: { errors },
 		setError,
 		clearErrors,
@@ -36,25 +39,33 @@ const FormMint: React.FC<Props> = ({
 		setValue('file', e[0]);
 		clearErrors('file');
 	};
+	const [currentCategoryTransformed, setCurrentCategoryTransformed] = useState<
+		OptionSelectCustom<string> | null | undefined
+	>();
 	const onSubmit = handleSubmit((data) => {
 		updateFormInput(data);
 		if (!errors.file && !errors.description && !errors.name) {
 			handleOpenModalBuy();
 		}
 	});
+
+	const listCategoryTransformed: OptionSelectCustom<string>[] = listCategory
+		.map((item: Category) => ({ name: item.name, value: item.value.toString() }))
+		.filter((item: OptionSelectCustom<string>, idx: number) => {
+			return item.name !== 'Box';
+		});
 	const checkCollectionNameValid = (e: any) => {
 		let value = e.target.value;
-		console.log(value);
 		let isExist = collections.findIndex((collection: any) => collection.name === value);
 		if (isExist >= 0) setError('name', { type: 'required', message: 'Name is used' });
 		else if (value === '') setError('name', { type: 'custom', message: 'Name is required' });
 		else clearErrors('name');
-		console.log(errors.description);
 	};
-	const longDescription = useRef();
+	const longDescription: any = useRef();
 	const checkCollectionDesValid = (e: any) => {
 		let value = e.target.value;
-		longDescription.current = value.length;
+		value = value.slice(0, 1500);
+		setValue('description', value);
 		if (value.length > 1500) {
 			setError('description', {
 				type: 'custom',
@@ -62,6 +73,23 @@ const FormMint: React.FC<Props> = ({
 			});
 		} else {
 			clearErrors('description');
+		}
+		longDescription.current = value.length | 0;
+	};
+	const handleChangeCategory = (
+		categoryTransformed: OptionSelectCustom<string> | null | undefined
+	) => {
+		if (categoryTransformed) {
+			setValue('category', Number(categoryTransformed.value));
+			setCurrentCategoryTransformed(categoryTransformed);
+			clearErrors('category');
+		} else {
+			setValue('category', 0);
+			setCurrentCategoryTransformed(undefined);
+			setError('category', {
+				type: 'custom',
+				message: 'Category is required',
+			});
 		}
 	};
 
@@ -154,6 +182,35 @@ const FormMint: React.FC<Props> = ({
 						<ErrorMessage>{errors.description?.message}</ErrorMessage>
 					)}
 				</InputItem>
+
+				<InputTitle sx={{ mt: 2 }}>
+					Category
+					<Asterisk />
+				</InputTitle>
+
+				<FieldSubTitle>
+					A type of characteristics that the collection belongs to. Typically, artwork,
+					fan tokens, music, etc. In alpha release only artwork and its relative are
+					supported.
+				</FieldSubTitle>
+
+				<AutoCompleteCustom
+					currentItem={currentCategoryTransformed}
+					listItem={listCategoryTransformed}
+					{...register('category', {
+						required: 'Category is required.',
+					})}
+					onChange={handleChangeCategory}
+					placeholder="Category name..."
+					sx={{
+						border: '1px solid #E7E8EC',
+						borderRadius: '12px',
+					}}
+				/>
+				{errors.category?.message && (
+					<ErrorMessage>{errors.category?.message}</ErrorMessage>
+				)}
+
 				<Box
 					sx={{
 						mt: 2,
