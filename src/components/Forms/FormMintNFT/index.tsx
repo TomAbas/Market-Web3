@@ -70,6 +70,14 @@ const FormMintNft: React.FC<Props> = ({
 			clearErrors('description');
 		}
 	};
+	const checkAmountValid = (e: any, amount: number, label: any, message: string) => {
+		if (parseInt(e.target.value) > amount) {
+			e.target.value = amount.toString();
+			setValue(label, amount);
+		} else {
+			clearErrors(label);
+		}
+	};
 	return (
 		<>
 			{' '}
@@ -211,16 +219,13 @@ const FormMintNft: React.FC<Props> = ({
 								message: 'royalty must be positive',
 							},
 						})}
-						onChange={(e) => {
-							if (parseInt(e.target.value) > 50) {
-								e.target.value = '50';
-								setError('royaltyFee', {
-									type: 'custom',
-									message: 'Royalty fee must be less than 50 percentage',
-								});
-							} else {
-								clearErrors('royaltyFee');
-							}
+						onChange={(e: any) => {
+							checkAmountValid(
+								e,
+								50,
+								'royaltyFee',
+								'Royalty fee must be less than 50 percentage'
+							);
 						}}
 					/>
 					{errors.royaltyFee && <ErrorMessage>{errors.royaltyFee?.message}</ErrorMessage>}
@@ -245,16 +250,8 @@ const FormMintNft: React.FC<Props> = ({
 								message: 'Amount must be more than 1',
 							},
 						})}
-						onChange={(e) => {
-							if (parseInt(e.target.value) > 100) {
-								e.target.value = '100';
-								setError('amount', {
-									type: 'custom',
-									message: 'Supply must be less than 100',
-								});
-							} else {
-								clearErrors('amount');
-							}
+						onChange={(e: any) => {
+							checkAmountValid(e, 100, 'amount', 'Supply must be less than 100');
 						}}
 					/>
 					{errors.amount && <ErrorMessage>{errors.amount?.message}</ErrorMessage>}
