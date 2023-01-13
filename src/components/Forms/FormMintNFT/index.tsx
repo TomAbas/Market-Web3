@@ -231,7 +231,7 @@ const FormMintNft: React.FC<Props> = ({
 							},
 							min: {
 								value: 1,
-								message: 'Amount must be positive',
+								message: 'Amount must be more than 1',
 							},
 						})}
 					/>
