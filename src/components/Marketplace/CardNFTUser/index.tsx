@@ -84,7 +84,15 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 		);
 		console.log('1');
 	};
-
+	function handleValidateAmount(e: any) {
+		console.log(e.target.value);
+		console.log(item.supply);
+		if (Number(e.target.value) > Number(item.supply)) {
+			e.target.value = item.supply;
+			setSupply(item.suppy);
+		}
+	}
+	console.log(item);
 	return (
 		<>
 			<Grid xs={6} sm={4} md={3} p={1}>
@@ -247,7 +255,12 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 													<input
 														type="number"
 														value={supply}
-														onChange={(e) => setSupply(e.target.value)}
+														onInput={(e: any) =>
+															(e.target.value = Math.abs(
+																e.target.value
+															))
+														}
+														onChange={handleValidateAmount}
 														id="name"
 														placeholder="0"
 													/>
@@ -272,6 +285,11 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 												>
 													<input
 														type="number"
+														onInput={(e: any) =>
+															(e.target.value = Math.abs(
+																e.target.value
+															))
+														}
 														onChange={(e) => setPrice(e.target.value)}
 														value={price}
 														id="price"

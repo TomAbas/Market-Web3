@@ -190,7 +190,7 @@ export default function Marketplace() {
 					sx={{ color: 'rgba(29, 29, 31, 0.5)' }}
 				>
 					The world of digital assets in form of NFTs{' '}
-					<Link href="#/view-all" sx={{ textDecoration: 'none' }}>
+					<Link href="#/view-all/items/" sx={{ textDecoration: 'none' }}>
 						View All
 					</Link>
 				</Typography>
