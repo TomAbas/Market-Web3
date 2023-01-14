@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -48,9 +48,12 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 	};
 	const handleListItem = async () => {
 		try {
-			if (!supply || !price || supply == '0' || price == '0') {
+			console.log(supply);
+			console.log(price);
+			if (!supply || !price || supply === '0' || price === '0') {
 				return;
 			}
+			console.log('123');
 			let newPrice = parseFloat(price) * DECIMAL;
 			setStatusList('Processing...');
 			const payload = {
@@ -106,14 +109,14 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 		console.log('1');
 	};
 	function handleValidateAmount(e: any) {
-		console.log(e.target.value);
-		console.log(item.supply);
+	
 		if (Number(e.target.value) > Number(item.supply)) {
 			e.target.value = item.supply;
-			setSupply(item.suppy);
+			console.log(item.supply);
+			setSupply(e.target.value);
 		}
 	}
-	console.log(item);
+
 	return (
 		<>
 			<Grid xs={6} sm={4} md={3} p={1}>
@@ -306,12 +309,19 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 												>
 													<input
 														type="number"
-														onInput={(e: any) =>
-															(e.target.value = Math.abs(
-																e.target.value
-															))
-														}
-														onChange={(e) => setPrice(e.target.value)}
+														// onInput={(e: any) =>
+														// 	(e.target.value = Math.abs(
+														// 		e.target.value
+														// 	))
+														// }
+														onChange={(e) => {
+															if (Number(e.target.value) < 0) {
+																let a = -Number(e.target.value);
+																setPrice(a.toString());
+															} else {
+																setPrice(e.target.value);
+															}
+														}}
 														value={price}
 														id="price"
 														placeholder="0"

@@ -70,18 +70,19 @@ export default function MyItemDetail() {
 		fetchOffers();
 	}, [tokens]);
 	function handleValidateAmount(e: any) {
-		console.log(e.target.value);
-		console.log(item.supply);
 		if (Number(e.target.value) > Number(item.supply)) {
 			e.target.value = item.supply;
-			setSupply(item.suppy);
+			console.log(item.supply);
+			setSupply(e.target.value);
 		}
 	}
+
 	const handleListItem = async () => {
 		try {
-			if (!supply || !price || supply == '0' || price == '0') {
+			if (!supply || !price || supply === '0' || price === '0') {
 				return;
 			}
+			console.log('123');
 			let newPrice = parseFloat(price) * DECIMAL;
 			setStatusSell('Processing...');
 			console.log(supply + ' ' + newPrice);
@@ -299,10 +300,19 @@ export default function MyItemDetail() {
 								>
 									<input
 										type="number"
-										onInput={(e: any) =>
-											(e.target.value = Math.abs(e.target.value))
-										}
-										onChange={(e) => setPrice(e.target.value)}
+										// onInput={(e: any) =>
+										// 	(e.target.value = setPrice(
+										// 		Math.abs(e.target.value).toString()
+										// 	))
+										// }
+										onChange={(e) => {
+											if (Number(e.target.value) < 0) {
+												let a = -Number(e.target.value);
+												setPrice(a.toString());
+											} else {
+												setPrice(e.target.value);
+											}
+										}}
 										value={price}
 										id="price"
 										placeholder="0"
