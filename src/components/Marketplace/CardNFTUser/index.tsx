@@ -70,8 +70,8 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 			// setStatusList('Sell Item');
 			// handleItems(index);
 			// setOpen(false);
-			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).catch(
-				(err) => console.log(err)
+			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
+				(res) => res.hash
 			);
 
 			setStatusList('Sell Item');

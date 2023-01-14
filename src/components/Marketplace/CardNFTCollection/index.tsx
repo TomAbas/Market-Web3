@@ -117,14 +117,13 @@ export default function CardNFTCollection({
 				price: offer.price,
 				quantity: offer.amount,
 				to: MARKET_ADDRESS,
-				txHash: 'hash',
+				txHash: hash,
 				itemName: offer.token_id.token_data_id.name,
 				collectionName: offer.token_id.token_data_id.collection,
 				owner: offer.owner,
 			};
 
 			buyItem(listItem);
-
 			const fetchOffers = async () => {
 				let newList = offers.filter((_item: any, i: any) => i !== index);
 				setOffers(newList);

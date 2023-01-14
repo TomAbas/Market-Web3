@@ -111,9 +111,9 @@ export default function CardNFT({
 				],
 			};
 
-			// let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
-			// 	(res) => res.hash
-			// );
+			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
+				(res) => res.hash
+			);
 			console.log(offer);
 			let listItem: any = {
 				maker: account?.address?.toString(),
@@ -121,7 +121,7 @@ export default function CardNFT({
 				price: offer.price,
 				quantity: offer.amount,
 				to: MARKET_ADDRESS,
-				txHash: 'hash',
+				txHash: hash,
 				itemName: offer.token_id.token_data_id.name,
 				collectionName: offer.token_id.token_data_id.collection,
 				owner: offer.owner,
