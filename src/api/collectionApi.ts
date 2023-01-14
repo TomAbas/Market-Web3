@@ -1,6 +1,6 @@
+import { Collection, Item, Order } from '../models/collection';
 import axiosClient from './axiosClient';
 import { Response } from '../models/common';
-import { Collection, Item } from '../models/collection';
 
 async function createCollection(collectionInfo: Collection): Promise<Response<any>> {
 	// let urlData = await uploadUserMedia(data, userAddress);
@@ -19,4 +19,14 @@ async function createItem(itemInfo: Item): Promise<Response<any>> {
 	return axiosClient.post(url, itemInfo);
 }
 
-export { createCollection, getCollectionByUserAddress, createItem };
+async function sellItem(listItemInfo: Order) {
+	const url = `order/sell-item/userAddress/${listItemInfo.maker}/chainId/${listItemInfo.chainId}`;
+	return axiosClient.post(url, listItemInfo);
+}
+
+async function buyItem(listItemInfo: Order) {
+	const url = `order/buy-item/userAddress/${listItemInfo.maker}/chainId/${listItemInfo.chainId}`;
+	return axiosClient.post(url, listItemInfo);
+}
+
+export { createCollection, getCollectionByUserAddress, createItem, sellItem, buyItem };

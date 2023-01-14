@@ -20,3 +20,13 @@ export interface Item {
 	txHash?: string;
 	to?: string;
 }
+
+export interface Order {
+	chainId: string;
+	maker: string;
+	taker: string;
+	quantity: string;
+	freeRecipient: string;
+	itemId: string;
+	basePrice: string;
+}

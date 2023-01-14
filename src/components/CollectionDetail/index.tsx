@@ -207,6 +207,9 @@ const MyCollectionDetail = () => {
 							</Box>
 						</Stack>
 					</Box>
+					<Typography sx={{ maxWidth: '80%', marginX: 'auto', marginTop: '16px' }}>
+						{collectionInfo?.description}
+					</Typography>
 					<Box py={4}>
 						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
 							{loadingItem ? (

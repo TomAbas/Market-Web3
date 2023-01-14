@@ -23,6 +23,8 @@ import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import TwitterIcon from '../../../assets/icons/twitter-white.svg';
 import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
 import aptos from '../../../assets/images/card/aptos.jpg';
+import { sellItem } from '../../../api/collectionApi';
+import { Order } from '../../../models/collection';
 import { toast } from 'react-toastify';
 
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
@@ -51,7 +53,6 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 			}
 			let newPrice = parseFloat(price) * DECIMAL;
 			setStatusList('Processing...');
-			console.log(supply + ' ' + newPrice);
 			const payload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::market::list_token`,
@@ -65,9 +66,29 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 					newPrice.toString(),
 				],
 			};
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+
+			// setStatusList('Sell Item');
+			// handleItems(index);
+			// setOpen(false);
+			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
+				(res) => res.hash
+			);
+
 			setStatusList('Sell Item');
 			toast.success('Successfully listed an item');
+			let listItem: any = {
+				maker: account?.address?.toString(),
+				chainId: '2',
+				price: newPrice,
+				quantity: supply,
+				to: MARKET_ADDRESS,
+				txHash: hash,
+				itemName: item.name,
+				collectionName: item.collection,
+				owner: item.creator,
+			};
+			console.log(listItem);
+			sellItem(listItem);
 			navigate('/view-all');
 			handleItems(index);
 			setOpen(false);

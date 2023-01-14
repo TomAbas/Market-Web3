@@ -16,7 +16,7 @@ const CollectionDetail = () => {
 	const [items, setItems] = useState<any[]>([]);
 	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 	const search = useLocation().search;
-	const [collectImage, setCollectionImage] = useState('');
+	const [collectionInfo, setCollectionInfo] = useState<any>('');
 	const [loadingCollectionImg, setLoadingCollectionImg] = useState(true);
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
@@ -30,8 +30,9 @@ const CollectionDetail = () => {
 					item?.token_id?.token_data_id?.creator == creator
 			);
 			setItems(newItems);
-			let collectionInfo = await getCollectionData(creator, collection);
-			setCollectionImage(collectionInfo.uri);
+			let collectionData = await getCollectionData(creator, collection);
+			setCollectionInfo(collectionData);
+			console.log(collectionData);
 			setLoadingCollectionImg(false);
 		};
 		fetchOffers();
@@ -55,7 +56,7 @@ const CollectionDetail = () => {
 						{' '}
 						<Skeleton width="100%">
 							<Box sx={{ height: '400px' }}>
-								<img src={collectImage} alt="banner" />
+								<img src={collectionInfo.uri} alt="banner" />
 							</Box>
 						</Skeleton>
 						<Box
@@ -77,7 +78,7 @@ const CollectionDetail = () => {
 						>
 							<Skeleton width="100%">
 								<Box sx={{ width: '100px', height: '100px' }}>
-									<img src={collectImage} alt="avatar" />
+									<img src={collectionInfo.uri} alt="avatar" />
 								</Box>
 							</Skeleton>
 						</Box>
@@ -94,7 +95,7 @@ const CollectionDetail = () => {
 							},
 						}}
 					>
-						<img src={collectImage} alt="banner" />
+						<img src={collectionInfo.uri} alt="banner" />
 						<Box
 							sx={{
 								position: 'absolute',
@@ -112,7 +113,7 @@ const CollectionDetail = () => {
 								},
 							}}
 						>
-							<img src={collectImage} alt="avatar" />
+							<img src={collectionInfo.uri} alt="avatar" />
 						</Box>
 					</Box>
 				)}
@@ -146,6 +147,9 @@ const CollectionDetail = () => {
 									creator?.slice(creator?.length - 4, creator?.length)}
 							</Box>
 						</Stack>
+						<Typography sx={{ marginTop: '16px', maxWidth: '80%', marginX: 'auto' }}>
+							{collectionInfo.description}
+						</Typography>
 					</Box>
 					<Box py={4}>
 						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>

@@ -12,6 +12,7 @@ import { getBalanceToken } from '../../../service/aptos.service';
 import { toast } from 'react-toastify';
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import defaultImg from '../../../assets/icons/default-img-input2.png';
+import { sellItem } from '../../../api/collectionApi';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '';
 const DECIMAL = 100000000;
@@ -97,8 +98,20 @@ export default function MyItemDetail() {
 					newPrice.toString(),
 				],
 			};
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
 			setStatusSell('Sell');
+			let listItem: any = {
+				maker: account?.address?.toString(),
+				chainId: '2',
+				price: newPrice,
+				quantity: supply,
+				to: MARKET_ADDRESS,
+				txHash: hash,
+				itemName: item.name,
+				collectionName: item.collection,
+				owner: item.creator,
+			};
+			sellItem(listItem);
 			toast.success('Successfully listed an item');
 			navigate('/view-all');
 			setOpen(false);
