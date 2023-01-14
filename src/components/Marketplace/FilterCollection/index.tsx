@@ -1,33 +1,27 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Link, Stack } from '@mui/material';
 import React from 'react';
-
+import { useSearchParams } from 'react-router-dom';
+import { listCategory } from 'constants/category.constant';
 export default function FilterCollection() {
+	let [searchParams, setSearchParams] = useSearchParams();
+	const category = searchParams.get('category');
+	console.log(category);
 	const listFilter = [
 		{
-			id: 1,
+			id: null,
 			name: 'All',
-			link: '',
+			link: '#/view-all/collections/',
 		},
-		{
-			id: 2,
-			name: 'Art',
-			link: '',
-		},
-		{
-			id: 3,
-			name: 'Collectible',
-			link: '',
-		},
-		{
-			id: 4,
-			name: 'Music',
-			link: '',
-		},
-		{
-			id: 5,
-			name: 'Sport',
-			link: '',
-		},
+		{ id: '0', name: 'Other', link: '#/view-all/collections/?category=0' },
+		{ id: '1', name: 'Art', link: '#/view-all/collections/?category=1' },
+		{ id: '2', name: 'Music', link: '#/view-all/collections/?category=2' },
+		{ id: '3', name: 'Photography', link: '#/view-all/collections/?category=3' },
+		{ id: '4', name: 'Games', link: '#/view-all/collections/?category=4' },
+		{ id: '5', name: 'Sport', link: '#/view-all/collections/?category=5' },
+		{ id: '6', name: 'Metaverse', link: '#/view-all/collections/?category=6' },
+		{ id: '7', name: 'Box', link: '#/view-all/collections/?category=7' },
+		{ id: '8', name: 'Trading Card', link: '#/view-all/collections/?category=8' },
 	];
 	return (
 		<>
@@ -44,7 +38,8 @@ export default function FilterCollection() {
 									transition: 'all 0.4s',
 									borderRadius: '12px',
 									fontWeight: 400,
-									background: '#fff',
+									background: category! === item.id ? '#007aff' : '#fff',
+									color: category! === item.id ? '#fff' : 'black',
 									fontSize: '16px',
 									cursor: 'pointer',
 									fontFamily: 'Montserrat, sans-serif !important',

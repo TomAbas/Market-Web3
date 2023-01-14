@@ -23,12 +23,13 @@ export default function DetailCard() {
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
 	const name = decodeURIComponent(new URLSearchParams(search).get('name') || '');
-	const [offers, setOffers, loading] = useOutletContext<any>();
+	const [offers] = useOutletContext<any>();
 	const { account, signAndSubmitTransaction } = useWallet();
 	const [statusWithdraw, setStatusWithdraw] = useState('Cancel');
 	const dispatch = useAppDispatch();
 	let navigate = useNavigate();
 	const [item, setItem] = useState<any>();
+	const [loadingItem, setLoadingItem] = useState(true);
 	const {
 		handleNext,
 		handleOpenModalBuy,
@@ -67,16 +68,20 @@ export default function DetailCard() {
 			navigate('/profile');
 		}
 	};
+	const fetchOffers = () => {
+		const newItem = offers.find(
+			(item: any) =>
+				item.token_id.token_data_id.creator === creator &&
+				item.token_id.token_data_id.collection === collection &&
+				item.token_id.token_data_id.name === name
+		);
+		if (newItem) {
+			setLoadingItem(false);
+		}
+
+		setItem(newItem);
+	};
 	useEffect(() => {
-		const fetchOffers = async () => {
-			const newItem = offers.find(
-				(item: any) =>
-					item.token_id.token_data_id.creator === creator &&
-					item.token_id.token_data_id.collection === collection &&
-					item.token_id.token_data_id.name === name
-			);
-			setItem(newItem);
-		};
 		fetchOffers();
 	}, [offers]);
 
@@ -149,7 +154,7 @@ export default function DetailCard() {
 		<>
 			<Box sx={{ pt: 16, pb: 4, maxWidth: '1440px', mx: 'auto', px: 2 }}>
 				<Stack direction="row" gap={4}>
-					{loading ? (
+					{loadingItem ? (
 						<>
 							<Box>
 								<Skeleton sx={{ width: '100%', transform: 'translateY(0px)' }}>
@@ -175,7 +180,6 @@ export default function DetailCard() {
 						<>
 							<ItemImage sx={{ width: '50%', paddingTop: '50%' }}>
 								<Box className="main-img">
-									{/* <img src={item?.uri} alt="item" /> */}
 									<MediaDisplayCard
 										media={item?.uri}
 										preview={defaultImg}

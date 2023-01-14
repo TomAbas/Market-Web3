@@ -68,7 +68,14 @@ export default function MyItemDetail() {
 		};
 		fetchOffers();
 	}, [tokens]);
-
+	function handleValidateAmount(e: any) {
+		console.log(e.target.value);
+		console.log(item.supply);
+		if (Number(e.target.value) > Number(item.supply)) {
+			e.target.value = item.supply;
+			setSupply(item.suppy);
+		}
+	}
 	const handleListItem = async () => {
 		try {
 			if (!supply || !price || supply == '0' || price == '0') {
@@ -251,7 +258,10 @@ export default function MyItemDetail() {
 									<input
 										type="number"
 										value={supply}
-										onChange={(e) => setSupply(e.target.value)}
+										onInput={(e: any) =>
+											(e.target.value = Math.abs(e.target.value))
+										}
+										onChange={handleValidateAmount}
 										id="name"
 										placeholder="0"
 									/>
@@ -276,6 +286,9 @@ export default function MyItemDetail() {
 								>
 									<input
 										type="number"
+										onInput={(e: any) =>
+											(e.target.value = Math.abs(e.target.value))
+										}
 										onChange={(e) => setPrice(e.target.value)}
 										value={price}
 										id="price"
