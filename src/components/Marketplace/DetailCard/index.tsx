@@ -10,6 +10,8 @@ import { openFirstModal } from '../../../redux/slices/modalWallet';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 // import { getListItemResource } from '../../../utils/dataResource';
 import { ItemImage } from '../styled';
+import { toast } from 'react-toastify';
+
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import defaultImg from '../../../assets/icons/default-img-input2.png';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
@@ -46,20 +48,25 @@ export default function DetailCard() {
 		{
 			label: `${
 				statusBuyNft.isSuccess
-					? 'Congrat'
+					? 'Congrats'
 					: statusBuyNft.isError
 					? 'Something went wrong'
 					: 'Result'
 			}`,
 			description: `${
 				statusBuyNft.isSuccess
-					? 'You bought your NFT'
+					? 'Successfully bought NFT item'
 					: statusBuyNft.isError
 					? 'Try again'
 					: '123'
 			}`,
 		},
 	];
+	const handleNavigate = (status: boolean) => {
+		if (status) {
+			navigate('/profile');
+		}
+	};
 	useEffect(() => {
 		const fetchOffers = async () => {
 			const newItem = offers.find(
@@ -131,6 +138,7 @@ export default function DetailCard() {
 			};
 
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			toast.success('Successfully canceled listing');
 			navigate('/profile');
 		} catch {
 			setStatusWithdraw('Cancel');
@@ -292,7 +300,7 @@ export default function DetailCard() {
 			<ModalBuy
 				title="Buy Item"
 				openState={openModalBuy}
-				closeModal={handleCloseModalBuy}
+				closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
 				funcBuyNft={claimOffer}
 				activeStep={activeStep}
 				statusBuyNft={statusBuyNft}

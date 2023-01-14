@@ -97,7 +97,7 @@ export default function Slider() {
 			sx={{
 				'.swiper': {
 					width: '100%',
-					py: '50px',
+					py: '10px',
 				},
 				// ".swiper-slide": {
 				//   height: "500px",

@@ -70,6 +70,14 @@ const FormMintNft: React.FC<Props> = ({
 			clearErrors('description');
 		}
 	};
+	const checkAmountValid = (e: any, amount: number, label: any, message: string) => {
+		if (parseInt(e.target.value) > amount) {
+			e.target.value = amount.toString();
+			setValue(label, amount);
+		} else {
+			clearErrors(label);
+		}
+	};
 	return (
 		<>
 			{' '}
@@ -199,18 +207,26 @@ const FormMintNft: React.FC<Props> = ({
 						min="0"
 						onInput={(e: any) => (e.target.value = Math.abs(e.target.value))}
 						type="number"
-						placeholder="E.g. 2"
+						placeholder="Maximum is 50%"
 						{...register('royaltyFee', {
 							required: 'Royalty fee is required',
 							max: {
 								value: 50,
-								message: 'royalty must smaller than 50%',
+								message: 'Royalty fee must be less than or equal 50%',
 							},
 							min: {
 								value: 0,
-								message: 'royalty must be positive',
+								message: 'Royalty must be positive',
 							},
 						})}
+						onChange={(e: any) => {
+							checkAmountValid(
+								e,
+								50,
+								'royaltyFee',
+								'Royalty fee must be less than or equal 50%'
+							);
+						}}
 					/>
 					{errors.royaltyFee && <ErrorMessage>{errors.royaltyFee?.message}</ErrorMessage>}
 				</InputItem>
@@ -222,18 +238,26 @@ const FormMintNft: React.FC<Props> = ({
 						min="0"
 						onInput={(e: any) => (e.target.value = Math.abs(e.target.value))}
 						type="number"
-						placeholder="Min: 1 - Max: 100"
+						placeholder="Maximum is 100"
 						{...register('amount', {
 							required: 'Amount  is required',
 							max: {
 								value: 100,
-								message: 'Amount must less than 100',
+								message: 'Amount must less than or equal 100',
 							},
 							min: {
 								value: 1,
-								message: 'Amount must be more than 1',
+								message: 'Amount must be greater than 1',
 							},
 						})}
+						onChange={(e: any) => {
+							checkAmountValid(
+								e,
+								100,
+								'amount',
+								'Supply must be less than or equal 100'
+							);
+						}}
 					/>
 					{errors.amount && <ErrorMessage>{errors.amount?.message}</ErrorMessage>}
 				</InputItem>

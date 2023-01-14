@@ -9,6 +9,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useTokens } from '../../../hooks/useTokens';
 import { ItemImage } from '../styled';
 import { getBalanceToken } from '../../../service/aptos.service';
+import { toast } from 'react-toastify';
+import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
+import defaultImg from '../../../assets/icons/default-img-input2.png';
+import { sellItem } from '../../../api/collectionApi';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '';
 const DECIMAL = 100000000;
@@ -87,9 +91,22 @@ export default function MyItemDetail() {
 					newPrice.toString(),
 				],
 			};
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
 			setStatusSell('Sell');
-			navigate('/');
+			let listItem: any = {
+				maker: account?.address?.toString(),
+				chainId: '2',
+				price: newPrice,
+				quantity: supply,
+				to: MARKET_ADDRESS,
+				txHash: hash,
+				itemName: item.name,
+				collectionName: item.collection,
+				owner: item.creator,
+			};
+			sellItem(listItem);
+			toast.success('Successfully listed an item');
+			navigate('/view-all');
 			setOpen(false);
 		} catch (error) {
 			setStatusSell('Sell');
@@ -118,6 +135,11 @@ export default function MyItemDetail() {
 						<ItemImage sx={{ width: '50%', paddingTop: '50%' }}>
 							<Box className="main-img">
 								<img src={item?.uri} alt="item" />
+								<MediaDisplayCard
+									media={item?.uri}
+									preview={defaultImg}
+									name={item?.name}
+								/>
 							</Box>
 						</ItemImage>
 					)}

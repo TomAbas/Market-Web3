@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from 'redux/hooks';
 import { getUserSuccessA } from 'redux/slices/userInfo';
-import { loginUser } from '../api/userApi/userApi';
+import { loginUser } from '../api/userApi';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { toast } from 'react-toastify';
 const useLogin = () => {
@@ -16,7 +16,7 @@ const useLogin = () => {
 
 			dispatch(getUserSuccessA(data));
 			setLoginSuccess(true);
-			toast.success('Login Success');
+			toast.success('Successful login');
 		} catch (error: any) {
 			toast.error(error.message);
 		}

@@ -41,19 +41,19 @@ const LayoutCreateCollection: React.FC<Props> = ({ setValue, handleCreateItem })
 	const steps = [
 		{
 			label: 'Create your collection',
-			description: 'Please confirm your action',
+			description: 'Please confirm your transaction',
 		},
 		{
 			label: `${
 				statusBuyNft.isSuccess
-					? 'Congrat'
+					? 'Congrats'
 					: statusBuyNft.isError
 					? 'Something went wrong'
 					: 'Result'
 			}`,
 			description: `${
 				statusBuyNft.isSuccess
-					? 'You create your collection'
+					? 'Successfully created a collection'
 					: statusBuyNft.isError
 					? 'Try again'
 					: '123'

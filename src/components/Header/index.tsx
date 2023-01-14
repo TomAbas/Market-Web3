@@ -41,17 +41,17 @@ import { getUserSuccessA } from 'redux/slices/userInfo';
 const listNav = [
 	{
 		id: 1,
-		name: 'Marketplace',
+		name: 'Explore',
 		link: '/',
 	},
 	{
 		id: 2,
-		name: 'Drop',
+		name: 'Drops',
 		link: '/drop',
 	},
 	{
 		id: 3,
-		name: 'Mint',
+		name: 'Create',
 		link: '/mint',
 	},
 ];
@@ -311,7 +311,7 @@ const Header: React.FC = () => {
 															fontSize="16px"
 															fontStyle="italic"
 														>
-															I dont have a crypto wallet
+															I don't have a crypto wallet
 														</Typography>
 													</LinkWrapper>
 												</Box>

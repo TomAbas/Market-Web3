@@ -9,7 +9,7 @@ const NavBar: React.FC<Props> = ({ item }) => {
 	const navigate = useNavigate();
 	return (
 		<>
-			{item.name === 'Drop' ? (
+			{item.name === 'Drops' ? (
 				<Tooltip title="coming soon">
 					<Box>
 						<Link

@@ -21,7 +21,7 @@ export interface Item {
 	to?: string;
 }
 
-export interface ListInfo {
+export interface Order {
 	chainId: string;
 	maker: string;
 	taker: string;

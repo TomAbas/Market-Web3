@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import FormMintNft from 'components/Forms/FormMintNFT';
 import { getListCollectionUserResource } from '../../utils/dataResource';
-import { getCollectionByUserAddress } from '../../api/mintApi/collectionApi';
+import { getCollectionByUserAddress } from '../../api/collectionApi';
 export default function LayoutMintNFT() {
 	const navigate = useNavigate();
 	const [dataFormInput, setDataFormInput] = useState<any>();
@@ -28,20 +28,20 @@ export default function LayoutMintNFT() {
 		useCreateMintSell();
 	const steps = [
 		{
-			label: 'Confirm order',
-			description: 'Please confirm your order',
+			label: 'Create your item',
+			description: 'Please confirm your transaction',
 		},
 		{
 			label: `${
 				statusBuyNft.isSuccess
-					? 'Congrat'
+					? 'Congrats'
 					: statusBuyNft.isError
 					? 'Something went wrong'
 					: 'Result'
 			}`,
 			description: `${
 				statusBuyNft.isSuccess
-					? 'You create your NFT'
+					? 'Successfully created an item'
 					: statusBuyNft.isError
 					? 'Try again'
 					: '123'

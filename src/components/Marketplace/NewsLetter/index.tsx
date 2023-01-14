@@ -32,7 +32,7 @@ const listTutorial = [
 		id: 1,
 		title: '1. Set Up Your Wallet',
 		description:
-			'Once you’ve set up your wallet of choice, connect it to Metaspacecy and click the NFT Marketplace in the top right corner.',
+			'Once you have installed your wallet of choice, connect it to Metaspacecy and click the Marketplace in the top right corner.',
 		image: Wallet,
 		link: '',
 	},
@@ -40,7 +40,7 @@ const listTutorial = [
 		id: 2,
 		title: '2. Create Your Collection',
 		description:
-			'Click Create and set up your collection. Add social links, a description, profile & banner images, and set a secondary sales fee.',
+			'Click "Create" to set up your collection. Add a banner image, name, and description.',
 		image: Collection,
 		link: '',
 	},
@@ -48,15 +48,14 @@ const listTutorial = [
 		id: 3,
 		title: '3. Add Your NFTs',
 		description:
-			'Upload your work (image, video, audio, or 3D art), add a title and description, and customize your NFTs with properties and stats',
+			'Upload your image, video, audio, or 3D art; add a name and description; and set a royalty fee and supply for your NFTs.',
 		image: NFTs,
 		link: '',
 	},
 	{
 		id: 4,
 		title: '4. List Them For Sale',
-		description:
-			'Choose between auctions, fixed-price listings, and falling-price listings. You choose how you want to sell your NFTs!',
+		description: 'Choose the listing price and supply for the NFTs you want to sell.',
 		image: Tag,
 		link: '',
 	},

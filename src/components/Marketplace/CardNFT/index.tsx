@@ -32,6 +32,7 @@ import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
 import { toast } from 'react-toastify';
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
+import { buyItem } from '../../../api/collectionApi';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 // const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -69,14 +70,14 @@ export default function CardNFT({
 		{
 			label: `${
 				statusBuyNft.isSuccess
-					? 'Congrat'
+					? 'Congrats'
 					: statusBuyNft.isError
 					? 'Something went wrong'
 					: 'Result'
 			}`,
 			description: `${
 				statusBuyNft.isSuccess
-					? 'You bought your NFT'
+					? 'Successfully bought NFT item'
 					: statusBuyNft.isError
 					? 'Try again'
 					: '123'
@@ -110,20 +111,43 @@ export default function CardNFT({
 				],
 			};
 
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			// let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
+			// 	(res) => res.hash
+			// );
+			console.log(offer);
+			let listItem: any = {
+				maker: account?.address?.toString(),
+				chainId: '2',
+				price: offer.price,
+				quantity: offer.amount,
+				to: MARKET_ADDRESS,
+				txHash: 'hash',
+				itemName: offer.token_id.token_data_id.name,
+				collectionName: offer.token_id.token_data_id.collection,
+				owner: offer.owner,
+			};
 
+			buyItem(listItem);
+
+			toast.success('Successfully purchased an item');
 			const fetchOffers = async () => {
 				let newList = offers.filter((_item: any, i: any) => i !== index);
 				setOffers(newList);
 			};
 			fetchOffers();
 			completeTaskSuccess();
-			toast.success('success buy item');
+
 			handleNext();
 		} catch {
-			toast.error('try again');
+			toast.error('Something went wrong. Try again!');
 			failToComplete();
 			handleNext();
+		}
+	};
+
+	const handleNavigate = (status: boolean) => {
+		if (status) {
+			navigate('/profile');
 		}
 	};
 
@@ -148,9 +172,9 @@ export default function CardNFT({
 						<ItemImage>
 							<Box className="main-img">
 								<MediaDisplayCard
-									media={offer.uri}
+									media={offer?.uri}
 									preview={TwitterIcon}
-									name={offer.token_id.token_data_id.name}
+									name={offer?.token_id.token_data_id.name}
 								/>
 								{/* <img src={offer.uri} alt="item" /> */}
 							</Box>
@@ -359,7 +383,7 @@ export default function CardNFT({
 			<ModalBuy
 				title="Buy Item"
 				openState={openModalBuy}
-				closeModal={handleCloseModalBuy}
+				closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
 				funcBuyNft={claimOffer}
 				activeStep={activeStep}
 				statusBuyNft={statusBuyNft}

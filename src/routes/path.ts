@@ -136,5 +136,5 @@ export const PATH_SOCIAL = {
 	instagram: 'https://www.instagram.com/metaspacecy_nfts',
 	youtube: 'https://www.youtube.com/@metaspacecy',
 	facebook: 'https://www.facebook.com/metaspacecy',
-	medium: 'https://medium.com/@metaspacecy',
+	medium: 'https://metaspacecynfts.medium.com/',
 };

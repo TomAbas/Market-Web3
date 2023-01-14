@@ -77,10 +77,10 @@ export default function Marketplace() {
 				<Container maxWidth="xl">
 					<Box>
 						<HeaderSection sx={{ marginTop: '30px' }}>
-							<MainHeader variant="h1" fontWeight="600" fontStyle="italic">
+							<MainHeader variant="h2" fontWeight="600" fontStyle="italic">
 								Discover, Collect & Sell
 							</MainHeader>
-							<SubTitle variant="h1" fontWeight="600" fontStyle="italic">
+							<SubTitle variant="h2" fontWeight="600" fontStyle="italic">
 								Creative NFTs
 							</SubTitle>
 						</HeaderSection>
@@ -180,7 +180,7 @@ export default function Marketplace() {
 					</Box>
 				</Box>
 				<Typography variant="h2" textAlign="center" fontWeight="500">
-					Explore NFT
+					Explore NFTs
 				</Typography>
 				<Typography
 					variant="h5"
@@ -189,7 +189,7 @@ export default function Marketplace() {
 					mt={1}
 					sx={{ color: 'rgba(29, 29, 31, 0.5)' }}
 				>
-					The world of digital assets in forms of NFTs{' '}
+					The world of digital assets in form of NFTs{' '}
 					<Link href="#/view-all" sx={{ textDecoration: 'none' }}>
 						View All
 					</Link>
@@ -203,7 +203,7 @@ export default function Marketplace() {
 						</>
 					) : (
 						<>
-							{offers.map((offer: any, index: any) => (
+							{offers.slice(0, 12).map((offer: any, index: any) => (
 								<CardNFT
 									offers={offers}
 									offer={offer}

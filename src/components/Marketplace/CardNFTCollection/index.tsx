@@ -30,6 +30,8 @@ import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
 import aptos from '../../../assets/images/card/aptos.jpg';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
+import { toast } from 'react-toastify';
+import { buyItem } from '../../../api/collectionApi';
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -65,14 +67,14 @@ export default function CardNFTCollection({
 		{
 			label: `${
 				statusBuyNft.isSuccess
-					? 'Congrat'
+					? 'Congrats'
 					: statusBuyNft.isError
 					? 'Something went wrong'
 					: 'Result'
 			}`,
 			description: `${
 				statusBuyNft.isSuccess
-					? 'You bought your NFT'
+					? 'Successfully bought NFT item'
 					: statusBuyNft.isError
 					? 'Try again'
 					: '123'
@@ -106,7 +108,22 @@ export default function CardNFTCollection({
 				],
 			};
 
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
+				(res) => res.hash
+			);
+			let listItem: any = {
+				maker: account?.address?.toString(),
+				chainId: '2',
+				price: offer.price,
+				quantity: offer.amount,
+				to: MARKET_ADDRESS,
+				txHash: 'hash',
+				itemName: offer.token_id.token_data_id.name,
+				collectionName: offer.token_id.token_data_id.collection,
+				owner: offer.owner,
+			};
+
+			buyItem(listItem);
 
 			const fetchOffers = async () => {
 				let newList = offers.filter((_item: any, i: any) => i !== index);
@@ -114,10 +131,16 @@ export default function CardNFTCollection({
 			};
 			fetchOffers();
 			completeTaskSuccess();
+			toast.success('Successfully purchased an item');
 			handleNext();
 		} catch {
 			failToComplete();
 			handleNext();
+		}
+	};
+	const handleNavigate = (status: boolean) => {
+		if (status) {
+			navigate('/profile');
 		}
 	};
 
@@ -376,7 +399,7 @@ export default function CardNFTCollection({
 			<ModalBuy
 				title="Buy Item"
 				openState={openModalBuy}
-				closeModal={handleCloseModalBuy}
+				closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
 				funcBuyNft={claimOffer}
 				activeStep={activeStep}
 				statusBuyNft={statusBuyNft}

@@ -118,6 +118,7 @@ export default function UploadMediaCustom({
 							width={80}
 							height={80}
 						/>
+
 						<Box
 							sx={{
 								textAlign: 'center',
@@ -127,7 +128,19 @@ export default function UploadMediaCustom({
 								fontWeight: 500,
 							}}
 						>
-							JPG, PNG, GIF, SVG, WEBM, WAV, OGG, GLB, GLTF. Max size: 10 MB
+							JPG, PNG, GIF, SVG, WEBM, WAV, OGG, GLB, GLTF.
+						</Box>
+
+						<Box
+							sx={{
+								textAlign: 'center',
+								fontSize: '10px',
+								color: '#000',
+								opacity: '0.5',
+								fontWeight: 500,
+							}}
+						>
+							Max size: 10 MB
 						</Box>
 					</ImageDefault>
 				)}

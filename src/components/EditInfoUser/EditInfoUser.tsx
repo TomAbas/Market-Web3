@@ -25,7 +25,7 @@ import { User } from 'models/user';
 //api
 import { uploadUserMedia } from 'api/uploadAPI';
 //redux
-import { updateUser } from 'api/userApi/userApi';
+import { updateUser } from 'api/userApi';
 import { selectUser, updateInfoUserA } from '../../redux/slices/userInfo';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { toast } from 'react-toastify';
