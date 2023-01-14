@@ -128,6 +128,7 @@ export default function CardNFTCollection({
 				let newList = offers.filter((_item: any, i: any) => i !== index);
 				setOffers(newList);
 			};
+
 			fetchOffers();
 			completeTaskSuccess();
 			toast.success('Successfully purchased an item');

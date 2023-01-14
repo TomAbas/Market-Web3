@@ -126,9 +126,7 @@ export default function CardNFT({
 				collectionName: offer.token_id.token_data_id.collection,
 				owner: offer.owner,
 			};
-
 			buyItem(listItem);
-
 			toast.success('Successfully purchased an item');
 			const fetchOffers = async () => {
 				let newList = offers.filter((_item: any, i: any) => i !== index);
