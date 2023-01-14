@@ -50,7 +50,6 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 			}
 			let newPrice = parseFloat(price) * DECIMAL;
 			setStatusList('Processing...');
-			console.log(supply + ' ' + newPrice);
 			const payload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::market::list_token`,
@@ -64,10 +63,19 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 					newPrice.toString(),
 				],
 			};
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
-			setStatusList('Sell Item');
-			handleItems(index);
-			setOpen(false);
+			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			console.log(hash);
+			let ListInfo = {
+				maker: item.creator,
+				itemName: item.name,
+				collectionName: item.collection,
+				quantity: supply,
+				basePrice: newPrice,
+			};
+			console.log(ListInfo);
+			// setStatusList('Sell Item');
+			// handleItems(index);
+			// setOpen(false);
 		} catch (error) {
 			setStatusList('Sell Item');
 			setOpen(false);

@@ -114,7 +114,6 @@ const useCreateMintSell = () => {
 				}
 			);
 		} catch (error: any) {
-			console.log('Error create NFT: ', error);
 			toast.error(error.message);
 			failToComplete();
 			handleNext();
