@@ -109,7 +109,6 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 		console.log('1');
 	};
 	function handleValidateAmount(e: any) {
-	
 		if (Number(e.target.value) > Number(item.supply)) {
 			e.target.value = item.supply;
 			console.log(item.supply);
