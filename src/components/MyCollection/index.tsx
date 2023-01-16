@@ -1,13 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import item from '../../assets/avatar_default.png';
 import { ItemImage } from 'components/Marketplace/styled';
+import { useAppSelector } from 'redux/hooks';
+import { selectUser } from 'redux/slices/userInfo';
+import { getCollectionData } from '../../service/aptos.service';
+import { getCollectionByUserAddress } from '../../api/collectionApi';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import { Outlet, useNavigate } from 'react-router-dom';
 import SkeletonCardNft from 'components/SkeletonCardNft';
+import { async } from '@firebase/util';
+import { fetch } from 'nft.storage/dist/src/platform';
 export default function MyCollection() {
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	const navigate = useNavigate();
@@ -15,21 +22,52 @@ export default function MyCollection() {
 	const { tokens } = useTokens(account);
 	const [collections, setCollections] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
+	const userInfo = useAppSelector(selectUser);
 	useEffect(() => {
-		let newCollection = new Map();
-		tokens.map((item) => {
-			let collection = newCollection.get(item?.collection + '*/////*' + item?.creator);
-			if (!collection) {
-				newCollection.set(item?.collection + '*/////*' + item?.creator, [item]);
-			} else {
-				collection.push(item);
-				newCollection.set(item?.collection + '*/////*' + item?.creator, collection);
+		async function fetchCollection() {
+			let newCollection = new Array();
+			await Promise.all(
+				tokens.map(async (item) => {
+					let collection = newCollection.find(
+						(x) => x.name === item.collection && x.creator == item?.creator
+					);
+					let data: any = await getCollectionData(item.creator, item?.collection);
+					if (!collection) {
+						let newCol = {
+							name: item?.collection,
+							creator: item.creator,
+							uri: data.uri,
+							items: [item],
+						};
+						newCollection.push(newCol);
+					} else {
+						collection.items.push(item);
+					}
+					// return data;
+				})
+			);
+			let collectionData = (await getCollectionByUserAddress(userInfo!.userAddress, 2)).data;
+
+			collectionData.map(async (item: any) => {
+				let collection = newCollection.find(
+					(x) => x.name === item.collectionName && x.creator == item?.userAddress
+				);
+				if (!collection) {
+					let newCol = {
+						name: item?.collectionName,
+						creator: item.userAddress,
+						uri: item.logo,
+						items: item.listItem,
+					};
+					newCollection.push(newCol);
+				}
+			});
+			setCollections(newCollection);
+			if (tokens.length > 0) {
+				setLoading(false);
 			}
-		});
-		setCollections(Array.from(newCollection));
-		if (tokens.length > 0) {
-			setLoading(false);
 		}
+		fetchCollection();
 	}, [tokens]);
 	// console.log(collections);
 	return (
@@ -78,9 +116,7 @@ export default function MyCollection() {
 									key={index}
 									onClick={() => {
 										navigate(
-											`/myCollection/detail?collection=${
-												collection[0].split('*/////*')[0]
-											}&creator=${collection[0].split('*/////*')[1]}`
+											`/myCollection/detail?collection=${collection.name}&creator=${collection.creator}`
 										);
 									}}
 								>
@@ -100,13 +136,11 @@ export default function MyCollection() {
 									>
 										<ItemImage>
 											<Box className="main-img">
-												<img src={collection[1][0].uri} alt="collection" />
+												<img src={collection.uri} alt="collection" />
 											</Box>
 										</ItemImage>
 										<Box py={1.5}>
-											<Typography variant="h6">
-												{collection[0].split('*/////*')[0]}
-											</Typography>
+											<Typography variant="h6">{collection.name}</Typography>
 											<Stack
 												mt={1}
 												direction="row"
@@ -130,31 +164,21 @@ export default function MyCollection() {
 													</Box>
 													<Typography variant="body1">
 														<a
-															href={`https://explorer.aptoslabs.com/account/${
-																collection[0].split('*/////*')[1]
-															}`}
+															href={`https://explorer.aptoslabs.com/account/${collection.creator}`}
 															target="_blank"
 														>
-															{collection[0]
-																.split('*/////*')[1]
-																.slice(0, 6) +
+															{collection.creator.slice(0, 6) +
 																'...' +
-																collection[0]
-																	.split('*/////*')[1]
-																	.slice(
-																		collection[0].split(
-																			'*/////*'
-																		)[1].length - 4,
-																		collection[0].split(
-																			'*/////*'
-																		)[1].length
-																	)}
+																collection.creator.slice(
+																	collection.creator.length - 4,
+																	collection.creator.length
+																)}
 														</a>
 													</Typography>
 												</Stack>
 												<Box>
 													<Typography variant="body1">
-														{collection[1].length} items
+														{collection.items.length} items
 													</Typography>
 												</Box>
 											</Stack>

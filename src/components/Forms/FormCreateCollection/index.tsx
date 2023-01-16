@@ -169,7 +169,7 @@ const FormMint: React.FC<Props> = ({
 					<TextArea
 						rows={6}
 						cols={4}
-						placeholder="Description: 0 of 1500 characters used"
+						placeholder="Provide a detailed description of your collection"
 						{...register('description', {
 							required: 'Description is required.',
 							// maxLength: {
