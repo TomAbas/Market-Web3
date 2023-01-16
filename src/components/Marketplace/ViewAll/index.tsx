@@ -22,7 +22,11 @@ export default function ViewAll() {
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
 	};
-
+	useEffect(() => {
+		if (window.location.href.includes('collections')) {
+			setValue('2');
+		}
+	}, [window.location.href]);
 	return (
 		<Box sx={{ maxWidth: '1350px', mx: 'auto', paddingTop: '150px' }}>
 			<Typography variant="h1" fontWeight={500} textAlign="center" mb={3}>

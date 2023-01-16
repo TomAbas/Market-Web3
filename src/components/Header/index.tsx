@@ -5,6 +5,17 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Box, Stack, Tooltip, Typography, useTheme } from '@mui/material';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
+import IconColectibles from 'assets/icons/NavBar/icon-colectibles.svg';
+import IconArt from 'assets/icons/NavBar/icon-art.svg';
+import IconMusic from 'assets/icons/NavBar/icon-music.svg';
+import IconSports from 'assets/icons/NavBar/icon-sports.svg';
+import IconDomainNames from 'assets/icons/NavBar/icon-domain.svg';
+import IconTradingCards from 'assets/icons/NavBar/icon-trading.svg';
+import IconEsports from 'assets/icons/NavBar/icon-esports.svg';
+import IconEvent from 'assets/icons/NavBar/icon-event.svg';
+import IconDrops from 'assets/icons/NavBar/icon-drops.svg';
+import IconXmas from 'assets/icons/NavBar/icon-xmas.svg';
+import IconAution from 'assets/icons/NavBar/auction.svg';
 //redux
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import {
@@ -16,7 +27,19 @@ import {
 } from '../../redux/slices/modalWallet';
 //styled
 import userIcon from '../../assets/icons/icon-user-black.svg';
-import { AppbarHeader, LogoLink, PageLogo, IconItem, LinkWrapper, DropDownContent } from './styled';
+import {
+	AppbarHeader,
+	LogoLink,
+	PageLogo,
+	IconItem,
+	LinkWrapper,
+	DropDownContent,
+	DropdownMenu,
+	DropdownMenuLink,
+	NavLinkBigScreen,
+	NavigationBarBigScreen,
+	NavigationItemBigScreen,
+} from './styled';
 //image
 import LogoMSWhite from '../../assets/images/logo/logoMetaBlue.png';
 import LogoMSMobileWhite from '../../assets/images/logo/logoMetaBlue.png';
@@ -38,10 +61,76 @@ import NavBarMobile from 'components/NavBarMobile';
 import { loginUser } from 'hooks/useUserLogin';
 import { getUserSuccessA } from 'redux/slices/userInfo';
 
+const listCategoryMarketplace = [
+	// {
+	// 	id: 0,
+	// 	title: 'NFTs Space',
+	// 	target: '_self',
+	// 	link: `#${PATH_VIEWALL.root}`,
+	// 	isFilter: false,
+	// 	icon: IconNftspace,
+	// },
+	{
+		id: 0,
+		title: 'Collectible',
+		target: '_self',
+		link: `/#/view-all/collections/`,
+		isFilter: false,
+		icon: IconColectibles,
+	},
+	{
+		id: 1,
+		title: 'Art',
+		target: '_self',
+		link: `/#/view-all/collections/`,
+		isFilter: true,
+		icon: IconArt,
+	},
+	{
+		id: 2,
+		title: 'Music',
+		target: '_self',
+		link: `/#/view-all/collections/`,
+		isFilter: true,
+		icon: IconMusic,
+	},
+	{
+		id: 5,
+		title: 'Sport',
+		target: '_self',
+		link: `/#/view-all/collections/`,
+		isFilter: true,
+		icon: IconSports,
+	},
+	{
+		id: 1,
+		title: 'Domain Name',
+		target: '_self',
+		link: `/#/view-all/collections/`,
+		isFilter: false,
+		icon: IconDomainNames,
+	},
+	{
+		id: 8,
+		title: 'Trading Card',
+		target: '_self',
+		link: `/#/view-all/collections/`,
+		isFilter: true,
+		icon: IconTradingCards,
+	},
+	{
+		id: 4,
+		title: 'Esport',
+		target: '_self',
+		link: `/#/view-all/collections/`,
+		isFilter: true,
+		icon: IconEsports,
+	},
+];
 const listNav = [
 	{
 		id: 1,
-		name: 'Explore',
+		name: 'Marketplace',
 		link: '/',
 	},
 	{
@@ -208,12 +297,174 @@ const Header: React.FC = () => {
 								<input type="text" placeholder="Search" />
 							</Stack>
 							{innerWidth > 1024 ? (
-								<Stack sx={{ flexDirection: 'row', gap: '60px' }}>
-									{listNav.map((item) => (
-										<NavBar item={item} key={item.id} />
-									))}
-								</Stack>
-							) : null}
+								<NavigationBarBigScreen>
+									<NavigationItemBigScreen sx={{ width: '165px' }}>
+										<NavLinkBigScreen
+											className="navLink"
+											href={`/#/`}
+											target="_self"
+											// onClick={(e: any) => {
+											// 	e.preventDefault();
+											// }}
+										>
+											<Typography
+												variant="body1"
+												fontStyle="italic"
+												fontWeight="500"
+											>
+												Marketplace
+											</Typography>
+										</NavLinkBigScreen>
+
+										<DropdownMenu
+											className="dropdownMenu"
+											sx={{ minWidth: '165px' }}
+										>
+											<Stack>
+												{listCategoryMarketplace.map(
+													(category: any, index: number) => (
+														<DropdownMenuLink
+															href={
+																category.isFilter
+																	? category.link +
+																	  '?category=' +
+																	  category.id
+																	: category.link
+															}
+															key={index}
+														>
+															<Stack
+																direction="row"
+																alignItems="center"
+															>
+																<Box width="30px">
+																	<img
+																		style={{
+																			width: '100%',
+																			height: '100%',
+																			boxShadow:
+																				'2px 2px 2px 0 rgba(0,0,0,0.2)',
+																			borderRadius: '50%',
+																		}}
+																		src={category.icon}
+																		alt={category.title}
+																	/>
+																</Box>
+																<Typography
+																	variant="body2"
+																	sx={{ padding: '0 0 0 8px' }}
+																	textAlign="center"
+																	noWrap
+																	fontStyle="italic"
+																>
+																	{category.title}
+																</Typography>
+															</Stack>
+														</DropdownMenuLink>
+													)
+												)}
+											</Stack>
+										</DropdownMenu>
+									</NavigationItemBigScreen>
+									<NavigationItemBigScreen
+										sx={{ width: '165px' }}
+										title="coming soon"
+									>
+										<NavLinkBigScreen
+											className="navLink"
+											// href={`/#${PATH_MARKETPLACE.root}`}
+											// target="_self"
+											// onClick={(e: any) => {
+											// 	e.preventDefault();
+											// }}
+										>
+											<Typography
+												variant="body1"
+												fontStyle="italic"
+												fontWeight="500"
+											>
+												Drops
+											</Typography>
+										</NavLinkBigScreen>
+									</NavigationItemBigScreen>
+									<NavigationItemBigScreen sx={{ width: '165px' }}>
+										<NavLinkBigScreen
+											className="navLink"
+											href={'/#/mint'}
+											target="_self"
+											// onClick={(e: any) => {
+											// 	e.preventDefault();
+											// }}
+										>
+											<Typography
+												variant="body1"
+												fontStyle="italic"
+												fontWeight="500"
+											>
+												Create
+											</Typography>
+										</NavLinkBigScreen>
+									</NavigationItemBigScreen>
+								</NavigationBarBigScreen>
+							) : // <Stack sx={{ flexDirection: 'row', gap: '60px' }}>
+							// 	{listNav.map((item) => (
+							// 		<>
+							// 			<NavBar item={item} key={item.id} />
+							// 			<DropdownMenu
+							// 				className="dropdownMenu"
+							// 				sx={{ minWidth: '165px' }}
+							// 			>
+							// 				<Stack>
+							// 					{listCategoryMarketplace.map(
+							// 						(category: any, index: number) => (
+							// 							<DropdownMenuLink
+							// 								href={
+							// 									category.isFilter
+							// 										? category.link +
+							// 										  '?category=' +
+							// 										  category.title
+							// 										: category.link
+							// 								}
+							// 								key={index}
+							// 							>
+							// 								<Stack
+							// 									direction="row"
+							// 									alignItems="center"
+							// 								>
+							// 									<Box width="30px">
+							// 										<img
+							// 											style={{
+							// 												width: '100%',
+							// 												height: '100%',
+							// 												boxShadow:
+							// 													'2px 2px 2px 0 rgba(0,0,0,0.2)',
+							// 												borderRadius: '50%',
+							// 											}}
+							// 											src={category.icon}
+							// 											alt={category.title}
+							// 										/>
+							// 									</Box>
+							// 									<Typography
+							// 										variant="body2"
+							// 										sx={{
+							// 											padding: '0 0 0 8px',
+							// 										}}
+							// 										textAlign="center"
+							// 										noWrap
+							// 										fontStyle="italic"
+							// 									>
+							// 										{category.title}
+							// 									</Typography>
+							// 								</Stack>
+							// 							</DropdownMenuLink>
+							// 						)
+							// 					)}
+							// 				</Stack>
+							// 			</DropdownMenu>
+							// 		</>
+							// 	))}
+							// </Stack>
+							null}
 						</Stack>
 						<Stack direction="row" alignItems="center" gap="8px">
 							<Stack direction="row" gap="10px">

@@ -111,9 +111,9 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 	function handleValidateAmount(e: any) {
 		if (Number(e.target.value) > Number(item.supply)) {
 			e.target.value = item.supply;
-			console.log(item.supply);
 			setSupply(e.target.value);
 		}
+		setSupply(e.target.value);
 	}
 
 	return (
@@ -278,11 +278,6 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 													<input
 														type="number"
 														value={supply}
-														onInput={(e: any) =>
-															(e.target.value = Math.abs(
-																e.target.value
-															))
-														}
 														onChange={handleValidateAmount}
 														id="name"
 														placeholder="0"

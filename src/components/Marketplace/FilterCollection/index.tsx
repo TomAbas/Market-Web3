@@ -13,7 +13,6 @@ export default function FilterCollection() {
 			name: 'All',
 			link: '#/view-all/collections/',
 		},
-		{ id: '0', name: 'Other', link: '#/view-all/collections/?category=0' },
 		{ id: '1', name: 'Art', link: '#/view-all/collections/?category=1' },
 		{ id: '2', name: 'Music', link: '#/view-all/collections/?category=2' },
 		{ id: '3', name: 'Photography', link: '#/view-all/collections/?category=3' },
