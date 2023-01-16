@@ -75,6 +75,7 @@ export default function MyItemDetail() {
 			console.log(item.supply);
 			setSupply(e.target.value);
 		}
+		setSupply(e.target.value);
 	}
 
 	const handleListItem = async () => {

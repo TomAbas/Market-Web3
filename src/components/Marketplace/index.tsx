@@ -126,7 +126,7 @@ export default function Marketplace() {
 							</LinkWrapper>
 
 							<LinkWrapper
-								href="#/view-all"
+								href="#/view-all/items"
 								sx={{
 									button: {
 										padding: '10px 30px',

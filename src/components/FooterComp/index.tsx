@@ -129,6 +129,9 @@ const FooterComp: React.FC = () => {
 	// //Path
 	// const { pathname } = useLocation();
 	// const isHomePage = pathname === "/";
+	const ScrollToTop = () => {
+		window.scrollTo(0, 0);
+	};
 
 	const marketplace = [
 		{
@@ -136,39 +139,20 @@ const FooterComp: React.FC = () => {
 			contents: [
 				{
 					title: 'Collectible',
-					link: `${PATH_VIEWALL.collections}`,
+					link: `/#/view-all/collections`,
 					isFilter: false,
 				},
+				{ id: '1', title: 'Art', link: `/#/view-all/collections`, isFilter: true },
+				{ id: '2', title: 'Music', link: `/#/view-all/collections`, isFilter: true },
+				{ id: '5', title: 'Sport', link: `/#/view-all/collections`, isFilter: true },
+				{ title: 'Domain Name', link: `/#/view-all/collections`, isFilter: false },
 				{
-					title: 'Art',
-					link: `${PATH_CATEGORY.artwork}`,
-					isFilter: true,
-				},
-				{
-					title: 'Music',
-					link: `${PATH_CATEGORY.artwork}`,
-					isFilter: true,
-				},
-				{
-					title: 'Sport',
-					link: `${PATH_CATEGORY.artwork}`,
-					isFilter: true,
-				},
-				{
-					title: 'Domain Name',
-					link: `${PATH_CATEGORY.artwork}`,
-					isFilter: true,
-				},
-				{
+					id: '8',
 					title: 'Trading Card',
-					link: `${PATH_CATEGORY.artwork}`,
+					link: `/#/view-all/collections`,
 					isFilter: true,
 				},
-				{
-					title: 'Esport',
-					link: `${PATH_CATEGORY.artwork}`,
-					isFilter: true,
-				},
+				{ id: '4', title: 'Esport', link: `/#/view-all/collections`, isFilter: true },
 			],
 		},
 	];
@@ -199,6 +183,61 @@ const FooterComp: React.FC = () => {
 					id: 4,
 					name: 'Auction',
 					link: ``,
+					target: '',
+				},
+			],
+		},
+		{
+			title: 'Virtual Space',
+			contents: [
+				{
+					id: 1,
+					name: 'Utility',
+					link: `${PATH_VIRTUAL_WORLD.root}`,
+					target: '',
+				},
+				{
+					id: 2,
+					name: 'Virtual Time Square',
+					link: `${PATH_VIRTUAL_WORLD.virtualWorld}`,
+					target: '',
+				},
+
+				{
+					id: 3,
+					name: 'Virtual Meeting',
+					link: `${PATH_VIRTUAL_WORLD.virtualEvent}`,
+					target: '',
+				},
+				{
+					id: 4,
+					name: 'Virtual Concert',
+					link: ``,
+					target: '',
+				},
+				{
+					id: 5,
+					name: 'Virtual Exhibition',
+					link: '',
+					target: '',
+				},
+
+				{
+					id: 6,
+					name: 'Virtual Sport',
+					link: `${PATH_VIRTUAL_WORLD.virtualSport}`,
+					target: '',
+				},
+				{
+					id: 7,
+					name: 'Virtual Museum',
+					link: `${PATH_VIRTUAL_WORLD.virtualArt}`,
+					target: '',
+				},
+				{
+					id: 7,
+					name: 'Virtual Xmas',
+					link: `${PATH_VIRTUAL_WORLD.eventXmax}`,
 					target: '',
 				},
 			],
@@ -242,6 +281,7 @@ const FooterComp: React.FC = () => {
 				// },
 			],
 		},
+
 		{
 			title: 'Company',
 			contents: [
@@ -462,15 +502,15 @@ const FooterComp: React.FC = () => {
 											<DetailLink
 												href={
 													item.isFilter
-														? item.link + '?category=' + item.title
+														? item.link + '?category=' + item.id
 														: item.link
 												}
-												target="_blank"
 												sx={{
 													fontStyle: 'italic',
 													pointerEvents:
 														item.link === '' ? 'none' : 'pointer',
 												}}
+												onClick={ScrollToTop}
 											>
 												{item.title}
 											</DetailLink>

@@ -189,7 +189,7 @@ const FormMintNft: React.FC<Props> = ({
 					<TextArea
 						rows={6}
 						cols={4}
-						placeholder="Description: 0 of 1500 characters used"
+						placeholder="Provide a detailed description of your item"
 						{...register('description', {
 							required: 'Item description is required',
 						})}

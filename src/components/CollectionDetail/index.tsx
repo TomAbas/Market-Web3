@@ -7,15 +7,21 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTokens } from '../../hooks/useTokens';
 import banner from '../../assets/banner.png';
+import { getCollectionByUserAddress } from '../../api/collectionApi';
 import { getCollectionData } from '../../service/aptos.service';
 import aptos from '../../assets/images/card/aptos.jpg';
 import { useSizeObersver } from 'contexts/SizeObserver';
 import SkeletonCardNft from 'components/SkeletonCardNft';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { selectUser, toggleSettingModalA } from 'redux/slices/userInfo';
 const MyCollectionDetail = () => {
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	const [loadingCollectionImg, setLoadingCollectionImg] = useState(true);
 	const [loadingItem, setLoadingItem] = useState(true);
 	const search = useLocation().search;
+
+	//modalWallet
+
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
 	const { innerWidth } = useSizeObersver();
@@ -26,12 +32,15 @@ const MyCollectionDetail = () => {
 	const { tokens } = useTokens(account);
 	const [collectionInfo, setCollectionInfo] = useState<any>('');
 	const [items, setItems] = useState<any[]>([]);
+	const dispatch = useAppDispatch();
+	const userInfo = useAppSelector(selectUser);
 
 	const handleItems = (index: any) => {
 		let newItems = items.filter((_item, i) => i !== index);
 		setItems(newItems);
 	};
 	useEffect(() => {
+		console.log('userAddress', userInfo?.userAddress);
 		let newCollection = new Map();
 		tokens.map((item: any) => {
 			let collection = newCollection.get(item?.collection + '*/////*' + item?.creator);
@@ -46,11 +55,12 @@ const MyCollectionDetail = () => {
 		const found =
 			collections.find((value) => value[0] == `${collection}*/////*${creator}`) || [];
 		setItems(found[1]);
-		if (found.length > 0) {
+		if (tokens.length > 0) {
 			setLoadingItem(false);
 		}
 		const fetchData = async () => {
 			let coll = await getCollectionData(creator, collection);
+			console.log('collection', coll);
 			setCollectionInfo(coll);
 			setLoadingCollectionImg(false);
 		};

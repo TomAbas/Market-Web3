@@ -184,3 +184,122 @@ export const LinkWrapper = styled('a')(() => ({
 	transition: 'all ease 0.5s',
 	color: '#000',
 }));
+
+export const DropdownMenu = styled('div')(({ theme }) => ({
+	borderRadius: '0 0 12px 12px',
+	opacity: 1,
+	visibility: 'hidden',
+	position: 'absolute',
+	top: '100%',
+	left: '50%',
+	transform: 'translateX(-50%)',
+	transition: 'all 0.1s',
+	zIndex: 100,
+	backdropFilter: 'blur(8px)',
+	width: 'fit-content',
+	overflow: 'hidden',
+
+	...(theme.palette.mode === 'light'
+		? {
+				background: '#fff',
+				boxShadow: '0 10px 12px rgba(0,0,0,0.15)',
+		  }
+		: {
+				backdropFilter: 'blur(25px)',
+				background: '#89AED0',
+		  }),
+}));
+
+export const DropdownMenuLink = styled('a')(({ theme }) => ({
+	// position: 'relative',
+	padding: '12px 10px',
+	color: theme.palette.text.primary,
+	cursor: 'pointer',
+	transition: 'all ease 0.1s',
+	minWidth: '160px',
+
+	'&:not(:last-child):after': {
+		content: '""',
+		position: 'absolute',
+		top: '100%',
+		left: 0,
+		width: '100%',
+		height: '0.9px',
+		// background: theme.palette.gradients.line,
+	},
+
+	...(theme.palette.mode === 'light'
+		? {
+				'&:hover': {
+					background: 'rgba(0, 0, 0, 0.1)',
+				},
+		  }
+		: {
+				'&:hover': {
+					// background: theme.palette.primaryDark.main,
+				},
+		  }),
+}));
+
+export const NavigationBarBigScreen = styled('ul')({
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'flex-end',
+	gap: '2px',
+	padding: '0 5px',
+	width: '80%',
+	'@media screen and (max-width: 2450px)': {
+		width: '90%',
+	},
+	'@media screen and (max-width: 2350px)': {
+		width: '100%',
+	},
+});
+
+export const NavigationItemBigScreen = styled('li')(({ theme }) => ({
+	position: 'relative',
+	listStyleType: 'none',
+	transition: 'all 0.1s',
+	textAlign: 'center',
+	padding: '12px',
+	borderRadius: '12px 12px 0 0',
+	width: '160px',
+
+	'&:hover .dropdownMenu': {
+		opacity: 1,
+		visibility: 'visible',
+	},
+	'&:nth-child(2):hover': {
+		borderRadius: '12px',
+	},
+
+	'&:nth-child(3):hover': {
+		borderRadius: '12px',
+	},
+
+	'&:nth-child(5):hover': {
+		borderRadius: '12px',
+	},
+
+	...(theme.palette.mode === 'light'
+		? {
+				'&:hover': {
+					background: '#fff',
+					// boxShadow: theme.customShadows.cardLight,
+					backdropFilter: 'blur(8px)',
+				},
+		  }
+		: {
+				'&:hover': {
+					backdropFilter: 'blur(25px)',
+					background: '#89AED0',
+				},
+		  }),
+}));
+
+export const NavLinkBigScreen = styled(Link)(({ theme }) => ({
+	// color: theme.palette.text.primary,
+	color: 'rgb(29, 29, 31)',
+	borderRadius: '16px',
+	textDecoration: 'none !important',
+}));
