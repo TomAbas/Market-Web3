@@ -24,7 +24,8 @@ import DetailCard from 'components/Marketplace/DetailCard';
 import ViewAll from 'components/Marketplace/ViewAll';
 import MyCollectionDetail from 'components/CollectionDetail';
 import MyItemDetail from 'components/Marketplace/MyItemdetail';
-
+import Collections from 'components/Marketplace/ViewAll/Collections';
+import Items from 'components/Marketplace/ViewAll/Items';
 const router = createHashRouter([
 	{
 		element: <App />,
@@ -114,6 +115,24 @@ const router = createHashRouter([
 						<h1>error test view all</h1>
 					</>
 				),
+				children: [
+					{
+						path: 'collections',
+						element: (
+							<>
+								<Collections />
+							</>
+						),
+					},
+					{
+						path: 'items',
+						element: (
+							<>
+								<Items />
+							</>
+						),
+					},
+				],
 			},
 			{
 				path: 'myCollection/detail',

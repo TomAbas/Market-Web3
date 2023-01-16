@@ -5,26 +5,19 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
+
 import Items from './Items';
 import Collections from './Collections';
 import { Typography } from '@mui/material';
-import { useOutletContext } from 'react-router-dom';
+import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 import { getListCollectionMarketplace } from 'utils/dataResource';
 // import LayoutMintNFT from './mintNFT';
 // import LayoutCreateCollection from './createCollection';
 
 export default function ViewAll() {
-	const [value, setValue] = React.useState('2');
-	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
-	const [collections, setCollections] = useState<any[]>([]);
-	useEffect(() => {
-		const fetchCollections = async () => {
-			let newArrCollection = await getListCollectionMarketplace(offers);
-			setCollections(newArrCollection);
-		};
-		fetchCollections();
-	}, [offers]);
+	const navigate = useNavigate();
+	const [value, setValue] = React.useState('1');
+	// const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
@@ -51,16 +44,29 @@ export default function ViewAll() {
 					}}
 				>
 					<TabList onChange={handleChange} aria-label="lab API tabs example">
-						<Tab label="Items" value="2" />
-						<Tab label="Collections" value="1" />
+						<Tab
+							label="Items"
+							value="1"
+							onClick={() => {
+								navigate('items/');
+							}}
+						/>
+						<Tab
+							label="Collections"
+							value="2"
+							onClick={() => {
+								navigate('collections/');
+							}}
+						/>
 					</TabList>
 				</Box>
-				<TabPanel value="2" sx={{ px: 0 }}>
+				<Outlet />
+				{/* <TabPanel value="2" sx={{ px: 0 }}>
 					<Items offers={offers} setOffers={setOffers} loadingOffers={loadingOffers} />
 				</TabPanel>
 				<TabPanel value="1" sx={{ px: 0 }}>
-					<Collections collections={collections} />
-				</TabPanel>
+					<Collections collections={collections} indexTab="1" />
+				</TabPanel> */}
 			</TabContext>
 		</Box>
 	);

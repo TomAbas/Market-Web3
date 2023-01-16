@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -48,9 +48,12 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 	};
 	const handleListItem = async () => {
 		try {
-			if (!supply || !price || supply == '0' || price == '0') {
+			console.log(supply);
+			console.log(price);
+			if (!supply || !price || supply === '0' || price === '0') {
 				return;
 			}
+			console.log('123');
 			let newPrice = parseFloat(price) * DECIMAL;
 			setStatusList('Processing...');
 			const payload = {
@@ -105,6 +108,13 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 		);
 		console.log('1');
 	};
+	function handleValidateAmount(e: any) {
+		if (Number(e.target.value) > Number(item.supply)) {
+			e.target.value = item.supply;
+			console.log(item.supply);
+			setSupply(e.target.value);
+		}
+	}
 
 	return (
 		<>
@@ -268,7 +278,12 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 													<input
 														type="number"
 														value={supply}
-														onChange={(e) => setSupply(e.target.value)}
+														onInput={(e: any) =>
+															(e.target.value = Math.abs(
+																e.target.value
+															))
+														}
+														onChange={handleValidateAmount}
 														id="name"
 														placeholder="0"
 													/>
@@ -293,7 +308,19 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 												>
 													<input
 														type="number"
-														onChange={(e) => setPrice(e.target.value)}
+														// onInput={(e: any) =>
+														// 	(e.target.value = Math.abs(
+														// 		e.target.value
+														// 	))
+														// }
+														onChange={(e) => {
+															if (Number(e.target.value) < 0) {
+																let a = -Number(e.target.value);
+																setPrice(a.toString());
+															} else {
+																setPrice(e.target.value);
+															}
+														}}
 														value={price}
 														id="price"
 														placeholder="0"
