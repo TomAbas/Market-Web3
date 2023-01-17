@@ -15,7 +15,6 @@ async function getCollectionByUserAddress(userAddress: string, chainId: number =
 
 async function createItem(itemInfo: Item): Promise<Response<any>> {
 	const url = `/item/create/userAddress/${itemInfo.creator}/chainId/${itemInfo.chainId}`;
-	console.log(itemInfo);
 	return axiosClient.post(url, itemInfo);
 }
 

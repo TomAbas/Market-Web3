@@ -62,7 +62,6 @@ export default function WhiteList() {
 		};
 		fetchTicket();
 	}, [account]);
-	// console.log(whitelist);
 	const dispatch = useAppDispatch();
 
 	const handleClaim = async () => {

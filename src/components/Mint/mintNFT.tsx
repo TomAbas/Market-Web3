@@ -81,7 +81,6 @@ export default function LayoutMintNFT() {
 	useEffect(() => {
 		fetchCollection();
 	}, [account]);
-	console.log(collections);
 	return (
 		<Box
 			sx={{
