@@ -39,10 +39,8 @@ const useCreateMintSell = () => {
 	});
 
 	const handleInputFile = (e: any) => {
-		console.log(e);
 		const file = e[0];
 		if (file) {
-			console.log('chay');
 			// const file = e[0];
 			setBase64image({ ...file, preview: URL.createObjectURL(file) });
 		}
@@ -146,7 +144,6 @@ const useCreateMintSell = () => {
 				(error) => console.log('err ', error),
 				async () => {
 					let downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-					console.log(downloadURL);
 					try {
 						const royaltyFeeNumerator = Number(royaltyFee) * 100;
 						const royaltyFeeDenominator = 10000;

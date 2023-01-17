@@ -48,12 +48,10 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 	};
 	const handleListItem = async () => {
 		try {
-			console.log(supply);
-			console.log(price);
 			if (!supply || !price || supply === '0' || price === '0') {
 				return;
 			}
-			console.log('123');
+
 			let newPrice = parseFloat(price) * DECIMAL;
 			setStatusList('Processing...');
 			const payload = {
@@ -92,7 +90,7 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 			};
 			console.log(listItem);
 			sellItem(listItem);
-			navigate('/view-all');
+			navigate('/view-all/items');
 			handleItems(index);
 			setOpen(false);
 		} catch (error) {
@@ -106,7 +104,6 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 				item?.collection
 			)}&name=${encodeURIComponent(item?.name)}`
 		);
-		console.log('1');
 	};
 	function handleValidateAmount(e: any) {
 		if (Number(e.target.value) > Number(item.supply)) {

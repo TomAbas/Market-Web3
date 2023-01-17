@@ -72,7 +72,6 @@ export default function MyItemDetail() {
 	function handleValidateAmount(e: any) {
 		if (Number(e.target.value) > Number(item.supply)) {
 			e.target.value = item.supply;
-			console.log(item.supply);
 			setSupply(e.target.value);
 		}
 		setSupply(e.target.value);
@@ -83,10 +82,8 @@ export default function MyItemDetail() {
 			if (!supply || !price || supply === '0' || price === '0') {
 				return;
 			}
-			console.log('123');
 			let newPrice = parseFloat(price) * DECIMAL;
 			setStatusSell('Processing...');
-			console.log(supply + ' ' + newPrice);
 			const payload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::market::list_token`,
@@ -100,7 +97,9 @@ export default function MyItemDetail() {
 					newPrice.toString(),
 				],
 			};
-			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
+				(res) => res.hash
+			);
 			setStatusSell('Sell');
 			let listItem: any = {
 				maker: account?.address?.toString(),

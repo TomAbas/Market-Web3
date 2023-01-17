@@ -38,7 +38,6 @@ const FormMintNft: React.FC<Props> = ({
 		clearErrors('file');
 	};
 	const onSubmit = handleSubmit((data) => {
-		console.log(data);
 		updateFormInput(data);
 		if (
 			!errors.file &&

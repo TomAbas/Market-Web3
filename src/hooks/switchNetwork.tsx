@@ -9,7 +9,6 @@ const SwitchNetwork = async (mainnet: any, newChainId: number) => {
 				params: [{ chainId: Web3.utils.toHex(newChainId) }],
 			});
 		} catch (switchError: any) {
-			console.log('Switch Error');
 			if (switchError !== 4001) {
 				try {
 					await window.ethereum.request({

@@ -10,7 +10,6 @@ import LayoutCreateCollection from './createCollection';
 import { useSearchParams } from 'react-router-dom';
 export default function MintTabs() {
 	let [searchParams, setSearchParams] = useSearchParams();
-	console.log(searchParams.get('query'));
 	const [value, setValue] = React.useState('1');
 	let query = searchParams.get('query');
 	React.useEffect(() => {

@@ -124,6 +124,7 @@ export default function CardNFT({
 				txHash: hash,
 				itemName: offer.token_id.token_data_id.name,
 				collectionName: offer.token_id.token_data_id.collection,
+				creator: offer.token_id.token_data_id.creator,
 				owner: offer.owner,
 			};
 			buyItem(listItem);
@@ -157,7 +158,6 @@ export default function CardNFT({
 				offer.token_id.token_data_id.name
 			)}`
 		);
-		console.log('1');
 	};
 
 	return (
