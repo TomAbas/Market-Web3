@@ -22,3 +22,10 @@ export const compressImage = (url: string, width: number, quality: string) => {
 	split.splice(index + 1, 0, `w_${width}`, `q_auto:${quality},f_auto`);
 	return split.join('/');
 };
+
+export const sliceString = (string: string, limit = 0) => {
+	if (string && 0 < string.length && typeof limit === 'number') {
+		return string.length < limit ? string : `${string.slice(0, limit)}...`;
+	}
+	return '';
+};

@@ -9,6 +9,15 @@ export interface Collection {
 	to?: string;
 }
 
+export interface CollectionTop extends Collection {
+	percent7Days: number;
+	percent30Days: number;
+	percent24Hour: number;
+	volumeTrade: number;
+	volume24Hour: number;
+	volume7Days: number;
+	volume30Days: number;
+}
 export interface Item {
 	itemName: string;
 	description: string;

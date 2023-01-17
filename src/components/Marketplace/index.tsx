@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import CardNFT from './CardNFT';
 import { getListItemResource, getListCollectionMarketplace } from '../../utils/dataResource';
 import item from '../../assets/avatar_default.png';
-
 import {
 	ButtonBlue,
 	ButtonViewAll,
@@ -33,6 +32,7 @@ import {
 import Newsletter from './NewsLetter';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import { useOutletContext } from 'react-router-dom';
+import TopCollection from './TopCollection';
 
 export default function Marketplace() {
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -179,6 +179,11 @@ export default function Marketplace() {
 						<Slider />
 					</Box>
 				</Box>
+				{/* top collection */}
+
+				<TopCollection />
+
+				{/* top collection end*/}
 				<Typography variant="h2" textAlign="center" fontWeight="500">
 					Explore NFTs
 				</Typography>
