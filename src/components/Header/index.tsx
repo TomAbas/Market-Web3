@@ -546,7 +546,7 @@ const Header: React.FC = () => {
 
 												<Box pt={2}>
 													<LinkWrapper
-														href="https://metaspacecy.gitbook.io/metaspacecy/getting-started/installing-a-wallet"
+														href="https://metaspacecynfts.medium.com/setting-up-and-using-your-martian-wallet-89f887128e5c"
 														target="_blank"
 													>
 														<Typography
