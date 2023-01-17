@@ -6,13 +6,13 @@ import { getStorage } from 'firebase/storage';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-	apiKey: 'AIzaSyDEreYfnAXKKBtxnykPEqCdx-E2fFkYxR4',
-	authDomain: 'audio-call-demo-04.firebaseapp.com',
-	projectId: 'audio-call-demo-04',
-	storageBucket: 'audio-call-demo-04.appspot.com',
-	messagingSenderId: '1032188065838',
-	appId: '1:1032188065838:web:9668aa24a7a337738c87bf',
-	measurementId: 'G-6HM159Q5M3',
+	apiKey: 'AIzaSyDPjJTdxRuxkWNz89VJJOrIimOQsQk3bBc',
+	authDomain: 'aptos-354fd.firebaseapp.com',
+	projectId: 'aptos-354fd',
+	storageBucket: 'aptos-354fd.appspot.com',
+	messagingSenderId: '930009972913',
+	appId: '1:930009972913:web:556768431b503830e0e290',
+	measurementId: 'G-2G32M14RRL',
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

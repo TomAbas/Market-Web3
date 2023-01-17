@@ -312,7 +312,7 @@ const Header: React.FC = () => {
 												fontStyle="italic"
 												fontWeight="500"
 											>
-												Marketplace
+												Explore
 											</Typography>
 										</NavLinkBigScreen>
 
