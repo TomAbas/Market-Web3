@@ -111,6 +111,7 @@ export default function CardNFTCollection({
 			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
 				(res) => res.hash
 			);
+			console.log(offer);
 			let listItem: any = {
 				maker: account?.address?.toString(),
 				chainId: '2',
@@ -120,7 +121,8 @@ export default function CardNFTCollection({
 				txHash: hash,
 				itemName: offer.token_id.token_data_id.name,
 				collectionName: offer.token_id.token_data_id.collection,
-				owner: offer.owner,
+				creator: offer.token_id.token_data_id.creator,
+				owner: offer?.owner,
 			};
 
 			buyItem(listItem);
@@ -152,7 +154,6 @@ export default function CardNFTCollection({
 				offer.token_id.token_data_id.name
 			)}`
 		);
-		console.log('1');
 	};
 
 	return (

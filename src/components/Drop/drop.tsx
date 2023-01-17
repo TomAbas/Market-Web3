@@ -70,7 +70,6 @@ export default function Drop() {
 		};
 		fetchTicket();
 	}, [account]);
-	// console.log(whitelist);
 	const dispatch = useAppDispatch();
 
 	const handleClaim = async () => {

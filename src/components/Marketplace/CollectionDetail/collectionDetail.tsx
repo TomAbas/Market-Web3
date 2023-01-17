@@ -20,7 +20,6 @@ const CollectionDetail = () => {
 	const [loadingCollectionImg, setLoadingCollectionImg] = useState(true);
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
-	// console.log({ collection, creator });
 	useEffect(() => {
 		const fetchOffers = async () => {
 			const newOffers = offers;
@@ -32,12 +31,10 @@ const CollectionDetail = () => {
 			setItems(newItems);
 			let collectionData = await getCollectionData(creator, collection);
 			setCollectionInfo(collectionData);
-			console.log(collectionData);
 			setLoadingCollectionImg(false);
 		};
 		fetchOffers();
 	}, [offers]);
-	// console.log(tokens);
 	return (
 		<>
 			<Box pt={13}>

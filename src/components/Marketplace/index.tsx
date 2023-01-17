@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CardNFT from './CardNFT';
 import { getListItemResource, getListCollectionMarketplace } from '../../utils/dataResource';
+import { getCollectionData } from '../../service/aptos.service';
 import item from '../../assets/avatar_default.png';
 import {
 	ButtonBlue,
@@ -50,10 +51,28 @@ export default function Marketplace() {
 	useEffect(() => {
 		const fetchCollections = async () => {
 			let newArrCollection = await getListCollectionMarketplace(offers);
-			if (newArrCollection.length > 4) {
-				newArrCollection = newArrCollection.slice(0, 4);
-			}
-			setCollections(newArrCollection);
+			console.log('newArrCollection', newArrCollection);
+			let arrCollection: any = [];
+			await Promise.all(
+				newArrCollection.map(async (collection, index) => {
+					if (index < 4) {
+						let name = collection[0].split('*/////*')[0];
+						let creator = collection[0].split('*/////*')[1];
+						let items = collection[1];
+						let res = await getCollectionData(creator, name);
+						console.log('res', res);
+						let image = res.uri;
+						let data = {
+							name,
+							creator,
+							items,
+							image,
+						};
+						arrCollection.push(data);
+					}
+				})
+			);
+			setCollections(arrCollection);
 		};
 		fetchCollections();
 	}, [offers]);
@@ -237,10 +256,7 @@ export default function Marketplace() {
 							p={1}
 							key={index}
 							onClick={() => {
-								handleCollectionDetail(
-									collection[0].split('*/////*')[1],
-									collection[0].split('*/////*')[0]
-								);
+								handleCollectionDetail(collection.creator, collection.name);
 							}}
 						>
 							<Link
@@ -272,14 +288,12 @@ export default function Marketplace() {
 								>
 									<ItemImage>
 										<Box className="main-img">
-											<img src={collection[1][0].uri} alt="collection" />
+											<img src={collection.image} alt="collection" />
 										</Box>
 									</ItemImage>
 
 									<Box py={1.5}>
-										<Typography variant="h6">
-											{collection[0].split('*/////*')[0]}
-										</Typography>
+										<Typography variant="h6">{collection.name}</Typography>
 										<Stack
 											mt={1}
 											direction="row"
@@ -302,21 +316,17 @@ export default function Marketplace() {
 													<img src={item} alt="collection" />
 												</Box>
 												<Typography variant="body1">
-													{collection[0].split('*/////*')[1].slice(0, 6) +
+													{collection.creator.slice(0, 6) +
 														'...' +
-														collection[0]
-															.split('*/////*')[1]
-															.slice(
-																collection[0].split('*/////*')[1]
-																	.length - 4,
-																collection[0].split('*/////*')[1]
-																	.length
-															)}
+														collection.creator.slice(
+															collection.creator.length - 4,
+															collection.creator.length
+														)}
 												</Typography>
 											</Stack>
 											<Box>
 												<Typography variant="body1">
-													{collection[1].length} items
+													{collection.items.length} items
 												</Typography>
 											</Box>
 										</Stack>

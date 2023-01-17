@@ -69,7 +69,6 @@ export default function MyCollection() {
 		}
 		fetchCollection();
 	}, [tokens]);
-	// console.log(collections);
 	return (
 		<>
 			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 16, pb: 4 }}>
