@@ -100,7 +100,9 @@ export default function MyItemDetail() {
 					newPrice.toString(),
 				],
 			};
-			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
+				(res) => res.hash
+			);
 			setStatusSell('Sell');
 			let listItem: any = {
 				maker: account?.address?.toString(),
