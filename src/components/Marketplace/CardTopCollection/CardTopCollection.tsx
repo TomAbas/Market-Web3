@@ -19,7 +19,7 @@ const CardTopCollection = ({ filter, listCollections }: ICollectionRankingCardPr
 	return (
 		<>
 			{listCollections.map((collection: Collection, idx) => (
-				<Grid item xs={1} key={idx}>
+				<Grid item xs={1} key={idx} sx={{ paddingX: '32px' }}>
 					<CardTest idx={idx} collection={collection} filter={filter} />
 				</Grid>
 			))}

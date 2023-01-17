@@ -107,12 +107,12 @@ const Index = () => {
             </LinkWrapper>
         </SubHeader> */}
 			</HeaderSection>
-			<Box sx={{ magrin: '2rem auto' }} fontWeight="600" fontStyle="italic">
+			<Box sx={{ margin: '2rem auto' }} fontWeight="600" fontStyle="italic">
 				<Grid
 					container
 					spacing={4}
 					columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
-					sx={{ mt: 2, maxWidth: '1440px', margin: '0 auto' }}
+					sx={{ maxWidth: '1440px', margin: '0 auto' }}
 				>
 					<TopCollections filter={selectedFilter} />
 				</Grid>
