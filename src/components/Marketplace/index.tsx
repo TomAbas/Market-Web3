@@ -34,7 +34,8 @@ import Newsletter from './NewsLetter';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import { useOutletContext } from 'react-router-dom';
 import TopCollection from './TopCollection';
-
+import FeaturedCollection from './FeaturedCollection';
+import { getUserInfo } from 'api/userApi';
 export default function Marketplace() {
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
@@ -51,7 +52,7 @@ export default function Marketplace() {
 	useEffect(() => {
 		const fetchCollections = async () => {
 			let newArrCollection = await getListCollectionMarketplace(offers);
-			console.log('newArrCollection', newArrCollection);
+
 			let arrCollection: any = [];
 			await Promise.all(
 				newArrCollection.map(async (collection, index) => {
@@ -60,13 +61,18 @@ export default function Marketplace() {
 						let creator = collection[0].split('*/////*')[1];
 						let items = collection[1];
 						let res = await getCollectionData(creator, name);
-						console.log('res', res);
+						let getOwnerInfo: any = await getUserInfo(creator).then((res: any) => {
+							console.log(res.data.data.avatar);
+							return res.data.data;
+						});
 						let image = res.uri;
+						let ownerAva = getOwnerInfo.avatar;
 						let data = {
 							name,
 							creator,
 							items,
 							image,
+							ownerAva,
 						};
 						arrCollection.push(data);
 					}
@@ -242,100 +248,7 @@ export default function Marketplace() {
 				</Grid>
 			</ExploreCollection>
 			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 4, pb: 4, px: 2 }}>
-				<Box sx={{ textAlign: 'center', mb: 2 }}>
-					<Typography variant="h2" fontWeight={500}>
-						Featured Collections
-					</Typography>
-				</Box>
-				<Grid container spacing={1}>
-					{collections.map((collection, index: any) => (
-						<Grid
-							xs={6}
-							sm={4}
-							md={3}
-							p={1}
-							key={index}
-							onClick={() => {
-								handleCollectionDetail(collection.creator, collection.name);
-							}}
-						>
-							<Link
-								// href={`https://explorer.aptoslabs.com/account/${
-								// 	collection[0].split('*/////*')[1]
-								// }`}
-								target="_blank"
-								sx={{
-									textDecoration: 'none',
-									color: '#131740',
-									'&:hover': {
-										boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
-									},
-								}}
-							>
-								<Box
-									sx={{
-										border: '1.5px solid #e7e8ec',
-										borderRadius: '12px',
-										overflow: 'hidden',
-										cursor: 'pointer',
-										transition: 'all 0.4s',
-										padding: '12px 12px 0',
-										background: '#fff',
-										'&:hover': {
-											boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
-										},
-									}}
-								>
-									<ItemImage>
-										<Box className="main-img">
-											<img src={collection.image} alt="collection" />
-										</Box>
-									</ItemImage>
-
-									<Box py={1.5}>
-										<Typography variant="h6">{collection.name}</Typography>
-										<Stack
-											mt={1}
-											direction="row"
-											alignItems="center"
-											justifyContent="space-between"
-											gap={1}
-										>
-											<Stack direction="row" gap={1} alignItems="center">
-												<Box
-													sx={{
-														img: {
-															width: '32px',
-															height: '32px',
-															objectFit: 'cover',
-															objectPosition: 'center',
-															borderRadius: '50%',
-														},
-													}}
-												>
-													<img src={item} alt="collection" />
-												</Box>
-												<Typography variant="body1">
-													{collection.creator.slice(0, 6) +
-														'...' +
-														collection.creator.slice(
-															collection.creator.length - 4,
-															collection.creator.length
-														)}
-												</Typography>
-											</Stack>
-											<Box>
-												<Typography variant="body1">
-													{collection.items.length} items
-												</Typography>
-											</Box>
-										</Stack>
-									</Box>
-								</Box>
-							</Link>
-						</Grid>
-					))}
-				</Grid>
+				<FeaturedCollection collections={collections} />
 			</Box>
 			<ExploreCollection sx={{ py: 4 }}>
 				<Container maxWidth="xl" sx={{}}>

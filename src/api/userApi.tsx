@@ -11,5 +11,9 @@ function updateUser(data: User): Promise<Response<User>> {
 function loginUser(data: UserLoginModel) {
 	return axiosClient.post('/users/login', data);
 }
+function getUserInfo(userAddress: string) {
+	const url = baseURL + `/userAddress/${userAddress}`;
+	return axiosClient.get(url);
+}
 
-export { updateUser, loginUser };
+export { updateUser, loginUser, getUserInfo };
