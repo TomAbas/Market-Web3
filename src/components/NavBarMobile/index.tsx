@@ -14,7 +14,6 @@ const NavBarMobile: React.FC<Props> = ({ item, listCategoryMarketplace }) => {
 	const navigate = useNavigate();
 	function handleOpen() {
 		setActive(!active);
-		console.log('chay');
 	}
 	if (item.name === 'Explore') {
 		return (

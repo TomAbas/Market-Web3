@@ -45,12 +45,9 @@ const TopCollections: React.FC<Props> = ({ filter }) => {
 		}
 	}
 	useEffect(() => {
-		console.log('123s');
 		getTopCollections();
 	}, []);
-	useEffect(() => {
-		console.log(list);
-	}, [list]);
+
 	return (
 		<>
 			{loadingState.isLoading ? (
