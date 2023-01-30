@@ -36,15 +36,18 @@ import { useOutletContext } from 'react-router-dom';
 import TopCollection from './TopCollection';
 import FeaturedCollection from './FeaturedCollection';
 import { getUserInfo } from 'api/userApi';
+import { getAllItems } from 'api/items/itemsApi';
 export default function Marketplace() {
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 	const [collections, setCollections] = useState<any[]>([]);
+	const [testApi, setTest] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 	let navigate = useNavigate();
 	useEffect(() => {
 		const fetchOffers = async () => {
-			const newOffers = await getListItemResource();
-			setOffers(newOffers);
+			const newOffers = await getAllItems('2').then((res) => res.data);
+			setTest(newOffers);
 		};
 		fetchOffers();
 	}, []);
@@ -52,7 +55,6 @@ export default function Marketplace() {
 	useEffect(() => {
 		const fetchCollections = async () => {
 			let newArrCollection = await getListCollectionMarketplace(offers);
-
 			let arrCollection: any = [];
 			await Promise.all(
 				newArrCollection.map(async (collection, index) => {
@@ -78,6 +80,9 @@ export default function Marketplace() {
 				})
 			);
 			setCollections(arrCollection);
+			if (offers.length > 0) {
+				setIsLoading(false);
+			}
 		};
 		fetchCollections();
 	}, [offers]);
@@ -247,7 +252,7 @@ export default function Marketplace() {
 				</Grid>
 			</ExploreCollection>
 			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 4, pb: 4, px: 2 }}>
-				<FeaturedCollection collections={collections} />
+				<FeaturedCollection collections={collections} isLoading={isLoading} />
 			</Box>
 			<ExploreCollection sx={{ py: 4 }}>
 				<Container maxWidth="xl" sx={{}}>

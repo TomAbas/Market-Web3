@@ -14,6 +14,7 @@ export default function Items() {
 	const filterPar = useAppSelector(selectFilter);
 	const [loadingOffers, setLoadingOffers] = useState(true);
 	const [offers, setOffers] = useState<any[]>([]);
+	const [offersDisplay, setOffersDisplay] = useState<any[]>([]);
 	useEffect(() => {
 		const fetchOffers = async () => {
 			let newOffers = await getListItemResource();
@@ -28,16 +29,19 @@ export default function Items() {
 				let price = Number(item.price) / 10 ** 8;
 
 				if (filterPar.minPrice !== '' && filterPar.maxPrice !== '') {
-					return Number(filterPar.minPrice) < price && Number(filterPar.maxPrice) > price;
+					return (
+						Number(filterPar.minPrice) <= price && Number(filterPar.maxPrice) >= price
+					);
 				} else if (filterPar.minPrice !== '') {
-					return Number(filterPar.minPrice) < price;
+					return Number(filterPar.minPrice) <= price;
 				} else if (filterPar.maxPrice !== '') {
-					return Number(filterPar.maxPrice) > price;
+					return Number(filterPar.maxPrice) >= price;
 				}
 				return true;
 			});
 			const tOffers = newOffers.slice(0, 12);
-			setOffers(tOffers);
+			setOffersDisplay(tOffers);
+			// setOffers(tOffers);
 		}
 	}, [filterPar, loadingOffers]);
 	return (
@@ -56,9 +60,9 @@ export default function Items() {
 						</>
 					) : (
 						<>
-							{offers && (
+							{offersDisplay && (
 								<>
-									{offers?.map((offer: any, index: any) => (
+									{offersDisplay?.map((offer: any, index: any) => (
 										<CardNFT
 											offers={offers}
 											offer={offer}

@@ -208,73 +208,6 @@ export default function CardNFT({
 									</Stack>
 								</Box>
 							</ItemFavorite>
-
-							{/* Item creator / owner */}
-							{/* <Stack
-							direction="row"
-							sx={{
-								position: 'absolute',
-								bottom: '-10px',
-								left: '10px',
-							}}
-						>
-							<Tooltip
-								title={`Creator: ${item.creator?.substring(
-									0,
-									10
-								)}...${item.creator?.substring(37)}`}
-								arrow
-								placement="top"
-								aria-describedby="tip1"
-							>
-								<AvatarIcon>
-									{item.creatorInfo?.avatar ===
-									'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg' ? (
-										<GradIcon
-											sx={{
-												background: creatorAvatar,
-												color: '#000',
-											}}
-										/>
-									) : (
-										<Avatar
-											sx={{ width: 25, height: 25 }}
-											src={item.creatorInfo?.avatar}
-											alt="creator"
-										/>
-									)}
-								</AvatarIcon>
-							</Tooltip>
-							{item.owner[0] && item.ownerInfo && item.ownerInfo[0] && (
-								<Tooltip
-									title={`Owner: ${
-										item.owner[0]
-											? sliceAddress(item.owner[0], 6, 6)
-											: sliceAddress(NULL_ADDRESS, 6, 6)
-									}`}
-									arrow
-									placement="top"
-									aria-describedby="tip1"
-								>
-									<AvatarIcon sx={{ marginLeft: '-10px', zIndex: 1 }}>
-										{item.ownerInfo[0].avatar ===
-										'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg' ? (
-											<GradIcon
-												sx={{
-													background: ownerAvatar,
-												}}
-											/>
-										) : (
-											<Avatar
-												sx={{ width: 25, height: 25 }}
-												src={item.ownerInfo[0].avatar}
-												alt="creator"
-											/>
-										)}
-									</AvatarIcon>
-								</Tooltip>
-							)}
-						</Stack> */}
 						</ItemImage>
 
 						{/* Item info */}
@@ -305,31 +238,6 @@ export default function CardNFT({
 									<ImageBlockchain>
 										<img src={aptos} alt="aptos" />
 									</ImageBlockchain>
-									{/* <Box>
-									<Tooltip
-										title={NETWORKINFO[item.chainId].name}
-										placement="top"
-										aria-describedby="tip1"
-										arrow
-										// componentsProps={{
-										// 	tooltip: {
-										// 		sx: {
-										// 			bgcolor: 'common.black',
-										// 			'& .MuiTooltip-arrow': {
-										// 				color: 'common.black',
-										// 			},
-										// 		},
-										// 	},
-										// }}
-									>
-										<ImageBlockchain>
-											<img
-												src={NETWORKINFO[item.chainId].image}
-												alt="icon blockchain"
-											/>
-										</ImageBlockchain>
-									</Tooltip>
-								</Box> */}
 								</Box>
 							</Stack>
 							<Box sx={{ height: '21px' }}>
@@ -344,16 +252,6 @@ export default function CardNFT({
 									sx={{ paddingTop: '15px' }}
 								>
 									<Box sx={{ display: 'flex', gap: '5px' }}>
-										{/* <img src={HistoryIcon} alt="history" />
-													<span
-														style={{
-															fontWeight: 500,
-															fontSize: '14px',
-															color: '#5A5D79',
-														}}
-													>
-														View History
-													</span> */}
 										{offer.price / DECIMAL} APT
 									</Box>
 									<Typography

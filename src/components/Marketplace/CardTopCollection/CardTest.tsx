@@ -62,7 +62,7 @@ const CardTest: React.FC<Props> = ({ idx, collection, filter }) => {
 						</NameInfo>
 						{collection.volumeTrade !== 0 && (
 							<TotalInfo variant="body2">
-								$ {getVolumeTrade(filter, collection)}
+								APT {getVolumeTrade(filter, collection)}
 							</TotalInfo>
 						)}
 					</CollectionInfo>
