@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.daaf3fd5.css",
-    "main.js": "/static/js/main.06c1311d.js",
+    "main.js": "/static/js/main.2c561553.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.d69eb72d.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.fd7bcfd0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.a460d097.chunk.js",
@@ -45,6 +45,7 @@
     "static/media/icon-logout-black.svg": "/static/media/icon-logout-black.03bf7c0648288faf5d5ab2fd957bc43d.svg",
     "static/media/icon-instagram.svg": "/static/media/icon-instagram.88a9a57a9badbef9f6bbd5d946dc55fa.svg",
     "static/media/mediumicon.svg": "/static/media/mediumicon.fb4b9f6506d716cf16475d5dfee7aafc.svg",
+    "static/media/icon-filter-price.svg": "/static/media/icon-filter-price.5adcb4125939097ea7b716d39b6cb90d.svg",
     "static/media/twitter-gray.svg": "/static/media/twitter-gray.b01b146fcff4628f68238c3d888304bb.svg",
     "static/media/twitter-white.svg": "/static/media/twitter-white.095eba5f0d4aad7bdc4354dbd1204386.svg",
     "static/media/discord-gray.svg": "/static/media/discord-gray.831fe8b6b4083467199beb325dd09d74.svg",
@@ -71,6 +72,6 @@
   },
   "entrypoints": [
     "static/css/main.daaf3fd5.css",
-    "static/js/main.06c1311d.js"
+    "static/js/main.2c561553.js"
   ]
 }
