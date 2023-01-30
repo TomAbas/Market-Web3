@@ -62,7 +62,6 @@ export default function Marketplace() {
 						let items = collection[1];
 						let res = await getCollectionData(creator, name);
 						let getOwnerInfo: any = await getUserInfo(creator).then((res: any) => {
-							console.log(res.data.data.avatar);
 							return res.data.data;
 						});
 						let image = res.uri;

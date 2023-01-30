@@ -12,6 +12,8 @@ export interface FieldInputProps {
 	readOnly?: boolean;
 	sx?: any;
 	otherProps?: any;
+	min?: any;
+	max?: any;
 }
 
 FieldInput.defaultProps = {
@@ -29,9 +31,13 @@ function FieldInput({
 	readOnly,
 	sx,
 	otherProps,
+	min,
+	max,
 }: FieldInputProps) {
 	return (
 		<Input
+			min={min}
+			max={max}
 			type={type}
 			step="any"
 			className={className}
