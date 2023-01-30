@@ -130,7 +130,7 @@ const listCategoryMarketplace = [
 const listNav = [
 	{
 		id: 1,
-		name: 'Marketplace',
+		name: 'Explore',
 		link: '/',
 	},
 	{
@@ -406,65 +406,7 @@ const Header: React.FC = () => {
 										</NavLinkBigScreen>
 									</NavigationItemBigScreen>
 								</NavigationBarBigScreen>
-							) : // <Stack sx={{ flexDirection: 'row', gap: '60px' }}>
-							// 	{listNav.map((item) => (
-							// 		<>
-							// 			<NavBar item={item} key={item.id} />
-							// 			<DropdownMenu
-							// 				className="dropdownMenu"
-							// 				sx={{ minWidth: '165px' }}
-							// 			>
-							// 				<Stack>
-							// 					{listCategoryMarketplace.map(
-							// 						(category: any, index: number) => (
-							// 							<DropdownMenuLink
-							// 								href={
-							// 									category.isFilter
-							// 										? category.link +
-							// 										  '?category=' +
-							// 										  category.title
-							// 										: category.link
-							// 								}
-							// 								key={index}
-							// 							>
-							// 								<Stack
-							// 									direction="row"
-							// 									alignItems="center"
-							// 								>
-							// 									<Box width="30px">
-							// 										<img
-							// 											style={{
-							// 												width: '100%',
-							// 												height: '100%',
-							// 												boxShadow:
-							// 													'2px 2px 2px 0 rgba(0,0,0,0.2)',
-							// 												borderRadius: '50%',
-							// 											}}
-							// 											src={category.icon}
-							// 											alt={category.title}
-							// 										/>
-							// 									</Box>
-							// 									<Typography
-							// 										variant="body2"
-							// 										sx={{
-							// 											padding: '0 0 0 8px',
-							// 										}}
-							// 										textAlign="center"
-							// 										noWrap
-							// 										fontStyle="italic"
-							// 									>
-							// 										{category.title}
-							// 									</Typography>
-							// 								</Stack>
-							// 							</DropdownMenuLink>
-							// 						)
-							// 					)}
-							// 				</Stack>
-							// 			</DropdownMenu>
-							// 		</>
-							// 	))}
-							// </Stack>
-							null}
+							) : null}
 						</Stack>
 						<Stack direction="row" alignItems="center" gap="8px">
 							<Stack direction="row" gap="10px">
@@ -486,9 +428,15 @@ const Header: React.FC = () => {
 													openMoreOption();
 												}}
 											>
-												<DropDownContent ref={ref}>
+												<DropDownContent ref={ref} sx={{ padding: '10px' }}>
 													{listNav.map((item) => (
-														<NavBarMobile item={item} key={item.id} />
+														<NavBarMobile
+															item={item}
+															key={item.id}
+															listCategoryMarketplace={
+																listCategoryMarketplace
+															}
+														/>
 													))}
 												</DropDownContent>
 											</ClickAwayListener>
