@@ -31,3 +31,15 @@ export interface OptionSelectCustom<T> {
 	image?: string;
 	chainId?: number;
 }
+
+export interface filterNft {
+	status?: number[];
+	collectionId?: string[];
+	tokenSymbol?: string;
+	minPrice: string;
+	maxPrice: string;
+	itemName?: string;
+	owner?: string;
+	text?: string;
+	isFiltering: boolean;
+}
