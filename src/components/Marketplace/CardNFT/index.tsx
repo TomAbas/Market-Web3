@@ -35,7 +35,7 @@ import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import { buyItem } from '../../../api/collectionApi';
 import { changePriceToToken } from 'utils/function';
 import { useEffect, useState } from 'react';
-import { BuyItemAptos } from '../../../utils/putAptos';
+import useBuyItemAptos from '../../../utils/putAptos';
 
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 // const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -70,6 +70,7 @@ export default function CardNFT({
 		activeStep,
 		statusBuyNft,
 	} = useControlModal();
+	const { buyItemAptos } = useBuyItemAptos(offer);
 	const [itemPrice, setItemPrice] = useState<number>();
 	function changePrice() {
 		setItemPrice(changePriceToToken(offer.price));
@@ -97,14 +98,11 @@ export default function CardNFT({
 		},
 	];
 	let navigate = useNavigate();
-	const { account, signAndSubmitTransaction } = useWallet();
-	const dispatch = useAppDispatch();
-
 	const encodeURI = (uri: string) => {
 		return encodeURIComponent(uri);
 	};
 	const claimOffer = async () => {
-		BuyItemAptos(offer);
+		await buyItemAptos(handleNext, startLoading, failToComplete, completeTaskSuccess);
 	};
 
 	const handleNavigate = (status: boolean) => {
@@ -114,11 +112,7 @@ export default function CardNFT({
 	};
 
 	const handleClickItem = () => {
-		navigate(
-			`/item?creator=${encodeURI(offer.creator)}&collection=${encodeURI(
-				offer.collectionInfo.collectionName
-			)}&name=${encodeURI(offer.itemName)}`
-		);
+		navigate(`/item/${offer._id}`);
 	};
 	useEffect(() => {
 		changePrice();

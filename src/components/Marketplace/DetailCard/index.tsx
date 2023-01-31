@@ -2,7 +2,7 @@
 import { Box, Stack, Typography, Skeleton } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
-import { useNavigate, useOutletContext, useLocation } from 'react-router-dom';
+import { useNavigate, useOutletContext, useLocation, useParams } from 'react-router-dom';
 import useControlModal from 'hooks/useControlModal';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useAppDispatch } from '../../../redux/hooks';
@@ -14,11 +14,18 @@ import { toast } from 'react-toastify';
 import { buyItem, cancelOrder } from '../../../api/collectionApi';
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import defaultImg from '../../../assets/icons/default-img-input2.png';
+import { getItemDetail } from 'api/items/itemsApi';
+import { nftItem } from 'models/item';
+import useBuyItemAptos from 'utils/putAptos';
+import { getBalanceToken } from 'service/aptos.service';
+import { changePriceToToken } from 'utils/function';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
+const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const DECIMAL = 100000000;
 
 export default function DetailCard() {
+	let { itemId } = useParams();
 	const search = useLocation().search;
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
@@ -28,8 +35,11 @@ export default function DetailCard() {
 	const [statusWithdraw, setStatusWithdraw] = useState('Cancel');
 	const dispatch = useAppDispatch();
 	let navigate = useNavigate();
-	const [item, setItem] = useState<any>();
+	const [item, setItem] = useState<nftItem>();
+	const [amountItemResource, setAmountItemResource] = useState('');
 	const [loadingItem, setLoadingItem] = useState(true);
+	const [itemPrice, setItemPrice] = useState<number>();
+	const { buyItemAptos } = useBuyItemAptos(item!);
 	const {
 		handleNext,
 		handleOpenModalBuy,
@@ -68,68 +78,21 @@ export default function DetailCard() {
 			navigate('/profile');
 		}
 	};
-	const fetchOffers = () => {
-		const newItem = offers.find(
-			(item: any) =>
-				item.token_id.token_data_id.creator === creator &&
-				item.token_id.token_data_id.collection === collection &&
-				item.token_id.token_data_id.name === name
-		);
-		if (newItem) {
+	const fetchOffers = async () => {
+		try {
+			let item = await getItemDetail(itemId!).then((res) => res.data);
+			getAmountItemResoucre(item);
+			changePrice(item);
+			setItem(item);
+		} catch (error) {
+			navigate('/');
+		} finally {
 			setLoadingItem(false);
 		}
-
-		setItem(newItem);
 	};
-	useEffect(() => {
-		fetchOffers();
-	}, [offers]);
 
 	const claimOffer = async () => {
-		if (!account) {
-			dispatch(openFirstModal());
-			return;
-		}
-		startLoading();
-		try {
-			const payload: TransactionPayload = {
-				type: 'entry_function_payload',
-				function: `${MARKET_ADDRESS}::market::buy_token`,
-				type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
-				arguments: [
-					item?.token_id.token_data_id.creator,
-					item?.token_id.token_data_id.collection,
-					item?.token_id.token_data_id.name,
-					item?.token_id.property_version,
-				],
-			};
-
-			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
-				(res: any) => {
-					let listItem: any = {
-						maker: account?.address?.toString(),
-						chainId: '2',
-						price: item.price,
-						quantity: item.amount,
-						to: MARKET_ADDRESS,
-						txHash: res.hash,
-						itemName: name,
-						collectionName: collection,
-						creator: creator,
-						owner: item?.owner,
-					};
-					buyItem(listItem);
-				}
-			);
-			console.log(item);
-
-			completeTaskSuccess();
-			handleNext();
-			navigate('/profile');
-		} catch {
-			failToComplete();
-			handleNext();
-		}
+		await buyItemAptos(handleNext, startLoading, failToComplete, completeTaskSuccess);
 	};
 
 	const navigateCollection = () => {
@@ -140,7 +103,26 @@ export default function DetailCard() {
 			)}&collection=${new URLSearchParams(search).get('collection')}`
 		);
 	};
-
+	function changePrice(item: nftItem) {
+		setItemPrice(changePriceToToken(item.price));
+	}
+	async function getAmountItemResoucre(item: nftItem) {
+		try {
+			console.log(MARKET_ADDRESS);
+			console.log(item);
+			const amountSell = await getBalanceToken(
+				item.status === 1
+					? '0xed08f5856d2e5a1ab7282964922b7ec8c18b85c911d99b3f23eb25af5965d270'!
+					: item.owner[0],
+				item.creator,
+				item.collectionInfo.collectionName!,
+				item.itemName,
+				'2'
+			);
+			console.log(amountSell);
+			setAmountItemResource(amountSell);
+		} catch (error) {}
+	}
 	const handleWithdrawItem = async () => {
 		if (!account) {
 			dispatch(openFirstModal());
@@ -153,10 +135,10 @@ export default function DetailCard() {
 				function: `${MARKET_ADDRESS}::market::withdraw_token`,
 				type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
 				arguments: [
-					item?.token_id.token_data_id.creator,
-					item?.token_id.token_data_id.collection,
-					item?.token_id.token_data_id.name,
-					item?.token_id.property_version,
+					item?.creator,
+					item?.collectionInfo.collectionName,
+					item?.itemName,
+					'0',
 				],
 			};
 
@@ -164,8 +146,8 @@ export default function DetailCard() {
 				let listItem: any = {
 					maker: account?.address?.toString(),
 					chainId: '2',
-					price: item.price,
-					quantity: item.amount,
+					price: item?.price,
+					quantity: amountItemResource,
 					to: MARKET_ADDRESS,
 					txHash: res.hash,
 					itemName: name,
@@ -177,12 +159,15 @@ export default function DetailCard() {
 			});
 
 			toast.success('Successfully canceled listing');
-			// navigate('/profile');
+			navigate('/profile');
 		} catch {
 			setStatusWithdraw('Cancel');
 		}
 	};
 
+	useEffect(() => {
+		fetchOffers();
+	}, [itemId]);
 	return (
 		<>
 			<Box sx={{ pt: 16, pb: 4, maxWidth: '1440px', mx: 'auto', px: 2 }}>
@@ -196,7 +181,7 @@ export default function DetailCard() {
 											className="main-img"
 											sx={{ width: '600px', height: '600px' }}
 										>
-											<img src={item?.uri} alt="item" />
+											<img src={item?.itemMedia} alt="item" />
 										</Box>
 									</ItemImage>
 								</Skeleton>
@@ -214,9 +199,9 @@ export default function DetailCard() {
 							<ItemImage sx={{ width: '50%', paddingTop: '50%' }}>
 								<Box className="main-img">
 									<MediaDisplayCard
-										media={item?.uri}
+										media={item!.itemMedia}
 										preview={defaultImg}
-										name={item?.token_id.token_data_id.name}
+										name={item!.itemName}
 									/>
 								</Box>
 							</ItemImage>
@@ -227,45 +212,51 @@ export default function DetailCard() {
 									sx={{ color: '#007aff', cursor: 'pointer' }}
 									onClick={navigateCollection}
 								>
-									{item?.token_id.token_data_id.collection}
+									{item?.collectionInfo.collectionName}
 								</Typography>
 								<Typography variant="h4" fontWeight={500}>
-									{item?.token_id.token_data_id.name}
+									{item?.itemName}
 								</Typography>
-								<p>{item?.description}</p>
-
-								<p>Owned Quantity : {item?.amount}</p>
+								<Typography variant="body1">{item?.description}</Typography>
+								{item?.status === 1 && (
+									<Typography variant="body1">
+										Owned Quantity : {amountItemResource}
+									</Typography>
+								)}
 								<Typography variant="body1">
 									Owner:{' '}
 									<a
 										href={`https://explorer.aptoslabs.com/account/${item?.owner}`}
 										target="_blank"
 									>
-										{item?.owner.slice(0, 6) +
-											'...' +
-											item?.owner.slice(
-												item?.owner.length - 4,
-												item?.owner.length
-											)}
+										{item!.owner.length > 0
+											? item?.owner[0].slice(0, 6) +
+											  '...' +
+											  item?.owner[0].slice(
+													item?.owner[0].length - 4,
+													item?.owner[0].length
+											  )
+											: ''}
 									</a>
 								</Typography>
 								<Typography variant="body1">
 									Creator:
 									<a
-										href={`https://explorer.aptoslabs.com/account/${item?.token_id.token_data_id.creator}`}
+										href={`https://explorer.aptoslabs.com/account/${item?.creator}`}
 										target="_blank"
 									>
-										{item?.token_id.token_data_id.creator.slice(0, 6) +
+										{item?.creator.slice(0, 6) +
 											'...' +
-											item?.token_id.token_data_id.creator.slice(
-												item?.token_id.token_data_id.creator.length - 4,
-												item?.token_id.token_data_id.creator.length
+											item?.creator.slice(
+												item?.creator.length - 4,
+												item?.creator.length
 											)}
 									</a>
 								</Typography>
-								<Typography variant="body1">
-									Price: {item?.price / DECIMAL} APT
-								</Typography>
+								{item?.status === 1 && (
+									<Typography variant="body1">Price: {itemPrice} APT</Typography>
+								)}
+
 								<Box
 									sx={{
 										button: {
@@ -288,16 +279,20 @@ export default function DetailCard() {
 										},
 									}}
 								>
-									{item?.owner != account?.address ? (
-										item?.is_cancle == false && (
-											<button onClick={handleOpenModalBuy}>Buy now</button>
-										)
-									) : (
+									{item?.status === 1 ? (
 										<>
-											<button onClick={handleWithdrawItem}>
-												{statusWithdraw}
-											</button>
+											{item?.owner[0] != account?.address ? (
+												<button onClick={handleOpenModalBuy}>
+													Buy now
+												</button>
+											) : (
+												<button onClick={handleWithdrawItem}>
+													{statusWithdraw}
+												</button>
+											)}
 										</>
+									) : (
+										<></>
 									)}
 								</Box>
 							</Stack>

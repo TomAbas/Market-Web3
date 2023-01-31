@@ -25,10 +25,15 @@ import ScrollToTop from 'hooks/useScrollToTop';
 //context
 import AudioProvider from './contexts/AudioContext';
 import { getAllItems } from 'api/items/itemsApi';
+import useGetNftOrder from 'hooks/useGetNftOrder';
 function App() {
 	const [loadingOffers, setLoadingOffers] = useState(true);
 	const [trigger, setTrigger] = useState(false);
 	const [offers, setOffers] = useState<any[]>([]);
+	const { getListNFTOrders } = useGetNftOrder();
+	useEffect(() => {
+		getListNFTOrders();
+	}, []);
 	useEffect(() => {
 		const fetchOffers = async () => {
 			const newOffers: any[] = await getAllItems('2').then((res) => res.data.slice(0, 12));

@@ -9,5 +9,8 @@ function getOfferOfItem(itemId: string): Promise<Response<any>> {
 	const url = `/item/get-all/chainId/${itemId}`;
 	return ClientAxios.get(url).then((res) => res.data);
 }
-
-export { getAllItems, getOfferOfItem };
+function getItemDetail(itemId: string): Promise<Response<any>> {
+	const url = `/item/get-info/itemId/${itemId}`;
+	return ClientAxios.get(url).then((res) => res.data);
+}
+export { getAllItems, getOfferOfItem, getItemDetail };

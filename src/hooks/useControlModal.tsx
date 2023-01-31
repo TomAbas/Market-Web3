@@ -20,6 +20,7 @@ const useControlModal = () => {
 		func();
 	};
 	const startLoading = () => {
+		console.log('chayt');
 		setStatusBuyNft({ ...statusBuyNft, isLoading: true });
 	};
 	const completeTaskSuccess = () => {
