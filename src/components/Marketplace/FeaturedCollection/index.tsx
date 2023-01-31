@@ -9,7 +9,7 @@ interface Props {
 	isLoading: boolean;
 }
 const FeaturedCollection: React.FC<Props> = ({ collections, isLoading }) => {
-	let arr = [1, 2, 3, 4];
+	let arr = new Array(4);
 	let navigate = useNavigate();
 	function handleCollectionDetail(creator: string, collection: string) {
 		navigate(
@@ -44,7 +44,10 @@ const FeaturedCollection: React.FC<Props> = ({ collections, isLoading }) => {
 								p={1}
 								key={index}
 								onClick={() => {
-									handleCollectionDetail(collection.creator, collection.name);
+									handleCollectionDetail(
+										collection.useAddress,
+										collection.collectionName
+									);
 								}}
 							>
 								<Link
@@ -76,12 +79,14 @@ const FeaturedCollection: React.FC<Props> = ({ collections, isLoading }) => {
 									>
 										<ItemImage>
 											<Box className="main-img">
-												<img src={collection.image} alt="collection" />
+												<img src={collection.logo} alt="collection" />
 											</Box>
 										</ItemImage>
 
 										<Box py={1.5}>
-											<Typography variant="h6">{collection.name}</Typography>
+											<Typography variant="h6">
+												{collection.collectionName}
+											</Typography>
 											<Stack
 												mt={1}
 												direction="row"
@@ -102,22 +107,22 @@ const FeaturedCollection: React.FC<Props> = ({ collections, isLoading }) => {
 														}}
 													>
 														<img
-															src={collection.ownerAva}
+															src={collection.ownerInfo.avatar}
 															alt="collection"
 														/>
 													</Box>
 													<Typography variant="body1">
-														{collection.creator.slice(0, 6) +
+														{collection.userAddress.slice(0, 6) +
 															'...' +
-															collection.creator.slice(
-																collection.creator.length - 4,
-																collection.creator.length
+															collection.userAddress.slice(
+																collection.userAddress.length - 4,
+																collection.userAddress.length
 															)}
 													</Typography>
 												</Stack>
 												<Box>
 													<Typography variant="body1">
-														{collection.items.length} items
+														{collection.listItem.length} items
 													</Typography>
 												</Box>
 											</Stack>

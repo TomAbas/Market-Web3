@@ -24,27 +24,35 @@ import {
 	DropDownOption,
 	LinkWrapper,
 } from './styled';
-
 import TwitterIcon from '../../../assets/icons/twitter-white.svg';
 import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
+import HeartFullWhite from '../../../assets/icons/heart-full-white.svg';
 import aptos from '../../../assets/images/card/aptos.jpg';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
 import { toast } from 'react-toastify';
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import { buyItem } from '../../../api/collectionApi';
+import { changePriceToToken } from 'utils/function';
+import { useEffect, useState } from 'react';
+import { BuyItemAptos } from '../../../utils/putAptos';
+
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 // const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const DECIMAL = 100000000;
 
 export default function CardNFT({
+	itemLiked,
+	likeItem,
 	offer,
 	setOffers,
 	offers,
 	index,
 	loadingOffers,
 }: {
+	itemLiked: (itemId: string) => boolean;
+	likeItem: any;
 	offer: any;
 	setOffers: any;
 	offers: any;
@@ -62,6 +70,10 @@ export default function CardNFT({
 		activeStep,
 		statusBuyNft,
 	} = useControlModal();
+	const [itemPrice, setItemPrice] = useState<number>();
+	function changePrice() {
+		setItemPrice(changePriceToToken(offer.price));
+	}
 	const steps = [
 		{
 			label: 'Confirm order',
@@ -92,56 +104,7 @@ export default function CardNFT({
 		return encodeURIComponent(uri);
 	};
 	const claimOffer = async () => {
-		if (!account) {
-			dispatch(openFirstModal());
-			return;
-		}
-
-		startLoading();
-		try {
-			const payload: TransactionPayload = {
-				type: 'entry_function_payload',
-				function: `${MARKET_ADDRESS}::market::buy_token`,
-				type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
-				arguments: [
-					offer.token_id.token_data_id.creator,
-					offer.token_id.token_data_id.collection,
-					offer.token_id.token_data_id.name,
-					offer.token_id.property_version,
-				],
-			};
-
-			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
-				(res) => res.hash
-			);
-			console.log(offer);
-			let listItem: any = {
-				maker: account?.address?.toString(),
-				chainId: '2',
-				price: offer.price,
-				quantity: offer.amount,
-				to: MARKET_ADDRESS,
-				txHash: hash,
-				itemName: offer.token_id.token_data_id.name,
-				collectionName: offer.token_id.token_data_id.collection,
-				creator: offer.token_id.token_data_id.creator,
-				owner: offer.owner,
-			};
-			buyItem(listItem);
-			toast.success('Successfully purchased an item');
-			const fetchOffers = async () => {
-				let newList = offers.filter((_item: any, i: any) => i !== index);
-				setOffers(newList);
-			};
-			fetchOffers();
-			completeTaskSuccess();
-
-			handleNext();
-		} catch {
-			toast.error('Something went wrong. Try again!');
-			failToComplete();
-			handleNext();
-		}
+		BuyItemAptos(offer);
 	};
 
 	const handleNavigate = (status: boolean) => {
@@ -152,42 +115,32 @@ export default function CardNFT({
 
 	const handleClickItem = () => {
 		navigate(
-			`/item?creator=${encodeURI(
-				offer.token_id.token_data_id.creator
-			)}&collection=${encodeURI(offer.token_id.token_data_id.collection)}&name=${encodeURI(
-				offer.token_id.token_data_id.name
-			)}`
+			`/item?creator=${encodeURI(offer.creator)}&collection=${encodeURI(
+				offer.collectionInfo.collectionName
+			)}&name=${encodeURI(offer.itemName)}`
 		);
 	};
-
+	useEffect(() => {
+		changePrice();
+	}, []);
 	return (
 		<>
-			<Grid xs={6} sm={4} md={3} p={1} onClick={handleClickItem}>
+			<Grid xs={6} sm={4} md={3} p={1}>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
 
 						<ItemImage>
-							<Box className="main-img">
+							<Box className="main-img" onClick={handleClickItem}>
 								<MediaDisplayCard
-									media={offer?.uri}
+									media={offer?.itemMedia}
 									preview={TwitterIcon}
-									name={offer?.token_id.token_data_id.name}
+									name={offer?.itemName}
 								/>
-								{/* <img src={offer.uri} alt="item" /> */}
 							</Box>
 							{/* Item favorite */}
 							<ItemFavorite>
 								<Box mr={1.5}>
-									{/* <TwitterShareButton
-									url={`${RELATED_URLS.MetaSpacecyHomePage}/#${PATH_ITEM.detail}/${item?._id}`}
-									title={`Look what I found! ${item?.itemName} collectible`}
-									hashtags={['Music', 'Game']}
-									via="Metaspacecy"
-									style={{ width: '100%' }}
-								>
-									<img src={TwitterIcon} alt="icon twitter" />
-								</TwitterShareButton> */}
 									<img src={TwitterIcon} alt="icon twitter" />
 								</Box>
 								<Box>
@@ -197,14 +150,25 @@ export default function CardNFT({
 												cursor: 'pointer',
 											}}
 										>
-											{/* {likeState ? (
-											<IconFavorite src={HeartFullRed} alt="icon favorite" />
-										) : (
-											<IconFavorite src={HeartWhite} alt="icon favorite" />
-										)} */}
-											<IconFavorite src={HeartFullRed} alt="icon favorite" />
+											{itemLiked(offer._id) ? (
+												<IconFavorite
+													src={HeartFullRed}
+													alt="icon favorite"
+													onClick={() => {
+														likeItem(offer._id, false);
+													}}
+												/>
+											) : (
+												<IconFavorite
+													src={HeartFullWhite}
+													alt="icon favorite"
+													onClick={() => {
+														likeItem(offer._id, true);
+													}}
+												/>
+											)}
 										</Box>
-										<Typography variant="body1">1</Typography>
+										<Typography variant="body1">{offer.countFav}</Typography>
 									</Stack>
 								</Box>
 							</ItemFavorite>
@@ -226,14 +190,15 @@ export default function CardNFT({
 										alignItems: 'center',
 										gap: '8px',
 									}}
+									onClick={handleClickItem}
 								>
 									<Typography
 										variant="subtitle1"
 										fontWeight="500"
 										noWrap
-										sx={{ cursor: 'default' }}
+										sx={{ cursor: 'pointer' }}
 									>
-										{offer.token_id.token_data_id.name}
+										{offer.itemName}
 									</Typography>
 									<ImageBlockchain>
 										<img src={aptos} alt="aptos" />
@@ -251,20 +216,39 @@ export default function CardNFT({
 									spacing={1}
 									sx={{ paddingTop: '15px' }}
 								>
-									<Box sx={{ display: 'flex', gap: '5px' }}>
-										{offer.price / DECIMAL} APT
-									</Box>
+									{offer.status === 0 ? (
+										<Box sx={{ display: 'flex', gap: '5px' }}>
+											<Typography
+												variant="subtitle2"
+												sx={{
+													fontWeight: '300',
+												}}
+											>
+												Unlisted
+											</Typography>
+										</Box>
+									) : (
+										<Box sx={{ display: 'flex', gap: '5px' }}>
+											{itemPrice} APT
+										</Box>
+									)}
+
 									<Typography
 										onClick={(e) => {
 											e.stopPropagation();
 											handleOpenModalBuy();
 										}}
-										variant="body2"
+										variant="subtitle2"
 										sx={{
-											fontWeight: offer.is_cancle ? '300' : '600',
+											color:
+												offer.status === 0
+													? 'rgba(0, 0, 0, 0.3)'
+													: 'rgb(0, 122, 255)',
+											fontWeight: '600',
 											'&:hover': {
 												opacity: '1',
 											},
+											pointerEvents: offer.status === 0 ? 'none' : 'all',
 										}}
 									>
 										Buy Now

@@ -9,8 +9,10 @@ import { useOutletContext } from 'react-router-dom';
 import { getListItemResource } from 'utils/dataResource';
 import { selectFilter } from 'redux/slices/nftFilter';
 import { useAppSelector } from 'redux/hooks';
+import useInteraction from 'hooks/useInteraction';
 export default function Items() {
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	const { checkIsLike, likeItem } = useInteraction();
 	const filterPar = useAppSelector(selectFilter);
 	const [loadingOffers, setLoadingOffers] = useState(true);
 	const [offers, setOffers] = useState<any[]>([]);
@@ -64,6 +66,8 @@ export default function Items() {
 								<>
 									{offersDisplay?.map((offer: any, index: any) => (
 										<CardNFT
+											itemLiked={checkIsLike}
+											likeItem={likeItem}
 											offers={offers}
 											offer={offer}
 											setOffers={setOffers}

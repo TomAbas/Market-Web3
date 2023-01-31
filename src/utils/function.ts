@@ -29,3 +29,7 @@ export const sliceString = (string: string, limit = 0) => {
 	}
 	return '';
 };
+
+export const changePriceToToken = (wei: string) => {
+	return Number(wei) / 10 ** 8;
+};

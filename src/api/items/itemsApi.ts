@@ -5,5 +5,9 @@ function getAllItems(chainId: string): Promise<Response<any>> {
 	const url = `/item/get-all/chainId/${chainId}`;
 	return ClientAxios.get(url).then((res) => res.data);
 }
+function getOfferOfItem(itemId: string): Promise<Response<any>> {
+	const url = `/item/get-all/chainId/${itemId}`;
+	return ClientAxios.get(url).then((res) => res.data);
+}
 
-export { getAllItems };
+export { getAllItems, getOfferOfItem };
