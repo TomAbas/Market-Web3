@@ -125,7 +125,7 @@ export default function CardNFT({
 	}, []);
 	return (
 		<>
-			<Grid xs={6} sm={4} md={3} p={1}>
+			<Grid xs={6} sm={4} md={3} p={1} sx={{ transition: 'all 0.5s ease', animation: '' }}>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}

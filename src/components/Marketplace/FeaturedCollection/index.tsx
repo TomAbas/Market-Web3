@@ -45,7 +45,7 @@ const FeaturedCollection: React.FC<Props> = ({ collections, isLoading }) => {
 								key={index}
 								onClick={() => {
 									handleCollectionDetail(
-										collection.useAddress,
+										collection.userAddress,
 										collection.collectionName
 									);
 								}}
