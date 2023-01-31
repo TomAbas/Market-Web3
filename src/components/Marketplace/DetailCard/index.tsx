@@ -11,7 +11,7 @@ import ModalBuy from 'components/ModalBuy/ModalBuy';
 // import { getListItemResource } from '../../../utils/dataResource';
 import { ItemImage } from '../styled';
 import { toast } from 'react-toastify';
-import { buyItem } from '../../../api/collectionApi';
+import { buyItem, cancelOrder } from '../../../api/collectionApi';
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import defaultImg from '../../../assets/icons/default-img-input2.png';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
@@ -105,23 +105,24 @@ export default function DetailCard() {
 			};
 
 			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
-				(res) => res.hash
+				(res: any) => {
+					let listItem: any = {
+						maker: account?.address?.toString(),
+						chainId: '2',
+						price: item.price,
+						quantity: item.amount,
+						to: MARKET_ADDRESS,
+						txHash: res.hash,
+						itemName: name,
+						collectionName: collection,
+						creator: creator,
+						owner: item?.owner,
+					};
+					buyItem(listItem);
+				}
 			);
 			console.log(item);
-			let listItem: any = {
-				maker: account?.address?.toString(),
-				chainId: '2',
-				price: item.price,
-				quantity: item.amount,
-				to: MARKET_ADDRESS,
-				txHash: hash,
-				itemName: name,
-				collectionName: collection,
-				creator: creator,
-				owner: item?.owner,
-			};
 
-			buyItem(listItem);
 			completeTaskSuccess();
 			handleNext();
 			navigate('/profile');
@@ -159,9 +160,24 @@ export default function DetailCard() {
 				],
 			};
 
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 });
+			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
+				let listItem: any = {
+					maker: account?.address?.toString(),
+					chainId: '2',
+					price: item.price,
+					quantity: item.amount,
+					to: MARKET_ADDRESS,
+					txHash: res.hash,
+					itemName: name,
+					collectionName: collection,
+					creator: creator,
+					owner: item?.owner,
+				};
+				cancelOrder(listItem);
+			});
+
 			toast.success('Successfully canceled listing');
-			navigate('/profile');
+			// navigate('/profile');
 		} catch {
 			setStatusWithdraw('Cancel');
 		}

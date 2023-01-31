@@ -28,4 +28,9 @@ async function buyItem(listItemInfo: Order) {
 	return axiosClient.post(url, listItemInfo);
 }
 
-export { createCollection, getCollectionByUserAddress, createItem, sellItem, buyItem };
+async function cancelOrder(listItemInfo: Order) {
+	const url = `order/cancel-order/userAddress/${listItemInfo.maker}/chainId/${listItemInfo.chainId}`;
+	return axiosClient.post(url, listItemInfo);
+}
+
+export { createCollection, getCollectionByUserAddress, createItem, sellItem, buyItem, cancelOrder };

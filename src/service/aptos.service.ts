@@ -42,17 +42,10 @@ export const getCollectionData = async (creator: string, collectionName: string)
 	const client = new AptosClient(APTOS_NODE_URL[chainId]);
 	let tokenClient = new TokenClient(client);
 	return tokenClient.getCollectionData(creator, collectionName);
-	// const resources = await this.aptosClient.getAccountResources(creator);
-	// const accountResource: { type: Gen.MoveStructTag; data: any } = resources.find(
-	// 	(r) => r.type === '0x3::token::Collections'
-	// )!;
-	// const { handle }: { handle: string } = accountResource.data.collection_data;
-	// const getCollectionTableItemRequest: Gen.TableItemRequest = {
-	// 	key_type: '0x1::string::String',
-	// 	value_type: '0x3::token::CollectionData',
-	// 	key: collectionName,
-	// };
 };
-// getBalanceToken(address, tokenId);
-// new Promise((resolve, reject) => {});
-// const bobBalance3 = await tokenClient.getTokenForAccount(bob.address(), tokenId);
+
+export const getItemData = async (creator: string, collectionName: string, itemName: string) => {
+	const client = new AptosClient(APTOS_NODE_URL[chainId]);
+	let tokenClient = new TokenClient(client);
+	return tokenClient.getTokenData(creator, collectionName, itemName);
+};
