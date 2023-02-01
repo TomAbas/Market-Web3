@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Stack, Typography, Skeleton } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import { useWallet } from '@manahippo/aptos-wallet-adapter';
+
 import { useNavigate, useOutletContext, useLocation, useParams } from 'react-router-dom';
 import useControlModal from 'hooks/useControlModal';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
-import { useAppDispatch } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { openFirstModal } from '../../../redux/slices/modalWallet';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
+import ModalSell from 'components/ModelSell/ModelSell';
 // import { getListItemResource } from '../../../utils/dataResource';
 import { ItemImage } from '../styled';
 import { toast } from 'react-toastify';
@@ -19,27 +20,31 @@ import { nftItem } from 'models/item';
 import useBuyItemAptos from 'utils/putAptos';
 import { getBalanceToken } from 'service/aptos.service';
 import { changePriceToToken } from 'utils/function';
-const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
-const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
-const DECIMAL = 100000000;
+import { selectListNftOrders } from 'redux/slices/orderResource';
+import { getItemFromOrder } from 'utils/dataResource';
+import { selectUser } from 'redux/slices/userInfo';
 
 export default function DetailCard() {
 	let { itemId } = useParams();
 	const search = useLocation().search;
-	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
-	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
-	const name = decodeURIComponent(new URLSearchParams(search).get('name') || '');
-	const [offers] = useOutletContext<any>();
-	const { account, signAndSubmitTransaction } = useWallet();
-	const [statusWithdraw, setStatusWithdraw] = useState('Cancel');
-	const dispatch = useAppDispatch();
-	let navigate = useNavigate();
 	const [item, setItem] = useState<nftItem>();
-	const [amountItemResource, setAmountItemResource] = useState('');
 	const [loadingItem, setLoadingItem] = useState(true);
 	const [itemPrice, setItemPrice] = useState<number>();
-	const { buyItemAptos } = useBuyItemAptos(item!);
+	const [itemResource, setItemResource] = useState<any>();
+	const {
+		buyItemAptos,
+		handleWithdrawItem,
+		statusWithdraw,
+		sellItemAptos,
+		setPrice,
+		price,
+		supply,
+		statusList,
+		handleValidateAmount,
+	} = useBuyItemAptos(item!);
+	const navigate = useNavigate();
+	const listNftOrders = useAppSelector(selectListNftOrders);
+	const userInfo = useAppSelector(selectUser);
 	const {
 		handleNext,
 		handleOpenModalBuy,
@@ -81,7 +86,6 @@ export default function DetailCard() {
 	const fetchOffers = async () => {
 		try {
 			let item = await getItemDetail(itemId!).then((res) => res.data);
-			getAmountItemResoucre(item);
 			changePrice(item);
 			setItem(item);
 		} catch (error) {
@@ -90,7 +94,6 @@ export default function DetailCard() {
 			setLoadingItem(false);
 		}
 	};
-
 	const claimOffer = async () => {
 		await buyItemAptos(handleNext, startLoading, failToComplete, completeTaskSuccess);
 	};
@@ -105,66 +108,8 @@ export default function DetailCard() {
 	};
 	function changePrice(item: nftItem) {
 		setItemPrice(changePriceToToken(item.price));
+		setItemResource(getItemFromOrder(listNftOrders, item!));
 	}
-	async function getAmountItemResoucre(item: nftItem) {
-		try {
-			console.log(MARKET_ADDRESS);
-			console.log(item);
-			const amountSell = await getBalanceToken(
-				item.status === 1
-					? '0xed08f5856d2e5a1ab7282964922b7ec8c18b85c911d99b3f23eb25af5965d270'!
-					: item.owner[0],
-				item.creator,
-				item.collectionInfo.collectionName!,
-				item.itemName,
-				'2'
-			);
-			console.log(amountSell);
-			setAmountItemResource(amountSell);
-		} catch (error) {}
-	}
-	const handleWithdrawItem = async () => {
-		if (!account) {
-			dispatch(openFirstModal());
-			return;
-		}
-		setStatusWithdraw('...');
-		try {
-			const payload: TransactionPayload = {
-				type: 'entry_function_payload',
-				function: `${MARKET_ADDRESS}::market::withdraw_token`,
-				type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
-				arguments: [
-					item?.creator,
-					item?.collectionInfo.collectionName,
-					item?.itemName,
-					'0',
-				],
-			};
-
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
-				let listItem: any = {
-					maker: account?.address?.toString(),
-					chainId: '2',
-					price: item?.price,
-					quantity: amountItemResource,
-					to: MARKET_ADDRESS,
-					txHash: res.hash,
-					itemName: name,
-					collectionName: collection,
-					creator: creator,
-					owner: item?.owner,
-				};
-				cancelOrder(listItem);
-			});
-
-			toast.success('Successfully canceled listing');
-			navigate('/profile');
-		} catch {
-			setStatusWithdraw('Cancel');
-		}
-	};
-
 	useEffect(() => {
 		fetchOffers();
 	}, [itemId]);
@@ -220,7 +165,7 @@ export default function DetailCard() {
 								<Typography variant="body1">{item?.description}</Typography>
 								{item?.status === 1 && (
 									<Typography variant="body1">
-										Owned Quantity : {amountItemResource}
+										Owned Quantity : {itemResource?.amount}
 									</Typography>
 								)}
 								<Typography variant="body1">
@@ -256,7 +201,6 @@ export default function DetailCard() {
 								{item?.status === 1 && (
 									<Typography variant="body1">Price: {itemPrice} APT</Typography>
 								)}
-
 								<Box
 									sx={{
 										button: {
@@ -281,7 +225,7 @@ export default function DetailCard() {
 								>
 									{item?.status === 1 ? (
 										<>
-											{item?.owner[0] != account?.address ? (
+											{itemResource?.owner != userInfo?.userAddress ? (
 												<button onClick={handleOpenModalBuy}>
 													Buy now
 												</button>
@@ -292,14 +236,47 @@ export default function DetailCard() {
 											)}
 										</>
 									) : (
-										<></>
+										<>
+											{item?.owner.includes(userInfo?.userAddress!) && (
+												<button onClick={handleOpenModalBuy}>
+													Sell item
+												</button>
+											)}
+										</>
 									)}
 								</Box>
 							</Stack>
 						</>
 					)}
 				</Stack>
-				{/* <Box mt={3}>
+			</Box>
+			{item?.status === 1 ? (
+				<ModalBuy
+					title="Buy Item"
+					openState={openModalBuy}
+					closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
+					funcBuyNft={claimOffer}
+					activeStep={activeStep}
+					statusBuyNft={statusBuyNft}
+					steps={steps}
+				/>
+			) : (
+				<ModalSell
+					open={openModalBuy}
+					handleClose={handleCloseModalBuy}
+					handleListItem={sellItemAptos}
+					setPrice={setPrice}
+					price={price}
+					supply={supply}
+					statusList={statusList}
+					handleValidateAmount={handleValidateAmount}
+				/>
+			)}
+		</>
+	);
+}
+
+/* <Box mt={3}>
 					<Box sx={{ textAlign: 'center', mb: 3 }}>
 						<Typography variant="h4" fontWeight={500}>
 							History
@@ -327,17 +304,4 @@ export default function DetailCard() {
 							</Box>
 						</Stack>
 					</Stack>
-				</Box> */}
-			</Box>
-			<ModalBuy
-				title="Buy Item"
-				openState={openModalBuy}
-				closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
-				funcBuyNft={claimOffer}
-				activeStep={activeStep}
-				statusBuyNft={statusBuyNft}
-				steps={steps}
-			/>
-		</>
-	);
-}
+				</Box> */

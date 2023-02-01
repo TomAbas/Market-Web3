@@ -46,7 +46,6 @@ export default function CardNFT({
 	itemLiked,
 	likeItem,
 	offer,
-	setOffers,
 	offers,
 	index,
 	loadingOffers,
@@ -54,7 +53,6 @@ export default function CardNFT({
 	itemLiked: (itemId: string) => boolean;
 	likeItem: any;
 	offer: any;
-	setOffers: any;
 	offers: any;
 	index: any;
 	loadingOffers: any;
@@ -98,9 +96,7 @@ export default function CardNFT({
 		},
 	];
 	let navigate = useNavigate();
-	const encodeURI = (uri: string) => {
-		return encodeURIComponent(uri);
-	};
+
 	const claimOffer = async () => {
 		await buyItemAptos(handleNext, startLoading, failToComplete, completeTaskSuccess);
 	};
@@ -119,7 +115,14 @@ export default function CardNFT({
 	}, []);
 	return (
 		<>
-			<Grid xs={6} sm={4} md={3} p={1} sx={{ transition: 'all 0.5s ease', animation: '' }}>
+			<Grid
+				item
+				xs={6}
+				sm={4}
+				md={3}
+				p={1}
+				sx={{ transition: 'all 0.5s ease', animation: '' }}
+			>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}

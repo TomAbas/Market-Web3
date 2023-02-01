@@ -34,7 +34,6 @@ export const getBalanceToken = async (
 		property_version: '0',
 	};
 	return tokenClient.getTokenForAccount(address, tokenId).then((res) => {
-		console.log(res);
 		return res.amount;
 	});
 };

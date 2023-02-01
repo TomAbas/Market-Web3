@@ -7,24 +7,34 @@ import SkeletonCardNft from 'components/SkeletonCardNft';
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { getListItemResource } from 'utils/dataResource';
-import { selectFilter } from 'redux/slices/nftFilter';
+import { selectAllNfts, selectFilter, selectLoadingAllNfts } from 'redux/slices/nftFilter';
 import { useAppSelector } from 'redux/hooks';
 import useInteraction from 'hooks/useInteraction';
+import { getAllItems } from 'api/items/itemsApi';
+import createValidation from 'yup/lib/util/createValidation';
 export default function Items() {
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	const { checkIsLike, likeItem } = useInteraction();
 	const filterPar = useAppSelector(selectFilter);
-	const [loadingOffers, setLoadingOffers] = useState(true);
-	const [offers, setOffers] = useState<any[]>([]);
+	// const [loadingOffers, setLoadingOffers] = useState(true);
+	// const [offers, setOffers] = useState<any[]>([]);
+	const offers = useAppSelector(selectAllNfts);
+	const loadingOffers = useAppSelector(selectLoadingAllNfts);
 	const [offersDisplay, setOffersDisplay] = useState<any[]>([]);
-	useEffect(() => {
-		const fetchOffers = async () => {
-			let newOffers = await getListItemResource();
-			setOffers(newOffers);
-			setLoadingOffers(false);
-		};
-		fetchOffers();
-	}, []);
+	// useEffect(() => {
+	// 	// const fetchOffers = async () => {
+	// 	// 	let newOffers = await getListItemResource();
+	// 	// 	setOffers(newOffers);
+	// 	// 	setLoadingOffers(false);
+	// 	// };
+	// 	const fetchOffers = async () => {
+	// 		const newOffers: any[] = await getAllItems('2').then((res) => res.data);
+	// 		setOffers(newOffers);
+	// 		setLoadingOffers(false);
+	// 	};
+	// 	fetchOffers();
+	// }, []);
+	console.log(offers);
 	useEffect(() => {
 		if (offers.length > 0) {
 			let newOffers = offers.filter((item: any) => {
@@ -45,7 +55,7 @@ export default function Items() {
 			setOffersDisplay(tOffers);
 			// setOffers(tOffers);
 		}
-	}, [filterPar, loadingOffers]);
+	}, [filterPar, loadingOffers, offers]);
 	return (
 		<>
 			{/* <FilterItem /> */}
@@ -70,7 +80,6 @@ export default function Items() {
 											likeItem={likeItem}
 											offers={offers}
 											offer={offer}
-											setOffers={setOffers}
 											index={index}
 											key={index}
 											loadingOffers={loadingOffers}

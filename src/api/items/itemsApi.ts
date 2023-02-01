@@ -13,4 +13,8 @@ function getItemDetail(itemId: string): Promise<Response<any>> {
 	const url = `/item/get-info/itemId/${itemId}`;
 	return ClientAxios.get(url).then((res) => res.data);
 }
-export { getAllItems, getOfferOfItem, getItemDetail };
+function getUserItem(chainId: string, userAddress: string): Promise<Response<any>> {
+	const url = `/item/get-item-for-user/userAddress/${userAddress}/chainId/${chainId}`;
+	return ClientAxios.get(url).then((res) => res.data);
+}
+export { getAllItems, getOfferOfItem, getItemDetail, getUserItem };
