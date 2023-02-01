@@ -11,8 +11,10 @@ import aptos from '../../../assets/images/card/aptos.jpg';
 import { useSearchParams, useOutletContext } from 'react-router-dom';
 import { getCollectionData } from '../../../service/aptos.service';
 import SkeletonCardNft from 'components/SkeletonCardNft';
+import useInteraction from 'hooks/useInteraction';
 const CollectionDetail = () => {
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	const { checkIsLike, likeItem } = useInteraction();
 	const [items, setItems] = useState<any[]>([]);
 	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 	const search = useLocation().search;
@@ -160,6 +162,8 @@ const CollectionDetail = () => {
 								<>
 									{items.map((offer: any, index: any) => (
 										<CardNFT
+											itemLiked={checkIsLike}
+											likeItem={likeItem}
 											offers={offers}
 											offer={offer}
 											setOffers={setItems}

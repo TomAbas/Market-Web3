@@ -36,51 +36,24 @@ import { useOutletContext } from 'react-router-dom';
 import TopCollection from './TopCollection';
 import FeaturedCollection from './FeaturedCollection';
 import { getUserInfo } from 'api/userApi';
+import { getAllItems } from 'api/items/itemsApi';
+import { getAllCollections } from '../../api/collectionApi';
+import useInteraction from 'hooks/useInteraction';
 export default function Marketplace() {
-	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	let arr = new Array(12);
+	const { likeItem, checkIsLike } = useInteraction();
 	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 	const [collections, setCollections] = useState<any[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
 	let navigate = useNavigate();
 	useEffect(() => {
-		const fetchOffers = async () => {
-			const newOffers = await getListItemResource();
-			setOffers(newOffers);
-		};
-		fetchOffers();
-	}, []);
-
-	useEffect(() => {
 		const fetchCollections = async () => {
-			let newArrCollection = await getListCollectionMarketplace(offers);
-
-			let arrCollection: any = [];
-			await Promise.all(
-				newArrCollection.map(async (collection, index) => {
-					if (index < 4) {
-						let name = collection[0].split('*/////*')[0];
-						let creator = collection[0].split('*/////*')[1];
-						let items = collection[1];
-						let res = await getCollectionData(creator, name);
-						let getOwnerInfo: any = await getUserInfo(creator).then((res: any) => {
-							return res.data.data;
-						});
-						let image = res.uri;
-						let ownerAva = getOwnerInfo.avatar;
-						let data = {
-							name,
-							creator,
-							items,
-							image,
-							ownerAva,
-						};
-						arrCollection.push(data);
-					}
-				})
-			);
-			setCollections(arrCollection);
+			let newArrCollection = await getAllCollections('2').then((res) => res.data);
+			setCollections(newArrCollection.slice(0, 4));
+			setIsLoading(false);
 		};
 		fetchCollections();
-	}, [offers]);
+	}, []);
 
 	const handleCollectionDetail = (creator: string, collection: string) => {
 		//encodeURIComponent
@@ -234,6 +207,8 @@ export default function Marketplace() {
 						<>
 							{offers.slice(0, 12).map((offer: any, index: any) => (
 								<CardNFT
+									itemLiked={checkIsLike}
+									likeItem={likeItem}
 									offers={offers}
 									offer={offer}
 									setOffers={setOffers}
@@ -247,7 +222,7 @@ export default function Marketplace() {
 				</Grid>
 			</ExploreCollection>
 			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 4, pb: 4, px: 2 }}>
-				<FeaturedCollection collections={collections} />
+				<FeaturedCollection collections={collections} isLoading={isLoading} />
 			</Box>
 			<ExploreCollection sx={{ py: 4 }}>
 				<Container maxWidth="xl" sx={{}}>

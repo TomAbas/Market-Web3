@@ -4,7 +4,7 @@ import CardTopCollection from '../CardTopCollection/CardTopCollection';
 import SkeletonCollectionRankingList from 'components/SkeletonCardTopCollections/SkeletonCardTopCollections';
 import ErrorBoundary from 'components/SkeletonCardTopCollections/ErrorHandleComponents';
 import { CollectionTop } from 'models/collection';
-import { getTopCollections as getTopCollectionsAPI } from '../../../api/collections/collectionApi';
+import { getTopCollections as getTopCollectionsAPI } from '../../../api/collectionApi';
 interface Props {
 	filter: string;
 }

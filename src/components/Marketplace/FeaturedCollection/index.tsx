@@ -2,11 +2,14 @@ import { Box, Grid, Link, Stack, Typography } from '@mui/material';
 import { ItemImage } from './styled';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import SkeletonCardNft from 'components/SkeletonCardNft';
 
 interface Props {
 	collections: any[];
+	isLoading: boolean;
 }
-const FeaturedCollection: React.FC<Props> = ({ collections }) => {
+const FeaturedCollection: React.FC<Props> = ({ collections, isLoading }) => {
+	let arr = new Array(4);
 	let navigate = useNavigate();
 	function handleCollectionDetail(creator: string, collection: string) {
 		navigate(
@@ -15,6 +18,7 @@ const FeaturedCollection: React.FC<Props> = ({ collections }) => {
 			)}&collection=${encodeURIComponent(collection)}`
 		);
 	}
+
 	return (
 		<>
 			{' '}
@@ -24,93 +28,111 @@ const FeaturedCollection: React.FC<Props> = ({ collections }) => {
 				</Typography>
 			</Box>
 			<Grid container spacing={1}>
-				{collections.map((collection: any, index: any) => (
-					<Grid
-						xs={6}
-						sm={4}
-						md={3}
-						p={1}
-						key={index}
-						onClick={() => {
-							handleCollectionDetail(collection.creator, collection.name);
-						}}
-					>
-						<Link
-							// href={`https://explorer.aptoslabs.com/account/${
-							// 	collection[0].split('*/////*')[1]
-							// }`}
-							target="_blank"
-							sx={{
-								textDecoration: 'none',
-								color: '#131740',
-								'&:hover': {
-									boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
-								},
-							}}
-						>
-							<Box
-								sx={{
-									border: '1.5px solid #e7e8ec',
-									borderRadius: '12px',
-									overflow: 'hidden',
-									cursor: 'pointer',
-									transition: 'all 0.4s',
-									padding: '12px 12px 0',
-									background: '#fff',
-									'&:hover': {
-										boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
-									},
+				{isLoading ? (
+					<>
+						{arr.map((item, idx) => (
+							<SkeletonCardNft key={idx} />
+						))}
+					</>
+				) : (
+					<>
+						{collections.map((collection: any, index: any) => (
+							<Grid
+								xs={6}
+								sm={4}
+								md={3}
+								p={1}
+								key={index}
+								onClick={() => {
+									handleCollectionDetail(
+										collection.userAddress,
+										collection.collectionName
+									);
 								}}
 							>
-								<ItemImage>
-									<Box className="main-img">
-										<img src={collection.image} alt="collection" />
-									</Box>
-								</ItemImage>
-
-								<Box py={1.5}>
-									<Typography variant="h6">{collection.name}</Typography>
-									<Stack
-										mt={1}
-										direction="row"
-										alignItems="center"
-										justifyContent="space-between"
-										gap={1}
+								<Link
+									// href={`https://explorer.aptoslabs.com/account/${
+									// 	collection[0].split('*/////*')[1]
+									// }`}
+									target="_blank"
+									sx={{
+										textDecoration: 'none',
+										color: '#131740',
+										'&:hover': {
+											boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
+										},
+									}}
+								>
+									<Box
+										sx={{
+											border: '1.5px solid #e7e8ec',
+											borderRadius: '12px',
+											overflow: 'hidden',
+											cursor: 'pointer',
+											transition: 'all 0.4s',
+											padding: '12px 12px 0',
+											background: '#fff',
+											'&:hover': {
+												boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
+											},
+										}}
 									>
-										<Stack direction="row" gap={1} alignItems="center">
-											<Box
-												sx={{
-													img: {
-														width: '32px',
-														height: '32px',
-														objectFit: 'cover',
-														objectPosition: 'center',
-														borderRadius: '50%',
-													},
-												}}
-											>
-												<img src={collection.ownerAva} alt="collection" />
+										<ItemImage>
+											<Box className="main-img">
+												<img src={collection.logo} alt="collection" />
 											</Box>
-											<Typography variant="body1">
-												{collection.creator.slice(0, 6) +
-													'...' +
-													collection.creator.slice(
-														collection.creator.length - 4,
-														collection.creator.length
-													)}
+										</ItemImage>
+
+										<Box py={1.5}>
+											<Typography variant="h6">
+												{collection.collectionName}
 											</Typography>
-										</Stack>
-										<Box>
-											<Typography variant="body1">
-												{collection.items.length} items
-											</Typography>
+											<Stack
+												mt={1}
+												direction="row"
+												alignItems="center"
+												justifyContent="space-between"
+												gap={1}
+											>
+												<Stack direction="row" gap={1} alignItems="center">
+													<Box
+														sx={{
+															img: {
+																width: '32px',
+																height: '32px',
+																objectFit: 'cover',
+																objectPosition: 'center',
+																borderRadius: '50%',
+															},
+														}}
+													>
+														<img
+															src={collection.ownerInfo.avatar}
+															alt="collection"
+														/>
+													</Box>
+													<Typography variant="body1">
+														{collection.userAddress.slice(0, 6) +
+															'...' +
+															collection.userAddress.slice(
+																collection.userAddress.length - 4,
+																collection.userAddress.length
+															)}
+													</Typography>
+												</Stack>
+												<Box>
+													<Typography variant="body1">
+														{collection.listItem.length} items
+													</Typography>
+												</Box>
+											</Stack>
 										</Box>
-									</Stack>
-								</Box>
-							</Box>
-						</Link>
-					</Grid>
-				))}
+									</Box>
+								</Link>
+							</Grid>
+						))}
+					</>
+				)}
 			</Grid>
 		</>
 	);

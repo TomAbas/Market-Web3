@@ -1,4 +1,4 @@
-import ClientAxios from 'customAxios/ClientAxios';
+import ClientAxios from 'api/axiosClient';
 import { UserLoginModel } from 'models/user';
 
 const loginUser = (data: UserLoginModel) => {

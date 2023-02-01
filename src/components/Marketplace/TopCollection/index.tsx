@@ -16,7 +16,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { Button, Box, Grid } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DropDown from 'components/CustomUI/DropDown';
-//coponents
+//components
 import TopCollections from './TopCollections';
 
 interface Props {

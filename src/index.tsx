@@ -54,7 +54,7 @@ const router = createHashRouter([
 				),
 			},
 			{
-				path: '/item',
+				path: '/item/:itemId',
 				element: <DetailCard />,
 				errorElement: (
 					<>

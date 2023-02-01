@@ -9,7 +9,7 @@ import item from '../../../../assets/images/card/box.webp';
 import {
 	getAllCollections as getAllCollectionsAPI,
 	getCategoryCollections as getCategoryCollectionsAPI,
-} from 'api/collections/collectionApi';
+} from 'api/collectionApi';
 import { async } from '@firebase/util';
 export default function Items() {
 	let [searchParams, setSearchParams] = useSearchParams();
