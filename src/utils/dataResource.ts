@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { nftItem } from 'models/item';
 import { getListItemWallet } from './getUser';
 
 const APTOS_NODE_URL = process.env.REACT_APP_APTOS_NODE_URL;
@@ -35,7 +36,19 @@ export const getListItemResource = async () => {
 		return [];
 	}
 };
-
+export function getItemFromOrder(listNftOrders: any[], offer: nftItem) {
+	let itemOrder = listNftOrders.find((item) => {
+		if (
+			item.token_id.token_data_id.creator === offer.creator &&
+			item.token_id.token_data_id.collection === offer.collectionInfo.collectionName &&
+			item.token_id.token_data_id.name === offer.itemName
+		) {
+			return true;
+		}
+		return false;
+	});
+	return itemOrder;
+}
 export const getListCollectionUserResource = async (address: any) => {
 	try {
 		const response: any = await axios.get(

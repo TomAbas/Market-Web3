@@ -13,7 +13,7 @@ import {
 	CheckIconWrapper,
 } from './styled';
 import CheckIcon from '@mui/icons-material/Check';
-import { Button, Box, Grid } from '@mui/material';
+import { Button, Box, Grid, DialogTitle } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DropDown from 'components/CustomUI/DropDown';
 //components
@@ -117,6 +117,7 @@ const Index = () => {
 					<TopCollections filter={selectedFilter} />
 				</Grid>
 			</Box>
+			<button>Go to Ranking</button>
 
 			{/* <Box sx={{ marginTop: '50px', display: 'flex', justifyContent: 'center' }}>
 				<LinkWrapper>

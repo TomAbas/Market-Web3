@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
-import { useAppSelector } from 'redux/hooks';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectUser } from 'redux/slices/userInfo';
 import { getLikesStatusOfItem as getLikesStatusOfItemAPI, putLikesToItem } from 'api/userApi';
 import { toast } from 'react-toastify';
-import { useOutletContext } from 'react-router-dom';
+import { handleTrigger } from 'redux/slices/nftFilter';
+
 const useInteraction = () => {
-	const [, , , setTrigger] = useOutletContext<any>();
+	const dispatch = useAppDispatch();
 	const userInfo = useAppSelector(selectUser);
 	const [itemLiked, setItemLiked] = useState<string[]>([]);
 	async function getLikesStatusOfItem() {
@@ -26,7 +27,7 @@ const useInteraction = () => {
 			try {
 				await putLikesToItem(userInfo.userAddress, itemId, state);
 				getLikesStatusOfItem();
-				setTrigger((prev: boolean) => !prev);
+				dispatch(handleTrigger());
 				toast.success('Success');
 			} catch (error) {
 				toast.error("Cant't like item");

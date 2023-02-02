@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import { InputItem, InputTitle } from './styled';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
-import useCreateMintSell from 'hooks/useCreateMintSell';
+import useCreateMintSell from 'hooks/useCreateMint';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import React, { useState, useEffect } from 'react';
 import { getListCollectionUserResource } from '../../utils/dataResource';

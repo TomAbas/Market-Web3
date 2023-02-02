@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import { InputItem, InputTitle } from './styled';
 import useControlModal from 'hooks/useControlModal';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
-import useCreateMintSell from 'hooks/useCreateMintSell';
+import useCreateMintSell from 'hooks/useCreateMint';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';

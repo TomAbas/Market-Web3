@@ -62,15 +62,15 @@ const router = createHashRouter([
 					</>
 				),
 			},
-			{
-				path: '/my-item',
-				element: <MyItemDetail />,
-				errorElement: (
-					<>
-						<h1>error test market</h1>
-					</>
-				),
-			},
+			// {
+			// 	path: '/my-item',
+			// 	element: <MyItemDetail />,
+			// 	errorElement: (
+			// 		<>
+			// 			<h1>error test market</h1>
+			// 		</>
+			// 	),
+			// },
 			{
 				path: '/collection-detail',
 				element: <CollectionDetail />,

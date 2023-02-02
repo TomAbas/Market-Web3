@@ -11,6 +11,7 @@ import SettingInfoUser from 'components/SettingInfoUser/SettingInfoUser';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectSettingModal, selectUser, toggleSettingModalA } from 'redux/slices/userInfo';
 import EditInfoUser from 'components/EditInfoUser/EditInfoUser';
+import { nftItem } from 'models/item';
 
 const ProfileUser = () => {
 	const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ const ProfileUser = () => {
 	const { innerWidth } = useSizeObersver();
 	const [viewFull, setViewFull] = useState(false);
 	const [viewAvatar, setViewAvatar] = useState(false);
-	const { tokens, loading } = useTokens(account);
+	const { tokens, userNfts } = useTokens(account);
 	const [items, setItems] = useState<any[]>([]);
 	const innerHeight = innerWidth / 4.5;
 	const infoUser = useAppSelector(selectUser);
@@ -180,7 +181,7 @@ const ProfileUser = () => {
 					</Box>
 					<Box py={4}>
 						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-							{items.map((item: any, index: any) => (
+							{userNfts.map((item: nftItem, index: any) => (
 								<CardNFTUser
 									item={item}
 									handleItems={handleItems}

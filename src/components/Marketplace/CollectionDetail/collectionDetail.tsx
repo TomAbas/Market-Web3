@@ -166,7 +166,6 @@ const CollectionDetail = () => {
 											likeItem={likeItem}
 											offers={offers}
 											offer={offer}
-											setOffers={setItems}
 											index={index}
 											key={index}
 											loadingOffers={loadingOffers}

@@ -39,6 +39,7 @@ import { getUserInfo } from 'api/userApi';
 import { getAllItems } from 'api/items/itemsApi';
 import { getAllCollections } from '../../api/collectionApi';
 import useInteraction from 'hooks/useInteraction';
+
 export default function Marketplace() {
 	let arr = new Array(12);
 	const { likeItem, checkIsLike } = useInteraction();
@@ -211,7 +212,6 @@ export default function Marketplace() {
 									likeItem={likeItem}
 									offers={offers}
 									offer={offer}
-									setOffers={setOffers}
 									index={index}
 									key={index}
 									loadingOffers={loadingOffers}

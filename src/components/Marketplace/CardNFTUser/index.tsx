@@ -3,12 +3,7 @@ import { Box, Grid, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {
 	ImageBlockchain,
@@ -26,17 +21,31 @@ import aptos from '../../../assets/images/card/aptos.jpg';
 import { sellItem } from '../../../api/collections/collectionApi';
 import { Order } from '../../../models/collection';
 import { toast } from 'react-toastify';
+import { nftItem } from 'models/item';
+import { useAppSelector } from 'redux/hooks';
+import { selectUser } from 'redux/slices/userInfo';
+import useGetAcountTokenAmount from 'hooks/useGetAcountTokenAmount';
 
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '0x1::aptos_coin::AptosCoin';
 const DECIMAL = 100000000;
 
-const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any; index: any }) => {
-	const { account, signAndSubmitTransaction } = useWallet();
+const CardNFTUser = ({
+	item,
+	handleItems,
+	index,
+}: {
+	item: nftItem;
+	handleItems: any;
+	index: any;
+}) => {
+	const { signAndSubmitTransaction } = useWallet();
 	const [open, setOpen] = useState(false);
 	const [supply, setSupply] = useState('');
 	const [price, setPrice] = useState('');
 	const [statusList, setStatusList] = useState('Sell Item');
+	const userInfo = useAppSelector(selectUser);
+	const { userTokenAmount } = useGetAcountTokenAmount(userInfo?.userAddress!, item);
 	const navigate = useNavigate();
 
 	const handleClickOpen = () => {
@@ -46,6 +55,7 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 	const handleClose = () => {
 		setOpen(false);
 	};
+
 	const handleListItem = async () => {
 		try {
 			if (!supply || !price || supply === '0' || price === '0') {
@@ -60,8 +70,8 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 				type_arguments: [MARKET_COINT_TYPE],
 				arguments: [
 					item.creator,
-					item.collection,
-					item.name,
+					item.collectionInfo.collectionName,
+					item.itemName,
 					'0',
 					supply,
 					newPrice.toString(),
@@ -78,15 +88,16 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 			setStatusList('Sell Item');
 			toast.success('Successfully listed an item');
 			let listItem: any = {
-				maker: account?.address?.toString(),
+				maker: userInfo?.userAddress,
 				chainId: '2',
 				price: newPrice,
 				quantity: supply,
 				to: MARKET_ADDRESS,
 				txHash: hash,
-				itemName: item.name,
-				collectionName: item.collection,
-				owner: item.creator,
+				itemName: item.itemName,
+				collectionName: item.collectionInfo.collectionName,
+				owner: userInfo?.userAddress,
+				creator: item.creator,
 			};
 			console.log(listItem);
 			sellItem(listItem);
@@ -99,15 +110,11 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 		}
 	};
 	const handleClickItem = () => {
-		navigate(
-			`/my-item?creator=${encodeURIComponent(item?.creator)}&collection=${encodeURIComponent(
-				item?.collection
-			)}&name=${encodeURIComponent(item?.name)}`
-		);
+		navigate(`/item/${item._id}`);
 	};
 	function handleValidateAmount(e: any) {
-		if (Number(e.target.value) > Number(item.supply)) {
-			e.target.value = item.supply;
+		if (Number(e.target.value) > Number(userTokenAmount)) {
+			e.target.value = userTokenAmount;
 			setSupply(e.target.value);
 		}
 		setSupply(e.target.value);
@@ -115,7 +122,7 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 
 	return (
 		<>
-			<Grid xs={6} sm={4} md={3} p={1}>
+			<Grid item xs={6} sm={4} md={3} p={1}>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
@@ -123,9 +130,9 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 							<Box className="main-img">
 								{/* <img src={item.uri} alt="item" /> */}
 								<MediaDisplayCard
-									media={item?.uri}
+									media={item.itemMedia}
 									preview={TwitterIcon}
-									name={item?.name}
+									name={item?.itemName}
 								/>
 							</Box>
 							{/* Item favourite */}
@@ -176,7 +183,7 @@ const CardNFTUser = ({ item, handleItems, index }: { item: any; handleItems: any
 										noWrap
 										sx={{ cursor: 'default' }}
 									>
-										{item.name}
+										{item.itemName}
 									</Typography>
 									<ImageBlockchain>
 										<img src={aptos} alt="aptos" />

@@ -26,22 +26,30 @@ import ScrollToTop from 'hooks/useScrollToTop';
 import AudioProvider from './contexts/AudioContext';
 import { getAllItems } from 'api/items/itemsApi';
 import useGetNftOrder from 'hooks/useGetNftOrder';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { getAllNfts, selectTrigger } from 'redux/slices/nftFilter';
 function App() {
 	const [loadingOffers, setLoadingOffers] = useState(true);
 	const [trigger, setTrigger] = useState(false);
 	const [offers, setOffers] = useState<any[]>([]);
 	const { getListNFTOrders } = useGetNftOrder();
+	const triggerFetchNft = useAppSelector(selectTrigger);
+	const dispatch = useAppDispatch();
 	useEffect(() => {
 		getListNFTOrders();
 	}, []);
 	useEffect(() => {
 		const fetchOffers = async () => {
-			const newOffers: any[] = await getAllItems('2').then((res) => res.data.slice(0, 12));
+			const newOffers: any[] = await getAllItems('2').then((res) => {
+				dispatch(getAllNfts(res.data));
+				return res.data.slice(0, 12);
+			});
 			setOffers(newOffers);
 			setLoadingOffers(false);
 		};
 		fetchOffers();
-	}, [trigger]);
+		console.log(triggerFetchNft);
+	}, [triggerFetchNft, dispatch]);
 	const wallets = useMemo(
 		() => [
 			new SpacecyWalletAdapter(),
