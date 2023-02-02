@@ -155,7 +155,8 @@ const Header: React.FC = () => {
 	let [background, setBackground] = useState(false);
 	let [option, setOption] = useState(false);
 	const [chainId, setChainId] = useState('Testnet');
-	const { network } = useWallet();
+	const { network, wallet } = useWallet();
+
 	const openModal = () => {
 		if (!userAddress) {
 			dispatch(openFirstModal());

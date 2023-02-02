@@ -32,7 +32,7 @@ import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
 import { toast } from 'react-toastify';
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
-import { buyItem } from '../../../api/collectionApi';
+import { buyItem } from '../../../api/collections/collectionApi';
 import { changePriceToToken } from 'utils/function';
 import { useEffect, useState } from 'react';
 import useBuyItemAptos from '../../../utils/putAptos';

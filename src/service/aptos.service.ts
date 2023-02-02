@@ -47,5 +47,6 @@ export const getCollectionData = async (creator: string, collectionName: string)
 export const getItemData = async (creator: string, collectionName: string, itemName: string) => {
 	const client = new AptosClient(APTOS_NODE_URL[chainId]);
 	let tokenClient = new TokenClient(client);
+
 	return tokenClient.getTokenData(creator, collectionName, itemName);
 };

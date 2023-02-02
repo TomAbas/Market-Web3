@@ -18,7 +18,7 @@ import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import TwitterIcon from '../../../assets/icons/twitter-white.svg';
 import HeartFullRed from '../../../assets/icons/heart-full-red.svg';
 import aptos from '../../../assets/images/card/aptos.jpg';
-import { sellItem } from '../../../api/collectionApi';
+import { sellItem } from '../../../api/collections/collectionApi';
 import { Order } from '../../../models/collection';
 import { toast } from 'react-toastify';
 import { nftItem } from 'models/item';
@@ -135,7 +135,7 @@ const CardNFTUser = ({
 									name={item?.itemName}
 								/>
 							</Box>
-							{/* Item favorite */}
+							{/* Item favourite */}
 							<ItemFavorite>
 								<Box mr={1.5}>
 									<img src={TwitterIcon} alt="icon twitter" />
@@ -148,11 +148,11 @@ const CardNFTUser = ({
 											}}
 										>
 											{/* {likeState ? (
-											<IconFavorite src={HeartFullRed} alt="icon favorite" />
+											<IconFavorite src={HeartFullRed} alt="icon favourite" />
 										) : (
-											<IconFavorite src={HeartWhite} alt="icon favorite" />
+											<IconFavorite src={HeartWhite} alt="icon favourite" />
 										)} */}
-											<IconFavorite src={HeartFullRed} alt="icon favorite" />
+											<IconFavorite src={HeartFullRed} alt="icon favourite" />
 										</Box>
 										<Typography variant="body1">1</Typography>
 									</Stack>

@@ -1,5 +1,5 @@
-import ClientAxios from 'customAxios/ClientAxios';
-import { Response } from '../../models/common';
+import ClientAxios from './axiosClient';
+import { Response } from '../models/common';
 
 function getAllCollections(chainId: string): Promise<Response<any>> {
 	const url = `/collection/get-all/chainId/${chainId}`;

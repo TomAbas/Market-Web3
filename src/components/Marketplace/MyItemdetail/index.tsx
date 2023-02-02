@@ -12,7 +12,7 @@ import { getBalanceToken } from '../../../service/aptos.service';
 import { toast } from 'react-toastify';
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import defaultImg from '../../../assets/icons/default-img-input2.png';
-import { sellItem } from '../../../api/collectionApi';
+import { sellItem } from '../../../api/collections/collectionApi';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '';
 const DECIMAL = 100000000;

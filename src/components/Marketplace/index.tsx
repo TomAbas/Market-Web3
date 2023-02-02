@@ -37,7 +37,7 @@ import TopCollection from './TopCollection';
 import FeaturedCollection from './FeaturedCollection';
 import { getUserInfo } from 'api/userApi';
 import { getAllItems } from 'api/items/itemsApi';
-import { getAllCollections } from 'api/collections/collectionApi';
+import { getAllCollections } from '../../api/collectionApi';
 import useInteraction from 'hooks/useInteraction';
 
 export default function Marketplace() {

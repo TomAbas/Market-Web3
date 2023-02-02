@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import FormMintNft from 'components/Forms/FormMintNFT';
 import { getListCollectionUserResource } from '../../utils/dataResource';
-import { getCollectionByUserAddress } from '../../api/collectionApi';
+import { getCollectionByUserAddress } from '../../api/collections/collectionApi';
 export default function LayoutMintNFT() {
 	const navigate = useNavigate();
 	const [dataFormInput, setDataFormInput] = useState<any>();

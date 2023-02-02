@@ -1,4 +1,4 @@
-import ClientAxios from 'customAxios/ClientAxios';
+import ClientAxios from '../axiosClient';
 import { Response } from '../../models/common';
 
 function getAllItems(chainId: string): Promise<Response<any>> {

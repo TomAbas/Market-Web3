@@ -12,7 +12,7 @@ import ModalSell from 'components/ModelSell/ModelSell';
 // import { getListItemResource } from '../../../utils/dataResource';
 import { ItemImage } from '../styled';
 import { toast } from 'react-toastify';
-import { buyItem, cancelOrder } from '../../../api/collectionApi';
+import { buyItem, cancelOrder } from '../../../api/collections/collectionApi';
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import defaultImg from '../../../assets/icons/default-img-input2.png';
 import { getItemDetail } from 'api/items/itemsApi';
