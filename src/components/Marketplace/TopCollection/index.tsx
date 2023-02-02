@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	FilterContent,
 	LinkWrapper,
@@ -13,11 +13,12 @@ import {
 	CheckIconWrapper,
 } from './styled';
 import CheckIcon from '@mui/icons-material/Check';
-import { Button, Box, Grid, DialogTitle } from '@mui/material';
+import { Button, Box, Grid, Typography } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DropDown from 'components/CustomUI/DropDown';
 //components
 import TopCollections from './TopCollections';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
 	selectedFilter: string;
@@ -74,12 +75,15 @@ const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption }
 const Index = () => {
 	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
 	const [selectedFilter, setSelectedFilter] = useState<string>('7 days');
-
+	const navigate = useNavigate();
 	const handleClickOption = (filterDay: any) => {
 		setSelectedFilter(filterDay.name);
 		// setSortBy(filter.value);
 
 		setActiveDropDown(false);
+	};
+	const handleGoToRanking = () => {
+		navigate('/collection/trending');
 	};
 	return (
 		<>
@@ -117,7 +121,32 @@ const Index = () => {
 					<TopCollections filter={selectedFilter} />
 				</Grid>
 			</Box>
-			<button>Go to Ranking</button>
+			<Box
+				mb={4}
+				sx={{
+					textAlign: 'center',
+
+					button: {
+						padding: '10px 30px',
+						border: '1.5px solid #e7e8ec',
+						transition: 'all 0.4s',
+						borderRadius: '12px',
+						background: '#fff',
+						fontSize: '16px',
+						cursor: 'pointer',
+						fontFamily: 'Montserrat, sans-serif !important',
+						fontStyle: 'italic !important',
+						width: 'auto',
+						'&:hover': {
+							background: '#007aff',
+							borderColor: 'transparent',
+							color: '#fff',
+						},
+					},
+				}}
+			>
+				<button onClick={handleGoToRanking}>Go to ranking</button>
+			</Box>
 
 			{/* <Box sx={{ marginTop: '50px', display: 'flex', justifyContent: 'center' }}>
 				<LinkWrapper>

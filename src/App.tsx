@@ -28,6 +28,7 @@ import { getAllItems } from 'api/items/itemsApi';
 import useGetNftOrder from 'hooks/useGetNftOrder';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { getAllNfts, selectTrigger } from 'redux/slices/nftFilter';
+import AccountSign from 'components/AccountSign/AccountSign';
 function App() {
 	const [loadingOffers, setLoadingOffers] = useState(true);
 	const [trigger, setTrigger] = useState(false);
@@ -67,16 +68,23 @@ function App() {
 				<WalletProvider wallets={wallets} autoConnect={true}>
 					<AudioProvider>
 						<SizeObserver>
-							<Header />
-							<AccountGuard>
-								<ScrollToTop>
-									<div className="container">
-										<Outlet
-											context={[offers, setOffers, loadingOffers, setTrigger]}
-										/>
-									</div>
-								</ScrollToTop>
-							</AccountGuard>
+							<AccountSign>
+								<Header />
+								<AccountGuard>
+									<ScrollToTop>
+										<div className="container">
+											<Outlet
+												context={[
+													offers,
+													setOffers,
+													loadingOffers,
+													setTrigger,
+												]}
+											/>
+										</div>
+									</ScrollToTop>
+								</AccountGuard>
+							</AccountSign>
 							<FooterComp />
 							<ModalGuard />
 							<ToastContainer />

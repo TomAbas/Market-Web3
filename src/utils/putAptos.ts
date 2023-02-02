@@ -67,7 +67,7 @@ function useBuyItemAptos(offer: nftItem) {
 					creator: offer.creator,
 					owner: getItemFromOrder(listNftOrders, offer)?.owner,
 				};
-				buyItem(listItem).then((res) => dispatch(handleTrigger()));
+				buyItem(listItem).then((res: any) => dispatch(handleTrigger()));
 				completeTaskSuccess();
 				toast.success('Successfully purchased an item');
 			});

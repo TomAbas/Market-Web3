@@ -23,6 +23,8 @@ import CollectionDetail from 'components/Marketplace/CollectionDetail/collection
 import DetailCard from 'components/Marketplace/DetailCard';
 import ViewAll from 'components/Marketplace/ViewAll';
 import MyCollectionDetail from 'components/CollectionDetail';
+import CollectionTrending from 'components/Ranking/CollectionRanking';
+import TopTrader from 'components/Ranking/TopTrader';
 import MyItemDetail from 'components/Marketplace/MyItemdetail';
 import Collections from 'components/Marketplace/ViewAll/Collections';
 import Items from 'components/Marketplace/ViewAll/Items';
@@ -74,6 +76,24 @@ const router = createHashRouter([
 			{
 				path: '/collection-detail',
 				element: <CollectionDetail />,
+				errorElement: (
+					<>
+						<h1>error test market</h1>
+					</>
+				),
+			},
+			{
+				path: '/top-trader',
+				element: <TopTrader />,
+				errorElement: (
+					<>
+						<h1>error test market</h1>
+					</>
+				),
+			},
+			{
+				path: '/collection/trending',
+				element: <CollectionTrending />,
 				errorElement: (
 					<>
 						<h1>error test market</h1>

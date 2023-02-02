@@ -12,6 +12,8 @@ import IconSports from 'assets/icons/NavBar/icon-sports.svg';
 import IconDomainNames from 'assets/icons/NavBar/icon-domain.svg';
 import IconTradingCards from 'assets/icons/NavBar/icon-trading.svg';
 import IconEsports from 'assets/icons/NavBar/icon-esports.svg';
+import IconRankings from 'assets/icons/icon-rankings.svg';
+import IconTopTrader from 'assets/icons/icon-top-trader.svg';
 import IconEvent from 'assets/icons/NavBar/icon-event.svg';
 import IconDrops from 'assets/icons/NavBar/icon-drops.svg';
 import IconXmas from 'assets/icons/NavBar/icon-xmas.svg';
@@ -155,7 +157,8 @@ const Header: React.FC = () => {
 	let [background, setBackground] = useState(false);
 	let [option, setOption] = useState(false);
 	const [chainId, setChainId] = useState('Testnet');
-	const { network } = useWallet();
+	const { network, wallet } = useWallet();
+
 	const openModal = () => {
 		if (!userAddress) {
 			dispatch(openFirstModal());
@@ -404,6 +407,89 @@ const Header: React.FC = () => {
 												Create
 											</Typography>
 										</NavLinkBigScreen>
+									</NavigationItemBigScreen>
+									<NavigationItemBigScreen sx={{ width: '165px' }}>
+										<NavLinkBigScreen
+											className="navLink"
+											href={`/#/`}
+											target="_self"
+											// onClick={(e: any) => {
+											// 	e.preventDefault();
+											// }}
+										>
+											<Typography
+												variant="body1"
+												fontStyle="italic"
+												fontWeight="500"
+											>
+												Stats
+											</Typography>
+										</NavLinkBigScreen>
+
+										<DropdownMenu
+											className="dropdownMenu"
+											sx={{ minWidth: '165px' }}
+										>
+											<Stack>
+												<DropdownMenuLink href={'#/collection/trending'}>
+													<Stack direction="row" alignItems="center">
+														<Box width="30px">
+															<img
+																style={{
+																	width: '100%',
+																	height: '100%',
+																	boxShadow:
+																		'2px 2px 2px 0 rgba(0,0,0,0.2)',
+																	borderRadius: '50%',
+																}}
+																src={IconRankings}
+																alt={'category.title'}
+															/>
+														</Box>
+														<Typography
+															variant="body2"
+															sx={{ padding: '0 0 0 8px' }}
+															textAlign="center"
+															noWrap
+															fontStyle="italic"
+														>
+															Rankings
+														</Typography>
+													</Stack>
+												</DropdownMenuLink>
+											</Stack>
+											<Stack>
+												<DropdownMenuLink
+													href={`/#/top-trader`}
+													// key={index}
+												>
+													<Stack direction="row" alignItems="center">
+														<Box width="30px">
+															<img
+																style={{
+																	width: '100%',
+																	height: '100%',
+																	boxShadow:
+																		'2px 2px 2px 0 rgba(0,0,0,0.2)',
+																	borderRadius: '50%',
+																}}
+																src={IconTopTrader}
+																alt={'Top trader'}
+															/>
+														</Box>
+														<Typography
+															variant="body2"
+															sx={{ padding: '0 0 0 8px' }}
+															textAlign="center"
+															noWrap
+															fontStyle="italic"
+														>
+															Top trader
+														</Typography>
+													</Stack>
+												</DropdownMenuLink>
+											</Stack>
+										</DropdownMenu>
 									</NavigationItemBigScreen>
 								</NavigationBarBigScreen>
 							) : null}
