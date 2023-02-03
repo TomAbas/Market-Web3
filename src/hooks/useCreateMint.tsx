@@ -180,6 +180,7 @@ const useCreateMintSell = () => {
 							collectionId: collectionId,
 							txHash: txHash,
 							to: MARKET_ADDRESS!,
+							amount: amount,
 						};
 						await createItemApi(ItemInfo);
 						handleNext();

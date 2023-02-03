@@ -40,21 +40,6 @@ export default function InfiniteListTopTrader({
 
 	//state
 
-	const renderPercent = (percent: number) => (
-		<Typography
-			sx={{
-				color: percent > 0 ? 'green' : percent < 0 ? 'red' : 'inherit',
-				whiteSpace: 'nowrap',
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-			}}
-		>
-			{percent > 0 ? '+' : percent < 0 ? '-' : null}
-			{percent === 0 ? '___' : `${Math.abs(percent).toFixed(2)} %`}
-		</Typography>
-	);
-
 	return (
 		<Box sx={{ width: '100%' }} ref={listRef}>
 			<TableWrapper>

@@ -62,7 +62,11 @@ export default function InfiniteListTrendingCollection({
 				<TableScrollable>
 					<thead>
 						<tr>
-							{!isLoading && <th></th>}
+							<th>
+								<FlexBox>
+									<Typography>Rank</Typography>
+								</FlexBox>
+							</th>
 							<th>
 								<FlexBox>
 									<Typography>Collection</Typography>
@@ -113,10 +117,10 @@ export default function InfiniteListTrendingCollection({
 									<tr key={index}>
 										<th>
 											<FlexBox sx={{ height: 40 }}>
-												<Skeleton sx={{ width: 250 }} />
+												<Skeleton sx={{ width: '100%' }} />
 											</FlexBox>
 										</th>
-										{new Array(7).fill(null).map((item: any, idx: number) => (
+										{new Array(8).fill(null).map((item: any, idx: number) => (
 											<td key={idx}>
 												<FlexBox>
 													<Skeleton sx={{ width: '100%' }} />
@@ -181,7 +185,7 @@ export default function InfiniteListTrendingCollection({
 										<td>
 											<FlexBox>
 												<Fragment>
-													{collection.volume7Days / 10 ** 8}
+													{collection.volume7Days / 10 ** 8} APT
 												</Fragment>
 											</FlexBox>
 										</td>
@@ -202,7 +206,7 @@ export default function InfiniteListTrendingCollection({
 										</td>
 										<td>
 											<FlexBox sx={{ minWidth: '135px' }}>
-												$ {collection.floorPrice / 10 ** 8}
+												{collection.floorPrice / 10 ** 8} APT
 											</FlexBox>
 										</td>
 										<td>

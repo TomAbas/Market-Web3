@@ -28,6 +28,7 @@ export interface Item {
 	collectionId: string;
 	txHash?: string;
 	to?: string;
+	amount?: number;
 }
 
 export interface Order {

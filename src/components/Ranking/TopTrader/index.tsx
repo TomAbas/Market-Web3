@@ -8,7 +8,7 @@ const TopTrader = () => {
 	};
 	const [listTopTrader, setListTopTrader] = useState<any>([]);
 	const [filter] = useState(initFilter);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const hasNextPage = false;
 	const handleFetchNextPage = () => {};
 	const allowLoadMore = false;
@@ -16,8 +16,8 @@ const TopTrader = () => {
 		const fetchData = async () => {
 			getTopTradeUsers('2', filter.time).then((res: any) => {
 				setListTopTrader(res);
+				setIsLoading(false);
 			});
-			setIsLoading(false);
 		};
 		fetchData();
 	}, [filter]);
