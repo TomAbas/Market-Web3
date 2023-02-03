@@ -1,18 +1,26 @@
 import { Box, Container, Typography } from '@mui/material';
 import InfiniteListTopTrader from './InfiniteListTopTrader';
 import { useEffect, useState } from 'react';
+import { getTopTradeUsers } from 'api/userApi';
 const TopTrader = () => {
-	let listTopTrader: any = [];
-	const [isLoading, setIsLoading] = useState(false);
+	let initFilter = {
+		time: '30',
+	};
+	const [listTopTrader, setListTopTrader] = useState<any>([]);
+	const [filter] = useState(initFilter);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const hasNextPage = false;
 	const handleFetchNextPage = () => {};
 	const allowLoadMore = false;
 	useEffect(() => {
 		const fetchData = async () => {
-			setIsLoading(true);
+			getTopTradeUsers('2', filter.time).then((res: any) => {
+				setListTopTrader(res);
+				setIsLoading(false);
+			});
 		};
 		fetchData();
-	}, []);
+	}, [filter]);
 	return (
 		<Box sx={{}}>
 			<Container

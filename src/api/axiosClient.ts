@@ -2,7 +2,6 @@
 import axios from 'axios';
 import { API_ENDPOINT } from 'constants/api';
 import SignMessages from 'hooks/useSignMessages';
-import useSignMessages from 'hooks/useSignMessages';
 
 const axiosClient = axios.create({
 	baseURL: API_ENDPOINT,
@@ -36,7 +35,7 @@ axiosClient.interceptors.response.use(
 		// Do something with response error
 		if (error.response.status === 401) {
 			// do something
-			// SignMessages();
+			SignMessages();
 		}
 		return Promise.reject(error);
 	}

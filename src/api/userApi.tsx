@@ -27,4 +27,15 @@ function putLikesToItem(
 	const url = baseURLINTERACTION + `/create/userAddress/${userAddress}`;
 	return axiosClient.post(url, { itemId, state });
 }
-export { updateUser, loginUser, getUserInfo, getLikesStatusOfItem, putLikesToItem };
+function getTopTradeUsers(chainId: string, numberDay: string): Promise<Response<any>> {
+	const url = baseURL + `/top-trader/chainId/${chainId}/?request=${numberDay}`;
+	return axiosClient.get(url).then((res) => res.data);
+}
+export {
+	updateUser,
+	loginUser,
+	getUserInfo,
+	getLikesStatusOfItem,
+	putLikesToItem,
+	getTopTradeUsers,
+};
