@@ -49,6 +49,7 @@ export default function Items() {
 				<Grid container spacing={1}>
 					{collections.map((collection: any, index: any) => (
 						<Grid
+							item
 							xs={6}
 							sm={4}
 							md={3}

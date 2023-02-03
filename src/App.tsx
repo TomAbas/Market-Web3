@@ -68,23 +68,18 @@ function App() {
 				<WalletProvider wallets={wallets} autoConnect={true}>
 					<AudioProvider>
 						<SizeObserver>
-							<AccountSign>
-								<Header />
-								<AccountGuard>
-									<ScrollToTop>
-										<div className="container">
-											<Outlet
-												context={[
-													offers,
-													setOffers,
-													loadingOffers,
-													setTrigger,
-												]}
-											/>
-										</div>
-									</ScrollToTop>
-								</AccountGuard>
-							</AccountSign>
+							{/* <AccountSign> */}
+							<Header />
+							<AccountGuard>
+								<ScrollToTop>
+									<div className="container">
+										<Outlet
+											context={[offers, setOffers, loadingOffers, setTrigger]}
+										/>
+									</div>
+								</ScrollToTop>
+							</AccountGuard>
+							{/* </AccountSign> */}
 							<FooterComp />
 							<ModalGuard />
 							<ToastContainer />
