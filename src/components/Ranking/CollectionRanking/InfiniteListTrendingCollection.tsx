@@ -138,7 +138,7 @@ export default function InfiniteListTrendingCollection({
 												<CollectionName
 													onClick={() =>
 														navigate(
-															`${PATH_COLLECTION.detail}/${collection._id}`
+															`/collection-detail/${collection._id}`
 														)
 													}
 												>

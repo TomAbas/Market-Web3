@@ -55,7 +55,7 @@ export const TableScrollable = styled('table')(({ theme }) => ({
 				// position: 'sticky',
 				left: 0,
 				zIndex: 3,
-				width: '1px',
+				minWidth: '100px',
 			},
 			':second-of-type': {
 				// position: 'sticky',

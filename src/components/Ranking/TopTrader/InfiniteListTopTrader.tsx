@@ -15,7 +15,7 @@ import { CollectionName, FlexBox, TableScrollable, TableWrapper } from '../style
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { PATH_COLLECTION } from 'routes/path';
-
+import { displayAddress } from 'utils/formatDisplay';
 // icon
 import checkicon from 'assets/icons/icon-check.svg';
 
@@ -61,7 +61,6 @@ export default function InfiniteListTopTrader({
 				<TableScrollable>
 					<thead>
 						<tr>
-							{!isLoading && <th></th>}
 							<th>
 								<FlexBox>
 									<Typography>Rank</Typography>
@@ -69,7 +68,7 @@ export default function InfiniteListTopTrader({
 							</th>
 							<th>
 								<FlexBox>
-									<Typography>Collection</Typography>
+									<Typography sx={{ mr: 'auto', ml: 2 }}>Name</Typography>
 								</FlexBox>
 							</th>
 							<th>
@@ -89,12 +88,7 @@ export default function InfiniteListTopTrader({
 							<tbody>
 								{new Array(10).fill(null).map((item: any, index: number) => (
 									<tr key={index}>
-										<th>
-											<FlexBox sx={{ height: 40 }}>
-												<Skeleton sx={{ width: '100%' }} />
-											</FlexBox>
-										</th>
-										{new Array(3).fill(null).map((item: any, idx: number) => (
+										{new Array(4).fill(null).map((item: any, idx: number) => (
 											<td key={idx}>
 												<FlexBox>
 													<Skeleton sx={{ width: '100%' }} />
@@ -108,22 +102,22 @@ export default function InfiniteListTopTrader({
 					) : (
 						<>
 							<tbody>
-								{/* {listTopTrader.map((collection: any, index: number) => (
+								{listTopTrader.map((item: any, index: number) => (
 									<tr key={index}>
 										<th>{index + 1}</th>
 										<th>
 											<FlexBox>
 												<CollectionName
-													onClick={() =>
-														navigate(
-															`${PATH_COLLECTION.detail}/${collection._id}`
-														)
-													}
+												// onClick={() =>
+												// 	navigate(
+												// 		`${PATH_COLLECTION.detail}/${collection._id}`
+												// 	)
+												// }
 												>
 													<Box sx={{ position: 'relative' }}>
 														<Avatar
 															variant="rounded"
-															src={collection.logo}
+															src={item.address.avatar}
 															sx={{
 																width: 40,
 																height: 40,
@@ -139,58 +133,35 @@ export default function InfiniteListTopTrader({
 																right: 1,
 															}}
 														>
-															<img
+															{/* <img
 																src={checkicon}
 																alt="icon verified"
 																style={{
 																	width: '100%',
 																	height: 'auto',
 																}}
-															/>
+															/> */}
 														</Box>
 													</Box>
 
 													<Typography fontWeight="500">
-														{collection.collectionName}
+														{item.address.username}
 													</Typography>
 												</CollectionName>
 											</FlexBox>
 										</th>
+
 										<td>
 											<FlexBox>
-												<Fragment>
-													{collection.volume7Days / 10 ** 8}
-												</Fragment>
+												{displayAddress(item.address.userAddress)}
 											</FlexBox>
 										</td>
+
 										<td>
-											<FlexBox>
-												{renderPercent(collection.percent24Hour)}
-											</FlexBox>
-										</td>
-										<td>
-											<FlexBox>
-												{renderPercent(collection.percent7Days)}
-											</FlexBox>
-										</td>
-										<td>
-											<FlexBox>
-												{renderPercent(collection.percent30Days)}
-											</FlexBox>
-										</td>
-										<td>
-											<FlexBox sx={{ minWidth: '135px' }}>
-												$ {collection.floorPrice / 10 ** 8}
-											</FlexBox>
-										</td>
-										<td>
-											<FlexBox>{collection.owners}</FlexBox>
-										</td>
-										<td>
-											<FlexBox>{collection.items}</FlexBox>
+											<FlexBox>{item.volumeTrade / 10 ** 8}</FlexBox>
 										</td>
 									</tr>
-								))} */}
+								))}
 							</tbody>
 						</>
 					)}
