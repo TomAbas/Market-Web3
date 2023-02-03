@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { openFirstModal } from 'redux/slices/modalWallet';
 import useControlModal from 'hooks/useControlModal';
 import { toast } from 'react-toastify';
-import { buyItem, cancelOrder, sellItem } from '../api/collections/collectionApi';
+import { buyItem, cancelOrder, sellItem } from 'api/collections/collectionApi';
 import { getBalanceToken } from 'service/aptos.service';
 import { useState } from 'react';
 import { selectListNftOrders } from 'redux/slices/orderResource';

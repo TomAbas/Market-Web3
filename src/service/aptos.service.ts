@@ -6,6 +6,9 @@ import { APTOS_NODE_URL } from '../constants/aptos.constant';
 // const address = '0x09e161f7a5f223d8852594af6f8b20ea9717c9114d16d9c23b66c1f0d6f4734d';
 // const collectName = 'Metaverse Collectible';
 // const tokenName = 'test #2';
+
+//  signHexString by AptosAccount
+
 const chainId = '2';
 // const tokenId = {
 // 	token_data_id: {

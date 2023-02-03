@@ -16,6 +16,6 @@ export interface UserLoginModel {
 	userAddress: string | undefined;
 	signature?: string;
 	publicKey?: string;
-	nonce?: number;
+	nonce?: string;
 	message?: string;
 }
