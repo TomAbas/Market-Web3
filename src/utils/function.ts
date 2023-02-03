@@ -1,6 +1,6 @@
 import { CustomFile } from '../models/common';
 import numeral from 'numeral';
-
+import moment from 'moment';
 export const getFileType = (file: CustomFile | string | null) => {
 	if (!file) return;
 	let f: any;
@@ -36,4 +36,34 @@ export const changePriceToToken = (wei: string) => {
 
 export const changeTokenToWei = (token: string) => {
 	return (Number(token) * 10 ** 8).toString();
+};
+export const formatTimeHistory = (time: Date | string): string => {
+	let result: string;
+
+	if (!time) {
+		result = '-----';
+	} else {
+		result = moment(time).format('MM/DD/YYYY h:mm A');
+	}
+	return result;
+};
+
+export function displayAddress(address: string) {
+	return `${address.slice(0, 6)}...${address.slice(-4)}`;
+}
+export const formatAddressHistory = (
+	addressHistory: string,
+	userAddress: string | null | undefined
+): string => {
+	let result: string = '';
+
+	if (!addressHistory) {
+		result = '-----';
+	} else if (addressHistory === userAddress) {
+		result = 'You';
+	} else {
+		result = displayAddress(addressHistory) ?? '-----';
+	}
+
+	return result;
 };

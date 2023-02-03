@@ -16,13 +16,9 @@ export default function Items() {
 	const category = searchParams.get('category');
 	const [collections, setCollections] = useState([]);
 	let navigate = useNavigate();
-	const handleCollectionDetail = (creator: string, collection: string) => {
+	const handleCollectionDetail = (collectionId: string) => {
 		//encodeURIComponent
-		navigate(
-			`/collection-detail?creator=${encodeURIComponent(
-				creator
-			)}&collection=${encodeURIComponent(collection)}`
-		);
+		navigate(`/collection-detail/${collectionId}`);
 	};
 	async function getAllCollections() {
 		let { data } = await getAllCollectionsAPI('2');
@@ -56,10 +52,7 @@ export default function Items() {
 							p={1}
 							key={index}
 							onClick={() => {
-								handleCollectionDetail(
-									collection.userAddress,
-									collection.collectionName
-								);
+								handleCollectionDetail(collection._id);
 							}}
 						>
 							<Link

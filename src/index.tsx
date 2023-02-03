@@ -64,17 +64,8 @@ const router = createHashRouter([
 					</>
 				),
 			},
-			// {
-			// 	path: '/my-item',
-			// 	element: <MyItemDetail />,
-			// 	errorElement: (
-			// 		<>
-			// 			<h1>error test market</h1>
-			// 		</>
-			// 	),
-			// },
 			{
-				path: '/collection-detail',
+				path: '/collection-detail/:collectionId',
 				element: <CollectionDetail />,
 				errorElement: (
 					<>
