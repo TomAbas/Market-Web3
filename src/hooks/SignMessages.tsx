@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { async } from '@firebase/util';
-import { useWallet } from '@manahippo/aptos-wallet-adapter';
-import axiosClient from 'api/axiosClient';
 import sha256 from 'sha256';
-import React, { useState } from 'react';
-import { loginUser } from './useUserLogin';
-
+import { loginUser } from '../api/userApi';
+// import useLogin from './useLogin';
+// import { dispatch } from 'redux/store';
+// import { getUserSuccessA } from 'redux/slices/userInfo';
 declare let window: any;
-const SignMessages = () => {
+const SignMessagesFc = () => {
 	let publicKey: string;
 	let userAddress: string;
 	let nonce =
 		Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-	const { wallet, account } = useWallet();
 	const dataMessage = {
 		address: false, // set true if you want include current address to message
 		application: false, // // set true if you want include current application to message
@@ -20,18 +17,21 @@ const SignMessages = () => {
 		message: '', // message like string or Uint8Array
 		nonce: nonce, // random nonce like string
 	};
+
 	function identifyWallet() {
-		console.log(wallet?.adapter.name);
-		if (wallet?.adapter.name === 'Pontem') {
+		let wallet = localStorage.getItem('wallet');
+		if (wallet === 'Pontem') {
 			pontemSign();
-		} else if (wallet?.adapter.name === 'Spacecy') {
+		} else if (wallet === 'Spacecy') {
 			spacecySign();
-		} else if (wallet?.adapter.name === 'Martian') {
+		} else if (wallet === 'Martian') {
 			martianSign();
-		} else if (wallet?.adapter.name === 'Petra') {
+		} else if (wallet === 'Petra') {
 			petraSign();
 		}
+		// pontemSign();
 	}
+	identifyWallet();
 	async function pontemSign() {
 		await window.pontem.connect().then((result: any) => {
 			publicKey = result.publicKey.startsWith('0x')
@@ -51,7 +51,6 @@ const SignMessages = () => {
 						? result.result.signature.slice(2)
 						: result.result.signature,
 				};
-				console.log('Obj sent', objSent);
 				loginUser(objSent);
 			})
 			.catch((e: any) => console.log('Error', e));
@@ -127,7 +126,6 @@ const SignMessages = () => {
 			})
 			.catch((e: any) => console.log('Error', e));
 	}
-	return { identifyWallet };
 };
 
-export default SignMessages;
+export default SignMessagesFc;
