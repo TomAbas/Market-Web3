@@ -11,12 +11,8 @@ interface Props {
 const FeaturedCollection: React.FC<Props> = ({ collections, isLoading }) => {
 	let arr = new Array(4);
 	let navigate = useNavigate();
-	function handleCollectionDetail(creator: string, collection: string) {
-		navigate(
-			`/collection-detail?creator=${encodeURIComponent(
-				creator
-			)}&collection=${encodeURIComponent(collection)}`
-		);
+	function handleCollectionDetail(collectionId: string) {
+		navigate(`/collection-detail/${collectionId}`);
 	}
 
 	return (
@@ -44,10 +40,7 @@ const FeaturedCollection: React.FC<Props> = ({ collections, isLoading }) => {
 								p={1}
 								key={index}
 								onClick={() => {
-									handleCollectionDetail(
-										collection.userAddress,
-										collection.collectionName
-									);
+									handleCollectionDetail(collection._id);
 								}}
 							>
 								<Link

@@ -60,8 +60,6 @@ import useLogin from '../../hooks/useLogin';
 //component
 import NavBar from 'components/NavBar';
 import NavBarMobile from 'components/NavBarMobile';
-import { loginUser } from 'hooks/useUserLogin';
-import { getUserSuccessA } from 'redux/slices/userInfo';
 
 const listCategoryMarketplace = [
 	// {
@@ -692,29 +690,27 @@ const Header: React.FC = () => {
 							{userAddress && (
 								<IconItem onClick={openModalInfoUser}>
 									<img src={userIcon} alt="model info" />
-									{modalWalletSteps.steps.thirdModal &&
-										loginSuccess &&
-										userAddress && (
-											<ClickAwayListener
-												onClickAway={() => {
-													openModalInfoUser();
-												}}
-											>
-												<DropDownContent ref={ref}>
-													<Box
-														sx={{
-															width: '330px',
-															boxShadow:
-																'rgb(0 0 0 / 40%) 0px 0px 5px 0px',
-															borderRadius: '12px',
-														}}
-														p={4}
-													>
-														<ModalInfo userAddress={userAddress} />
-													</Box>
-												</DropDownContent>
-											</ClickAwayListener>
-										)}
+									{modalWalletSteps.steps.thirdModal && userAddress && (
+										<ClickAwayListener
+											onClickAway={() => {
+												openModalInfoUser();
+											}}
+										>
+											<DropDownContent ref={ref}>
+												<Box
+													sx={{
+														width: '330px',
+														boxShadow:
+															'rgb(0 0 0 / 40%) 0px 0px 5px 0px',
+														borderRadius: '12px',
+													}}
+													p={4}
+												>
+													<ModalInfo userAddress={userAddress} />
+												</Box>
+											</DropDownContent>
+										</ClickAwayListener>
+									)}
 								</IconItem>
 							)}
 						</Stack>

@@ -1,11 +1,9 @@
-import useSignMessages from 'hooks/useSignMessages';
-import React, { ReactNode } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { ReactNode, useEffect } from 'react';
 interface Props {
 	children: ReactNode | string;
 }
 const AccountSign: React.FC<Props> = ({ children }) => {
-	const { identifyWallet } = useSignMessages();
-	identifyWallet();
 	return <>{children}</>;
 };
 

@@ -46,7 +46,7 @@ const ButtonContent: React.FC<Props> = ({ selectedFilter }) => {
 
 const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption }) => {
 	const listFilter: any = [
-		{ name: '1 day', value: 'volume24Hours' },
+		{ name: '1 day', value: 'volume24Hour' },
 		{ name: '7 days', value: 'volume7Days' },
 		{ name: '30 days', value: 'volume30Days' },
 	];

@@ -158,7 +158,7 @@ export default function CardNFTCollection({
 
 	return (
 		<>
-			<Grid xs={6} sm={4} md={3} p={1}>
+			<Grid item xs={6} sm={4} md={3} p={1}>
 				<ItemCardStyle sx={{ boxShadow: 0 }} onClick={handleItem}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}

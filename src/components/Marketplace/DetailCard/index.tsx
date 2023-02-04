@@ -18,11 +18,12 @@ import defaultImg from '../../../assets/icons/default-img-input2.png';
 import { getItemDetail } from 'api/items/itemsApi';
 import { nftItem } from 'models/item';
 import useBuyItemAptos from 'utils/putAptos';
-import { getBalanceToken } from 'service/aptos.service';
 import { changePriceToToken } from 'utils/function';
 import { selectListNftOrders } from 'redux/slices/orderResource';
 import { getItemFromOrder } from 'utils/dataResource';
 import { selectUser } from 'redux/slices/userInfo';
+import TabItemDetail from './TabItemDetail/TabItemDetail';
+import { getBalanceToken } from 'service/aptos.service';
 
 export default function DetailCard() {
 	let { itemId } = useParams();
@@ -31,6 +32,7 @@ export default function DetailCard() {
 	const [loadingItem, setLoadingItem] = useState(true);
 	const [itemPrice, setItemPrice] = useState<number>();
 	const [itemResource, setItemResource] = useState<any>();
+	const [userAmountOfItem, setUserAmountOfItem] = useState('');
 	const {
 		buyItemAptos,
 		handleWithdrawItem,
@@ -110,6 +112,22 @@ export default function DetailCard() {
 		setItemPrice(changePriceToToken(item.price));
 		setItemResource(getItemFromOrder(listNftOrders, item!));
 	}
+	async function getUserAmountOfItem(item: nftItem) {
+		setUserAmountOfItem(
+			await getBalanceToken(
+				userInfo?.userAddress!,
+				item.creator,
+				item.collectionInfo.collectionName!,
+				item.itemName,
+				item.chainId
+			)
+		);
+	}
+	useEffect(() => {
+		if (userInfo && item?.itemName) {
+			getUserAmountOfItem(item);
+		}
+	}, [userInfo, item]);
 	useEffect(() => {
 		fetchOffers();
 	}, [itemId]);
@@ -165,7 +183,7 @@ export default function DetailCard() {
 								<Typography variant="body1">{item?.description}</Typography>
 								{item?.status === 1 && (
 									<Typography variant="body1">
-										Owned Quantity : {itemResource?.amount}
+										Sell Quantity : {itemResource?.amount}
 									</Typography>
 								)}
 								<Typography variant="body1">
@@ -249,6 +267,9 @@ export default function DetailCard() {
 						</>
 					)}
 				</Stack>
+				<Box>
+					<TabItemDetail userAmountOfItem={userAmountOfItem} item={item!} />
+				</Box>
 			</Box>
 			{item?.status === 1 ? (
 				<ModalBuy

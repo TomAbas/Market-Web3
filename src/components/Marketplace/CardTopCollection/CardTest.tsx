@@ -29,9 +29,7 @@ const CardTest: React.FC<Props> = ({ idx, collection, filter }) => {
 	return (
 		<>
 			{' '}
-			<LinkWrapper
-				href={`/#/collection-detail?creator=${collection.userAddress}&collection=${collection.collectionName}`}
-			>
+			<LinkWrapper href={`/#/collection-detail/${collection._id}`}>
 				<CollectionItem direction="row" alignItems="center">
 					<CollectionRank>
 						<div>{idx + 1}</div>

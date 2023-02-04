@@ -20,4 +20,8 @@ function getTopCollections(
 	const filter = { sortBy: sortBy };
 	return ClientAxios.post(url, filter).then(({ data }) => data);
 }
-export { getAllCollections, getCategoryCollections, getTopCollections };
+function getItemOfCollection(collectionId: string) {
+	const url = `/collection/get-info/collectionId/${collectionId}`;
+	return ClientAxios.get(url).then(({ data }) => data);
+}
+export { getAllCollections, getCategoryCollections, getTopCollections, getItemOfCollection };

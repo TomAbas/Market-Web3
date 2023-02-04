@@ -3,7 +3,7 @@ import { Box, Grid, Stack, Typography, Skeleton } from '@mui/material';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import CardNFT from 'components/Marketplace/CardNFT';
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useTokens } from '../../../hooks/useTokens';
 import { getListItemResource } from '../../../utils/dataResource';
 import banner from '../../../assets/banner.png';
@@ -12,31 +12,29 @@ import { useSearchParams, useOutletContext } from 'react-router-dom';
 import { getCollectionData } from '../../../service/aptos.service';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import useInteraction from 'hooks/useInteraction';
+import { getItemOfCollection } from 'api/collectionApi';
+import { useAppSelector } from 'redux/hooks';
+import { selectTrigger } from 'redux/slices/nftFilter';
 const CollectionDetail = () => {
-	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	const { collectionId } = useParams();
+	let arr = [1, 2, 3, 4];
 	const { checkIsLike, likeItem } = useInteraction();
-	const [items, setItems] = useState<any[]>([]);
 	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 	const search = useLocation().search;
 	const [collectionInfo, setCollectionInfo] = useState<any>('');
 	const [loadingCollectionImg, setLoadingCollectionImg] = useState(true);
-	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
-	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
+	const triggerFetchNft = useAppSelector(selectTrigger);
+	async function fetchCollectionItems() {
+		let collection = await getItemOfCollection(collectionId!).then((res: any) => res.data);
+		setCollectionInfo(collection);
+		setLoadingCollectionImg(false);
+	}
 	useEffect(() => {
-		const fetchOffers = async () => {
-			const newOffers = offers;
-			let newItems = newOffers.filter(
-				(item: any) =>
-					item?.token_id?.token_data_id?.collection == collection &&
-					item?.token_id?.token_data_id?.creator == creator
-			);
-			setItems(newItems);
-			let collectionData = await getCollectionData(creator, collection);
-			setCollectionInfo(collectionData);
-			setLoadingCollectionImg(false);
-		};
-		fetchOffers();
-	}, [offers]);
+		fetchCollectionItems();
+	}, [triggerFetchNft]);
+	useEffect(() => {
+		console.log(collectionInfo);
+	}, [collectionInfo]);
 	return (
 		<>
 			<Box pt={13}>
@@ -55,7 +53,7 @@ const CollectionDetail = () => {
 						{' '}
 						<Skeleton width="100%">
 							<Box sx={{ height: '400px' }}>
-								<img src={collectionInfo.uri} alt="banner" />
+								<img src={collectionInfo?.logo} alt="banner" />
 							</Box>
 						</Skeleton>
 						<Box
@@ -77,7 +75,7 @@ const CollectionDetail = () => {
 						>
 							<Skeleton width="100%">
 								<Box sx={{ width: '100px', height: '100px' }}>
-									<img src={collectionInfo.uri} alt="avatar" />
+									<img src={collectionInfo?.logo} alt="avatar" />
 								</Box>
 							</Skeleton>
 						</Box>
@@ -94,7 +92,7 @@ const CollectionDetail = () => {
 							},
 						}}
 					>
-						<img src={collectionInfo.uri} alt="banner" />
+						<img src={collectionInfo?.logo} alt="banner" />
 						<Box
 							sx={{
 								position: 'absolute',
@@ -112,14 +110,14 @@ const CollectionDetail = () => {
 								},
 							}}
 						>
-							<img src={collectionInfo.uri} alt="avatar" />
+							<img src={collectionInfo?.logo} alt="avatar" />
 						</Box>
 					</Box>
 				)}
 				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>
 					<Box sx={{ width: '100%' }}>
 						<Typography variant="h4" fontWeight="500">
-							{collection}
+							{collectionInfo.collectionName}
 						</Typography>
 						<Stack
 							direction="row"
@@ -141,9 +139,12 @@ const CollectionDetail = () => {
 						>
 							<img src={aptos} alt="aptos" />
 							<Box>
-								{creator?.slice(0, 6) +
+								{collectionInfo.userAddress?.slice(0, 6) +
 									'...' +
-									creator?.slice(creator?.length - 4, creator?.length)}
+									collectionInfo.userAddress?.slice(
+										collectionInfo.userAddress?.length - 4,
+										collectionInfo.userAddress?.length
+									)}
 							</Box>
 						</Stack>
 						<Typography sx={{ marginTop: '16px', maxWidth: '80%', marginX: 'auto' }}>
@@ -160,7 +161,7 @@ const CollectionDetail = () => {
 								</>
 							) : (
 								<>
-									{items.map((offer: any, index: any) => (
+									{collectionInfo?.listItem?.map((offer: any, index: any) => (
 										<CardNFT
 											itemLiked={checkIsLike}
 											likeItem={likeItem}

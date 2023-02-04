@@ -21,7 +21,7 @@ const TopCollections: React.FC<Props> = ({ filter }) => {
 		let volume30Days;
 		try {
 			await Promise.all([
-				(volume24Hours = await getTopCollectionsAPI('2', '12', '1', 'volume24Hours')),
+				(volume24Hours = await getTopCollectionsAPI('2', '12', '1', 'volume24Hour')),
 				(volume7Days = await getTopCollectionsAPI('2', '12', '1', 'volume7Days')),
 				(volume30Days = await getTopCollectionsAPI('2', '12', '1', 'volume30Days')),
 			]);

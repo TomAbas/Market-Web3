@@ -9,6 +9,7 @@ export interface userState {
 	userInfo: User | null;
 	isOpenEdit: boolean;
 	isOpenSetting: boolean;
+	walletId: string;
 }
 const initialState: userState = {
 	isLoading: false,
@@ -17,6 +18,10 @@ const initialState: userState = {
 	userInfo: null,
 	isOpenEdit: false,
 	isOpenSetting: false,
+	walletId: '',
+};
+const getWalletId: CaseReducer<userState, PayloadAction<any>> = (state, action) => {
+	state.walletId = action.payload;
 };
 const startLoading: CaseReducer<userState> = (state) => {
 	state.isLoading = true;
@@ -57,6 +62,7 @@ export const userSlice = createSlice({
 		updateInfoUser,
 		toggleEditModal,
 		toggleSettingModal,
+		getWalletId,
 	},
 });
 
@@ -67,11 +73,12 @@ export const updateInfoUserA = userSlice.actions.updateInfoUser;
 export const logOutUserSuccessA = userSlice.actions.logOutUserSuccess;
 export const toggleEditModalA = userSlice.actions.toggleEditModal;
 export const toggleSettingModalA = userSlice.actions.toggleSettingModal;
+export const getWalletIdA = userSlice.actions.getWalletId;
 
 export const selectUser = (state: RootState) => state.userSlice.userInfo;
 export const selectLoading = (state: RootState) => state.userSlice.isLoading;
 export const selectSuceess = (state: RootState) => state.userSlice.isSuccess;
 export const selectEditModal = (state: RootState) => state.userSlice.isOpenEdit;
 export const selectSettingModal = (state: RootState) => state.userSlice.isOpenSetting;
-
+export const selectWalletId = (state: RootState) => state.userSlice.walletId;
 export default userSlice.reducer;
