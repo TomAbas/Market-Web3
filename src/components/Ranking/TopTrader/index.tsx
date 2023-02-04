@@ -45,7 +45,7 @@ const TopTrader = () => {
 					sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 8 }}
 				>
 					<Typography variant="h2" fontWeight="500">
-						Top List Traders
+						Top Traders
 					</Typography>
 				</Box>
 
