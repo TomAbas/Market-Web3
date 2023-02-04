@@ -370,7 +370,7 @@ const Header: React.FC = () => {
 									<NavigationItemBigScreen sx={{ width: '165px' }}>
 										<NavLinkBigScreen
 											className="navLink"
-											href={`/#/`}
+											href={`#/collection/trending`}
 											target="_self"
 											// onClick={(e: any) => {
 											// 	e.preventDefault();
@@ -412,7 +412,7 @@ const Header: React.FC = () => {
 															noWrap
 															fontStyle="italic"
 														>
-															Rankings
+															Top Collections
 														</Typography>
 													</Stack>
 												</DropdownMenuLink>
@@ -443,7 +443,7 @@ const Header: React.FC = () => {
 															noWrap
 															fontStyle="italic"
 														>
-															Top trader
+															Top traders
 														</Typography>
 													</Stack>
 												</DropdownMenuLink>
