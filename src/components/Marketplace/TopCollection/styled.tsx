@@ -39,6 +39,12 @@ export const MainHeader = styled(Typography)(({ theme }) => ({
 	color: '#131740',
 }));
 export const SubTitle = styled(Typography)(({ theme }) => ({
+	display: 'flex',
+	flexDirection: 'row',
+	justifyContent: 'space-between',
+	alignItems: 'center',
+	marginLeft: '8px',
+	//
 	WebkitTextFillColor: 'transparent',
 	background: 'linear-gradient(270deg,#ff7356,#ff59e2 25.52%,#52ddf6 50%,#eadf4e 76.04%,#ff7356)',
 	WebkitBackgroundClip: 'text',

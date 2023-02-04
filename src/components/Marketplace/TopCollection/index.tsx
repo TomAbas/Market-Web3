@@ -21,32 +21,25 @@ import TopCollections from './TopCollections';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-	selectedFilter: string;
+	selectedFilter: any;
+	sx?: any;
+	variant?: any;
 }
 interface Props0 {
 	selectedFilter: any;
 	handleClickOption: any;
 }
-const ButtonContent: React.FC<Props> = ({ selectedFilter }) => {
+export const ButtonContent: React.FC<Props> = ({ selectedFilter, sx, variant = 'h2' }) => {
 	return (
-		<SubTitle
-			variant="h2"
-			sx={{
-				display: 'flex',
-				flexDirection: 'row',
-				justifyContent: 'space-between',
-				alignItems: 'center',
-				marginLeft: '8px',
-			}}
-		>
-			{selectedFilter} <KeyboardArrowDownIcon sx={{ width: 40, height: 40 }} />
+		<SubTitle variant={variant} sx={sx}>
+			{selectedFilter.name} <KeyboardArrowDownIcon sx={{ width: 40, height: 40 }} />
 		</SubTitle>
 	);
 };
 
-const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption }) => {
+export const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption }) => {
 	const listFilter: any = [
-		{ name: '1 day', value: 'volume24Hours' },
+		{ name: '1 day', value: 'volume24Hour' },
 		{ name: '7 days', value: 'volume7Days' },
 		{ name: '30 days', value: 'volume30Days' },
 	];
@@ -54,7 +47,7 @@ const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption }
 		<DropdownWrapper sx={{ width: '180px' }}>
 			<ListOption>
 				{listFilter.map((filter: any, index: number) => {
-					const isItemSelected = selectedFilter === filter.name;
+					const isItemSelected = selectedFilter.name === filter.name;
 					return (
 						<OptionItem key={index} onClick={() => handleClickOption(filter)}>
 							<OptionItemText>{filter.name}</OptionItemText>
@@ -73,11 +66,12 @@ const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption }
 };
 
 const Index = () => {
+	const initFilter = { name: '7 days', value: 'volume7Days' };
 	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
-	const [selectedFilter, setSelectedFilter] = useState<string>('7 days');
+	const [selectedFilter, setSelectedFilter] = useState<any>(initFilter);
 	const navigate = useNavigate();
 	const handleClickOption = (filterDay: any) => {
-		setSelectedFilter(filterDay.name);
+		setSelectedFilter(filterDay);
 		// setSortBy(filter.value);
 
 		setActiveDropDown(false);
@@ -104,12 +98,6 @@ const Index = () => {
 						}
 					/>
 				</FilterContent>
-				{/* <SubHeader variant="h5" sx={{ display: 'inline' }}>
-            Top collection volume trade
-            <LinkWrapper href={`#${PATH_COLLECTION.trending}`}>
-                <ButtonViewAll sx={{ display: 'inline' }}>Ranking</ButtonViewAll>
-            </LinkWrapper>
-        </SubHeader> */}
 			</HeaderSection>
 			<Box sx={{ margin: '2rem auto' }} fontWeight="600" fontStyle="italic">
 				<Grid

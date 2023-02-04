@@ -35,7 +35,6 @@ export default function Items() {
 			getAllCollections();
 		} else {
 			getCategoryCollections();
-			console.log('chay');
 		}
 	}, [category]);
 	return (

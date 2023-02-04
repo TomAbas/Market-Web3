@@ -44,18 +44,7 @@ export default function Marketplace() {
 	let arr = new Array(12);
 	const { likeItem, checkIsLike } = useInteraction();
 	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
-	const [collections, setCollections] = useState<any[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
 	let navigate = useNavigate();
-	useEffect(() => {
-		const fetchCollections = async () => {
-			let newArrCollection = await getAllCollections('2').then((res) => res.data);
-			setCollections(newArrCollection.slice(0, 4));
-			setIsLoading(false);
-		};
-		fetchCollections();
-	}, []);
-
 	const handleCollectionDetail = (creator: string, collection: string) => {
 		//encodeURIComponent
 		navigate(
@@ -222,7 +211,7 @@ export default function Marketplace() {
 				</Grid>
 			</ExploreCollection>
 			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 4, pb: 4, px: 2 }}>
-				<FeaturedCollection collections={collections} isLoading={isLoading} />
+				<FeaturedCollection />
 			</Box>
 			<ExploreCollection sx={{ py: 4 }}>
 				<Container maxWidth="xl" sx={{}}>
