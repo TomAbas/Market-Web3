@@ -173,14 +173,14 @@ const FooterComp: React.FC = () => {
 					target: '',
 				},
 
+				// {
+				// 	id: 3,
+				// 	name: 'Boarc',
+				// 	link: `${PATH_DROP.boarc}`,
+				// 	target: '',
+				// },
 				{
 					id: 3,
-					name: 'Boarc',
-					link: `${PATH_DROP.boarc}`,
-					target: '',
-				},
-				{
-					id: 4,
 					name: 'Auction',
 					link: ``,
 					target: '',
@@ -249,28 +249,21 @@ const FooterComp: React.FC = () => {
 				{
 					id: 1,
 					name: 'Profile',
-					link: '',
+					link: '#/profile',
 					target: '',
 				},
 
 				{
 					id: 2,
-					name: 'Watchlist',
-					link: '',
-					target: '',
-				},
-
-				{
-					id: 3,
 					name: 'Favorites',
 					link: '',
 					target: '',
 				},
 
 				{
-					id: 4,
-					name: 'My Collection',
-					link: '',
+					id: 3,
+					name: 'My Collections',
+					link: '#/myCollection',
 					target: '',
 				},
 
@@ -553,7 +546,7 @@ const FooterComp: React.FC = () => {
 														item.link === '' ? 'none' : 'pointer',
 													fontStyle: 'italic',
 												}}
-												target="_blank"
+												// target="_blank"
 												href={item.link}
 											>
 												{item.name}
