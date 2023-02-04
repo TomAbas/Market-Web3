@@ -20,6 +20,7 @@ const initialState: AllNftsState = {
 		minPrice: '',
 		maxPrice: '',
 		isFiltering: false,
+		status: [],
 	},
 	trigger: false,
 };
@@ -33,7 +34,7 @@ export const nftFilterSlice = createSlice({
 			state.isLoading = false;
 		},
 		setFilter(state, action) {
-			state.filter = { ...action.payload, isFiltering: true };
+			state.filter = { ...state.filter, ...action.payload, isFiltering: true };
 		},
 		handleReset(state) {
 			state = initialState;

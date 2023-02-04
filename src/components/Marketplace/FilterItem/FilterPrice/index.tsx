@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, ClickAwayListener, Stack, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 // yup
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,7 +12,7 @@ import {
 	ButtonTitle,
 	DropdownWrapper,
 	DropdownButtonGroup,
-} from './styled';
+} from '../styled';
 import FieldInput from '../../../../components/CustomField/FieldInput/index';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import iconPriceBlack from '../../../../assets/icons/icon-filter-price.svg';
@@ -50,6 +50,7 @@ const FilterPrice = () => {
 	function openModal() {
 		setOpen(!open);
 	}
+
 	function handleApply(data: any) {
 		if (
 			data.minPrice !== '' &&
@@ -82,70 +83,78 @@ const FilterPrice = () => {
 					</ButtonStyled>
 				</ButtonWrapper>
 				{open && (
-					<form
-						onSubmit={handleSubmit(handleApply)}
-						style={{ position: 'absolute', zIndex: 999, left: 0, top: '110%' }}
-					>
-						<DropdownWrapper sx={{ minWidth: '300px' }}>
-							<Stack
-								direction="row"
-								alignItems="center"
-								spacing={1}
-								sx={{ mt: 1, width: '92%', mx: 'auto' }}
-							>
-								<FieldInput
-									id="min-price"
-									type="number"
-									min={0}
-									placeholder="Min"
-									registerHookForm={{ ...register('minPrice') }}
-									sx={{
-										borderWidth: '1px',
-										borderRadius: '12px',
-										padding: '12.5px 15px',
-									}}
-									onChange={(e: any) => {
-										if (e.target.value !== '' && Number(e.target.value) < 0) {
-											setValue('minPrice', '0');
-										}
-									}}
-								/>
+					<ClickAwayListener onClickAway={() => openModal()}>
+						<form
+							onSubmit={handleSubmit(handleApply)}
+							style={{ position: 'absolute', zIndex: 999, left: 0, top: '110%' }}
+						>
+							<DropdownWrapper sx={{ minWidth: '300px' }}>
+								<Stack
+									direction="row"
+									alignItems="center"
+									spacing={1}
+									sx={{ mt: 1, width: '92%', mx: 'auto' }}
+								>
+									<FieldInput
+										id="min-price"
+										type="number"
+										min={0}
+										placeholder="Min"
+										registerHookForm={{ ...register('minPrice') }}
+										sx={{
+											borderWidth: '1px',
+											borderRadius: '12px',
+											padding: '12.5px 15px',
+										}}
+										onChange={(e: any) => {
+											if (
+												e.target.value !== '' &&
+												Number(e.target.value) < 0
+											) {
+												setValue('minPrice', '0');
+											}
+										}}
+									/>
 
-								<Typography variant="body1">to</Typography>
+									<Typography variant="body1">to</Typography>
 
-								<FieldInput
-									id="max-price"
-									type="number"
-									placeholder="Max"
-									registerHookForm={{ ...register('maxPrice') }}
-									sx={{
-										borderWidth: '1px',
-										borderRadius: '12px',
-										padding: '12.5px 15px',
-									}}
-									onChange={(e: any) => {
-										if (e.target.value !== '' && Number(e.target.value) < 0) {
-											setValue(
-												'maxPrice',
-												Math.abs(e.target.value).toString()
-											);
-										}
-									}}
-								/>
-							</Stack>
+									<FieldInput
+										id="max-price"
+										type="number"
+										placeholder="Max"
+										registerHookForm={{ ...register('maxPrice') }}
+										sx={{
+											borderWidth: '1px',
+											borderRadius: '12px',
+											padding: '12.5px 15px',
+										}}
+										onChange={(e: any) => {
+											if (
+												e.target.value !== '' &&
+												Number(e.target.value) < 0
+											) {
+												setValue(
+													'maxPrice',
+													Math.abs(e.target.value).toString()
+												);
+											}
+										}}
+									/>
+								</Stack>
 
-							{/* <DividerGradient sx={{ mt: 1 }} /> */}
+								{/* <DividerGradient sx={{ mt: 1 }} /> */}
 
-							<DropdownButtonGroup>
-								<ButtonWhite onClick={handleClear} sx={{ width: '130px' }}>
-									Clear
-								</ButtonWhite>
-								<ButtonWhite type="submit" sx={{ width: '130px' }}>
-									Apply
-								</ButtonWhite>
-							</DropdownButtonGroup>
-						</DropdownWrapper>
-					</form>
+								<DropdownButtonGroup>
+									<ButtonWhite onClick={handleClear} sx={{ width: '130px' }}>
+										Clear
+									</ButtonWhite>
+									<ButtonWhite type="submit" sx={{ width: '130px' }}>
+										Apply
+									</ButtonWhite>
+								</DropdownButtonGroup>
+							</DropdownWrapper>
+						</form>
+					</ClickAwayListener>
 				)}
 			</Box>
 		</>
