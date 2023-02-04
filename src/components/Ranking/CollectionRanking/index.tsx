@@ -110,6 +110,7 @@ const CollectionRanking = () => {
 				<Box sx={{ margin: '20px 0' }}>
 					<InfiniteListTrendingCollection
 						listCollection={listCollectionTop}
+						selectedFilter={selectedFilter}
 						isLoading={isLoading}
 						hasNextPage={hasNextPage}
 						fetchNextPage={handleFetchNextPage}

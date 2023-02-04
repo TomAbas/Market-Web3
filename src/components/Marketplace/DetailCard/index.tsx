@@ -102,11 +102,7 @@ export default function DetailCard() {
 
 	const navigateCollection = () => {
 		// console.log(name, creater);
-		navigate(
-			`/collection-detail?creator=${new URLSearchParams(search).get(
-				'creator'
-			)}&collection=${new URLSearchParams(search).get('collection')}`
-		);
+		navigate(`/collection-detail/${item?.collectionId}`);
 	};
 	function changePrice(item: nftItem) {
 		setItemPrice(changePriceToToken(item.price));
