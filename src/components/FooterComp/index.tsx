@@ -135,7 +135,7 @@ const FooterComp: React.FC = () => {
 
 	const marketplace = [
 		{
-			title: 'Marketplace',
+			title: 'Explore',
 			contents: [
 				{
 					title: 'Collectible',
