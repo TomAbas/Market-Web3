@@ -26,6 +26,7 @@ export interface InfiniteListTrendingCollectionProps {
 	hasNextPage: boolean;
 	fetchNextPage: Function;
 	allowLoadMore: boolean;
+	selectedFilter: any;
 }
 
 export default function InfiniteListTrendingCollection({
@@ -34,6 +35,7 @@ export default function InfiniteListTrendingCollection({
 	hasNextPage,
 	fetchNextPage,
 	allowLoadMore,
+	selectedFilter,
 }: InfiniteListTrendingCollectionProps) {
 	const listRef = useRef<HTMLDivElement>(null);
 	const navigate = useNavigate();
@@ -185,7 +187,7 @@ export default function InfiniteListTrendingCollection({
 										<td>
 											<FlexBox>
 												<Fragment>
-													{collection.volume7Days / 10 ** 8} APT
+													{collection[selectedFilter.value] / 10 ** 8} APT
 												</Fragment>
 											</FlexBox>
 										</td>
