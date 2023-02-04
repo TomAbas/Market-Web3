@@ -104,12 +104,6 @@ const Index = () => {
 						}
 					/>
 				</FilterContent>
-				{/* <SubHeader variant="h5" sx={{ display: 'inline' }}>
-            Top collection volume trade
-            <LinkWrapper href={`#${PATH_COLLECTION.trending}`}>
-                <ButtonViewAll sx={{ display: 'inline' }}>Ranking</ButtonViewAll>
-            </LinkWrapper>
-        </SubHeader> */}
 			</HeaderSection>
 			<Box sx={{ margin: '2rem auto' }} fontWeight="600" fontStyle="italic">
 				<Grid
