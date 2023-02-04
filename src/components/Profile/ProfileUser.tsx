@@ -3,6 +3,7 @@ import { Box, ClickAwayListener, Grid, Stack, Typography } from '@mui/material';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import CardNFTUser from 'components/Marketplace/CardNFTUser';
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useTokens } from '../../hooks/useTokens';
 import aptos from '../../assets/images/card/aptos.jpg';
 import { useSizeObersver } from 'contexts/SizeObserver';
@@ -12,8 +13,11 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectSettingModal, selectUser, toggleSettingModalA } from 'redux/slices/userInfo';
 import EditInfoUser from 'components/EditInfoUser/EditInfoUser';
 import { nftItem } from 'models/item';
+import { getUserInfo } from 'api/userApi';
 
 const ProfileUser = () => {
+	const [searchParams, setSearchParams] = useSearchParams();
+	const address = searchParams.get('address');
 	const dispatch = useAppDispatch();
 	const [openEdit, setOpenEdit] = useState(false);
 	const { account } = useWallet();
@@ -23,13 +27,13 @@ const ProfileUser = () => {
 	const { tokens, userNfts } = useTokens(account);
 	const [items, setItems] = useState<any[]>([]);
 	const innerHeight = innerWidth / 4.5;
-	const infoUser = useAppSelector(selectUser);
+	let myInfo = useAppSelector(selectUser);
+	const [infoUser, setInfoUser] = useState<any>(myInfo);
 	const isSettingModal = useAppSelector(selectSettingModal);
 	const handleItems = (index: any) => {
 		let newItems = items.filter((_item, i) => i !== index);
 		setItems(newItems);
 	};
-
 	const handleClickAway = () => {
 		setViewFull(false);
 	};
@@ -45,9 +49,16 @@ const ProfileUser = () => {
 	const handleToggleModalSetting = () => {
 		dispatch(toggleSettingModalA());
 	};
+	async function fetchData(userAddress: string) {
+		setInfoUser((await getUserInfo(userAddress)).data.data);
+		console.log(infoUser);
+	}
 	useEffect(() => {
 		setItems(tokens);
-	}, [tokens]);
+		if (address) {
+			fetchData(address);
+		}
+	}, [tokens, address]);
 	return (
 		<>
 			<Box pt={13}>
@@ -136,10 +147,12 @@ const ProfileUser = () => {
 						}}
 					>
 						{/* <img src={infoUser?.avatar} alt="avatar" /> */}
-						<button onClick={openEditModal}>
-							<img src={editIcon} alt="edit" />
-							<Box>Edit Profile</Box>
-						</button>
+						{!address && (
+							<button onClick={openEditModal}>
+								<img src={editIcon} alt="edit" />
+								<Box>Edit Profile</Box>
+							</button>
+						)}
 					</Box>
 				</Box>
 				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>

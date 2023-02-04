@@ -1,4 +1,5 @@
 export interface Collection {
+	_id?: string;
 	userAddress: string;
 	chainId?: string;
 	collectionName?: string;
