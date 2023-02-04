@@ -1,27 +1,146 @@
 import { Box, Grid, Link, Stack, Typography } from '@mui/material';
-import { ItemImage } from './styled';
+import {
+	DropdownWrapper,
+	FilterContent,
+	MainHeader,
+	ListOption,
+	OptionItem,
+	OptionItemText,
+	CheckIconWrapper,
+	ItemImage,
+	SubTitle,
+} from './styled';
+import CheckIcon from '@mui/icons-material/Check';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SkeletonCardNft from 'components/SkeletonCardNft';
+import DropDown from 'components/CustomUI/DropDown';
+import { getCategoryCollections, getAllCollections } from 'api/collectionApi';
 
-interface Props {
-	collections: any[];
-	isLoading: boolean;
+interface Props0 {
+	selectedFilter: any;
+	handleClickOption: any;
 }
-const FeaturedCollection: React.FC<Props> = ({ collections, isLoading }) => {
+
+interface Props1 {
+	selectedFilter: string;
+}
+const listFilter: any = [
+	{ id: 0, name: 'All', value: null },
+	{ id: 1, name: 'Art', value: 1 },
+	{ id: 2, name: 'Music', value: 2 },
+	{ id: 3, name: 'Photography', value: 3 },
+	{ id: 4, name: 'Games', value: 4 },
+	{ id: 5, name: 'Sport', value: 5 },
+	{ id: 6, name: 'Metaverse', value: 6 },
+	{ id: 7, name: 'Box', value: 7 },
+	{ id: 8, name: 'Trading Card', value: 8 },
+];
+const ButtonContent: React.FC<Props1> = ({ selectedFilter }) => {
+	return (
+		<SubTitle
+			variant="h2"
+			sx={{
+				display: 'flex',
+				flexDirection: 'row',
+				justifyContent: 'space-between',
+				alignItems: 'center',
+				marginLeft: '8px',
+			}}
+		>
+			{selectedFilter} <KeyboardArrowDownIcon sx={{ width: 40, height: 40 }} />
+		</SubTitle>
+	);
+};
+
+const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption }) => {
+	return (
+		<DropdownWrapper sx={{ width: '180px' }}>
+			<ListOption>
+				{listFilter.map((filter: any, index: number) => {
+					const isItemSelected = selectedFilter === filter.name;
+					return (
+						<OptionItem key={index} onClick={() => handleClickOption(filter)}>
+							<OptionItemText>{filter.name}</OptionItemText>
+
+							{isItemSelected && (
+								<CheckIconWrapper>
+									<CheckIcon sx={{ width: '100%', height: '100%' }} />
+								</CheckIconWrapper>
+							)}
+						</OptionItem>
+					);
+				})}
+			</ListOption>
+		</DropdownWrapper>
+	);
+};
+
+const FeaturedCollection = () => {
 	let arr = new Array(4);
+	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
+	const [selectedFilter, setSelectedFilter] = useState<string>('All');
+	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [collections, setCollections] = useState<any[]>([]);
+	const handleClickOption = (filter: any) => {
+		setSelectedFilter(filter.name);
+		setActiveDropDown(false);
+	};
 	let navigate = useNavigate();
 	function handleCollectionDetail(collectionId: string) {
 		navigate(`/collection-detail/${collectionId}`);
 	}
+	useEffect(() => {
+		let category = listFilter.find((item: any) => item.name === selectedFilter).value;
+		if (category === null) {
+			getAllCollections('2').then((res: any) => {
+				console.log('dsd', res.data);
+				setCollections(res.data.slice(0, 4));
+				setIsLoading(false);
+			});
+		} else {
+			getCategoryCollections('2', category.toString()).then((res: any) => {
+				setCollections(res.data.slice(0, 4));
+				setIsLoading(false);
+			});
+		}
+	}, [selectedFilter]);
 
 	return (
 		<>
 			{' '}
 			<Box sx={{ textAlign: 'center', mb: 2 }}>
-				<Typography variant="h2" fontWeight={500}>
+				<FilterContent>
+					<MainHeader variant="h2" fontWeight="600" fontStyle="italic">
+						Featured Collections
+					</MainHeader>
+					<DropDown
+						activeDropDown={activeDropDown}
+						setActiveDropDown={setActiveDropDown}
+						buttonContent={<ButtonContent selectedFilter={selectedFilter} />}
+						dropdownContent={
+							<DropdownContent
+								selectedFilter={selectedFilter}
+								handleClickOption={handleClickOption}
+							/>
+						}
+					/>
+				</FilterContent>
+				{/* <Typography variant="h2" fontWeight={500}>
 					Featured Collections
 				</Typography>
+				<DropDown
+					activeDropDown={activeDropDown}
+					setActiveDropDown={setActiveDropDown}
+					buttonContent={<ButtonContent selectedFilter={selectedFilter} />}
+					dropdownContent={
+						<DropdownContent
+							selectedFilter={selectedFilter}
+							handleClickOption={handleClickOption}
+						/>
+					}
+				/> */}
 			</Box>
 			<Grid container spacing={1}>
 				{isLoading ? (
@@ -100,7 +219,7 @@ const FeaturedCollection: React.FC<Props> = ({ collections, isLoading }) => {
 														}}
 													>
 														<img
-															src={collection.ownerInfo.avatar}
+															src={collection?.ownerInfo.avatar}
 															alt="collection"
 														/>
 													</Box>

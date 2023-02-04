@@ -93,11 +93,11 @@ export default function InfiniteListTopTrader({
 										<th>
 											<FlexBox>
 												<CollectionName
-												// onClick={() =>
-												// 	navigate(
-												// 		`${PATH_COLLECTION.detail}/${collection._id}`
-												// 	)
-												// }
+													onClick={() =>
+														navigate(
+															`/profile/?address=${item.address.userAddress}`
+														)
+													}
 												>
 													<Box sx={{ position: 'relative' }}>
 														<Avatar

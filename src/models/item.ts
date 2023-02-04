@@ -44,6 +44,10 @@ export const TYPE_TRANSACTION: { [key: number]: string } = {
 	14: 'Cancel Staking',
 };
 
+export const ITEM_STATUS = {
+	NOT_FOR_SELL: 0,
+	BUY_NOW: 1,
+};
 export interface itemHistory {
 	_id: string;
 	collectionId: string;

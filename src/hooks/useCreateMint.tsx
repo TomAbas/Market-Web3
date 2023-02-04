@@ -11,7 +11,7 @@ import {
 	createCollection as CreateCollectionApi,
 	createItem as createItemApi,
 } from 'api/collections/collectionApi';
-import { Collection, Item } from '../models/collection';
+import { Item } from '../models/collection';
 import { selectUser } from 'redux/slices/userInfo';
 
 const useCreateMintSell = () => {
@@ -90,7 +90,7 @@ const useCreateMintSell = () => {
 							}
 						).then((res) => res.hash);
 						toast.success('Successfully created a collection');
-						let collectionInfo: Collection = {
+						let collectionInfo: any = {
 							chainId: '2',
 							collectionName: name,
 							userAddress: infoUser?.userAddress || '',

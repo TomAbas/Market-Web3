@@ -1,26 +1,38 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Container, Typography } from '@mui/material';
 import InfiniteListTopTrader from './InfiniteListTopTrader';
 import { useEffect, useState } from 'react';
 import { getTopTradeUsers } from 'api/userApi';
+import DropDown from 'components/CustomUI/DropDown';
+import { ButtonContent, DropdownContent } from 'components/Marketplace/TopCollection';
 const TopTrader = () => {
 	let initFilter = {
-		time: '30',
+		name: '7 days',
+		value: 'volume7Days',
+	};
+	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
+	const [selectedFilter, setSelectedFilter] = useState<any>(initFilter);
+	const handleClickOption = (filterDay: any) => {
+		setSelectedFilter(filterDay);
+		// setSortBy(filter.value);
+
+		setActiveDropDown(false);
 	};
 	const [listTopTrader, setListTopTrader] = useState<any>([]);
-	const [filter] = useState(initFilter);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const hasNextPage = false;
 	const handleFetchNextPage = () => {};
 	const allowLoadMore = false;
 	useEffect(() => {
 		const fetchData = async () => {
-			getTopTradeUsers('2', filter.time).then((res: any) => {
+			let time = selectedFilter.name.split(' ')[0];
+			getTopTradeUsers('2', time).then((res: any) => {
 				setListTopTrader(res);
 				setIsLoading(false);
 			});
 		};
 		fetchData();
-	}, [filter]);
+	}, [selectedFilter]);
 	return (
 		<Box sx={{}}>
 			<Container
@@ -64,13 +76,32 @@ const TopTrader = () => {
 							},
 						}}
 					>
-						{/* <DropDown
+						<DropDown
 							activeDropDown={activeDropDown}
 							setActiveDropDown={setActiveDropDown}
-							buttonContent={renderButtonContent()}
-							dropdownContent={renderDropdownContent()}
+							buttonContent={
+								<ButtonContent
+									variant="body1"
+									selectedFilter={selectedFilter}
+									sx={{
+										animation: 'none',
+										background: 'white',
+										backgroundClip: 'text',
+										backgroundSize: '100% auto',
+										WebkitTextFillColor: 'unset',
+										color: 'black',
+										fontSize: '1rem',
+									}}
+								/>
+							}
+							dropdownContent={
+								<DropdownContent
+									selectedFilter={selectedFilter}
+									handleClickOption={handleClickOption}
+								/>
+							}
 							className="ranking"
-						/> */}
+						/>
 					</Box>
 				</Box>
 

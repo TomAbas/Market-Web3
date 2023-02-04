@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch } from 'redux/hooks';
 import { getUserSuccessA } from 'redux/slices/userInfo';
-import { getUserInfo, loginUser } from '../api/userApi';
+import { loginUser } from '../api/userApi';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { toast } from 'react-toastify';
 const useLogin = () => {
