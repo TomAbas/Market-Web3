@@ -15,7 +15,7 @@ const CollectionRanking = () => {
 		setActiveDropDown(false);
 	};
 	const [listCollectionTop, setListCollectionTop] = useState<CollectionTop[]>([]);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 	const hasNextPage = false;
 	const handleFetchNextPage = () => {};
 	const allowLoadMore = false;
