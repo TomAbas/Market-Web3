@@ -367,45 +367,6 @@ const Header: React.FC = () => {
 											</Stack>
 										</DropdownMenu>
 									</NavigationItemBigScreen>
-									<NavigationItemBigScreen
-										sx={{ width: '165px' }}
-										title="coming soon"
-									>
-										<NavLinkBigScreen
-											className="navLink"
-											// href={`/#${PATH_MARKETPLACE.root}`}
-											// target="_self"
-											// onClick={(e: any) => {
-											// 	e.preventDefault();
-											// }}
-										>
-											<Typography
-												variant="body1"
-												fontStyle="italic"
-												fontWeight="500"
-											>
-												Drops
-											</Typography>
-										</NavLinkBigScreen>
-									</NavigationItemBigScreen>
-									<NavigationItemBigScreen sx={{ width: '165px' }}>
-										<NavLinkBigScreen
-											className="navLink"
-											href={'/#/mint'}
-											target="_self"
-											// onClick={(e: any) => {
-											// 	e.preventDefault();
-											// }}
-										>
-											<Typography
-												variant="body1"
-												fontStyle="italic"
-												fontWeight="500"
-											>
-												Create
-											</Typography>
-										</NavLinkBigScreen>
-									</NavigationItemBigScreen>
 									<NavigationItemBigScreen sx={{ width: '165px' }}>
 										<NavLinkBigScreen
 											className="navLink"
@@ -488,6 +449,45 @@ const Header: React.FC = () => {
 												</DropdownMenuLink>
 											</Stack>
 										</DropdownMenu>
+									</NavigationItemBigScreen>
+									<NavigationItemBigScreen
+										sx={{ width: '165px' }}
+										title="coming soon"
+									>
+										<NavLinkBigScreen
+											className="navLink"
+											// href={`/#${PATH_MARKETPLACE.root}`}
+											// target="_self"
+											// onClick={(e: any) => {
+											// 	e.preventDefault();
+											// }}
+										>
+											<Typography
+												variant="body1"
+												fontStyle="italic"
+												fontWeight="500"
+											>
+												Drops
+											</Typography>
+										</NavLinkBigScreen>
+									</NavigationItemBigScreen>
+									<NavigationItemBigScreen sx={{ width: '165px' }}>
+										<NavLinkBigScreen
+											className="navLink"
+											href={'/#/mint'}
+											target="_self"
+											// onClick={(e: any) => {
+											// 	e.preventDefault();
+											// }}
+										>
+											<Typography
+												variant="body1"
+												fontStyle="italic"
+												fontWeight="500"
+											>
+												Create
+											</Typography>
+										</NavLinkBigScreen>
 									</NavigationItemBigScreen>
 								</NavigationBarBigScreen>
 							) : null}
