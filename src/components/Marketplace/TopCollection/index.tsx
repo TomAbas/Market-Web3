@@ -22,29 +22,22 @@ import { useNavigate } from 'react-router-dom';
 
 interface Props {
 	selectedFilter: string;
+	sx?: any;
+	variant?: any;
 }
 interface Props0 {
 	selectedFilter: any;
 	handleClickOption: any;
 }
-const ButtonContent: React.FC<Props> = ({ selectedFilter }) => {
+export const ButtonContent: React.FC<Props> = ({ selectedFilter, sx, variant = 'h2' }) => {
 	return (
-		<SubTitle
-			variant="h2"
-			sx={{
-				display: 'flex',
-				flexDirection: 'row',
-				justifyContent: 'space-between',
-				alignItems: 'center',
-				marginLeft: '8px',
-			}}
-		>
+		<SubTitle variant={variant} sx={sx}>
 			{selectedFilter} <KeyboardArrowDownIcon sx={{ width: 40, height: 40 }} />
 		</SubTitle>
 	);
 };
 
-const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption }) => {
+export const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption }) => {
 	const listFilter: any = [
 		{ name: '1 day', value: 'volume24Hour' },
 		{ name: '7 days', value: 'volume7Days' },

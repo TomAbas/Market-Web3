@@ -3,7 +3,17 @@ import { CollectionTop } from 'models/collection';
 import { useEffect, useState } from 'react';
 import InfiniteListTrendingCollection from './InfiniteListTrendingCollection';
 import { getTopCollections } from 'api/collectionApi';
+import DropDown from 'components/CustomUI/DropDown';
+import { ButtonContent, DropdownContent } from 'components/Marketplace/TopCollection';
 const CollectionRanking = () => {
+	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
+	const [selectedFilter, setSelectedFilter] = useState<string>('7 days');
+	const handleClickOption = (filterDay: any) => {
+		setSelectedFilter(filterDay.name);
+		// setSortBy(filter.value);
+
+		setActiveDropDown(false);
+	};
 	const [listCollectionTop, setListCollectionTop] = useState<CollectionTop[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const hasNextPage = false;
@@ -64,13 +74,32 @@ const CollectionRanking = () => {
 							},
 						}}
 					>
-						{/* <DropDown
+						<DropDown
 							activeDropDown={activeDropDown}
 							setActiveDropDown={setActiveDropDown}
-							buttonContent={renderButtonContent()}
-							dropdownContent={renderDropdownContent()}
+							buttonContent={
+								<ButtonContent
+									variant="body1"
+									selectedFilter={selectedFilter}
+									sx={{
+										animation: 'none',
+										background: 'white',
+										backgroundClip: 'text',
+										backgroundSize: '100% auto',
+										WebkitTextFillColor: 'unset',
+										color: 'black',
+										fontSize: '1rem',
+									}}
+								/>
+							}
+							dropdownContent={
+								<DropdownContent
+									selectedFilter={selectedFilter}
+									handleClickOption={handleClickOption}
+								/>
+							}
 							className="ranking"
-						/> */}
+						/>
 					</Box>
 				</Box>
 
