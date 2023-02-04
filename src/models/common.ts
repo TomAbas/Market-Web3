@@ -33,7 +33,7 @@ export interface OptionSelectCustom<T> {
 }
 
 export interface filterNft {
-	status?: number[];
+	status: number[];
 	collectionId?: string[];
 	tokenSymbol?: string;
 	minPrice: string;
