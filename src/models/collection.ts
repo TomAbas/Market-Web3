@@ -1,13 +1,23 @@
+import { nftItem } from './item';
+import { User } from './user';
+
 export interface Collection {
-	_id?: string;
+	_id: string;
+	collectionAddress: string;
 	userAddress: string;
-	chainId?: string;
-	collectionName?: string;
-	logo?: string;
-	category: number;
+	logo: string;
+	background: string;
+	collectionName: string;
+	collectionStandard: string;
+	royalties: number;
 	description: string;
-	txHash?: string;
-	to?: string;
+	volumeTrade: number;
+	chainId: string;
+	category: number;
+	isConfirm: boolean;
+	ownerInfo: User;
+	listItem: nftItem[];
+	isINO: Number;
 }
 
 export interface CollectionTop extends Collection {

@@ -21,6 +21,7 @@ const initialState: AllNftsState = {
 		maxPrice: '',
 		isFiltering: false,
 		status: [],
+		collectionId: [],
 	},
 	trigger: false,
 };

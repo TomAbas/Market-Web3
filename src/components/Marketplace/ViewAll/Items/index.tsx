@@ -48,6 +48,11 @@ export default function Items() {
 					});
 				}
 			}
+			if (filterPar.collectionId.length > 0) {
+				newOffers = newOffers.filter((item: nftItem) => {
+					return filterPar.collectionId.includes(item.collectionId);
+				});
+			}
 			const tOffers = newOffers.slice(0, 12);
 			setOffersDisplay(tOffers);
 		}

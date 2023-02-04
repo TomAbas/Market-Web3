@@ -18,25 +18,23 @@ import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import iconPriceBlack from '../../../../assets/icons/icon-filter-price.svg';
 import { setFilter } from 'redux/slices/nftFilter';
 import { useAppDispatch } from 'redux/hooks';
-import { ITEM_STATUS } from 'models/item';
-const listStatus: Status[] = [
-	{ id: 1, name: 'Buy Now', value: ITEM_STATUS.BUY_NOW },
-	{ id: 0, name: 'New', value: ITEM_STATUS.NOT_FOR_SELL },
-];
-interface Status {
-	id: number;
-	name: string;
-	value: number;
-}
-const FilterStatus = () => {
+import { getAllCollections as getAllCollectionsAPI } from 'api/collectionApi';
+import { Collection } from 'models/collection';
+
+const FilterCollection = () => {
 	const dispath = useAppDispatch();
-	const [selected, setSelected] = useState<number[]>([]);
+	const [selected, setSelected] = useState<string[]>([]);
+	const [collections, setCollections] = useState<Collection[]>([]);
 	const [open, setOpen] = useState(false);
 	//function
+	async function getAllColection() {
+		let { data } = await getAllCollectionsAPI('2');
+		setCollections(data);
+	}
 	function openModal() {
 		setOpen(!open);
 	}
-	function handleClickOption(id: number) {
+	function handleClickOption(id: string) {
 		if (selected.includes(id)) {
 			setSelected((prev) => prev.filter((item) => item !== id));
 		} else {
@@ -48,8 +46,11 @@ const FilterStatus = () => {
 		dispath(setFilter({ status: [] }));
 	}
 	function handleApply() {
-		dispath(setFilter({ status: selected }));
+		dispath(setFilter({ collectionId: selected }));
 	}
+	useEffect(() => {
+		getAllColection();
+	}, []);
 	return (
 		<>
 			<Box sx={{ position: 'relative' }}>
@@ -61,7 +62,7 @@ const FilterStatus = () => {
 						<IconStyled sx={{ width: '14px' }}>
 							<img src={iconPriceBlack} alt="icon price" />
 						</IconStyled>
-						<ButtonTitle>Status</ButtonTitle>
+						<ButtonTitle>Collections</ButtonTitle>
 					</ButtonStyled>
 				</ButtonWrapper>
 				{open && (
@@ -77,17 +78,18 @@ const FilterStatus = () => {
 
 								{/* <DividerGradient sx={{ mt: 1 }} /> */}
 								<ListOption>
-									{listStatus.map((item: Status, idx: number) => {
-										const isItemSelected = selected.indexOf(item.id!) !== -1;
-
+									{collections.map((item: Collection, idx: number) => {
+										const isItemSelected = selected.includes(item._id!);
 										return (
 											<OptionItem
 												key={idx}
 												onClick={() => {
-													handleClickOption(item.id);
+													handleClickOption(item._id);
 												}}
 											>
-												<OptionItemText>{item.name}</OptionItemText>
+												<OptionItemText>
+													{item.collectionName}
+												</OptionItemText>
 
 												{isItemSelected && (
 													<CheckIconWrapper>
@@ -117,4 +119,4 @@ const FilterStatus = () => {
 	);
 };
 
-export default FilterStatus;
+export default FilterCollection;
