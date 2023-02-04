@@ -21,10 +21,10 @@ interface Props {
 const CardTest: React.FC<Props> = ({ idx, collection, filter }) => {
 	const getVolumeTrade = (type: string, collection: Collection) => {
 		if (type === '1 day') {
-			return (collection.volume24Hour / 10 ** 7).toFixed(2);
+			return (collection.volume24Hour / 10 ** 8).toFixed(2);
 		} else if (type === '7 days') {
-			return (collection.volume7Days / 10 ** 7).toFixed(2);
-		} else return (collection.volume30Days / 10 ** 7).toFixed(2);
+			return (collection.volume7Days / 10 ** 8).toFixed(2);
+		} else return (collection.volume30Days / 10 ** 8).toFixed(2);
 	};
 	return (
 		<>

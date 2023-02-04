@@ -17,7 +17,6 @@ import { getListCollectionMarketplace } from 'utils/dataResource';
 export default function ViewAll() {
 	const navigate = useNavigate();
 	const [value, setValue] = React.useState('1');
-	// const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);

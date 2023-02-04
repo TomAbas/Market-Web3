@@ -9,7 +9,7 @@ import { ItemImage } from 'components/Marketplace/styled';
 import { useAppSelector } from 'redux/hooks';
 import { selectUser } from 'redux/slices/userInfo';
 import { getCollectionData } from '../../service/aptos.service';
-import { getCollectionByUserAddress } from '../../api/collectionApi';
+import { getCollectionByUserAddress } from '../../api/collections/collectionApi';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import { Outlet, useNavigate } from 'react-router-dom';
 import SkeletonCardNft from 'components/SkeletonCardNft';

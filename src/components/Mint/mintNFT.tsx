@@ -3,13 +3,13 @@ import Box from '@mui/material/Box';
 import { InputItem, InputTitle } from './styled';
 import useControlModal from 'hooks/useControlModal';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
-import useCreateMintSell from 'hooks/useCreateMintSell';
+import useCreateMintSell from 'hooks/useCreateMint';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import FormMintNft from 'components/Forms/FormMintNFT';
 import { getListCollectionUserResource } from '../../utils/dataResource';
-import { getCollectionByUserAddress } from '../../api/collectionApi';
+import { getCollectionByUserAddress } from '../../api/collections/collectionApi';
 export default function LayoutMintNFT() {
 	const navigate = useNavigate();
 	const [dataFormInput, setDataFormInput] = useState<any>();

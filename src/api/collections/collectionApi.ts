@@ -1,6 +1,6 @@
-import { Collection, Item, Order } from '../models/collection';
-import axiosClient from './axiosClient';
-import { Response } from '../models/common';
+import { Collection, Item, Order } from '../../models/collection';
+import axiosClient from '../axiosClient';
+import { Response } from '../../models/common';
 
 async function createCollection(collectionInfo: Collection): Promise<Response<any>> {
 	// let urlData = await uploadUserMedia(data, userAddress);

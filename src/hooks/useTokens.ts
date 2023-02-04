@@ -1,14 +1,26 @@
 import { AccountKeys } from '@manahippo/aptos-wallet-adapter';
+import { getUserItem } from 'api/items/itemsApi';
+import { nftItem } from 'models/item';
 import { useEffect, useState } from 'react';
+import { useAppSelector } from 'redux/hooks';
+import { selectUser } from 'redux/slices/userInfo';
 // import { Token } from '../types';
 import { walletClient } from '../utils/aptos';
 
-export function useTokens(account: AccountKeys | null): {
-	tokens: any[];
-	loading: boolean;
-} {
+export function useTokens(account: AccountKeys | null) {
 	const [tokens, setTokens] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [userNfts, setUserNfts] = useState<nftItem[]>([]);
+	const userInfo = useAppSelector(selectUser);
+	async function fetchUserNft() {
+		setUserNfts(await getUserItem('2', userInfo?.userAddress!).then((res) => res.data));
+	}
+
+	useEffect(() => {
+		if (userInfo?.userAddress) {
+			fetchUserNft();
+		}
+	}, [userInfo]);
 	useEffect(() => {
 		const getTokens = async () => {
 			const data = await walletClient.getTokenIds(account!.address!.toString(), 100, 0, 0);
@@ -36,5 +48,5 @@ export function useTokens(account: AccountKeys | null): {
 			getTokens();
 		}
 	}, [account]);
-	return { tokens, loading };
+	return { tokens, loading, userNfts };
 }

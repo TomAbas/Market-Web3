@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import {
 	createCollection as CreateCollectionApi,
 	createItem as createItemApi,
-} from 'api/collectionApi';
+} from 'api/collections/collectionApi';
 import { Collection, Item } from '../models/collection';
 import { selectUser } from 'redux/slices/userInfo';
 
@@ -180,6 +180,7 @@ const useCreateMintSell = () => {
 							collectionId: collectionId,
 							txHash: txHash,
 							to: MARKET_ADDRESS!,
+							amount: amount,
 						};
 						await createItemApi(ItemInfo);
 						handleNext();

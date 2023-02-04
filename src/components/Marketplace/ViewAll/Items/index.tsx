@@ -5,24 +5,18 @@ import CardNFT from 'components/Marketplace/CardNFT';
 import FilterItem from './FilterItem';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import { useEffect, useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
-import { getListItemResource } from 'utils/dataResource';
-import { selectFilter } from 'redux/slices/nftFilter';
+import { selectAllNfts, selectFilter, selectLoadingAllNfts } from 'redux/slices/nftFilter';
 import { useAppSelector } from 'redux/hooks';
+import useInteraction from 'hooks/useInteraction';
+
 export default function Items() {
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	const { checkIsLike, likeItem } = useInteraction();
 	const filterPar = useAppSelector(selectFilter);
-	const [loadingOffers, setLoadingOffers] = useState(true);
-	const [offers, setOffers] = useState<any[]>([]);
+
+	const offers = useAppSelector(selectAllNfts);
+	const loadingOffers = useAppSelector(selectLoadingAllNfts);
 	const [offersDisplay, setOffersDisplay] = useState<any[]>([]);
-	useEffect(() => {
-		const fetchOffers = async () => {
-			let newOffers = await getListItemResource();
-			setOffers(newOffers);
-			setLoadingOffers(false);
-		};
-		fetchOffers();
-	}, []);
 	useEffect(() => {
 		if (offers.length > 0) {
 			let newOffers = offers.filter((item: any) => {
@@ -43,7 +37,7 @@ export default function Items() {
 			setOffersDisplay(tOffers);
 			// setOffers(tOffers);
 		}
-	}, [filterPar, loadingOffers]);
+	}, [filterPar, loadingOffers, offers]);
 	return (
 		<>
 			{/* <FilterItem /> */}
@@ -64,9 +58,10 @@ export default function Items() {
 								<>
 									{offersDisplay?.map((offer: any, index: any) => (
 										<CardNFT
+											itemLiked={checkIsLike}
+											likeItem={likeItem}
 											offers={offers}
 											offer={offer}
-											setOffers={setOffers}
 											index={index}
 											key={index}
 											loadingOffers={loadingOffers}

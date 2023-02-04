@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.daaf3fd5.css",
-    "main.js": "/static/js/main.2c561553.js",
+    "main.js": "/static/js/main.029540f3.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.d69eb72d.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.fd7bcfd0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.a460d097.chunk.js",
@@ -23,19 +23,25 @@
     "static/media/Asset1.webp": "/static/media/Asset1.431c3a85d8a801026a7c.webp",
     "static/media/logo-metaspacecy-gray.webp": "/static/media/logo-metaspacecy-gray.f30a4fc82aa9b0222131.webp",
     "static/media/MSMobile-blue.webp": "/static/media/MSMobile-blue.f51a76bea02ba8daa5f2.webp",
+    "static/media/asset-blue.webp": "/static/media/asset-blue.6a18f75adf3e317973ab.webp",
     "static/media/MSMobile-white.webp": "/static/media/MSMobile-white.feb6e115bb0e8a6926e2.webp",
     "service-worker.js": "/service-worker.js",
+    "static/media/asset-black.webp": "/static/media/asset-black.472abd5001aa7e0edf58.webp",
     "static/media/default-img-input2.png": "/static/media/default-img-input2.9b6cd16b4b75e92d4b8c.png",
     "static/media/Asset5.webp": "/static/media/Asset5.f665022a9620334872a6.webp",
     "static/media/Asset6.webp": "/static/media/Asset6.acf57e7b8c1e547d2b4e.webp",
     "static/media/Asset10.webp": "/static/media/Asset10.3ab1baa662cd903be010.webp",
+    "static/media/graph-blue.webp": "/static/media/graph-blue.64799883fb3df1163b47.webp",
     "static/media/avatar_default.png": "/static/media/avatar_default.bace53df3c8ea0517a39.png",
     "static/media/Asset9.webp": "/static/media/Asset9.11ceabc91760ce784306.webp",
     "static/media/Asset3.webp": "/static/media/Asset3.08f01d8bd2bbb8daa8de.webp",
     "static/media/Asset4.webp": "/static/media/Asset4.60b9700c2ddc864894de.webp",
+    "static/media/graph-black.webp": "/static/media/graph-black.6d732e4fd477aa6ca3de.webp",
     "static/media/logoMetaBlue.png": "/static/media/logoMetaBlue.ff880ce767a6e2a90f93.png",
+    "static/media/description-blue.webp": "/static/media/description-blue.5bc11496331f959a9032.webp",
     "static/media/icon-esports.svg": "/static/media/icon-esports.dfda42970b5222ca2a1960483e110ec2.svg",
     "static/media/image-input-default.svg": "/static/media/image-input-default.d0641a4683e1109badde624502b379f4.svg",
+    "static/media/description-black.webp": "/static/media/description-black.c63cd47261a8ff8d2844.webp",
     "static/media/Nodata.svg": "/static/media/Nodata.3d2e8e403b28c8c1f43b5aa969aaccc9.svg",
     "static/media/icon-setting-black.svg": "/static/media/icon-setting-black.7b0cb55a14c78aa650b60c147552129f.svg",
     "static/media/icon-art.svg": "/static/media/icon-art.d1634bcc3ace642c7ea5464a16fdd427.svg",
@@ -43,11 +49,13 @@
     "static/media/icon-edit.svg": "/static/media/icon-edit.df82ae632eb34faefa70cfe592e9c69d.svg",
     "static/media/icon-sports.svg": "/static/media/icon-sports.438e7af84052d4bedeeba39b7f8e9e25.svg",
     "static/media/icon-logout-black.svg": "/static/media/icon-logout-black.03bf7c0648288faf5d5ab2fd957bc43d.svg",
+    "static/media/icon-top-trader.svg": "/static/media/icon-top-trader.258f25b16d8c4af57941cc349eca54dd.svg",
     "static/media/icon-instagram.svg": "/static/media/icon-instagram.88a9a57a9badbef9f6bbd5d946dc55fa.svg",
     "static/media/mediumicon.svg": "/static/media/mediumicon.fb4b9f6506d716cf16475d5dfee7aafc.svg",
     "static/media/icon-filter-price.svg": "/static/media/icon-filter-price.5adcb4125939097ea7b716d39b6cb90d.svg",
     "static/media/twitter-gray.svg": "/static/media/twitter-gray.b01b146fcff4628f68238c3d888304bb.svg",
     "static/media/twitter-white.svg": "/static/media/twitter-white.095eba5f0d4aad7bdc4354dbd1204386.svg",
+    "static/media/icon-rankings.svg": "/static/media/icon-rankings.eea6ba5320ba0d1652fddd9365339af8.svg",
     "static/media/discord-gray.svg": "/static/media/discord-gray.831fe8b6b4083467199beb325dd09d74.svg",
     "static/media/discord-white.svg": "/static/media/discord-white.574d554a63de0fdc1823496dd698582d.svg",
     "static/media/icon-user-black.svg": "/static/media/icon-user-black.a7233eba8183f6e349b804b761099af1.svg",
@@ -67,11 +75,12 @@
     "static/media/telegram-gray.svg": "/static/media/telegram-gray.f1b2cc3510e3b1136c1f92b57a65303e.svg",
     "static/media/facebook-white.svg": "/static/media/facebook-white.988bcbfa9d6d177e82e26970ae27c2f0.svg",
     "static/media/heart-full-red.svg": "/static/media/heart-full-red.6248de86e226229f47a3a22b8dc23d72.svg",
+    "static/media/heart-full-white.svg": "/static/media/heart-full-white.250e3f134ff721310de1d10f37bacf7a.svg",
     "static/media/icon-collection-help.svg": "/static/media/icon-collection-help.8483053b4d532fac22388557ff075dc4.svg",
     "static/media/icon-verify-check.svg": "/static/media/icon-verify-check.8438e37a3c0c44dcdd51991ad3d9c3d5.svg"
   },
   "entrypoints": [
     "static/css/main.daaf3fd5.css",
-    "static/js/main.2c561553.js"
+    "static/js/main.029540f3.js"
   ]
 }

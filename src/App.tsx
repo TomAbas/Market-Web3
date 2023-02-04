@@ -24,18 +24,33 @@ import { getListItemResource } from 'utils/dataResource';
 import ScrollToTop from 'hooks/useScrollToTop';
 //context
 import AudioProvider from './contexts/AudioContext';
+import { getAllItems } from 'api/items/itemsApi';
+import useGetNftOrder from 'hooks/useGetNftOrder';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { getAllNfts, selectTrigger } from 'redux/slices/nftFilter';
+import AccountSign from 'components/AccountSign/AccountSign';
 function App() {
 	const [loadingOffers, setLoadingOffers] = useState(true);
+	const [trigger, setTrigger] = useState(false);
 	const [offers, setOffers] = useState<any[]>([]);
+	const { getListNFTOrders } = useGetNftOrder();
+	const triggerFetchNft = useAppSelector(selectTrigger);
+	const dispatch = useAppDispatch();
+	useEffect(() => {
+		getListNFTOrders();
+	}, []);
 	useEffect(() => {
 		const fetchOffers = async () => {
-			const newOffers = await getListItemResource();
-			const tOffers = newOffers.slice(0, 12);
-			setOffers(tOffers);
+			const newOffers: any[] = await getAllItems('2').then((res) => {
+				dispatch(getAllNfts(res.data));
+				return res.data.slice(0, 12);
+			});
+			setOffers(newOffers);
 			setLoadingOffers(false);
 		};
 		fetchOffers();
-	}, []);
+		console.log(triggerFetchNft);
+	}, [triggerFetchNft, dispatch]);
 	const wallets = useMemo(
 		() => [
 			new SpacecyWalletAdapter(),
@@ -53,14 +68,23 @@ function App() {
 				<WalletProvider wallets={wallets} autoConnect={true}>
 					<AudioProvider>
 						<SizeObserver>
-							<Header />
-							<AccountGuard>
-								<ScrollToTop>
-									<div className="container">
-										<Outlet context={[offers, setOffers, loadingOffers]} />
-									</div>
-								</ScrollToTop>
-							</AccountGuard>
+							<AccountSign>
+								<Header />
+								<AccountGuard>
+									<ScrollToTop>
+										<div className="container">
+											<Outlet
+												context={[
+													offers,
+													setOffers,
+													loadingOffers,
+													setTrigger,
+												]}
+											/>
+										</div>
+									</ScrollToTop>
+								</AccountGuard>
+							</AccountSign>
 							<FooterComp />
 							<ModalGuard />
 							<ToastContainer />

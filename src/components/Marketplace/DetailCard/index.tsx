@@ -1,35 +1,52 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Stack, Typography, Skeleton } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import { useWallet } from '@manahippo/aptos-wallet-adapter';
-import { useNavigate, useOutletContext, useLocation } from 'react-router-dom';
+
+import { useNavigate, useOutletContext, useLocation, useParams } from 'react-router-dom';
 import useControlModal from 'hooks/useControlModal';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
-import { useAppDispatch } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { openFirstModal } from '../../../redux/slices/modalWallet';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
+import ModalSell from 'components/ModelSell/ModelSell';
 // import { getListItemResource } from '../../../utils/dataResource';
 import { ItemImage } from '../styled';
 import { toast } from 'react-toastify';
-import { buyItem, cancelOrder } from '../../../api/collectionApi';
+import { buyItem, cancelOrder } from '../../../api/collections/collectionApi';
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 import defaultImg from '../../../assets/icons/default-img-input2.png';
-const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
-const DECIMAL = 100000000;
+import { getItemDetail } from 'api/items/itemsApi';
+import { nftItem } from 'models/item';
+import useBuyItemAptos from 'utils/putAptos';
+import { changePriceToToken } from 'utils/function';
+import { selectListNftOrders } from 'redux/slices/orderResource';
+import { getItemFromOrder } from 'utils/dataResource';
+import { selectUser } from 'redux/slices/userInfo';
+import TabItemDetail from './TabItemDetail/TabItemDetail';
+import { getBalanceToken } from 'service/aptos.service';
 
 export default function DetailCard() {
+	let { itemId } = useParams();
 	const search = useLocation().search;
-	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
-	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
-	const name = decodeURIComponent(new URLSearchParams(search).get('name') || '');
-	const [offers] = useOutletContext<any>();
-	const { account, signAndSubmitTransaction } = useWallet();
-	const [statusWithdraw, setStatusWithdraw] = useState('Cancel');
-	const dispatch = useAppDispatch();
-	let navigate = useNavigate();
-	const [item, setItem] = useState<any>();
+	const [item, setItem] = useState<nftItem>();
 	const [loadingItem, setLoadingItem] = useState(true);
+	const [itemPrice, setItemPrice] = useState<number>();
+	const [itemResource, setItemResource] = useState<any>();
+	const [userAmountOfItem, setUserAmountOfItem] = useState('');
+	const {
+		buyItemAptos,
+		handleWithdrawItem,
+		statusWithdraw,
+		sellItemAptos,
+		setPrice,
+		price,
+		supply,
+		statusList,
+		handleValidateAmount,
+	} = useBuyItemAptos(item!);
+	const navigate = useNavigate();
+	const listNftOrders = useAppSelector(selectListNftOrders);
+	const userInfo = useAppSelector(selectUser);
 	const {
 		handleNext,
 		handleOpenModalBuy,
@@ -68,68 +85,19 @@ export default function DetailCard() {
 			navigate('/profile');
 		}
 	};
-	const fetchOffers = () => {
-		const newItem = offers.find(
-			(item: any) =>
-				item.token_id.token_data_id.creator === creator &&
-				item.token_id.token_data_id.collection === collection &&
-				item.token_id.token_data_id.name === name
-		);
-		if (newItem) {
+	const fetchOffers = async () => {
+		try {
+			let item = await getItemDetail(itemId!).then((res) => res.data);
+			changePrice(item);
+			setItem(item);
+		} catch (error) {
+			navigate('/');
+		} finally {
 			setLoadingItem(false);
 		}
-
-		setItem(newItem);
 	};
-	useEffect(() => {
-		fetchOffers();
-	}, [offers]);
-
 	const claimOffer = async () => {
-		if (!account) {
-			dispatch(openFirstModal());
-			return;
-		}
-		startLoading();
-		try {
-			const payload: TransactionPayload = {
-				type: 'entry_function_payload',
-				function: `${MARKET_ADDRESS}::market::buy_token`,
-				type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
-				arguments: [
-					item?.token_id.token_data_id.creator,
-					item?.token_id.token_data_id.collection,
-					item?.token_id.token_data_id.name,
-					item?.token_id.property_version,
-				],
-			};
-
-			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
-				(res: any) => {
-					let listItem: any = {
-						maker: account?.address?.toString(),
-						chainId: '2',
-						price: item.price,
-						quantity: item.amount,
-						to: MARKET_ADDRESS,
-						txHash: res.hash,
-						itemName: name,
-						collectionName: collection,
-						creator: creator,
-						owner: item?.owner,
-					};
-					buyItem(listItem);
-				}
-			);
-			console.log(item);
-
-			completeTaskSuccess();
-			handleNext();
-			navigate('/profile');
-		} catch {
-			failToComplete();
-			handleNext();
-		}
+		await buyItemAptos(handleNext, startLoading, failToComplete, completeTaskSuccess);
 	};
 
 	const navigateCollection = () => {
@@ -140,49 +108,29 @@ export default function DetailCard() {
 			)}&collection=${new URLSearchParams(search).get('collection')}`
 		);
 	};
-
-	const handleWithdrawItem = async () => {
-		if (!account) {
-			dispatch(openFirstModal());
-			return;
+	function changePrice(item: nftItem) {
+		setItemPrice(changePriceToToken(item.price));
+		setItemResource(getItemFromOrder(listNftOrders, item!));
+	}
+	async function getUserAmountOfItem(item: nftItem) {
+		setUserAmountOfItem(
+			await getBalanceToken(
+				userInfo?.userAddress!,
+				item.creator,
+				item.collectionInfo.collectionName!,
+				item.itemName,
+				item.chainId
+			)
+		);
+	}
+	useEffect(() => {
+		if (userInfo && item?.itemName) {
+			getUserAmountOfItem(item);
 		}
-		setStatusWithdraw('...');
-		try {
-			const payload: TransactionPayload = {
-				type: 'entry_function_payload',
-				function: `${MARKET_ADDRESS}::market::withdraw_token`,
-				type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
-				arguments: [
-					item?.token_id.token_data_id.creator,
-					item?.token_id.token_data_id.collection,
-					item?.token_id.token_data_id.name,
-					item?.token_id.property_version,
-				],
-			};
-
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
-				let listItem: any = {
-					maker: account?.address?.toString(),
-					chainId: '2',
-					price: item.price,
-					quantity: item.amount,
-					to: MARKET_ADDRESS,
-					txHash: res.hash,
-					itemName: name,
-					collectionName: collection,
-					creator: creator,
-					owner: item?.owner,
-				};
-				cancelOrder(listItem);
-			});
-
-			toast.success('Successfully canceled listing');
-			// navigate('/profile');
-		} catch {
-			setStatusWithdraw('Cancel');
-		}
-	};
-
+	}, [userInfo, item]);
+	useEffect(() => {
+		fetchOffers();
+	}, [itemId]);
 	return (
 		<>
 			<Box sx={{ pt: 16, pb: 4, maxWidth: '1440px', mx: 'auto', px: 2 }}>
@@ -196,7 +144,7 @@ export default function DetailCard() {
 											className="main-img"
 											sx={{ width: '600px', height: '600px' }}
 										>
-											<img src={item?.uri} alt="item" />
+											<img src={item?.itemMedia} alt="item" />
 										</Box>
 									</ItemImage>
 								</Skeleton>
@@ -214,9 +162,9 @@ export default function DetailCard() {
 							<ItemImage sx={{ width: '50%', paddingTop: '50%' }}>
 								<Box className="main-img">
 									<MediaDisplayCard
-										media={item?.uri}
+										media={item!.itemMedia}
 										preview={defaultImg}
-										name={item?.token_id.token_data_id.name}
+										name={item!.itemName}
 									/>
 								</Box>
 							</ItemImage>
@@ -227,45 +175,50 @@ export default function DetailCard() {
 									sx={{ color: '#007aff', cursor: 'pointer' }}
 									onClick={navigateCollection}
 								>
-									{item?.token_id.token_data_id.collection}
+									{item?.collectionInfo.collectionName}
 								</Typography>
 								<Typography variant="h4" fontWeight={500}>
-									{item?.token_id.token_data_id.name}
+									{item?.itemName}
 								</Typography>
-								<p>{item?.description}</p>
-
-								<p>Owned Quantity : {item?.amount}</p>
+								<Typography variant="body1">{item?.description}</Typography>
+								{item?.status === 1 && (
+									<Typography variant="body1">
+										Sell Quantity : {itemResource?.amount}
+									</Typography>
+								)}
 								<Typography variant="body1">
 									Owner:{' '}
 									<a
 										href={`https://explorer.aptoslabs.com/account/${item?.owner}`}
 										target="_blank"
 									>
-										{item?.owner.slice(0, 6) +
-											'...' +
-											item?.owner.slice(
-												item?.owner.length - 4,
-												item?.owner.length
-											)}
+										{item!.owner.length > 0
+											? item?.owner[0].slice(0, 6) +
+											  '...' +
+											  item?.owner[0].slice(
+													item?.owner[0].length - 4,
+													item?.owner[0].length
+											  )
+											: ''}
 									</a>
 								</Typography>
 								<Typography variant="body1">
 									Creator:
 									<a
-										href={`https://explorer.aptoslabs.com/account/${item?.token_id.token_data_id.creator}`}
+										href={`https://explorer.aptoslabs.com/account/${item?.creator}`}
 										target="_blank"
 									>
-										{item?.token_id.token_data_id.creator.slice(0, 6) +
+										{item?.creator.slice(0, 6) +
 											'...' +
-											item?.token_id.token_data_id.creator.slice(
-												item?.token_id.token_data_id.creator.length - 4,
-												item?.token_id.token_data_id.creator.length
+											item?.creator.slice(
+												item?.creator.length - 4,
+												item?.creator.length
 											)}
 									</a>
 								</Typography>
-								<Typography variant="body1">
-									Price: {item?.price / DECIMAL} APT
-								</Typography>
+								{item?.status === 1 && (
+									<Typography variant="body1">Price: {itemPrice} APT</Typography>
+								)}
 								<Box
 									sx={{
 										button: {
@@ -288,15 +241,25 @@ export default function DetailCard() {
 										},
 									}}
 								>
-									{item?.owner != account?.address ? (
-										item?.is_cancle == false && (
-											<button onClick={handleOpenModalBuy}>Buy now</button>
-										)
+									{item?.status === 1 ? (
+										<>
+											{itemResource?.owner != userInfo?.userAddress ? (
+												<button onClick={handleOpenModalBuy}>
+													Buy now
+												</button>
+											) : (
+												<button onClick={handleWithdrawItem}>
+													{statusWithdraw}
+												</button>
+											)}
+										</>
 									) : (
 										<>
-											<button onClick={handleWithdrawItem}>
-												{statusWithdraw}
-											</button>
+											{item?.owner.includes(userInfo?.userAddress!) && (
+												<button onClick={handleOpenModalBuy}>
+													Sell item
+												</button>
+											)}
 										</>
 									)}
 								</Box>
@@ -304,7 +267,37 @@ export default function DetailCard() {
 						</>
 					)}
 				</Stack>
-				{/* <Box mt={3}>
+				<Box>
+					<TabItemDetail userAmountOfItem={userAmountOfItem} item={item!} />
+				</Box>
+			</Box>
+			{item?.status === 1 ? (
+				<ModalBuy
+					title="Buy Item"
+					openState={openModalBuy}
+					closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
+					funcBuyNft={claimOffer}
+					activeStep={activeStep}
+					statusBuyNft={statusBuyNft}
+					steps={steps}
+				/>
+			) : (
+				<ModalSell
+					open={openModalBuy}
+					handleClose={handleCloseModalBuy}
+					handleListItem={sellItemAptos}
+					setPrice={setPrice}
+					price={price}
+					supply={supply}
+					statusList={statusList}
+					handleValidateAmount={handleValidateAmount}
+				/>
+			)}
+		</>
+	);
+}
+
+/* <Box mt={3}>
 					<Box sx={{ textAlign: 'center', mb: 3 }}>
 						<Typography variant="h4" fontWeight={500}>
 							History
@@ -332,17 +325,4 @@ export default function DetailCard() {
 							</Box>
 						</Stack>
 					</Stack>
-				</Box> */}
-			</Box>
-			<ModalBuy
-				title="Buy Item"
-				openState={openModalBuy}
-				closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
-				funcBuyNft={claimOffer}
-				activeStep={activeStep}
-				statusBuyNft={statusBuyNft}
-				steps={steps}
-			/>
-		</>
-	);
-}
+				</Box> */

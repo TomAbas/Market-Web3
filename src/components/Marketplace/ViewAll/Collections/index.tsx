@@ -9,20 +9,16 @@ import item from '../../../../assets/images/card/box.webp';
 import {
 	getAllCollections as getAllCollectionsAPI,
 	getCategoryCollections as getCategoryCollectionsAPI,
-} from 'api/collections/collectionApi';
+} from 'api/collectionApi';
 import { async } from '@firebase/util';
 export default function Items() {
 	let [searchParams, setSearchParams] = useSearchParams();
 	const category = searchParams.get('category');
 	const [collections, setCollections] = useState([]);
 	let navigate = useNavigate();
-	const handleCollectionDetail = (creator: string, collection: string) => {
+	const handleCollectionDetail = (collectionId: string) => {
 		//encodeURIComponent
-		navigate(
-			`/collection-detail?creator=${encodeURIComponent(
-				creator
-			)}&collection=${encodeURIComponent(collection)}`
-		);
+		navigate(`/collection-detail/${collectionId}`);
 	};
 	async function getAllCollections() {
 		let { data } = await getAllCollectionsAPI('2');
@@ -49,16 +45,14 @@ export default function Items() {
 				<Grid container spacing={1}>
 					{collections.map((collection: any, index: any) => (
 						<Grid
+							item
 							xs={6}
 							sm={4}
 							md={3}
 							p={1}
 							key={index}
 							onClick={() => {
-								handleCollectionDetail(
-									collection.userAddress,
-									collection.collectionName
-								);
+								handleCollectionDetail(collection._id);
 							}}
 						>
 							<Link

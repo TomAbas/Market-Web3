@@ -31,7 +31,7 @@ import aptos from '../../../assets/images/card/aptos.jpg';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import useControlModal from 'hooks/useControlModal';
 import { toast } from 'react-toastify';
-import { buyItem } from '../../../api/collectionApi';
+import { buyItem } from '../../../api/collections/collectionApi';
 import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -158,7 +158,7 @@ export default function CardNFTCollection({
 
 	return (
 		<>
-			<Grid xs={6} sm={4} md={3} p={1}>
+			<Grid item xs={6} sm={4} md={3} p={1}>
 				<ItemCardStyle sx={{ boxShadow: 0 }} onClick={handleItem}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}
