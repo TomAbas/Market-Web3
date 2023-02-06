@@ -110,7 +110,11 @@ const TabCommon = ({ tabItems, tabSections, tabAlignment = 'center' }: TabCommon
 						{tabSections
 							.filter((item: any) => item.isShow)
 							.map((item: any, idx: number) => (
-								<TabPanel key={idx} value={idx.toString()}>
+								<TabPanel
+									key={idx}
+									value={idx.toString()}
+									sx={{ padding: '0px 0px' }}
+								>
 									{item.Section}
 								</TabPanel>
 							))}
