@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.daaf3fd5.css",
-    "main.js": "/static/js/main.db17194e.js",
+    "main.js": "/static/js/main.defbe62b.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.d69eb72d.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.fd7bcfd0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.a460d097.chunk.js",
@@ -70,10 +70,12 @@
     "static/media/icon-domain.svg": "/static/media/icon-domain.b1bb075b44927e0db2235e5059fdb57b.svg",
     "static/media/facebook-gray.svg": "/static/media/facebook-gray.a570a69d44e98d3538413e38c317a7c2.svg",
     "static/media/search.svg": "/static/media/search.64a8b92cd3c3094c1d8ee0e767575925.svg",
+    "static/media/icon-heart-black.svg": "/static/media/icon-heart-black.cc812cc871988983211ff255413d2f3f.svg",
     "static/media/youtubeicon.svg": "/static/media/youtubeicon.2c5308a46e1dff035bdffaa2abb09f66.svg",
     "static/media/icon-colectibles.svg": "/static/media/icon-colectibles.c4979bcae6a76bb5f9770bd61063dbd1.svg",
     "static/media/telegram-gray.svg": "/static/media/telegram-gray.f1b2cc3510e3b1136c1f92b57a65303e.svg",
     "static/media/facebook-white.svg": "/static/media/facebook-white.988bcbfa9d6d177e82e26970ae27c2f0.svg",
+    "static/media/heart-black.svg": "/static/media/heart-black.114228e05109005689d5f5c248d219c0.svg",
     "static/media/heart-full-red.svg": "/static/media/heart-full-red.6248de86e226229f47a3a22b8dc23d72.svg",
     "static/media/heart-full-white.svg": "/static/media/heart-full-white.250e3f134ff721310de1d10f37bacf7a.svg",
     "static/media/icon-collection-help.svg": "/static/media/icon-collection-help.8483053b4d532fac22388557ff075dc4.svg",
@@ -81,6 +83,6 @@
   },
   "entrypoints": [
     "static/css/main.daaf3fd5.css",
-    "static/js/main.db17194e.js"
+    "static/js/main.defbe62b.js"
   ]
 }

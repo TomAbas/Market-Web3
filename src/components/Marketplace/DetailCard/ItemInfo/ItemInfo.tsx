@@ -8,7 +8,6 @@ import MediaDisplayCard from 'components/Marketplace/MediaDisplayCard/MediaDispl
 import { TwitterShareButton } from 'react-share';
 //img
 import HeartFullRed from '../../../../assets/icons/heart-full-red.svg';
-import HeartFullWhite from '../../../../assets/icons/heart-full-white.svg';
 import HeartFullBlack from '../../../../assets/icons/heart-black.svg';
 
 import defaultImg from '../../../../assets/icons/default-img-input2.png';
