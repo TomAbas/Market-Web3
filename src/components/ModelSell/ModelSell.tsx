@@ -11,6 +11,7 @@ interface Props {
 	supply: string;
 	handleValidateAmount: any;
 	statusList: string;
+	userAmountOfItem: string;
 }
 const ModelSell: React.FC<Props> = ({
 	open,
@@ -21,6 +22,7 @@ const ModelSell: React.FC<Props> = ({
 	supply,
 	handleValidateAmount,
 	statusList,
+	userAmountOfItem,
 }) => {
 	return (
 		<>
@@ -60,7 +62,9 @@ const ModelSell: React.FC<Props> = ({
 							min={0}
 							type="number"
 							value={supply}
-							onChange={handleValidateAmount}
+							onChange={(e) => {
+								handleValidateAmount(e, userAmountOfItem);
+							}}
 							id="name"
 							placeholder="0"
 						/>

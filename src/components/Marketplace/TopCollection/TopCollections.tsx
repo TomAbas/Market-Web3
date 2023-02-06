@@ -6,7 +6,7 @@ import ErrorBoundary from 'components/SkeletonCardTopCollections/ErrorHandleComp
 import { CollectionTop } from 'models/collection';
 import { getTopCollections as getTopCollectionsAPI } from '../../../api/collectionApi';
 interface Props {
-	filter: string;
+	filter: any;
 }
 const TopCollections: React.FC<Props> = ({ filter }) => {
 	const [loadingState, setLoadingState] = useState({
@@ -23,7 +23,12 @@ const TopCollections: React.FC<Props> = ({ filter }) => {
 			await Promise.all([
 				(volume24Hours = await getTopCollectionsAPI('2', '12', '1', 'volume24Hour')),
 				(volume7Days = await getTopCollectionsAPI('2', '12', '1', 'volume7Days')),
-				(volume30Days = await getTopCollectionsAPI('2', '12', '1', 'volume30Days')),
+				(volume30Days = await getTopCollectionsAPI('2', '12', '1', 'volume30Days').then(
+					(res) => {
+						console.log(res);
+						return res;
+					}
+				)),
 			]);
 			setList({
 				list24Hours: volume24Hours.data,
@@ -60,11 +65,11 @@ const TopCollections: React.FC<Props> = ({ filter }) => {
 				/>
 			) : (
 				<CardTopCollection
-					filter={filter}
+					filter={filter.name}
 					listCollections={
-						filter === '7 days'
+						filter.name === '7 days'
 							? list.list7Days
-							: filter === '30 days'
+							: filter.name === '30 days'
 							? list.list30Days
 							: list.list24Hours
 					}

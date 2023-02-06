@@ -19,6 +19,7 @@ import { PATH_COLLECTION } from 'routes/path';
 
 // icon
 import checkicon from 'assets/icons/icon-check.svg';
+import { displayVolume } from 'utils/formatDisplay';
 
 export interface InfiniteListTrendingCollectionProps {
 	listCollection: Collection[];
@@ -187,7 +188,11 @@ export default function InfiniteListTrendingCollection({
 										<td>
 											<FlexBox>
 												<Fragment>
-													{collection[selectedFilter.value] / 10 ** 8} APT
+													{displayVolume(
+														collection[selectedFilter.value] / 10 ** 8,
+														2
+													)}{' '}
+													APT
 												</Fragment>
 											</FlexBox>
 										</td>
@@ -208,7 +213,8 @@ export default function InfiniteListTrendingCollection({
 										</td>
 										<td>
 											<FlexBox sx={{ minWidth: '135px' }}>
-												{collection.floorPrice / 10 ** 8} APT
+												{displayVolume(collection.floorPrice / 10 ** 8, 2)}{' '}
+												APT
 											</FlexBox>
 										</td>
 										<td>

@@ -167,6 +167,7 @@ export default function DetailCard() {
 					price={price}
 					supply={supply}
 					statusList={statusList}
+					userAmountOfItem={userAmountOfItem}
 					handleValidateAmount={handleValidateAmount}
 				/>
 			)}

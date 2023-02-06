@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, ClickAwayListener, Grid, Stack, Typography } from '@mui/material';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
-import CardNFTUser from 'components/Marketplace/CardNFTUser';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useTokens } from '../../hooks/useTokens';
 import aptos from '../../assets/images/card/aptos.jpg';
 import { useSizeObersver } from 'contexts/SizeObserver';
 import editIcon from '../../assets/icons/icon-edit.svg';
@@ -14,26 +12,28 @@ import { selectSettingModal, selectUser, toggleSettingModalA } from 'redux/slice
 import EditInfoUser from 'components/EditInfoUser/EditInfoUser';
 import { nftItem } from 'models/item';
 import { getUserInfo } from 'api/userApi';
+import { getUserItem } from 'api/items/itemsApi';
+import CardNFT from 'components/Marketplace/CardNFT';
+import useInteraction from 'hooks/useInteraction';
+import { selectTrigger } from 'redux/slices/nftFilter';
+import SkeletonCardNft from 'components/SkeletonCardNft';
 
 const ProfileUser = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const address = searchParams.get('address');
 	const dispatch = useAppDispatch();
 	const [openEdit, setOpenEdit] = useState(false);
-	const { account } = useWallet();
 	const { innerWidth } = useSizeObersver();
 	const [viewFull, setViewFull] = useState(false);
 	const [viewAvatar, setViewAvatar] = useState(false);
-	const { tokens, userNfts } = useTokens(account);
-	const [items, setItems] = useState<any[]>([]);
 	const innerHeight = innerWidth / 4.5;
 	let myInfo = useAppSelector(selectUser);
 	const [infoUser, setInfoUser] = useState<any>();
+	const [items, setItems] = useState<nftItem[]>([]);
 	const isSettingModal = useAppSelector(selectSettingModal);
-	const handleItems = (index: any) => {
-		let newItems = items.filter((_item, i) => i !== index);
-		setItems(newItems);
-	};
+	const [isLoading, setIsLoading] = useState(true);
+	const { likeItem, checkIsLike } = useInteraction();
+	const trigger = useAppSelector(selectTrigger);
 	const handleClickAway = () => {
 		setViewFull(false);
 	};
@@ -51,16 +51,24 @@ const ProfileUser = () => {
 	};
 	async function fetchData(userAddress: string) {
 		setInfoUser((await getUserInfo(userAddress)).data.data);
-		console.log(infoUser);
+	}
+	async function fetchItems(userAddress: string) {
+		let items = (await getUserItem('2', userAddress)).data;
+		setItems(items);
+		setIsLoading(false);
 	}
 	useEffect(() => {
-		setItems(tokens);
 		if (address) {
 			fetchData(address);
 		} else {
 			setInfoUser(myInfo);
 		}
-	}, [tokens, address, myInfo]);
+	}, [address, myInfo]);
+	useEffect(() => {
+		if (infoUser) {
+			fetchItems(infoUser.userAddress);
+		}
+	}, [infoUser, trigger]);
 	return (
 		<>
 			<Box pt={13}>
@@ -196,14 +204,27 @@ const ProfileUser = () => {
 					</Box>
 					<Box py={4}>
 						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-							{userNfts.map((item: nftItem, index: any) => (
-								<CardNFTUser
-									item={item}
-									handleItems={handleItems}
-									index={index}
-									key={index}
-								/>
-							))}
+							{isLoading ? (
+								<>
+									{new Array(4).fill(null).map((_, index) => (
+										<SkeletonCardNft key={index} />
+									))}
+								</>
+							) : (
+								<>
+									{items.map((item: nftItem, index: any) => (
+										<CardNFT
+											itemLiked={checkIsLike}
+											likeItem={likeItem}
+											offers={[]}
+											offer={item}
+											index={index}
+											key={index}
+											loadingOffers={false}
+										/>
+									))}
+								</>
+							)}
 						</Grid>
 					</Box>
 				</Box>
