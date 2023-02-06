@@ -443,7 +443,7 @@ const Header: React.FC = () => {
 															noWrap
 															fontStyle="italic"
 														>
-															Top traders
+															Top Traders
 														</Typography>
 													</Stack>
 												</DropdownMenuLink>
@@ -452,7 +452,7 @@ const Header: React.FC = () => {
 									</NavigationItemBigScreen>
 									<NavigationItemBigScreen
 										sx={{ width: '165px' }}
-										title="coming soon"
+										title="Coming Soon"
 									>
 										<NavLinkBigScreen
 											className="navLink"
@@ -660,7 +660,7 @@ const Header: React.FC = () => {
 														</Stack>
 													</Tooltip>
 													<Tooltip
-														title="coming soon"
+														title="Coming Soon"
 														placement="right"
 														arrow
 													>

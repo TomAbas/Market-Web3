@@ -156,6 +156,34 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 										},
 									}}
 									onClick={() => {
+										navigate('#');
+										popupState.close();
+									}}
+								>
+									<img src={IconHeartBlack} alt="favorite" />
+									<Link
+										sx={{
+											color: 'black',
+											textDecoration: 'none',
+											'&:hover': {
+												color: '#007aff',
+											},
+										}}
+									>
+										Favorite
+									</Link>
+								</Stack>
+								<Stack
+									direction="row"
+									gap="10px"
+									alignItems="center"
+									sx={{
+										cursor: 'pointer',
+										img: {
+											width: '20px',
+										},
+									}}
+									onClick={() => {
 										navigate('/myCollection');
 										popupState.close();
 									}}

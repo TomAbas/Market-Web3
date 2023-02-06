@@ -15,7 +15,7 @@ import { CollectionName, FlexBox, TableScrollable, TableWrapper } from '../style
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { PATH_COLLECTION } from 'routes/path';
-import { displayAddress } from 'utils/formatDisplay';
+import { displayAddress, displayVolume } from 'utils/formatDisplay';
 // icon
 import checkicon from 'assets/icons/icon-check.svg';
 
@@ -143,7 +143,9 @@ export default function InfiniteListTopTrader({
 										</td>
 
 										<td>
-											<FlexBox>{item.volumeTrade / 10 ** 8}</FlexBox>
+											<FlexBox>
+												{displayVolume(item.volumeTrade / 10 ** 8, 2)}
+											</FlexBox>
 										</td>
 									</tr>
 								))}
