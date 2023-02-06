@@ -164,14 +164,18 @@ export const DropDownWrapper = styled(Box)(({ theme }) => ({
 export const DropDownOption = styled(Typography)(({ theme }) => ({
 	display: 'block',
 	borderRadius: '12px',
-	padding: '4px 8px',
+	padding: '5px 10px',
 	color: theme.palette.text.primary,
 	cursor: 'pointer',
 	transition: 'all 0.2s',
 	whiteSpace: 'nowrap',
 	fontWeight: '700',
 	textAlign: 'left',
-	margin: '10px auto',
+	margin: '5px auto',
+
+	'&:hover': {
+		background: '#F5F5F7',
+	},
 }));
 
 export const LinkWrapper = styled('a')(({ theme }) => ({

@@ -1,27 +1,45 @@
 import React from 'react';
 import { TabWrapper, DetailTitle } from './styled';
-import { Stack, Typography } from '@mui/material';
+import { Skeleton, Stack, Typography } from '@mui/material';
+import { nftItem } from 'models/item';
+import { NETWORKINFO } from 'constants/etherscan.constant';
 interface Props {
 	userAmountOfItem: string;
+	item: nftItem;
 }
-const DetailTab: React.FC<Props> = ({ userAmountOfItem }) => {
+const DetailTab: React.FC<Props> = ({ userAmountOfItem, item }) => {
 	return (
 		<>
-			<TabWrapper>
-				<Stack direction="row" spacing={2}>
-					{/* Title */}
-					<DetailTitle spacing={1}>
-						<Typography variant="body1">Blockchain:</Typography>
-						<Typography variant="body1">Owned Quantity:</Typography>
-					</DetailTitle>
+			{item && userAmountOfItem ? (
+				<TabWrapper>
+					<Stack direction="row" spacing={2}>
+						{/* Title */}
+						<DetailTitle spacing={1}>
+							<Typography variant="body1">Blockchain:</Typography>
+							<Typography variant="body1">Owned Quantity:</Typography>
+							<Typography variant="body1">Royalty Fee:</Typography>
+							{/* <Typography variant="body1">Supply:</Typography> */}
+						</DetailTitle>
 
-					{/* Value */}
-					<Stack spacing={1} sx={{ minWidth: 0 }}>
-						<Typography variant="body1">{2}</Typography>
-						<Typography variant="body1">{userAmountOfItem}</Typography>
+						{/* Value */}
+						<Stack spacing={1} sx={{ minWidth: 0 }}>
+							<Typography variant="body1">
+								{NETWORKINFO[item?.chainId]?.name} Chain
+							</Typography>
+							<Typography variant="body1">{userAmountOfItem}</Typography>
+							<Typography variant="body1">{item?.royalties / 100}%</Typography>
+						</Stack>
 					</Stack>
+				</TabWrapper>
+			) : (
+				<Stack gap="16px" sx={{ width: '50%' }}>
+					<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+					<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+					<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+					<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+					<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
 				</Stack>
-			</TabWrapper>
+			)}
 		</>
 	);
 };
