@@ -25,6 +25,7 @@ export interface nftItem {
 	creatorInfo: User;
 	isBox: boolean;
 	collectionInfo: Collection;
+	countFav: number;
 }
 
 export const TYPE_TRANSACTION: { [key: number]: string } = {

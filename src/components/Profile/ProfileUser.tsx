@@ -28,7 +28,7 @@ const ProfileUser = () => {
 	const [items, setItems] = useState<any[]>([]);
 	const innerHeight = innerWidth / 4.5;
 	let myInfo = useAppSelector(selectUser);
-	const [infoUser, setInfoUser] = useState<any>(myInfo);
+	const [infoUser, setInfoUser] = useState<any>();
 	const isSettingModal = useAppSelector(selectSettingModal);
 	const handleItems = (index: any) => {
 		let newItems = items.filter((_item, i) => i !== index);
@@ -57,8 +57,10 @@ const ProfileUser = () => {
 		setItems(tokens);
 		if (address) {
 			fetchData(address);
+		} else {
+			setInfoUser(myInfo);
 		}
-	}, [tokens, address]);
+	}, [tokens, address, myInfo]);
 	return (
 		<>
 			<Box pt={13}>

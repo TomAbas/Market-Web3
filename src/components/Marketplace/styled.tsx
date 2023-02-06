@@ -317,3 +317,13 @@ export const ItemImage = styled(Box)(({ theme }) => ({
 		borderRadius: '10px',
 	},
 }));
+
+export const FeatureWrapper = styled(Box)(({ theme }) => ({
+	borderColor: 'grey',
+	display: 'flex',
+	justifyContent: 'center',
+	background: '#fff',
+	border: '1px solid #E7E8EC',
+	borderRadius: '10px',
+	marginLeft: '5px',
+}));
