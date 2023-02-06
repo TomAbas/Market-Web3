@@ -72,6 +72,7 @@ export default function CardNFT({
 	const { buyItemAptos } = useBuyItemAptos(offer);
 	const [itemPrice, setItemPrice] = useState<number>();
 	function changePrice() {
+		console.log(offer.itemName, offer.price);
 		setItemPrice(changePriceToToken(offer.price));
 	}
 	const steps = [
@@ -112,8 +113,9 @@ export default function CardNFT({
 		navigate(`/item/${offer._id}`);
 	};
 	useEffect(() => {
+		console.log('chay inside card nft');
 		changePrice();
-	}, []);
+	}, [offer]);
 	return (
 		<>
 			<Grid

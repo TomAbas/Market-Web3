@@ -17,6 +17,7 @@ import React, { useEffect, useState } from 'react';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import DropDown from 'components/CustomUI/DropDown';
 import { getCategoryCollections, getAllCollections } from 'api/collectionApi';
+import { displayAddress } from 'utils/formatDisplay';
 
 interface Props0 {
 	selectedFilter: any;
@@ -91,6 +92,9 @@ const FeaturedCollection = () => {
 	function handleCollectionDetail(collectionId: string) {
 		navigate(`/collection-detail/${collectionId}`);
 	}
+	function handleCreatorDetail(userAddress: string) {
+		navigate(`/profile?address=${userAddress}`);
+	}
 	useEffect(() => {
 		let category = listFilter.find((item: any) => item.name === selectedFilter).value;
 		if (category === null) {
@@ -152,16 +156,7 @@ const FeaturedCollection = () => {
 				) : (
 					<>
 						{collections.map((collection: any, index: any) => (
-							<Grid
-								xs={6}
-								sm={4}
-								md={3}
-								p={1}
-								key={index}
-								onClick={() => {
-									handleCollectionDetail(collection._id);
-								}}
-							>
+							<Grid xs={6} sm={4} md={3} p={1} key={index}>
 								<Link
 									// href={`https://explorer.aptoslabs.com/account/${
 									// 	collection[0].split('*/////*')[1]
@@ -189,14 +184,23 @@ const FeaturedCollection = () => {
 											},
 										}}
 									>
-										<ItemImage>
+										<ItemImage
+											onClick={() => {
+												handleCollectionDetail(collection._id);
+											}}
+										>
 											<Box className="main-img">
 												<img src={collection.logo} alt="collection" />
 											</Box>
 										</ItemImage>
 
 										<Box py={1.5}>
-											<Typography variant="h6">
+											<Typography
+												variant="h6"
+												onClick={() => {
+													handleCollectionDetail(collection._id);
+												}}
+											>
 												{collection.collectionName}
 											</Typography>
 											<Stack
@@ -206,7 +210,14 @@ const FeaturedCollection = () => {
 												justifyContent="space-between"
 												gap={1}
 											>
-												<Stack direction="row" gap={1} alignItems="center">
+												<Stack
+													direction="row"
+													gap={1}
+													alignItems="center"
+													onClick={() =>
+														handleCreatorDetail(collection.userAddress)
+													}
+												>
 													<Box
 														sx={{
 															img: {
@@ -224,12 +235,7 @@ const FeaturedCollection = () => {
 														/>
 													</Box>
 													<Typography variant="body1">
-														{collection.userAddress.slice(0, 6) +
-															'...' +
-															collection.userAddress.slice(
-																collection.userAddress.length - 4,
-																collection.userAddress.length
-															)}
+														{displayAddress(collection.userAddress)}
 													</Typography>
 												</Stack>
 												<Box>
