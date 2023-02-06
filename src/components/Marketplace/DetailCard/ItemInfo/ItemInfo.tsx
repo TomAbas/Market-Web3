@@ -8,7 +8,6 @@ import MediaDisplayCard from 'components/Marketplace/MediaDisplayCard/MediaDispl
 import { TwitterShareButton } from 'react-share';
 //img
 import HeartFullRed from '../../../../assets/icons/heart-full-red.svg';
-import HeartFullWhite from '../../../../assets/icons/heart-full-white.svg';
 import HeartFullBlack from '../../../../assets/icons/heart-black.svg';
 
 import defaultImg from '../../../../assets/icons/default-img-input2.png';
@@ -120,7 +119,7 @@ const ItemInfo: React.FC<Props> = ({
 						direction="row"
 						spacing={{ xs: 1, sm: 2, md: 4 }}
 					>
-						<Box sx={{ flex: '1' }}>
+						<Stack sx={{ flex: '1' }} gap="16px">
 							{' '}
 							<Typography
 								variant="h6"
@@ -212,7 +211,7 @@ const ItemInfo: React.FC<Props> = ({
 									</>
 								)}
 							</Box>
-						</Box>
+						</Stack>
 						<Stack direction="row" alignItems="flex-start">
 							<FeatureWrapper>
 								<Stack

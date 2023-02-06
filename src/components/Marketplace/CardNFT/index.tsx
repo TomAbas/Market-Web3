@@ -36,7 +36,8 @@ import { buyItem } from '../../../api/collections/collectionApi';
 import { changePriceToToken } from 'utils/function';
 import { useEffect, useState } from 'react';
 import useBuyItemAptos from '../../../utils/putAptos';
-
+import { TwitterShareButton } from 'react-share';
+import { RELATED_URLS } from 'constants/index';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 // const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -138,7 +139,16 @@ export default function CardNFT({
 							{/* Item favorite */}
 							<ItemFavorite>
 								<Box mr={1.5}>
-									<img src={TwitterIcon} alt="icon twitter" />
+									<TwitterShareButton
+										url={`${RELATED_URLS.MetaSpacecyHomePage}/#/item/${offer?._id}`}
+										title={`Look what I found! ${offer?.itemName} collectible`}
+										hashtags={['Music', 'Game']}
+										via="Metaspacecy"
+										style={{ width: '100%', textAlign: 'left' }}
+									>
+										{' '}
+										<img src={TwitterIcon} alt="icon twitter" />
+									</TwitterShareButton>
 								</Box>
 								<Box>
 									<Stack direction="row" alignItems="center" spacing={0.5}>
