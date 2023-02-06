@@ -150,7 +150,8 @@ export const StackCard = styled(Box)(({ theme }) => ({
 export const DropDownWrapper = styled(Box)(({ theme }) => ({
 	borderRadius: '12px',
 	minWidth: 120,
-	padding: '8px 8px',
+	padding: '8px',
+	backgroundColor: '#fff',
 	// ...(theme.palette.mode === 'light'
 	// 	? {
 	// 			background: theme.palette.primaryLight.dark,
@@ -170,6 +171,7 @@ export const DropDownOption = styled(Typography)(({ theme }) => ({
 	whiteSpace: 'nowrap',
 	fontWeight: '700',
 	textAlign: 'left',
+	margin: '10px auto',
 }));
 
 export const LinkWrapper = styled('a')(({ theme }) => ({
