@@ -113,7 +113,7 @@ export default function CardNFT({
 	};
 	useEffect(() => {
 		changePrice();
-	}, []);
+	}, [offer]);
 	return (
 		<>
 			<Grid
