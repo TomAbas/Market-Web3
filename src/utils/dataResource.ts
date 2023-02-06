@@ -47,7 +47,8 @@ export function getItemFromOrder(listNftOrders: any[], offer: nftItem) {
 		}
 		return false;
 	});
-	return itemOrder;
+	console.log(itemOrder);
+	return itemOrder ? itemOrder : null;
 }
 export const getListCollectionUserResource = async (address: any) => {
 	try {

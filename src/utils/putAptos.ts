@@ -110,7 +110,7 @@ function useBuyItemAptos(offer: nftItem) {
 					creator: offer.creator,
 					owner: getItemFromOrder(listNftOrders, offer!)?.owner,
 				};
-				cancelOrder(listItem);
+				cancelOrder(listItem).then((res: any) => dispatch(handleTrigger()));
 			});
 
 			toast.success('Successfully canceled listing');

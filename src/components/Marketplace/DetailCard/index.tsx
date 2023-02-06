@@ -108,7 +108,7 @@ export default function DetailCard() {
 	};
 	function changePrice(item: nftItem) {
 		setItemPrice(changePriceToToken(item.price));
-		setItemResource(getItemFromOrder(listNftOrders, item!));
+		// setItemResource(getItemFromOrder(listNftOrders, item!));
 	}
 	async function getUserAmountOfItem(item: nftItem) {
 		setUserAmountOfItem(
@@ -121,6 +121,13 @@ export default function DetailCard() {
 			)
 		);
 	}
+	useEffect(() => {
+		if (item?.status === 1 && listNftOrders.length > 0) {
+			setItemResource(getItemFromOrder(listNftOrders, item!));
+		} else {
+			setItemResource(null);
+		}
+	}, [listNftOrders, item]);
 	useEffect(() => {
 		if (userInfo && item?.itemName) {
 			getUserAmountOfItem(item);

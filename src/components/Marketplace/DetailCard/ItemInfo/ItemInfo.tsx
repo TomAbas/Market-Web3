@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { nftItem } from 'models/item';
 import React, { useState } from 'react';
-import { Box, Stack, Typography, Skeleton } from '@mui/material';
+import { Box, Stack, Typography, Skeleton, CircularProgress } from '@mui/material';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { ItemImage, FeatureWrapper } from 'components/Marketplace/styled';
 import MediaDisplayCard from 'components/Marketplace/MediaDisplayCard/MediaDisplayCard';
@@ -193,20 +193,28 @@ const ItemInfo: React.FC<Props> = ({
 									},
 								}}
 							>
-								{item?.status === 1 ? (
+								{itemResource !== undefined && (
 									<>
-										{itemResource?.owner != userInfo?.userAddress ? (
-											<button onClick={handleOpenModalBuy}>Buy now</button>
+										{item?.status === 1 ? (
+											<>
+												{itemResource?.owner != userInfo?.userAddress ? (
+													<button onClick={handleOpenModalBuy}>
+														Buy now
+													</button>
+												) : (
+													<button onClick={handleWithdrawItem}>
+														{statusWithdraw}
+													</button>
+												)}
+											</>
 										) : (
-											<button onClick={handleWithdrawItem}>
-												{statusWithdraw}
-											</button>
-										)}
-									</>
-								) : (
-									<>
-										{item?.owner.includes(userInfo?.userAddress!) && (
-											<button onClick={handleOpenModalBuy}>Sell item</button>
+											<>
+												{item?.owner.includes(userInfo?.userAddress!) && (
+													<button onClick={handleOpenModalBuy}>
+														Sell item
+													</button>
+												)}
+											</>
 										)}
 									</>
 								)}
