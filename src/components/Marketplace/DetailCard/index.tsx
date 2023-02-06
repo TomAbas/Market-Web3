@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Stack, Typography, Skeleton } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-
 import { useNavigate, useOutletContext, useLocation, useParams } from 'react-router-dom';
 import useControlModal from 'hooks/useControlModal';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
@@ -24,15 +23,18 @@ import { getItemFromOrder } from 'utils/dataResource';
 import { selectUser } from 'redux/slices/userInfo';
 import TabItemDetail from './TabItemDetail/TabItemDetail';
 import { getBalanceToken } from 'service/aptos.service';
+import ItemInfo from './ItemInfo/ItemInfo';
+import { selectTrigger } from 'redux/slices/nftFilter';
 
 export default function DetailCard() {
 	let { itemId } = useParams();
 	const search = useLocation().search;
 	const [item, setItem] = useState<nftItem>();
 	const [loadingItem, setLoadingItem] = useState(true);
-	const [itemPrice, setItemPrice] = useState<number>();
+	const [itemPrice, setItemPrice] = useState<number>(0);
 	const [itemResource, setItemResource] = useState<any>();
 	const [userAmountOfItem, setUserAmountOfItem] = useState('');
+	const trigger = useAppSelector(selectTrigger);
 	const {
 		buyItemAptos,
 		handleWithdrawItem,
@@ -126,142 +128,21 @@ export default function DetailCard() {
 	}, [userInfo, item]);
 	useEffect(() => {
 		fetchOffers();
-	}, [itemId]);
+	}, [itemId, trigger]);
 	return (
 		<>
 			<Box sx={{ pt: 16, pb: 4, maxWidth: '1440px', mx: 'auto', px: 2 }}>
 				<Stack direction="row" gap={4}>
-					{loadingItem ? (
-						<>
-							<Box>
-								<Skeleton sx={{ width: '100%', transform: 'translateY(0px)' }}>
-									<ItemImage sx={{ width: '50%', paddingTop: '0' }}>
-										<Box
-											className="main-img"
-											sx={{ width: '600px', height: '600px' }}
-										>
-											<img src={item?.itemMedia} alt="item" />
-										</Box>
-									</ItemImage>
-								</Skeleton>
-							</Box>
-							<Stack gap="16px" sx={{ width: '50%' }}>
-								<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-								<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-								<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-								<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-								<Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-							</Stack>
-						</>
-					) : (
-						<>
-							<ItemImage sx={{ width: '50%', paddingTop: '50%' }}>
-								<Box className="main-img">
-									<MediaDisplayCard
-										media={item!.itemMedia}
-										preview={defaultImg}
-										name={item!.itemName}
-									/>
-								</Box>
-							</ItemImage>
-							<Stack gap="16px" sx={{ width: '50%' }}>
-								<Typography
-									variant="h6"
-									fontWeight={500}
-									sx={{ color: '#007aff', cursor: 'pointer' }}
-									onClick={navigateCollection}
-								>
-									{item?.collectionInfo.collectionName}
-								</Typography>
-								<Typography variant="h4" fontWeight={500}>
-									{item?.itemName}
-								</Typography>
-								<Typography variant="body1">{item?.description}</Typography>
-								{item?.status === 1 && (
-									<Typography variant="body1">
-										Sell Quantity : {itemResource?.amount}
-									</Typography>
-								)}
-								<Typography variant="body1">
-									Owner:{' '}
-									<a
-										href={`https://explorer.aptoslabs.com/account/${item?.owner}`}
-										target="_blank"
-									>
-										{item!.owner.length > 0
-											? item?.owner[0].slice(0, 6) +
-											  '...' +
-											  item?.owner[0].slice(
-													item?.owner[0].length - 4,
-													item?.owner[0].length
-											  )
-											: ''}
-									</a>
-								</Typography>
-								<Typography variant="body1">
-									Creator:
-									<a
-										href={`https://explorer.aptoslabs.com/account/${item?.creator}`}
-										target="_blank"
-									>
-										{item?.creator.slice(0, 6) +
-											'...' +
-											item?.creator.slice(
-												item?.creator.length - 4,
-												item?.creator.length
-											)}
-									</a>
-								</Typography>
-								{item?.status === 1 && (
-									<Typography variant="body1">Price: {itemPrice} APT</Typography>
-								)}
-								<Box
-									sx={{
-										button: {
-											padding: '10px 30px',
-											border: '1.5px solid #e7e8ec',
-											transition: 'all 0.4s',
-											borderRadius: '12px',
-											fontWeight: 500,
-											background: '#fff',
-											fontSize: '20px',
-											cursor: 'pointer',
-											fontFamily: 'Montserrat, sans-serif !important',
-											fontStyle: 'italic !important',
-											width: '180px',
-											'&:hover': {
-												background: '#007aff',
-												borderColor: 'transparent',
-												color: '#fff',
-											},
-										},
-									}}
-								>
-									{item?.status === 1 ? (
-										<>
-											{itemResource?.owner != userInfo?.userAddress ? (
-												<button onClick={handleOpenModalBuy}>
-													Buy now
-												</button>
-											) : (
-												<button onClick={handleWithdrawItem}>
-													{statusWithdraw}
-												</button>
-											)}
-										</>
-									) : (
-										<>
-											{item?.owner.includes(userInfo?.userAddress!) && (
-												<button onClick={handleOpenModalBuy}>
-													Sell item
-												</button>
-											)}
-										</>
-									)}
-								</Box>
-							</Stack>
-						</>
-					)}
+					<ItemInfo
+						itemResource={itemResource}
+						loadingItem={loadingItem}
+						item={item}
+						handleOpenModalBuy={handleOpenModalBuy}
+						handleWithdrawItem={handleWithdrawItem}
+						userInfo={userInfo}
+						statusWithdraw={statusWithdraw}
+						itemPrice={itemPrice}
+					/>
 				</Stack>
 				<Box>
 					<TabItemDetail userAmountOfItem={userAmountOfItem} item={item!} />
