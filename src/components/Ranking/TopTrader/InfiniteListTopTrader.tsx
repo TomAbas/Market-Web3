@@ -39,6 +39,20 @@ export default function InfiniteListTopTrader({
 	const { innerWidth, innerHeight } = useContext(SizeContext);
 
 	//state
+	const renderPercent = (percent: number) => (
+		<Typography
+			sx={{
+				color: percent > 0 ? 'green' : percent < 0 ? 'red' : 'inherit',
+				whiteSpace: 'nowrap',
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+			}}
+		>
+			{percent > 0 ? '+' : percent < 0 ? '-' : null}
+			{percent === 0 ? '___' : `${Math.abs(percent).toFixed(2)} %`}
+		</Typography>
+	);
 
 	return (
 		<Box sx={{ width: '100%' }} ref={listRef}>
@@ -66,6 +80,11 @@ export default function InfiniteListTopTrader({
 									<Typography>Volume</Typography>
 								</FlexBox>
 							</th>
+							<th>
+								<FlexBox>
+									<Typography>Percent Trade</Typography>
+								</FlexBox>
+							</th>
 						</tr>
 					</thead>
 					{isLoading ? (
@@ -73,7 +92,7 @@ export default function InfiniteListTopTrader({
 							<tbody>
 								{new Array(10).fill(null).map((item: any, index: number) => (
 									<tr key={index}>
-										{new Array(4).fill(null).map((item: any, idx: number) => (
+										{new Array(5).fill(null).map((item: any, idx: number) => (
 											<td key={idx}>
 												<FlexBox>
 													<Skeleton sx={{ width: '100%' }} />
@@ -102,7 +121,7 @@ export default function InfiniteListTopTrader({
 													<Box sx={{ position: 'relative' }}>
 														<Avatar
 															variant="rounded"
-															src={item.address.avatar}
+															src={item.user.avatar}
 															sx={{
 																width: 40,
 																height: 40,
@@ -130,7 +149,7 @@ export default function InfiniteListTopTrader({
 													</Box>
 
 													<Typography fontWeight="500">
-														{item.address.username}
+														{item.user.username}
 													</Typography>
 												</CollectionName>
 											</FlexBox>
@@ -138,7 +157,7 @@ export default function InfiniteListTopTrader({
 
 										<td>
 											<FlexBox>
-												{displayAddress(item.address.userAddress)}
+												{displayAddress(item.user.userAddress)}
 											</FlexBox>
 										</td>
 
@@ -146,6 +165,9 @@ export default function InfiniteListTopTrader({
 											<FlexBox>
 												{displayVolume(item.volumeTrade / 10 ** 8, 2)}
 											</FlexBox>
+										</td>
+										<td>
+											<FlexBox>{renderPercent(item.percentTrade)}</FlexBox>
 										</td>
 									</tr>
 								))}
