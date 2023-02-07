@@ -17,7 +17,7 @@ function getTopCollections(
 	sortBy: string
 ): Promise<Response<any>> {
 	const url = `/collection/top/chainId/${chainId}/pageSize/${pageSize}/page/${pageNumber}`;
-	const filter = { sortBy: sortBy };
+	const filter = { sortBy: sortBy, sortFrom: 'desc' };
 	return ClientAxios.post(url, filter).then(({ data }) => data);
 }
 function getItemOfCollection(collectionId: string) {
