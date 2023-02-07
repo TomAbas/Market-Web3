@@ -1,82 +1,61 @@
-import { Box, Container, Typography } from '@mui/material';
-// import { CollectionTop } from 'models/collection';
-// import { useEffect, useState } from 'react';
-// import InfiniteListTrendingCollection from './CollectionRanking/InfiniteListTrendingCollection';
-// import InfiniteListTopTrader from './TopTrader/InfiniteListTopTrader';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import { useSearchParams } from 'react-router-dom';
+import InfiniteListTrendingCollection from './CollectionRanking';
+import InfiniteListTopTrader from './TopTrader';
 const Ranking = () => {
-	// const [rankOption, setRankOption] = useState(1);
+	let [searchParams, setSearchParams] = useSearchParams();
+	const [value, setValue] = React.useState('1');
+	let query = searchParams.get('query');
+	React.useEffect(() => {
+		if (query) {
+			setValue(query);
+		}
+	}, [query]);
+	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+		setValue(newValue);
+	};
 
-	// useEffect(() => {}, []);
+	const handleCreateItem = (status: boolean) => {
+		if (status === true) {
+			setValue('2');
+		}
+	};
 
 	return (
-		<Box sx={{}}>
-			<Container
-				maxWidth="xl"
-				sx={{
-					pt: 18,
-				}}
-			>
+		<Box sx={{ mx: 'auto', paddingTop: '150px' }}>
+			<TabContext value={value}>
 				<Box
-					sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 8 }}
+					sx={{
+						borderBottom: 1,
+						borderColor: 'divider',
+						button: {
+							fontSize: '20px',
+							textTransform: 'none',
+							color: '#131740',
+							fontFamily: 'Montserrat, sans-serif',
+							fontWeight: '600',
+							fontStyle: 'italic',
+						},
+					}}
 				>
-					<Typography variant="h2" fontWeight="500">
-						Top Collections
-					</Typography>
+					<TabList centered onChange={handleChange} aria-label="lab API tabs example">
+						<Tab label="Top Collections" value="1" />
+						<Tab label="Top Traders" value="2" />
+					</TabList>
 				</Box>
-
-				<Box
-					sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-				>
-					{/* <FilterItemRanking
-						initialStateFilter={initialState.filter}
-						filter={filter}
-						setFilter={setFilter}
-					/> */}
-					<Box
-						sx={{
-							'& .ranking': {
-								padding: '6px 8px 6px 12px',
-								border: '1px solid #E7E8EC',
-								background: '#fff',
-								borderRadius: '12px',
-								cursor: 'pointer',
-								width: '180px',
-							},
-							h3: {
-								fontSize: '16px',
-								color: '#1d1d1f',
-								fontWeight: 500,
-								justifyContent: 'space-between',
-								paddingLeft: 0,
-							},
-						}}
-					>
-						{/* <DropDown
-							activeDropDown={activeDropDown}
-							setActiveDropDown={setActiveDropDown}
-							buttonContent={renderButtonContent()}
-							dropdownContent={renderDropdownContent()}
-							className="ranking"
-						/> */}
-					</Box>
-				</Box>
-
-				<Box sx={{ margin: '20px 0' }}>
-					{/* <InfiniteListTrendingCollection
-						listCollection={listCollectionTop}
-						isLoading={isLoading}
-						hasNextPage={hasNextPage}
-						fetchNextPage={handleFetchNextPage}
-						allowLoadMore={allowLoadMore}
-					/> */}
-				</Box>
-
-				{/* {!allowLoadMore && hasNextPage && !isLoading && (
-					<Stack sx={{ marginTop: '50px' }} alignItems="center">
-						<ButtonLoadmore onClick={() => setAllowLoadMore(true)} />
-					</Stack>
-				)} */}
-			</Container>
+				<TabPanel value="2">
+					<InfiniteListTrendingCollection />
+				</TabPanel>
+				<TabPanel value="1">
+					<InfiniteListTopTrader />
+				</TabPanel>
+			</TabContext>
 		</Box>
 	);
 };

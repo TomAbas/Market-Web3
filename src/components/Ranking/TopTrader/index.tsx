@@ -36,20 +36,7 @@ const TopTrader = () => {
 	}, [selectedFilter]);
 	return (
 		<Box sx={{}}>
-			<Container
-				maxWidth="xl"
-				sx={{
-					pt: 18,
-				}}
-			>
-				<Box
-					sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 8 }}
-				>
-					<Typography variant="h2" fontWeight="500">
-						Top Traders
-					</Typography>
-				</Box>
-
+			<Container maxWidth="xl">
 				<Box
 					sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
 				>

@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { CollectionTop } from 'models/collection';
 import { useEffect, useState } from 'react';
 import InfiniteListTrendingCollection from './InfiniteListTrendingCollection';
@@ -37,20 +37,7 @@ const CollectionRanking = () => {
 
 	return (
 		<Box sx={{}}>
-			<Container
-				maxWidth="xl"
-				sx={{
-					pt: 18,
-				}}
-			>
-				<Box
-					sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 8 }}
-				>
-					<Typography variant="h2" fontWeight="500">
-						Top Collections
-					</Typography>
-				</Box>
-
+			<Container maxWidth="xl">
 				<Box
 					sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
 				>
