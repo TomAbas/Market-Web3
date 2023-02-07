@@ -177,7 +177,10 @@ export default function MyCollection() {
 												</Stack>
 												<Box>
 													<Typography variant="body1">
-														{collection.items.length} items
+														{collection.items.length}{' '}
+														{collection.items.length > 1
+															? 'items'
+															: 'item'}
 													</Typography>
 												</Box>
 											</Stack>

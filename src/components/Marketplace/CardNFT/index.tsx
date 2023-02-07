@@ -247,15 +247,12 @@ export default function CardNFT({
 										}}
 										variant="subtitle2"
 										sx={{
-											color:
-												offer.status === 0
-													? 'rgba(0, 0, 0, 0.3)'
-													: 'rgb(0, 122, 255)',
+											color: 'rgb(0, 122, 255)',
 											fontWeight: '600',
 											'&:hover': {
 												opacity: '1',
 											},
-											pointerEvents: offer.status === 0 ? 'none' : 'all',
+											display: offer.status === 0 ? 'none' : 'block',
 										}}
 									>
 										Buy Now

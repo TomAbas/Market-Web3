@@ -79,7 +79,7 @@ const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption }
 };
 
 const FeaturedCollection = () => {
-	let arr = new Array(4);
+	let arr = new Array(4).fill(null);
 	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
 	const [selectedFilter, setSelectedFilter] = useState<string>('All');
 	const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -240,7 +240,10 @@ const FeaturedCollection = () => {
 												</Stack>
 												<Box>
 													<Typography variant="body1">
-														{collection.listItem.length} items
+														{collection.listItem.length}{' '}
+														{collection.listItem.length > 1
+															? 'items'
+															: 'item'}
 													</Typography>
 												</Box>
 											</Stack>

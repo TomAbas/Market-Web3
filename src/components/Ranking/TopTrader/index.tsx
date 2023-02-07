@@ -4,7 +4,7 @@ import InfiniteListTopTrader from './InfiniteListTopTrader';
 import { useEffect, useState } from 'react';
 import { getTopTradeUsers } from 'api/userApi';
 import DropDown from 'components/CustomUI/DropDown';
-import { ButtonContent, DropdownContent } from 'components/Marketplace/TopCollection';
+import { ButtonContent, DropdownContent } from 'components/Marketplace/ViewAll/TopCollection';
 const TopTrader = () => {
 	let initFilter = {
 		name: '7 days',
