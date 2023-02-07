@@ -5,6 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DropdownMenuLink } from 'components/Header/styled';
 import { DropdownMenu } from './styled';
+import IconCollection from '../../assets/images/planets/icon-collection-help.svg';
+import IconItem from '../../assets/images/planets/icon-nft-help.svg';
+import IconColectibles from 'assets/icons/NavBar/icon-colectibles.svg';
+import IconArt from 'assets/icons/NavBar/icon-art.svg';
+
 interface Props {
 	item: { id: number; name: string; link: string };
 	listCategoryMarketplace: Object[];
@@ -17,7 +22,7 @@ const listCreate = [
 		target: '_self',
 		link: `/#/mint`,
 		isFilter: true,
-		icon: '',
+		icon: IconColectibles,
 	},
 	{
 		id: 2,
@@ -25,7 +30,7 @@ const listCreate = [
 		target: '_self',
 		link: `/#/mint?query=2`,
 		isFilter: true,
-		icon: '',
+		icon: IconArt,
 	},
 ];
 const NavBarMobile: React.FC<Props> = ({ item, listCategoryMarketplace, listRanking }) => {
@@ -231,7 +236,7 @@ const NavBarMobile: React.FC<Props> = ({ item, listCategoryMarketplace, listRank
 							{listCreate.map((category: any, index: number) => (
 								<DropdownMenuLink href={category.link} key={index}>
 									<Stack direction="row" alignItems="center">
-										{/* <Box width="30px">
+										<Box width="30px">
 											<img
 												style={{
 													width: '100%',
@@ -242,7 +247,7 @@ const NavBarMobile: React.FC<Props> = ({ item, listCategoryMarketplace, listRank
 												src={category.icon}
 												alt={category.title}
 											/>
-										</Box> */}
+										</Box>
 										<Typography
 											variant="body2"
 											sx={{ padding: '0 0 0 8px' }}
