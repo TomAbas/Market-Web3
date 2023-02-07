@@ -296,7 +296,7 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 						</InputGroup>
 
 						<InputGroup>
-							<Box sx={{ display: 'flex' }}>
+							<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 								<Label htmlFor="user-bio">Bio</Label>
 								<Typography
 									sx={{
@@ -337,7 +337,7 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 						</InputGroup>
 
 						<InputGroup>
-							<Box sx={{ display: 'flex' }}>
+							<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 								<Label>Banner</Label>
 								<Typography
 									sx={{
