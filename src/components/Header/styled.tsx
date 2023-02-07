@@ -278,7 +278,7 @@ export const NavigationItemBigScreen = styled('li')(({ theme }) => ({
 	},
 
 	'&:nth-child(4):hover': {
-		borderRadius: '12px',
+		// borderRadius: '12px',
 	},
 
 	...(theme.palette.mode === 'light'
