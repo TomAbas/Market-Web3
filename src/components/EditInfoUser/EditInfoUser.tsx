@@ -3,7 +3,7 @@ import { Box, CircularProgress, Modal, Stack, Typography } from '@mui/material';
 import UploadMediaCustom from 'components/Forms/UploadMediaCustom';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import {
 	ErrorMessage,
@@ -44,12 +44,11 @@ interface Props {
 }
 const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) => {
 	const dispatch = useAppDispatch();
-
+	const longDescription: any = useRef();
 	// useState
 	const [avatar, setAvatar] = useState<any>(null);
 	const [background, setBackground] = useState<any>(null);
 	const [isLoading, setIsLoading] = useState<any>(false);
-
 	//hook form
 	const schema = yup
 		.object({
@@ -71,6 +70,8 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 		register,
 		handleSubmit,
 		setValue,
+		setError,
+		clearErrors,
 		formState: { errors, isSubmitting },
 	} = useForm<IFormEditProfileInputs>({
 		resolver: yupResolver(schema),
@@ -134,7 +135,6 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 	};
 	//end hook form
 	//function drop images
-
 	const handleDropAvatar = useCallback(
 		(acceptedFiles: any) => {
 			const file = acceptedFiles[0];
@@ -166,8 +166,22 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 		},
 		[setValue]
 	);
-
 	//end drop images
+	//function check validate
+	const checkBioDesValid = (e: any) => {
+		let value = e.target.value;
+		value = value.slice(0, 1500);
+		setValue('bio', value);
+		if (value.length > 1500) {
+			setError('bio', {
+				type: 'custom',
+				message: 'bio: 0 of 1500 characters used',
+			});
+		} else {
+			clearErrors('bio');
+		}
+		longDescription.current = value.length | 0;
+	};
 	useEffect(() => {
 		if (infoUser) {
 			setValue(`username`, infoUser.username);
@@ -178,9 +192,11 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 			setValue(`background`, infoUser.background);
 			setAvatar(infoUser.avatar);
 			setBackground(infoUser.background);
+			longDescription.current = infoUser.bio.length;
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [infoUser]);
+
 	return (
 		<Modal
 			open={openEdit}
@@ -218,8 +234,9 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 
 					<Box sx={{ padding: '20px' }}>
 						<TopPart>
-							<Stack direction="column" alignItems="center">
-								<InputGroup sx={{ margin: 0 }}>
+							<InputGroup sx={{ margin: 0 }}>
+								<Label>Avatar</Label>
+								<Stack direction="column" alignItems="center">
 									<UploadMediaCustom
 										accept={{
 											'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
@@ -242,16 +259,28 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 											},
 										}}
 									/>
-
 									{/* {errors.avatar?.message && (
 										<ErrorMessage>{errors.avatar?.message}</ErrorMessage>
-									)} */}
-								</InputGroup>
-							</Stack>
+									)} */}{' '}
+								</Stack>
+							</InputGroup>
 						</TopPart>
 
 						<InputGroup>
-							<Label>Banner</Label>
+							<Box sx={{ display: 'flex' }}>
+								<Label>Banner</Label>
+								<Typography
+									sx={{
+										marginLeft: '10px',
+										color: '#c4c4c4',
+										fontSize: '12px',
+										fontWeight: 'normal',
+									}}
+								>
+									This image will appear at the top of your profile page. 1800 x
+									400 recommended.
+								</Typography>
+							</Box>
 
 							<UploadMediaCustom
 								file={background}
@@ -276,10 +305,25 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 							)} */}
 						</InputGroup>
 						<InputGroup>
-							<Label htmlFor="user-bio">Bio</Label>
+							<Box sx={{ display: 'flex' }}>
+								<Label htmlFor="user-bio">Bio</Label>
+								<Typography
+									sx={{
+										marginLeft: '10px',
+										color: '#c4c4c4',
+										fontSize: '12px',
+										fontWeight: 'normal',
+									}}
+								>
+									{longDescription?.current
+										? `${longDescription?.current} of 1500 characters used`
+										: '0 of 1500 characters used'}
+								</Typography>
+							</Box>
 
 							<Textarea
 								{...register('bio')}
+								onChange={checkBioDesValid}
 								placeholder="Please write something about yourself"
 							/>
 

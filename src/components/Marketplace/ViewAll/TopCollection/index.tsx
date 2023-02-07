@@ -76,7 +76,7 @@ const Index = () => {
 		setActiveDropDown(false);
 	};
 	const handleGoToRanking = () => {
-		navigate('/collection/trending');
+		navigate('/rank?query=1');
 	};
 	return (
 		<>
