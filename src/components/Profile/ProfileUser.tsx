@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, ClickAwayListener, Grid, Stack, Typography } from '@mui/material';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import aptos from '../../assets/images/card/aptos.jpg';
 import { useSizeObersver } from 'contexts/SizeObserver';
@@ -19,9 +19,11 @@ import { selectTrigger } from 'redux/slices/nftFilter';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 
 const ProfileUser = () => {
+	const bioRef: any = useRef();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const address = searchParams.get('address');
 	const dispatch = useAppDispatch();
+	const [show, setShow] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
 	const { innerWidth } = useSizeObersver();
 	const [viewFull, setViewFull] = useState(false);
@@ -34,6 +36,7 @@ const ProfileUser = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const { likeItem, checkIsLike } = useInteraction();
 	const trigger = useAppSelector(selectTrigger);
+	console.log(bioRef.current?.offsetHeight);
 	const handleClickAway = () => {
 		setViewFull(false);
 	};
@@ -198,7 +201,29 @@ const ProfileUser = () => {
 									)}
 							</Box>
 						</Stack>
-						<Typography variant="body1" mt={2}>
+						<Typography
+							variant="body1"
+							mt={2}
+							ref={bioRef}
+							sx={{
+								// transition: 'all ease-in-out 12s',
+								margin: '16px auto',
+								width: '50%',
+								whiteSpace: `${show ? 'unset' : 'nowrap'}`,
+								textAlign: ` ${
+									bioRef.current?.offsetHeight > 50 ? 'justify' : 'center'
+								}`,
+								overflow: 'hidden',
+								textOverflow: 'ellipsis',
+								height: `${show ? 'auto' : '50px'}`,
+							}}
+							onClick={() => {
+								if (bioRef.current?.offsetHeight < 50) {
+									return;
+								}
+								setShow(!show);
+							}}
+						>
 							{infoUser?.bio}
 						</Typography>
 					</Box>
