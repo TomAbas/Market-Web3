@@ -127,7 +127,7 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 			dispatch(updateInfoUserA(newData));
 			updateUser(newData);
 			openEditModal();
-			toast.success('Successfull Update Info !');
+			toast.success('Successful update info');
 			// dispatch(updateUser(newData, executeAfterUpdateUser));
 		} catch (error: any) {
 			console.log(error);

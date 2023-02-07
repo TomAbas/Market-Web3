@@ -122,7 +122,7 @@ export default function DetailCard() {
 				)
 			);
 		} catch (error) {
-			toast.error("can't not get your balances of tokens");
+			toast.error("Can't not get your balance of Aptos Coin");
 		}
 	}
 	useEffect(() => {

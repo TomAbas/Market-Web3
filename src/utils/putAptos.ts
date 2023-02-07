@@ -68,7 +68,7 @@ function useBuyItemAptos(offer: nftItem) {
 				};
 				buyItem(listItem).then((res: any) => dispatch(handleTrigger()));
 				completeTaskSuccess();
-				toast.success('Successfully purchased an item');
+				toast.success('Successful purchase an item');
 			});
 
 			handleNext();
@@ -113,7 +113,7 @@ function useBuyItemAptos(offer: nftItem) {
 				cancelOrder(listItem).then((res: any) => dispatch(handleTrigger()));
 			});
 
-			toast.success('Successfully canceled listing');
+			toast.success('Successful cancel listing');
 			navigate('/profile');
 		} catch {
 			toast.error('Something went wrong. Try again!');
@@ -171,7 +171,7 @@ function useBuyItemAptos(offer: nftItem) {
 					creator: offer.creator,
 				};
 				console.log(listItem);
-				toast.success('Successfully listed an item');
+				toast.success('Successful list an item');
 				sellItem(listItem).then((res) => {
 					dispatch(handleTrigger());
 				});

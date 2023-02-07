@@ -86,7 +86,7 @@ const CardNFTUser = ({
 			);
 
 			setStatusList('Sell Item');
-			toast.success('Successfully listed an item');
+			toast.success('Successful list an item');
 			let listItem: any = {
 				maker: userInfo?.userAddress,
 				chainId: '2',
