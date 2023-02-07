@@ -521,42 +521,6 @@ const Header: React.FC = () => {
 							) : null}
 						</Stack>
 						<Stack direction="row" alignItems="center" gap="8px">
-							<Stack direction="row" gap="10px">
-								{innerWidth < 1500 ? (
-									<IconItem>
-										<MoreHorizOutlinedIcon
-											sx={{
-												width: '34px',
-												position: 'absolute',
-												// top: '6px',
-												color: 'black',
-											}}
-											onClick={() => setOption(true)}
-										/>
-
-										{option && (
-											<ClickAwayListener
-												onClickAway={() => {
-													openMoreOption();
-												}}
-											>
-												<DropDownContent ref={ref} sx={{ padding: '10px' }}>
-													{listNav.map((item) => (
-														<NavBarMobile
-															item={item}
-															key={item.id}
-															listCategoryMarketplace={
-																listCategoryMarketplace
-															}
-															listRanking={listRanking}
-														/>
-													))}
-												</DropDownContent>
-											</ClickAwayListener>
-										)}
-									</IconItem>
-								) : null}
-							</Stack>
 							<IconItem onClick={openModal}>
 								<img src={connectIcon} alt="connect icon" />
 								{modalWalletSteps.steps.firstModal && !userAddress && (
@@ -742,6 +706,42 @@ const Header: React.FC = () => {
 									)}
 								</IconItem>
 							)}
+							<Stack direction="row" gap="10px">
+								{innerWidth < 1500 ? (
+									<IconItem>
+										<MoreHorizOutlinedIcon
+											sx={{
+												width: '34px',
+												position: 'absolute',
+												// top: '6px',
+												color: 'black',
+											}}
+											onClick={() => setOption(true)}
+										/>
+
+										{option && (
+											<ClickAwayListener
+												onClickAway={() => {
+													openMoreOption();
+												}}
+											>
+												<DropDownContent ref={ref} sx={{ padding: '10px' }}>
+													{listNav.map((item) => (
+														<NavBarMobile
+															item={item}
+															key={item.id}
+															listCategoryMarketplace={
+																listCategoryMarketplace
+															}
+															listRanking={listRanking}
+														/>
+													))}
+												</DropDownContent>
+											</ClickAwayListener>
+										)}
+									</IconItem>
+								) : null}
+							</Stack>
 						</Stack>
 					</Stack>
 				</Box>
