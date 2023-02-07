@@ -133,7 +133,7 @@ const listRanking = [
 		id: 1,
 		title: 'Top Collections',
 		target: '_self',
-		link: `/#/collection/trending`,
+		link: `/#/rank?query=1`,
 		isFilter: true,
 		icon: IconRankings,
 	},
@@ -141,7 +141,7 @@ const listRanking = [
 		id: 2,
 		title: 'Top Traders',
 		target: '_self',
-		link: `/#/collection/trending`,
+		link: `/#/rank?query=2`,
 		isFilter: true,
 		icon: IconTopTrader,
 	},
@@ -155,7 +155,7 @@ const listNav = [
 	{
 		id: 1,
 		name: 'Stats',
-		link: '/collection/trending',
+		link: '/#/rank?query=1',
 	},
 	{
 		id: 2,
@@ -165,7 +165,7 @@ const listNav = [
 	{
 		id: 3,
 		name: 'Create',
-		link: '/mint',
+		link: '/#/mint',
 	},
 ];
 const Header: React.FC = () => {
@@ -398,7 +398,7 @@ const Header: React.FC = () => {
 									<NavigationItemBigScreen sx={{ width: '165px' }}>
 										<NavLinkBigScreen
 											className="navLink"
-											href={`#/collection/trending`}
+											href={`#/rank?query=1`}
 											target="_self"
 											// onClick={(e: any) => {
 											// 	e.preventDefault();
@@ -418,7 +418,7 @@ const Header: React.FC = () => {
 											sx={{ minWidth: '165px' }}
 										>
 											<Stack>
-												<DropdownMenuLink href={'#/collection/trending'}>
+												<DropdownMenuLink href={'#/rank?query=1'}>
 													<Stack direction="row" alignItems="center">
 														<Box width="30px">
 															<img
@@ -447,7 +447,7 @@ const Header: React.FC = () => {
 											</Stack>
 											<Stack>
 												<DropdownMenuLink
-													href={`/#/top-trader`}
+													href={`/#/rank?query=2`}
 													// key={index}
 												>
 													<Stack direction="row" alignItems="center">
@@ -521,42 +521,6 @@ const Header: React.FC = () => {
 							) : null}
 						</Stack>
 						<Stack direction="row" alignItems="center" gap="8px">
-							<Stack direction="row" gap="10px">
-								{innerWidth < 1500 ? (
-									<IconItem>
-										<MoreHorizOutlinedIcon
-											sx={{
-												width: '34px',
-												position: 'absolute',
-												// top: '6px',
-												color: 'black',
-											}}
-											onClick={() => setOption(true)}
-										/>
-
-										{option && (
-											<ClickAwayListener
-												onClickAway={() => {
-													openMoreOption();
-												}}
-											>
-												<DropDownContent ref={ref} sx={{ padding: '10px' }}>
-													{listNav.map((item) => (
-														<NavBarMobile
-															item={item}
-															key={item.id}
-															listCategoryMarketplace={
-																listCategoryMarketplace
-															}
-															listRanking={listRanking}
-														/>
-													))}
-												</DropDownContent>
-											</ClickAwayListener>
-										)}
-									</IconItem>
-								) : null}
-							</Stack>
 							<IconItem onClick={openModal}>
 								<img src={connectIcon} alt="connect icon" />
 								{modalWalletSteps.steps.firstModal && !userAddress && (
@@ -742,6 +706,42 @@ const Header: React.FC = () => {
 									)}
 								</IconItem>
 							)}
+							<Stack direction="row" gap="10px">
+								{innerWidth < 1500 ? (
+									<IconItem>
+										<MoreHorizOutlinedIcon
+											sx={{
+												width: '34px',
+												position: 'absolute',
+												// top: '6px',
+												color: 'black',
+											}}
+											onClick={() => setOption(true)}
+										/>
+
+										{option && (
+											<ClickAwayListener
+												onClickAway={() => {
+													openMoreOption();
+												}}
+											>
+												<DropDownContent ref={ref} sx={{ padding: '10px' }}>
+													{listNav.map((item) => (
+														<NavBarMobile
+															item={item}
+															key={item.id}
+															listCategoryMarketplace={
+																listCategoryMarketplace
+															}
+															listRanking={listRanking}
+														/>
+													))}
+												</DropDownContent>
+											</ClickAwayListener>
+										)}
+									</IconItem>
+								) : null}
+							</Stack>
 						</Stack>
 					</Stack>
 				</Box>
