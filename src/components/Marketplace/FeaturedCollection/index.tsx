@@ -98,7 +98,6 @@ const FeaturedCollection = () => {
 					console.log('key', key);
 					return { id: index, name: key, value: key };
 				});
-				listCategoy.push({ id: 0, name: 'All', value: null });
 				setListFilter(listCategoy);
 				// if (selectedFilter === 'All') {
 				// 	setCollections
