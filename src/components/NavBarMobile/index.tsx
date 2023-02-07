@@ -13,7 +13,7 @@ interface Props {
 const listCreate = [
 	{
 		id: 1,
-		title: 'Create Collection',
+		title: 'Collection',
 		target: '_self',
 		link: `/#/mint`,
 		isFilter: true,
@@ -21,7 +21,7 @@ const listCreate = [
 	},
 	{
 		id: 2,
-		title: 'Create Item',
+		title: 'Item',
 		target: '_self',
 		link: `/#/mint?query=2`,
 		isFilter: true,

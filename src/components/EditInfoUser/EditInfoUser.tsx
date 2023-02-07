@@ -277,8 +277,7 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 										fontWeight: 'normal',
 									}}
 								>
-									This image will appear at the top of your profile page. 1800 x
-									400 recommended.
+									recommended: 1800 x 400 (10Mb)
 								</Typography>
 							</Box>
 
