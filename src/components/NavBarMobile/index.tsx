@@ -13,7 +13,7 @@ interface Props {
 const listCreate = [
 	{
 		id: 1,
-		title: 'Create Collection',
+		title: 'Collection',
 		target: '_self',
 		link: `/#/mint`,
 		isFilter: true,
@@ -21,7 +21,7 @@ const listCreate = [
 	},
 	{
 		id: 2,
-		title: 'Create Item',
+		title: 'Item',
 		target: '_self',
 		link: `/#/mint?query=2`,
 		isFilter: true,
@@ -268,16 +268,17 @@ const NavBarMobile: React.FC<Props> = ({ item, listCategoryMarketplace, listRank
 					<Box>
 						<Link
 							onClick={() => navigate(item.link)}
-							href={item.link}
+							href={'#'}
+							title={'Coming Soon'}
 							sx={{
 								textDecoration: 'none',
 								color: '#131740',
 								fontWeight: '500',
 								transition: 'all 0.4s ',
-								cursor: 'pointer',
-								'&:hover': {
-									color: '#007aff',
-								},
+								// cursor: 'pointer',
+								// '&:hover': {
+								// 	color: '#007aff',
+								// },
 							}}
 						>
 							{item.name}
