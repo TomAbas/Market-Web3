@@ -114,14 +114,14 @@ export default function InfiniteListTopTrader({
 												<CollectionName
 													onClick={() =>
 														navigate(
-															`/profile/?address=${item.address.userAddress}`
+															`/profile/?address=${item.user.userAddress}`
 														)
 													}
 												>
 													<Box sx={{ position: 'relative' }}>
 														<Avatar
 															variant="rounded"
-															src={item.user.avatar}
+															src={item?.user?.avatar}
 															sx={{
 																width: 40,
 																height: 40,

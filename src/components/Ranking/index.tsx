@@ -50,10 +50,10 @@ const Ranking = () => {
 					</TabList>
 				</Box>
 				<TabPanel value="2">
-					<InfiniteListTrendingCollection />
+					<InfiniteListTopTrader />
 				</TabPanel>
 				<TabPanel value="1">
-					<InfiniteListTopTrader />
+					<InfiniteListTrendingCollection />
 				</TabPanel>
 			</TabContext>
 		</Box>

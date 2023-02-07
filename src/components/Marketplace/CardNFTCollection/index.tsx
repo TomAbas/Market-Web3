@@ -133,7 +133,7 @@ export default function CardNFTCollection({
 
 			fetchOffers();
 			completeTaskSuccess();
-			toast.success('Successfully purchased an item');
+			toast.success('Successful purchase an item');
 			handleNext();
 		} catch {
 			failToComplete();

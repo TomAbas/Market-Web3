@@ -12,7 +12,7 @@ const useGetNftOrder = () => {
 			dispatch(getListNftOrders(listNftOrders));
 		} catch (error) {
 			dispatch(hasError(error));
-			toast.error("can't get list order");
+			toast.error("can't get list orders");
 		}
 	}
 	return { getListNFTOrders };

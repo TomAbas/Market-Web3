@@ -119,7 +119,7 @@ const ItemInfo: React.FC<Props> = ({
 						direction="row"
 						spacing={{ xs: 1, sm: 2, md: 4 }}
 					>
-						<Stack sx={{ flex: '1' }} gap="16px">
+						<Stack gap="16px" sx={{ flex: '1' }}>
 							{' '}
 							<Typography
 								variant="h6"

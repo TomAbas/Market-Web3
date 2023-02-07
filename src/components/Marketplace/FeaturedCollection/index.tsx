@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Grid, Link, Stack, Typography } from '@mui/material';
 import {
 	DropdownWrapper,
@@ -18,26 +19,18 @@ import SkeletonCardNft from 'components/SkeletonCardNft';
 import DropDown from 'components/CustomUI/DropDown';
 import { getCategoryCollections, getAllCollections } from 'api/collectionApi';
 import { displayAddress } from 'utils/formatDisplay';
+import { getListCategory } from 'api/collectionApi';
 
 interface Props0 {
 	selectedFilter: any;
 	handleClickOption: any;
+	listFilter: any;
 }
 
 interface Props1 {
 	selectedFilter: string;
 }
-const listFilter: any = [
-	{ id: 0, name: 'All', value: null },
-	{ id: 1, name: 'Art', value: 1 },
-	{ id: 2, name: 'Music', value: 2 },
-	{ id: 3, name: 'Photography', value: 3 },
-	{ id: 4, name: 'Games', value: 4 },
-	{ id: 5, name: 'Sport', value: 5 },
-	{ id: 6, name: 'Metaverse', value: 6 },
-	{ id: 7, name: 'Box', value: 7 },
-	{ id: 8, name: 'Trading Card', value: 8 },
-];
+
 const ButtonContent: React.FC<Props1> = ({ selectedFilter }) => {
 	return (
 		<SubTitle
@@ -55,7 +48,7 @@ const ButtonContent: React.FC<Props1> = ({ selectedFilter }) => {
 	);
 };
 
-const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption }) => {
+const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption, listFilter }) => {
 	return (
 		<DropdownWrapper sx={{ width: '180px' }}>
 			<ListOption>
@@ -82,6 +75,7 @@ const FeaturedCollection = () => {
 	let arr = new Array(4).fill(null);
 	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
 	const [selectedFilter, setSelectedFilter] = useState<string>('All');
+	const [listFilter, setListFilter] = useState<any[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [collections, setCollections] = useState<any[]>([]);
 	const handleClickOption = (filter: any) => {
@@ -96,19 +90,35 @@ const FeaturedCollection = () => {
 		navigate(`/profile?address=${userAddress}`);
 	}
 	useEffect(() => {
-		let category = listFilter.find((item: any) => item.name === selectedFilter).value;
-		if (category === null) {
-			getAllCollections('2').then((res: any) => {
-				console.log('dsd', res.data);
-				setCollections(res.data.slice(0, 4));
+		getListCategory('2')
+			.then((res: any) => res.data)
+			.then((res: any) => {
+				console.log('res', res);
+				let listCategoy: any = Object.keys(res).map((key, index) => {
+					console.log('key', key);
+					return { id: index, name: key, value: key };
+				});
+				listCategoy.push({ id: 0, name: 'All', value: null });
+				setListFilter(listCategoy);
+				// if (selectedFilter === 'All') {
+				// 	setCollections
+				setCollections(res[selectedFilter].slice(0, 4));
+				// console.log('listCategoy', res[selectedFilter]);
 				setIsLoading(false);
 			});
-		} else {
-			getCategoryCollections('2', category.toString()).then((res: any) => {
-				setCollections(res.data.slice(0, 4));
-				setIsLoading(false);
-			});
-		}
+		// let category = listFilter.find((item: any) => item.name === selectedFilter).value;
+		// if (category === null) {
+		// 	getAllCollections('2').then((res: any) => {
+		// 		console.log('dsd', res.data);
+		// 		setCollections(res.data.slice(0, 4));
+		// 		setIsLoading(false);
+		// 	});
+		// } else {
+		// 	getCategoryCollections('2', category.toString()).then((res: any) => {
+		// 		setCollections(res.data.slice(0, 4));
+		// 		setIsLoading(false);
+		// 	});
+		// }
 	}, [selectedFilter]);
 
 	return (
@@ -127,6 +137,7 @@ const FeaturedCollection = () => {
 							<DropdownContent
 								selectedFilter={selectedFilter}
 								handleClickOption={handleClickOption}
+								listFilter={listFilter}
 							/>
 						}
 					/>

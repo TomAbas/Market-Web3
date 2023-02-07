@@ -27,7 +27,6 @@ const TopTrader = () => {
 		const fetchData = async () => {
 			let time = selectedFilter.name.split(' ')[0];
 			getTopTradeUsers('2', time).then((res: any) => {
-				console.log('res', res);
 				setListTopTrader(res);
 				setIsLoading(false);
 			});

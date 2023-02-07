@@ -113,7 +113,7 @@ export default function MyItemDetail() {
 				owner: item.creator,
 			};
 			sellItem(listItem);
-			toast.success('Successfully listed an item');
+			toast.success('Successful list an item');
 			navigate('/view-all');
 			setOpen(false);
 		} catch (error) {

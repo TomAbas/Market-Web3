@@ -24,4 +24,15 @@ function getItemOfCollection(collectionId: string) {
 	const url = `/collection/get-info/collectionId/${collectionId}`;
 	return ClientAxios.get(url).then(({ data }) => data);
 }
-export { getAllCollections, getCategoryCollections, getTopCollections, getItemOfCollection };
+
+function getListCategory(chainId: string): Promise<Response<any>> {
+	const url = `/collection/category/chainId/${chainId}`;
+	return ClientAxios.get(url).then(({ data }) => data);
+}
+export {
+	getAllCollections,
+	getCategoryCollections,
+	getTopCollections,
+	getListCategory,
+	getItemOfCollection,
+};

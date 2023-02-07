@@ -122,7 +122,10 @@ export default function Items() {
 											</Stack>
 											<Box>
 												<Typography variant="body1">
-													{collection.listItem.length} items
+													{collection.listItem.length}{' '}
+													{collection.listItem.length > 1
+														? 'items'
+														: 'item'}
 												</Typography>
 											</Box>
 										</Stack>

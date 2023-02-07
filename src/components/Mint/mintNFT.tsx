@@ -91,7 +91,7 @@ export default function LayoutMintNFT() {
 				setDataFormInput={setDataFormInput}
 			/>
 			<ModalBuy
-				title="Create NFT"
+				title="Create an item"
 				steps={steps}
 				openState={openModalBuy}
 				closeModal={() => {
