@@ -47,11 +47,13 @@ const ModelSell: React.FC<Props> = ({
 					</Typography>
 					<Box
 						sx={{
+							border: '1.5px solid #e7e8ec',
+							borderRadius: '10px',
 							input: {
-								border: '1.5px solid #e7e8ec',
+								borderRadius: '10px',
+								border: '0px solid white',
 								padding: '10px 24px',
 								outline: 'none',
-								borderRadius: '10px',
 								fontSize: '18px',
 								fontStyle: 'italic',
 								width: '100%',
@@ -76,14 +78,21 @@ const ModelSell: React.FC<Props> = ({
 					</Typography>
 					<Box
 						sx={{
+							border: '1.5px solid #e7e8ec',
+							borderRadius: '10px',
+							display: 'flex',
+							alignItems: 'center',
 							input: {
-								border: '1.5px solid #e7e8ec',
+								border: '0px solid white',
 								padding: '10px 24px',
 								outline: 'none',
 								borderRadius: '10px',
 								fontSize: '18px',
 								fontStyle: 'italic',
 								width: '100%',
+								borderRight: '1.5px solid #e7e8ec',
+								borderBottomRightRadius: '0px 0px',
+								borderTopRightRadius: '0px 0px',
 							},
 						}}
 					>
@@ -102,6 +111,7 @@ const ModelSell: React.FC<Props> = ({
 							id="price"
 							placeholder="0"
 						/>
+						<Box mx={2}>APT</Box>
 					</Box>
 				</Box>
 

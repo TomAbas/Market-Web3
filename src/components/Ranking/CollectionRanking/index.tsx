@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import InfiniteListTrendingCollection from './InfiniteListTrendingCollection';
 import { getTopCollections } from 'api/collectionApi';
 import DropDown from 'components/CustomUI/DropDown';
-import { ButtonContent, DropdownContent } from 'components/Marketplace/TopCollection';
+import { ButtonContent, DropdownContent } from 'components/Marketplace/ViewAll/TopCollection';
 const CollectionRanking = () => {
 	const initFilter = { name: '7 days', value: 'volume7Days' };
 	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);

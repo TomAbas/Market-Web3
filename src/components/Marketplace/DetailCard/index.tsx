@@ -111,15 +111,19 @@ export default function DetailCard() {
 		// setItemResource(getItemFromOrder(listNftOrders, item!));
 	}
 	async function getUserAmountOfItem(item: nftItem) {
-		setUserAmountOfItem(
-			await getBalanceToken(
-				userInfo?.userAddress!,
-				item.creator,
-				item.collectionInfo.collectionName!,
-				item.itemName,
-				item.chainId
-			)
-		);
+		try {
+			setUserAmountOfItem(
+				await getBalanceToken(
+					userInfo?.userAddress!,
+					item.creator,
+					item.collectionInfo.collectionName!,
+					item.itemName,
+					item.chainId
+				)
+			);
+		} catch (error) {
+			toast.error("can't not get your balances of tokens");
+		}
 	}
 	useEffect(() => {
 		if (item?.status === 1 && listNftOrders.length > 0) {

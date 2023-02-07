@@ -33,7 +33,7 @@ import {
 import Newsletter from './NewsLetter';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import { useOutletContext } from 'react-router-dom';
-import TopCollection from './TopCollection';
+import TopCollection from './ViewAll/TopCollection';
 import FeaturedCollection from './FeaturedCollection';
 import { getUserInfo } from 'api/userApi';
 import { getAllItems } from 'api/items/itemsApi';
@@ -41,19 +41,10 @@ import { getAllCollections } from '../../api/collectionApi';
 import useInteraction from 'hooks/useInteraction';
 
 export default function Marketplace() {
-	let arr = new Array(12);
+	let arr = new Array(12).fill(null);
 	const { likeItem, checkIsLike } = useInteraction();
 	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 	let navigate = useNavigate();
-	const handleCollectionDetail = (creator: string, collection: string) => {
-		//encodeURIComponent
-		navigate(
-			`/collection-detail?creator=${encodeURIComponent(
-				creator
-			)}&collection=${encodeURIComponent(collection)}`
-		);
-	};
-
 	return (
 		<>
 			<ExploreCollection

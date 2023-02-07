@@ -127,11 +127,35 @@ const listCategoryMarketplace = [
 		icon: IconEsports,
 	},
 ];
-const listNav = [
+
+const listRanking = [
 	{
 		id: 1,
+		title: 'Top Collections',
+		target: '_self',
+		link: `/#/collection/trending`,
+		isFilter: true,
+		icon: IconRankings,
+	},
+	{
+		id: 2,
+		title: 'Top Traders',
+		target: '_self',
+		link: `/#/collection/trending`,
+		isFilter: true,
+		icon: IconTopTrader,
+	},
+];
+const listNav = [
+	{
+		id: 0,
 		name: 'Explore',
 		link: '/',
+	},
+	{
+		id: 1,
+		name: 'Stats',
+		link: '/collection/trending',
 	},
 	{
 		id: 2,
@@ -295,9 +319,13 @@ const Header: React.FC = () => {
 								}}
 							>
 								<img src={searchIcon} alt="search" />
-								<input type="text" placeholder="Search" />
+								<input
+									type="text"
+									placeholder="Search"
+									style={{ minWidth: '200px' }}
+								/>
 							</Stack>
-							{innerWidth > 1024 ? (
+							{innerWidth > 1500 ? (
 								<NavigationBarBigScreen>
 									<NavigationItemBigScreen sx={{ width: '165px' }}>
 										<NavLinkBigScreen
@@ -494,7 +522,7 @@ const Header: React.FC = () => {
 						</Stack>
 						<Stack direction="row" alignItems="center" gap="8px">
 							<Stack direction="row" gap="10px">
-								{innerWidth < 1024 ? (
+								{innerWidth < 1500 ? (
 									<IconItem>
 										<MoreHorizOutlinedIcon
 											sx={{
@@ -520,6 +548,7 @@ const Header: React.FC = () => {
 															listCategoryMarketplace={
 																listCategoryMarketplace
 															}
+															listRanking={listRanking}
 														/>
 													))}
 												</DropDownContent>
