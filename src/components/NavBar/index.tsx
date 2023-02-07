@@ -10,7 +10,7 @@ const NavBar: React.FC<Props> = ({ item }) => {
 	return (
 		<>
 			{item.name === 'Drops' ? (
-				<Tooltip title="coming soon">
+				<Tooltip title="Coming Soon">
 					<Box>
 						<Link
 							sx={{

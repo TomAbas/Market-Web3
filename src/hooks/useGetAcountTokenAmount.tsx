@@ -1,6 +1,5 @@
 import { nftItem } from 'models/item';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { getBalanceToken } from 'service/aptos.service';
 
 const useGetAcountTokenAmount = (userAddress: string, itemInfo: nftItem) => {
@@ -17,16 +16,19 @@ const useGetAcountTokenAmount = (userAddress: string, itemInfo: nftItem) => {
 					itemInfo?.collectionInfo.collectionName!,
 					itemInfo?.itemName,
 					'2'
-				)
+				).then((res) => {
+					return res;
+				})
 			);
 		} catch (error) {
-			toast.error("can't not get your balances of tokens");
+			// toast.error("can't not get your balances of tokens");
 			console.log(error);
 		}
 	}
+
 	useEffect(() => {
 		getUserBalanceToken();
-	}, [userAddress]);
+	}, []);
 
 	return { userTokenAmount };
 };

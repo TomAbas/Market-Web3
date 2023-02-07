@@ -37,7 +37,7 @@ const useCreateMintSell = () => {
 		category: 0,
 		collectionId: '',
 	});
-
+	const [itemId, setItemId] = useState<string>('');
 	const handleInputFile = (e: any) => {
 		const file = e[0];
 		if (file) {
@@ -182,7 +182,13 @@ const useCreateMintSell = () => {
 							to: MARKET_ADDRESS!,
 							amount: amount,
 						};
-						await createItemApi(ItemInfo);
+						await createItemApi(ItemInfo).then(({ data }) => {
+							if (data.data) {
+								// handleCloseModalBuy();
+								setItemId(data.data._id);
+								// window.location.href = `#/item/${data.data._id}`;
+							}
+						});
 						handleNext();
 					} catch (error: any) {
 						console.log('Error creating item NFT: ', error);
@@ -209,6 +215,7 @@ const useCreateMintSell = () => {
 		createItem,
 		setFormInputNFT,
 		formInputNFT,
+		itemId,
 	};
 };
 

@@ -8,7 +8,7 @@ import useControlModal from 'hooks/useControlModal';
 import { toast } from 'react-toastify';
 import { buyItem, cancelOrder, sellItem } from 'api/collections/collectionApi';
 import { getBalanceToken } from 'service/aptos.service';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { selectListNftOrders } from 'redux/slices/orderResource';
 import { getItemFromOrder } from './dataResource';
 import { useNavigate, useOutletContext } from 'react-router-dom';
@@ -29,7 +29,6 @@ function useBuyItemAptos(offer: nftItem) {
 	const listNftOrders = useAppSelector(selectListNftOrders);
 	const userInfo = useAppSelector(selectUser);
 	const { account, signAndSubmitTransaction } = useWallet();
-	const { userTokenAmount } = useGetAcountTokenAmount(userInfo?.userAddress!, offer);
 	const navigate = useNavigate();
 	async function buyItemAptos(
 		handleNext: () => void,
@@ -111,7 +110,7 @@ function useBuyItemAptos(offer: nftItem) {
 					creator: offer.creator,
 					owner: getItemFromOrder(listNftOrders, offer!)?.owner,
 				};
-				cancelOrder(listItem);
+				cancelOrder(listItem).then((res: any) => dispatch(handleTrigger()));
 			});
 
 			toast.success('Successfully canceled listing');
@@ -121,7 +120,12 @@ function useBuyItemAptos(offer: nftItem) {
 			setStatusWithdraw('Cancel');
 		}
 	}
-	function handleValidateAmount(e: any) {
+	function handleValidateAmount(e: any, userTokenAmount: string) {
+		console.log(userTokenAmount);
+		if (e.target.value.includes('.')) {
+			e.target.value = e.target.value.split('.')[0];
+			setSupply(e.target.value);
+		}
 		if (Number(e.target.value) > Number(userTokenAmount)) {
 			e.target.value = userTokenAmount;
 			setSupply(e.target.value);
@@ -168,7 +172,9 @@ function useBuyItemAptos(offer: nftItem) {
 				};
 				console.log(listItem);
 				toast.success('Successfully listed an item');
-				sellItem(listItem);
+				sellItem(listItem).then((res) => {
+					dispatch(handleTrigger());
+				});
 			});
 			setStatusList('Sell Item');
 			navigate('/view-all/items');
@@ -177,6 +183,7 @@ function useBuyItemAptos(offer: nftItem) {
 			setStatusList('Sell Item');
 		}
 	}
+
 	return {
 		buyItemAptos,
 		handleWithdrawItem,

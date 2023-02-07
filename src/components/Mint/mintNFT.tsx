@@ -24,7 +24,7 @@ export default function LayoutMintNFT() {
 		activeStep,
 		statusBuyNft,
 	} = useControlModal();
-	const { createItem, setFormInputNFT, handleInputFileMintNft, base64image } =
+	const { createItem, setFormInputNFT, handleInputFileMintNft, base64image, itemId } =
 		useCreateMintSell();
 	const steps = [
 		{
@@ -69,13 +69,7 @@ export default function LayoutMintNFT() {
 	};
 	const handleNavigate = (status: boolean) => {
 		if (status) {
-			navigate(
-				`/my-item?creator=${encodeURIComponent(
-					userAddress
-				)}&collection=${encodeURIComponent(
-					dataFormInput?.collection
-				)}&name=${encodeURIComponent(dataFormInput?.name)}`
-			);
+			navigate(`/item/${itemId}`);
 		}
 	};
 	useEffect(() => {

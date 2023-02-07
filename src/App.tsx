@@ -49,7 +49,7 @@ function App() {
 			setLoadingOffers(false);
 		};
 		fetchOffers();
-		console.log(triggerFetchNft);
+		console.log('loadingOffers ' + loadingOffers);
 	}, [triggerFetchNft, dispatch]);
 	const wallets = useMemo(
 		() => [

@@ -108,19 +108,30 @@ export default function DetailCard() {
 	};
 	function changePrice(item: nftItem) {
 		setItemPrice(changePriceToToken(item.price));
-		setItemResource(getItemFromOrder(listNftOrders, item!));
+		// setItemResource(getItemFromOrder(listNftOrders, item!));
 	}
 	async function getUserAmountOfItem(item: nftItem) {
-		setUserAmountOfItem(
-			await getBalanceToken(
-				userInfo?.userAddress!,
-				item.creator,
-				item.collectionInfo.collectionName!,
-				item.itemName,
-				item.chainId
-			)
-		);
+		try {
+			setUserAmountOfItem(
+				await getBalanceToken(
+					userInfo?.userAddress!,
+					item.creator,
+					item.collectionInfo.collectionName!,
+					item.itemName,
+					item.chainId
+				)
+			);
+		} catch (error) {
+			toast.error("can't not get your balances of tokens");
+		}
 	}
+	useEffect(() => {
+		if (item?.status === 1 && listNftOrders.length > 0) {
+			setItemResource(getItemFromOrder(listNftOrders, item!));
+		} else {
+			setItemResource(null);
+		}
+	}, [listNftOrders, item]);
 	useEffect(() => {
 		if (userInfo && item?.itemName) {
 			getUserAmountOfItem(item);
@@ -167,6 +178,7 @@ export default function DetailCard() {
 					price={price}
 					supply={supply}
 					statusList={statusList}
+					userAmountOfItem={userAmountOfItem}
 					handleValidateAmount={handleValidateAmount}
 				/>
 			)}

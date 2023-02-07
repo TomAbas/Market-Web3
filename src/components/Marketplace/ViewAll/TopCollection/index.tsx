@@ -73,7 +73,6 @@ const Index = () => {
 	const handleClickOption = (filterDay: any) => {
 		setSelectedFilter(filterDay);
 		// setSortBy(filter.value);
-
 		setActiveDropDown(false);
 	};
 	const handleGoToRanking = () => {
