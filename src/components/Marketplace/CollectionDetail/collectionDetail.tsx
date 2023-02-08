@@ -2,7 +2,7 @@
 import { Box, Grid, Stack, Typography, Skeleton } from '@mui/material';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import CardNFT from 'components/Marketplace/CardNFT';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTokens } from '../../../hooks/useTokens';
 import { getListItemResource } from '../../../utils/dataResource';
@@ -16,6 +16,8 @@ import { getItemOfCollection } from 'api/collectionApi';
 import { useAppSelector } from 'redux/hooks';
 import { selectTrigger } from 'redux/slices/nftFilter';
 const CollectionDetail = () => {
+	const desRef: any = useRef();
+	const [show, setShow] = useState(false);
 	const { collectionId } = useParams();
 	let arr = [1, 2, 3, 4];
 	const { checkIsLike, likeItem } = useInteraction();
@@ -147,7 +149,30 @@ const CollectionDetail = () => {
 									)}
 							</Box>
 						</Stack>
-						<Typography sx={{ marginTop: '16px', maxWidth: '80%', marginX: 'auto' }}>
+						<Typography
+							sx={{
+								transition: 'max-height ease 0.5s',
+								margin: '16px auto',
+								padding: '0px 24px',
+								width: '100%',
+								whiteSpace: `${show ? 'unset' : 'nowrap'}`,
+								textAlign: ` ${
+									desRef.current?.offsetHeight > 50 ? 'center' : 'justify'
+								}`,
+								overflow: 'hidden',
+								textOverflow: 'ellipsis',
+								maxHeight: `${show ? '500px' : '51px'}`,
+								height: `${show ? 'auto' : '50px'}`,
+							}}
+							ref={desRef}
+							onClick={() => {
+								if (desRef.current?.offsetHeight < 50) {
+									return;
+								}
+								console.log(desRef.current?.offsetHeight);
+								setShow(!show);
+							}}
+						>
 							{collectionInfo.description}
 						</Typography>
 					</Box>

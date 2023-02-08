@@ -61,7 +61,19 @@ const FormMint: React.FC<Props> = ({
 		if (isExist >= 0) setError('name', { type: 'required', message: 'Name is used' });
 		else if (value === '') setError('name', { type: 'custom', message: 'Name is required' });
 		else clearErrors('name');
+		value = value.slice(0, 128);
+		setValue('name', value);
+		if (value.length > 128) {
+			setError('description', {
+				type: 'custom',
+				message: 'Name: 0 of 1500 characters used',
+			});
+		} else {
+			clearErrors('name');
+		}
+		longName.current = value.length | 0;
 	};
+	const longName: any = useRef();
 	const longDescription: any = useRef();
 	const checkCollectionDesValid = (e: any) => {
 		let value = e.target.value;
@@ -135,8 +147,20 @@ const FormMint: React.FC<Props> = ({
 				{errors.file && <ErrorMessage>Image is required</ErrorMessage>}
 
 				<InputItem>
-					<InputTitle>
+					<InputTitle sx={{ display: 'flex' }}>
 						Name <Asterisk />
+						<Typography
+							sx={{
+								marginLeft: '10px',
+								color: '#c4c4c4',
+								fontSize: '12px',
+								fontWeight: 'normal',
+							}}
+						>
+							{longName?.current
+								? `${longName?.current} of 128 characters used`
+								: '0 of 1500 characters used'}
+						</Typography>
 					</InputTitle>
 					<input
 						type="text"

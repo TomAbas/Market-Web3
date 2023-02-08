@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { nftItem } from 'models/item';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Stack, Typography, Skeleton, CircularProgress } from '@mui/material';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { ItemImage, FeatureWrapper } from 'components/Marketplace/styled';
@@ -73,6 +73,8 @@ const ItemInfo: React.FC<Props> = ({
 	statusWithdraw,
 	itemPrice,
 }) => {
+	const [show, setShow] = useState(false);
+	const desRef: any = useRef();
 	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
 	const { likeItem, checkIsLike } = useInteraction();
 	const navigate = useNavigate();
@@ -80,6 +82,10 @@ const ItemInfo: React.FC<Props> = ({
 		// console.log(name, creater);
 		navigate(`/collection-detail/${item?.collectionId}`);
 	};
+
+	useEffect(() => {
+		console.log(desRef.current?.offsetHeight);
+	}, [show]);
 	return (
 		<>
 			{' '}
@@ -104,7 +110,7 @@ const ItemInfo: React.FC<Props> = ({
 				</>
 			) : (
 				<>
-					<ItemImage sx={{ width: '50%', paddingTop: '50%' }}>
+					<ItemImage sx={{ width: '50%', paddingTop: '50%', maxWidth: '672px' }}>
 						<Box className="main-img">
 							<MediaDisplayCard
 								media={item!.itemMedia}
@@ -115,11 +121,11 @@ const ItemInfo: React.FC<Props> = ({
 					</ItemImage>
 					<Stack
 						gap="16px"
-						sx={{ width: '50%' }}
+						sx={{ width: '50%', height: '750px' }}
 						direction="row"
 						spacing={{ xs: 1, sm: 2, md: 4 }}
 					>
-						<Stack gap="16px" sx={{ flex: '1' }}>
+						<Stack gap="16px" sx={{ flex: '1', overflow: 'hidden' }}>
 							{' '}
 							<Typography
 								variant="h6"
@@ -132,7 +138,31 @@ const ItemInfo: React.FC<Props> = ({
 							<Typography variant="h4" fontWeight={500}>
 								{item?.itemName}
 							</Typography>
-							<Typography variant="body1">{item?.description}</Typography>
+							<Typography
+								variant="body1"
+								ref={desRef}
+								sx={{
+									transition: 'max-height ease 0.5s',
+									whiteSpace: `${show ? 'unset' : 'nowrap'}`,
+									textAlign: ` ${
+										desRef.current?.offsetHeight > 150 ? 'center' : 'justify'
+									}`,
+									padding: '0px 24px',
+									overflow: 'hidden',
+									textOverflow: 'ellipsis',
+									maxHeight: `${show ? '500px' : '151px'}`,
+									height: `${show ? 'auto' : '150px'}`,
+								}}
+								onClick={() => {
+									if (desRef.current?.offsetHeight < 150) {
+										return;
+									}
+									console.log(desRef.current?.offsetHeight);
+									setShow(!show);
+								}}
+							>
+								{item?.description}
+							</Typography>
 							{item?.status === 1 && (
 								<Typography variant="body1">
 									Sell Quantity : {itemResource?.amount}

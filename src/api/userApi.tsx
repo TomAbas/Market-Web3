@@ -35,6 +35,10 @@ function getTopTradeUsers(chainId: string, numberDay: string): Promise<Response<
 	const url = baseURL + `/top-trader/chainId/${chainId}/?request=${numberDay}`;
 	return axiosClient.get(url).then((res) => res.data);
 }
+function getListItemF(userAddress: string): Promise<Response<any>> {
+	const url = baseURLINTERACTION + `/userAddress/${userAddress}`;
+	return axiosClient.get(url).then((res) => res.data);
+}
 export {
 	updateUser,
 	loginUser,
@@ -42,4 +46,5 @@ export {
 	getLikesStatusOfItem,
 	putLikesToItem,
 	getTopTradeUsers,
+	getListItemF,
 };
