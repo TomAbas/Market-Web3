@@ -159,7 +159,7 @@ const FormMint: React.FC<Props> = ({
 						>
 							{longName?.current
 								? `${longName?.current} of 128 characters used`
-								: '0 of 1500 characters used'}
+								: '0 of 128 characters used'}
 						</Typography>
 					</InputTitle>
 					<input

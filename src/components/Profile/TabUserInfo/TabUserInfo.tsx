@@ -12,6 +12,7 @@ import AssetTab from './AssetTab/AssetTab';
 import FavoriteTab from './Favorite/FavoriteTab';
 import TabCommon from 'customComponents/customTabs/TabCommon/TabCommon';
 import { nftItem } from 'models/item';
+import ActivityTab from './ActivityTab/ActivityTab';
 
 interface Props {
 	items: nftItem[];
@@ -27,14 +28,14 @@ const TabUserInfo: React.FC<Props> = ({ items, itemsF, isLoading }) => {
 				iconSelected: <img src={iconAssetBlue} alt="asset icon" width={20} height={20} />,
 				isShow: true,
 			},
-			// {
-			// 	title: 'History',
-			// 	icon: <img src={iconHistoryBlack} alt="history icon" width={20} height={20} />,
-			// 	iconSelected: (
-			// 		<img src={iconHistoryBlue} alt="history icon" width={20} height={20} />
-			// 	),
-			// 	isShow: true,
-			// },
+			{
+				title: 'History',
+				icon: <img src={iconHistoryBlack} alt="history icon" width={20} height={20} />,
+				iconSelected: (
+					<img src={iconHistoryBlue} alt="history icon" width={20} height={20} />
+				),
+				isShow: true,
+			},
 			// {
 			// 	title: 'Offer',
 			// 	icon: <img src={iconBiddingBlack} alt="bidding icon" width={24} height={24} />,
@@ -57,7 +58,7 @@ const TabUserInfo: React.FC<Props> = ({ items, itemsF, isLoading }) => {
 				Section: <AssetTab items={items} isLoading={isLoading} />,
 				isShow: true,
 			},
-			// { Section: <ActivityTab />, isShow: true },
+			{ Section: <ActivityTab />, isShow: true },
 			// {
 			// 	Section: (
 			// 		<OffersTab

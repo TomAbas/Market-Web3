@@ -5,35 +5,20 @@ import { useNavigate } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DropdownMenuLink } from 'components/Header/styled';
 import { DropdownMenu } from './styled';
-import IconCollection from '../../assets/images/planets/icon-collection-help.svg';
-import IconItem from '../../assets/images/planets/icon-nft-help.svg';
-import IconColectibles from 'assets/icons/NavBar/icon-colectibles.svg';
-import IconArt from 'assets/icons/NavBar/icon-art.svg';
 
 interface Props {
 	item: { id: number; name: string; link: string };
 	listCategoryMarketplace: Object[];
 	listRanking: Object[];
+	listCreate: Object[];
 }
-const listCreate = [
-	{
-		id: 1,
-		title: 'Collection',
-		target: '_self',
-		link: `/#/mint`,
-		isFilter: true,
-		icon: IconColectibles,
-	},
-	{
-		id: 2,
-		title: 'Item',
-		target: '_self',
-		link: `/#/mint?query=2`,
-		isFilter: true,
-		icon: IconArt,
-	},
-];
-const NavBarMobile: React.FC<Props> = ({ item, listCategoryMarketplace, listRanking }) => {
+
+const NavBarMobile: React.FC<Props> = ({
+	item,
+	listCategoryMarketplace,
+	listRanking,
+	listCreate,
+}) => {
 	const [active, setActive] = useState(false);
 	const navigate = useNavigate();
 	function handleOpen() {

@@ -47,7 +47,7 @@ const TabItemDetail: React.FC<Props> = ({ userAmountOfItem, item }) => {
 				isShow: true,
 			},
 			{
-				Section: <ActivityTab item={item} />,
+				Section: <ActivityTab />,
 				isShow: true,
 			},
 			{

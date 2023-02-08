@@ -14,6 +14,8 @@ import IconTradingCards from 'assets/icons/NavBar/icon-trading.svg';
 import IconEsports from 'assets/icons/NavBar/icon-esports.svg';
 import IconRankings from 'assets/icons/icon-rankings.svg';
 import IconTopTrader from 'assets/icons/icon-top-trader.svg';
+import IconCreateItem from 'assets/icons/item-icon.svg';
+import IconCreateCollection from 'assets/icons/collection-icon.svg';
 import IconEvent from 'assets/icons/NavBar/icon-event.svg';
 import IconDrops from 'assets/icons/NavBar/icon-drops.svg';
 import IconXmas from 'assets/icons/NavBar/icon-xmas.svg';
@@ -166,6 +168,25 @@ const listNav = [
 		id: 3,
 		name: 'Create',
 		link: '/#/mint',
+	},
+];
+
+const listCreate = [
+	{
+		id: 1,
+		title: 'Collection',
+		target: '_self',
+		link: `/#/mint?query=1`,
+		isFilter: true,
+		icon: IconCreateCollection,
+	},
+	{
+		id: 2,
+		title: 'Item',
+		target: '_self',
+		link: `/#/mint?query=2`,
+		isFilter: true,
+		icon: IconCreateItem,
 	},
 ];
 const Header: React.FC = () => {
@@ -502,7 +523,7 @@ const Header: React.FC = () => {
 									<NavigationItemBigScreen sx={{ width: '165px' }}>
 										<NavLinkBigScreen
 											className="navLink"
-											href={'/#/mint'}
+											href={`/#/mint`}
 											target="_self"
 											// onClick={(e: any) => {
 											// 	e.preventDefault();
@@ -516,6 +537,45 @@ const Header: React.FC = () => {
 												Create
 											</Typography>
 										</NavLinkBigScreen>
+
+										<DropdownMenu
+											className="dropdownMenu"
+											sx={{ minWidth: '165px' }}
+										>
+											<Stack>
+												{listCreate.map((category: any, index: number) => (
+													<DropdownMenuLink
+														href={category.link}
+														key={index}
+													>
+														<Stack direction="row" alignItems="center">
+															<Box width="30px">
+																<img
+																	style={{
+																		width: '100%',
+																		height: '100%',
+																		boxShadow:
+																			'2px 2px 2px 0 rgba(0,0,0,0.2)',
+																		borderRadius: '50%',
+																	}}
+																	src={category.icon}
+																	alt={category.title}
+																/>
+															</Box>
+															<Typography
+																variant="body2"
+																sx={{ padding: '0 0 0 8px' }}
+																textAlign="center"
+																noWrap
+																fontStyle="italic"
+															>
+																{category.title}
+															</Typography>
+														</Stack>
+													</DropdownMenuLink>
+												))}
+											</Stack>
+										</DropdownMenu>
 									</NavigationItemBigScreen>
 								</NavigationBarBigScreen>
 							) : null}
@@ -734,6 +794,7 @@ const Header: React.FC = () => {
 																listCategoryMarketplace
 															}
 															listRanking={listRanking}
+															listCreate={listCreate}
 														/>
 													))}
 												</DropDownContent>

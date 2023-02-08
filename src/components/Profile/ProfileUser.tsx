@@ -174,8 +174,8 @@ const ProfileUser = () => {
 						)}
 					</Box>
 				</Box>
-				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>
-					<Box sx={{ width: '100%' }}>
+				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto' }}>
+					<Box sx={{ width: '100%', textAlign: 'center' }}>
 						<Typography variant="h4" fontWeight="500">
 							{infoUser?.username}
 						</Typography>

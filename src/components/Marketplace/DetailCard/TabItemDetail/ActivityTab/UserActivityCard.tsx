@@ -16,7 +16,6 @@ interface Props {
 const UserActivityCard: React.FC<Props> = ({ itemHistory }) => {
 	const userInfo = useAppSelector(selectUser);
 	function openTXHonline() {
-		console.log('123');
 		if (Number(itemHistory.itemInfo.chainId) === 2) {
 			window.open(`https://testnet.aptoscan.com/version/${itemHistory.txHash}`, '_blank');
 		} else {
@@ -34,7 +33,7 @@ const UserActivityCard: React.FC<Props> = ({ itemHistory }) => {
 							sx={{ width: '40px', height: '40px' }}
 						/>
 
-						<Box sx={{ ml: 2 }}>
+						<Box sx={{ ml: 2, textAlign: 'unset' }}>
 							<Box>
 								<TypeEvent
 									itemHistory={itemHistory}
