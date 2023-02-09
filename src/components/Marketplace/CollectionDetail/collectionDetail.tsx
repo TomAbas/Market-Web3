@@ -158,9 +158,7 @@ const CollectionDetail = () => {
 								whiteSpace: `${show ? 'unset' : 'nowrap'}`,
 								maxHeight: `${show ? '500px' : '49px'}`,
 								height: `${show ? 'auto' : '49px'}`,
-								textAlign: ` ${
-									desRef.current?.offsetHeight > 50 ? 'justify' : 'center'
-								}`,
+								textAlign: ` ${show ? 'center' : 'center'}`,
 								overflow: 'hidden',
 								textOverflow: 'ellipsis',
 							}}

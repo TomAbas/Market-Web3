@@ -162,6 +162,7 @@ export default function DetailCard() {
 			{item?.status === 1 ? (
 				<ModalBuy
 					title="Buy Item"
+					itemPrice={itemPrice}
 					openState={openModalBuy}
 					closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
 					funcBuyNft={claimOffer}

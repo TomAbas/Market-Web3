@@ -223,9 +223,7 @@ const MyCollectionDetail = () => {
 							margin: '16px auto',
 							width: '100%',
 							whiteSpace: `${show ? 'unset' : 'nowrap'}`,
-							textAlign: ` ${
-								desRef.current?.offsetHeight > 50 ? 'justify' : 'center'
-							}`,
+							textAlign: ` ${show ? 'center' : 'center'}`,
 							overflow: 'hidden',
 							textOverflow: 'ellipsis',
 							maxHeight: `${show ? '500px' : '49px'}`,
