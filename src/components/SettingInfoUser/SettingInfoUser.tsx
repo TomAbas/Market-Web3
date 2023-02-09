@@ -79,6 +79,16 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 	});
 	const onSubmit = async (data: IFormEditProfileInputs) => {
 		if (!infoUser) return;
+		let newName = data.username.trim();
+		if (newName.length === 0) {
+			setError('username', {
+				type: 'custom',
+				message: 'Name: 0 of 128 characters used',
+			});
+			longName.current = newName.length;
+			setValue('username', newName);
+			return;
+		}
 		const avatar: any = data.avatar;
 		const background: any = data.background;
 		let avatarURL: string = '';
@@ -109,17 +119,6 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 				backgroundURL = res.data.data.result;
 			}
 
-			// const executeAfterUpdateUser = (globalStateNewest: RootState) => {
-			// 	const { user } = globalStateNewest;
-
-			// 	if (user.isSuccess) {
-			// 		toast.success('Update profile success!');
-			// 		setIsOpenModalEditProfile(false);
-			// 	} else {
-			// 		toast.error(user.errorMessage);
-			// 	}
-			// };
-
 			const newData: User = {
 				...data,
 				avatar: avatarURL,
@@ -131,7 +130,6 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 			updateUser(newData);
 			openEditModal();
 			toast.success('Successful update info');
-			// dispatch(updateUser(newData, executeAfterUpdateUser));
 		} catch (error: any) {
 			console.log(error);
 			toast.error(error.message);

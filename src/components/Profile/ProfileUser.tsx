@@ -38,7 +38,6 @@ const ProfileUser = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const { likeItem, checkIsLike } = useInteraction();
 	const trigger = useAppSelector(selectTrigger);
-	console.log(bioRef.current?.offsetHeight);
 	const handleClickAway = () => {
 		setViewFull(false);
 	};
@@ -212,7 +211,7 @@ const ProfileUser = () => {
 							mt={2}
 							ref={bioRef}
 							sx={{
-								// transition: 'all ease-in-out 12s',
+								transition: 'max-height 0.5s ease-in-out ',
 								margin: '16px auto',
 								padding: '0px 24px',
 								width: '100%',
@@ -222,10 +221,11 @@ const ProfileUser = () => {
 								}`,
 								overflow: 'hidden',
 								textOverflow: 'ellipsis',
-								height: `${show ? 'auto' : '50px'}`,
+								maxHeight: `${show ? '500px' : '49px'}`,
+								height: `${show ? 'auto' : '49px'}`,
 							}}
 							onClick={() => {
-								if (bioRef.current?.offsetHeight < 50) {
+								if (bioRef.current?.offsetHeight < 48) {
 									return;
 								}
 								setShow(!show);
@@ -235,7 +235,12 @@ const ProfileUser = () => {
 						</Typography>
 					</Box>
 					<Box py={4}>
-						<TabUserInfo items={items} itemsF={itemsF} isLoading={isLoading} />
+						<TabUserInfo
+							items={items}
+							itemsF={itemsF}
+							isLoading={isLoading}
+							infoUser={infoUser}
+						/>
 					</Box>
 				</Box>
 			</Box>
