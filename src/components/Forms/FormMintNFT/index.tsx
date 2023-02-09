@@ -38,6 +38,16 @@ const FormMintNft: React.FC<Props> = ({
 		clearErrors('file');
 	};
 	const onSubmit = handleSubmit((data) => {
+		let newName = data.name.trim();
+		if (newName.length === 0) {
+			setError('name', {
+				type: 'custom',
+				message: 'Name: 0 of 128 characters used',
+			});
+			longName.current = newName.length;
+			setValue('name', newName);
+			return;
+		}
 		updateFormInput(data);
 		if (
 			!errors.file &&

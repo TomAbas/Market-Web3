@@ -151,22 +151,22 @@ const CollectionDetail = () => {
 						</Stack>
 						<Typography
 							sx={{
-								transition: 'max-height ease 0.5s',
+								transition: 'max-height 0.5s ease ',
 								margin: '16px auto',
 								padding: '0px 24px',
 								width: '100%',
 								whiteSpace: `${show ? 'unset' : 'nowrap'}`,
+								maxHeight: `${show ? '500px' : '49px'}`,
+								height: `${show ? 'auto' : '49px'}`,
 								textAlign: ` ${
-									desRef.current?.offsetHeight > 50 ? 'center' : 'justify'
+									desRef.current?.offsetHeight > 50 ? 'justify' : 'center'
 								}`,
 								overflow: 'hidden',
 								textOverflow: 'ellipsis',
-								maxHeight: `${show ? '500px' : '51px'}`,
-								height: `${show ? 'auto' : '50px'}`,
 							}}
 							ref={desRef}
 							onClick={() => {
-								if (desRef.current?.offsetHeight < 50) {
+								if (desRef.current?.offsetHeight < 48) {
 									return;
 								}
 								console.log(desRef.current?.offsetHeight);

@@ -11,6 +11,7 @@ import AutoCompleteCustom from '../../CustomField/AutoCompleteCustom';
 import { listCategory, Category } from '../../../constants/category.constant';
 import { OptionSelectCustom } from '../../../models/common';
 import { TextArea } from 'customComponents/FieldTextArea/styled';
+import { toast } from 'react-toastify';
 
 interface Props {
 	base64image: any;
@@ -44,6 +45,16 @@ const FormMint: React.FC<Props> = ({
 		OptionSelectCustom<string> | null | undefined
 	>();
 	const onSubmit = handleSubmit((data) => {
+		let newName = data.name.trim();
+		if (newName.length === 0) {
+			setError('name', {
+				type: 'custom',
+				message: 'Name: 0 of 128 characters used',
+			});
+			longName.current = newName.length;
+			setValue('name', newName);
+			return;
+		}
 		updateFormInput(data);
 		if (!errors.file && !errors.description && !errors.name) {
 			handleOpenModalBuy();
@@ -64,7 +75,7 @@ const FormMint: React.FC<Props> = ({
 		value = value.slice(0, 128);
 		setValue('name', value);
 		if (value.length > 128) {
-			setError('description', {
+			setError('name', {
 				type: 'custom',
 				message: 'Name: 0 of 1500 characters used',
 			});

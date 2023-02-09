@@ -145,16 +145,16 @@ const ItemInfo: React.FC<Props> = ({
 									transition: 'max-height ease 0.5s',
 									whiteSpace: `${show ? 'unset' : 'nowrap'}`,
 									textAlign: ` ${
-										desRef.current?.offsetHeight > 150 ? 'center' : 'justify'
+										desRef.current?.offsetHeight > 150 ? 'justify' : 'center'
 									}`,
 									padding: '0px 24px',
 									overflow: 'hidden',
 									textOverflow: 'ellipsis',
-									maxHeight: `${show ? '500px' : '151px'}`,
-									height: `${show ? 'auto' : '150px'}`,
+									maxHeight: `${show ? '500px' : '149px'}`,
+									height: `${show ? 'auto' : '149px'}`,
 								}}
 								onClick={() => {
-									if (desRef.current?.offsetHeight < 150) {
+									if (desRef.current?.offsetHeight < 148) {
 										return;
 									}
 									console.log(desRef.current?.offsetHeight);

@@ -18,8 +18,9 @@ interface Props {
 	items: nftItem[];
 	itemsF: nftItem[];
 	isLoading: boolean;
+	infoUser: any;
 }
-const TabUserInfo: React.FC<Props> = ({ items, itemsF, isLoading }) => {
+const TabUserInfo: React.FC<Props> = ({ items, itemsF, isLoading, infoUser }) => {
 	const tabsDetail = {
 		items: [
 			{
@@ -58,7 +59,7 @@ const TabUserInfo: React.FC<Props> = ({ items, itemsF, isLoading }) => {
 				Section: <AssetTab items={items} isLoading={isLoading} />,
 				isShow: true,
 			},
-			{ Section: <ActivityTab />, isShow: true },
+			{ Section: <ActivityTab infoUser={infoUser} />, isShow: true },
 			// {
 			// 	Section: (
 			// 		<OffersTab

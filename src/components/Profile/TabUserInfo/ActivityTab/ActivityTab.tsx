@@ -3,21 +3,21 @@ import InfiniteListActivity from 'components/Marketplace/DetailCard/TabItemDetai
 import { TabWrapperContainer } from 'components/Marketplace/DetailCard/TabItemDetail/ActivityTab/styled';
 import { itemHistory } from 'models/item';
 import React, { useEffect, useState } from 'react';
-import { useAppSelector } from 'redux/hooks';
-import { selectUser } from 'redux/slices/userInfo';
 
-const ActivityTab = () => {
-	const userAddress = useAppSelector(selectUser)?.userAddress;
+interface Props {
+	infoUser: any;
+}
+const ActivityTab: React.FC<Props> = ({ infoUser }) => {
 	const [listUserHistory, setListUserHistory] = useState<itemHistory[]>([]);
 
-	async function getUserHistoryFc(userAddress: string) {
-		setListUserHistory(await getUserHistory(userAddress).then((res: any) => res.data));
+	async function getUserHistoryFc() {
+		setListUserHistory(await getUserHistory(infoUser.userAddress).then((res: any) => res.data));
 	}
 	useEffect(() => {
-		if (userAddress) {
-			getUserHistoryFc(userAddress);
+		if (infoUser) {
+			getUserHistoryFc();
 		}
-	}, [userAddress]);
+	}, [infoUser]);
 	return (
 		<TabWrapperContainer>
 			<InfiniteListActivity
