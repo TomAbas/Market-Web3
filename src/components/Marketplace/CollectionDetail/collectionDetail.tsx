@@ -1,20 +1,28 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, Grid, Stack, Typography, Skeleton } from '@mui/material';
-import { useWallet } from '@manahippo/aptos-wallet-adapter';
+import { Box, Grid, Stack, Typography, Skeleton, Tooltip } from '@mui/material';
 import CardNFT from 'components/Marketplace/CardNFT';
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { useTokens } from '../../../hooks/useTokens';
-import { getListItemResource } from '../../../utils/dataResource';
-import banner from '../../../assets/banner.png';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import { TwitterShareButton } from 'react-share';
 import aptos from '../../../assets/images/card/aptos.jpg';
+import HeartBlack from 'assets/icons/icon-heart-black.svg';
+import AddIcon from '@mui/icons-material/Add';
+import IconReload from 'assets/icons/icon-reload.svg';
+import Share from 'assets/icons/share-black.webp';
 import { useSearchParams, useOutletContext } from 'react-router-dom';
-import { getCollectionData } from '../../../service/aptos.service';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import useInteraction from 'hooks/useInteraction';
 import { getItemOfCollection } from 'api/collectionApi';
 import { useAppSelector } from 'redux/hooks';
 import { selectTrigger } from 'redux/slices/nftFilter';
+import { displayAddress } from 'utils/formatDisplay';
+import { DetailCollectionStatistic } from './DetailStatistic';
+import { FeatureWrapper } from '../styled';
+import FilterPrice from '../FilterItem/FilterPrice';
+import FilterStatus from '../FilterItem/FilterStatus/FilterStatus';
+import { InputItem } from 'components/Mint/styled';
+import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
+import { RELATED_URLS } from 'constants/index';
 const CollectionDetail = () => {
 	const desRef: any = useRef();
 	const [show, setShow] = useState(false);
@@ -26,8 +34,10 @@ const CollectionDetail = () => {
 	const [collectionInfo, setCollectionInfo] = useState<any>('');
 	const [loadingCollectionImg, setLoadingCollectionImg] = useState(true);
 	const triggerFetchNft = useAppSelector(selectTrigger);
+	const navigate = useNavigate();
 	async function fetchCollectionItems() {
 		let collection = await getItemOfCollection(collectionId!).then((res: any) => res.data);
+		console.log(collection);
 		setCollectionInfo(collection);
 		setLoadingCollectionImg(false);
 	}
@@ -140,15 +150,16 @@ const CollectionDetail = () => {
 							}}
 						>
 							<img src={aptos} alt="aptos" />
-							<Box>
-								{collectionInfo.userAddress?.slice(0, 6) +
-									'...' +
-									collectionInfo.userAddress?.slice(
-										collectionInfo.userAddress?.length - 4,
-										collectionInfo.userAddress?.length
-									)}
-							</Box>
+							<Box>{displayAddress(collectionInfo?.userAddress)}</Box>
 						</Stack>
+						<Box sx={{ width: '500px', mx: 'auto', mt: 2 }}>
+							<DetailCollectionStatistic
+								numberItems={collectionInfo?.listItem?.length}
+								numberOwners={1}
+								floorPrice={0}
+								volumeTrades={0}
+							/>
+						</Box>
 						<Typography
 							sx={{
 								transition: 'max-height ease 0.5s',
@@ -169,12 +180,82 @@ const CollectionDetail = () => {
 								if (desRef.current?.offsetHeight < 50) {
 									return;
 								}
-								console.log(desRef.current?.offsetHeight);
 								setShow(!show);
 							}}
 						>
 							{collectionInfo.description}
 						</Typography>
+					</Box>
+					<Stack
+						direction="row"
+						alignItems="stretch"
+						justifyContent="center"
+						spacing={2}
+						sx={{ mt: 4, mx: 'auto' }}
+					>
+						<FeatureWrapper sx={{ padding: '14px 14px' }}>
+							<img
+								src={HeartBlack}
+								alt="icon heart"
+								style={{ width: '20px', height: '20px' }}
+							/>
+						</FeatureWrapper>
+						<TwitterShareButton
+							url={`${RELATED_URLS.MetaSpacecyHomePage}/#/collection-detail/${collectionInfo?._id}`}
+							title={`Look what I found! Collection ${collectionInfo?.collectionName}`}
+							// hashtags={['Music', 'Game']}
+							via="Metaspacecy"
+							style={{ textAlign: 'left' }}
+						>
+							<FeatureWrapper sx={{ padding: '14px 15px' }}>
+								<img src={Share} alt="icon share" style={{ height: '20px' }} />
+							</FeatureWrapper>
+						</TwitterShareButton>
+						<FeatureWrapper sx={{ padding: '14px 14px' }}>
+							<img
+								src={IconReload}
+								alt="icon heart"
+								style={{ width: '20px', height: '20px' }}
+							/>
+						</FeatureWrapper>
+					</Stack>
+					<Box sx={{ display: 'flex', width: 'auto', justifyContent: 'space-between' }}>
+						<Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
+							<FilterPrice />
+							<FilterStatus />
+						</Box>
+						<Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
+							<InputItem sx={{ marginTop: '0' }}>
+								<input
+									type="text"
+									placeholder="Search name ..."
+									// {...register('name', { required: true })}
+									// onChange={checkCollectionNameValid}
+								/>
+							</InputItem>
+							<Tooltip
+								title="Add Item"
+								placement="top"
+								arrow
+								sx={{ marginLeft: 'auto' }}
+							>
+								<Box>
+									<ButtonWhite
+										sx={{
+											py: '10px',
+											minWidth: '46px',
+											mb: 0,
+											background: '#fff',
+											border: '1px solid #E7E8EC',
+											px: 0,
+										}}
+										onClick={() => navigate(`/mint?query=2`)}
+									>
+										<AddIcon />
+									</ButtonWhite>
+								</Box>
+							</Tooltip>
+						</Box>
 					</Box>
 					<Box py={4}>
 						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>

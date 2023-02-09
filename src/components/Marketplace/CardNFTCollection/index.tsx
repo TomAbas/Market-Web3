@@ -77,7 +77,7 @@ export default function CardNFTCollection({
 					? 'Successfully bought NFT item'
 					: statusBuyNft.isError
 					? 'Try again'
-					: '123'
+					: ''
 			}`,
 		},
 	];

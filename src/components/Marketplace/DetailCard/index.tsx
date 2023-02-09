@@ -180,6 +180,7 @@ export default function DetailCard() {
 					statusList={statusList}
 					userAmountOfItem={userAmountOfItem}
 					handleValidateAmount={handleValidateAmount}
+					royaltyFee={item?.royalties.toString()!}
 				/>
 			)}
 		</>
