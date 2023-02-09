@@ -5,6 +5,7 @@ import { selectUser } from 'redux/slices/userInfo';
 import { getLikesStatusOfItem as getLikesStatusOfItemAPI, putLikesToItem } from 'api/userApi';
 import { toast } from 'react-toastify';
 import { handleTrigger } from 'redux/slices/nftFilter';
+import { nftItem } from 'models/item';
 
 const useInteraction = () => {
 	const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ const useInteraction = () => {
 				let arrLikesItem = await getLikesStatusOfItemAPI(userInfo?.userAddress).then(
 					(res) => res.data.data
 				);
+				arrLikesItem = arrLikesItem.map((item: nftItem) => item._id);
 				setItemLiked(arrLikesItem);
 			} catch (error) {
 				toast.error("Can't get like status");

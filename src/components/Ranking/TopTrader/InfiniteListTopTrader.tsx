@@ -1,6 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { Fragment, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { Avatar, Box, Grid, styled, Typography, useTheme, Skeleton } from '@mui/material';
+import {
+	Avatar,
+	Box,
+	Grid,
+	styled,
+	Typography,
+	useTheme,
+	Skeleton,
+	Tooltip,
+	TooltipProps,
+	tooltipClasses,
+} from '@mui/material';
+// import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 //components
 //models
 import { CollectionTop as Collection } from 'models/collection';
@@ -15,7 +27,12 @@ import { CollectionName, FlexBox, TableScrollable, TableWrapper } from '../style
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { PATH_COLLECTION } from 'routes/path';
-import { displayAddress, displayVolume } from 'utils/formatDisplay';
+import {
+	displayAddress,
+	displayVolume,
+	displayUserName,
+	displayUserFullName,
+} from 'utils/formatDisplay';
 // icon
 import checkicon from 'assets/icons/icon-check.svg';
 
@@ -26,7 +43,13 @@ export interface InfiniteListTrendingCollectionProps {
 	fetchNextPage: Function;
 	allowLoadMore: boolean;
 }
-
+export const NoMaxWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+	<Tooltip {...props} classes={{ popper: className }} />
+))({
+	[`& .${tooltipClasses.tooltip}`]: {
+		maxWidth: 'none',
+	},
+});
 export default function InfiniteListTopTrader({
 	listTopTrader,
 	isLoading,
@@ -37,7 +60,7 @@ export default function InfiniteListTopTrader({
 	const listRef = useRef<HTMLDivElement>(null);
 	const navigate = useNavigate();
 	const { innerWidth, innerHeight } = useContext(SizeContext);
-
+	const [hover, setHover] = useState(false);
 	//state
 	const renderPercent = (percent: number) => (
 		<Typography
@@ -148,8 +171,22 @@ export default function InfiniteListTopTrader({
 														</Box>
 													</Box>
 
-													<Typography fontWeight="500">
-														{item.user.username}
+													<Typography
+														onMouseEnter={() => setHover(true)}
+														onMouseLeave={() => setHover(false)}
+														fontWeight="500"
+													>
+														<NoMaxWidthTooltip
+															title={displayUserFullName(
+																item.user.username
+															)}
+														>
+															<Typography fontWeight="500">
+																{displayUserName(
+																	item.user.username
+																)}
+															</Typography>
+														</NoMaxWidthTooltip>
 													</Typography>
 												</CollectionName>
 											</FlexBox>

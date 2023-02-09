@@ -43,6 +43,7 @@ interface Props {
 }
 const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) => {
 	const dispatch = useAppDispatch();
+	const longName: any = useRef();
 	const longDescription: any = useRef();
 	// useState
 	const [avatar, setAvatar] = useState<any>(null);
@@ -172,19 +173,19 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 	);
 	//end drop images
 	//function validate
-	const checkBioDesValid = (e: any) => {
+	const checkBioDesValid = (e: any, long: number, name: any, ref: any) => {
 		let value = e.target.value;
-		value = value.slice(0, 1500);
-		setValue('bio', value);
-		if (value.length > 1500) {
-			setError('bio', {
+		value = value.slice(0, long);
+		setValue(name, value);
+		if (value.length > long) {
+			setError(name, {
 				type: 'custom',
 				message: 'bio: 0 of 1500 characters used',
 			});
 		} else {
-			clearErrors('bio');
+			clearErrors(name);
 		}
-		longDescription.current = value.length | 0;
+		ref.current = value.length | 0;
 	};
 	useEffect(() => {
 		if (infoUser) {
@@ -197,6 +198,7 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 			setAvatar(infoUser.avatar);
 			setBackground(infoUser.background);
 			longDescription.current = infoUser.bio.length;
+			longName.current = infoUser.username.length;
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [infoUser]);
@@ -271,11 +273,30 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 							</InputGroup>
 						</TopPart>
 						<InputGroup sx={{ marginTop: '20px' }}>
-							<Label htmlFor=" user-username">Username</Label>
+							<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+								{' '}
+								<Label htmlFor=" user-username">Username </Label>
+								<Typography
+									sx={{
+										marginLeft: '10px',
+										color: '#c4c4c4',
+										fontSize: '12px',
+										fontWeight: 'normal',
+									}}
+								>
+									{longName?.current
+										? `${longName?.current} of 128 characters used`
+										: '0 of 128 characters used'}
+								</Typography>
+							</Box>
+
 							<Input
 								id="user-username"
 								type="text"
 								{...register('username')}
+								onChange={(e) => {
+									checkBioDesValid(e, 128, 'username', longName);
+								}}
 								placeholder="Enter your username"
 							/>
 							{errors.username?.message && (
@@ -314,7 +335,9 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 
 							<Textarea
 								{...register('bio')}
-								onChange={checkBioDesValid}
+								onChange={(e) => {
+									checkBioDesValid(e, 1500, 'bio', longDescription);
+								}}
 								placeholder="Please write something about yourself"
 							/>
 

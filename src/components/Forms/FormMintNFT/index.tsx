@@ -53,22 +53,24 @@ const FormMintNft: React.FC<Props> = ({
 	});
 	// const [long, setLong] = useState();
 	const longDescription = useRef();
+	const longName: any = useRef();
 	const [collection, setCollection] = useState('');
-	const checkCollectionDesValid = (e: any) => {
+	const checkCollectionDesValid = (e: any, long: number, name: any, ref: any) => {
 		let value = e.target.value;
-		value = value.slice(0, 1500);
-		setValue('description', value);
-		longDescription.current = value.length;
+		value = value.slice(0, long);
+		setValue(name, value);
+		ref.current = value.length;
 		if (value.length > 1500) {
-			setValue('description', value.slice(0, 1499));
-			setError('description', {
+			setValue(name, value.slice(0, 1499));
+			setError(name, {
 				type: 'custom',
 				message: 'Description: 0 of 1500 characters used',
 			});
 		} else {
-			clearErrors('description');
+			clearErrors(name);
 		}
 	};
+
 	const checkAmountValid = (e: any, amount: number, label: any, message: string) => {
 		if (parseInt(e.target.value) > amount) {
 			e.target.value = amount.toString();
@@ -158,13 +160,28 @@ const FormMintNft: React.FC<Props> = ({
 					</FormControl>
 				</InputItem>
 				<InputItem>
-					<InputTitle>
+					<InputTitle sx={{ display: 'flex' }}>
 						Item Name <Asterisk />
+						<Typography
+							sx={{
+								marginLeft: '10px',
+								color: '#c4c4c4',
+								fontSize: '12px',
+								fontWeight: 'normal',
+							}}
+						>
+							{longName?.current
+								? `${longName?.current} of 128 characters used`
+								: '0 of 128 characters used'}
+						</Typography>
 					</InputTitle>
 					<input
 						type="text"
 						placeholder="Example: Metaspacecy item"
 						{...register('name', { required: true })}
+						onChange={(e) => {
+							checkCollectionDesValid(e, 128, 'name', longName);
+						}}
 					/>
 					{errors.name && <ErrorMessage>Item name is required</ErrorMessage>}
 				</InputItem>
@@ -192,7 +209,9 @@ const FormMintNft: React.FC<Props> = ({
 						{...register('description', {
 							required: 'Item description is required',
 						})}
-						onChange={checkCollectionDesValid}
+						onChange={(e) => {
+							checkCollectionDesValid(e, 1500, 'description', longDescription);
+						}}
 					/>
 					{errors.description && (
 						<ErrorMessage>{errors.description?.message}</ErrorMessage>
