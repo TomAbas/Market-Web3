@@ -3,7 +3,7 @@ import { Box, ClickAwayListener, Grid, Stack, Typography, Skeleton } from '@mui/
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
 import CardNFTUser from 'components/Marketplace/CardNFTUser';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTokens } from '../../hooks/useTokens';
 import { getCollectionByUserAddress } from '../../api/collections/collectionApi';
@@ -14,13 +14,14 @@ import SkeletonCardNft from 'components/SkeletonCardNft';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectUser, toggleSettingModalA } from 'redux/slices/userInfo';
 const MyCollectionDetail = () => {
+	const desRef: any = useRef();
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	const [loadingCollectionImg, setLoadingCollectionImg] = useState(true);
 	const [loadingItem, setLoadingItem] = useState(true);
 	const search = useLocation().search;
 
 	//modalWallet
-
+	const [show, setShow] = useState(false);
 	const creator = decodeURIComponent(new URLSearchParams(search).get('creator') || '');
 	const collection = decodeURIComponent(new URLSearchParams(search).get('collection') || '');
 	const { innerWidth } = useSizeObersver();
@@ -216,7 +217,29 @@ const MyCollectionDetail = () => {
 							</Box>
 						</Stack>
 					</Box>
-					<Typography sx={{ maxWidth: '80%', marginX: 'auto', marginTop: '16px' }}>
+					<Typography
+						sx={{
+							transition: 'max-height ease 0.5s',
+							margin: '16px auto',
+							width: '100%',
+							whiteSpace: `${show ? 'unset' : 'nowrap'}`,
+							textAlign: ` ${
+								desRef.current?.offsetHeight > 50 ? 'center' : 'justify'
+							}`,
+							overflow: 'hidden',
+							textOverflow: 'ellipsis',
+							maxHeight: `${show ? '500px' : '51px'}`,
+							height: `${show ? 'auto' : '50px'}`,
+						}}
+						ref={desRef}
+						onClick={() => {
+							if (desRef.current?.offsetHeight < 50) {
+								return;
+							}
+							console.log(desRef.current?.offsetHeight);
+							setShow(!show);
+						}}
+					>
 						{collectionInfo?.description}
 					</Typography>
 					<Box py={4}>

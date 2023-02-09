@@ -1,26 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
 import { TabWrapper } from './styled';
 import UserActivityCard from './UserActivityCard';
-import { itemHistory, nftItem } from 'models/item';
-import { getItemHistory } from 'api/items/itemsApi';
-import { useParams } from 'react-router-dom';
+import { itemHistory } from 'models/item';
 
 interface Props {
-	item: nftItem;
+	listItemHistory: itemHistory[];
 }
-const InfiniteListActivity: React.FC<Props> = ({ item }) => {
-	const [listItemHistory, setListItemHistory] = useState<itemHistory[]>([]);
-	const { itemId } = useParams();
-	async function getItemHistoryFc(itemId: string) {
-		setListItemHistory(await getItemHistory(itemId).then((res: any) => res.data));
-	}
-	useEffect(() => {
-		if (itemId) {
-			getItemHistoryFc(itemId);
-		}
-	}, [itemId]);
-
+const InfiniteListActivity: React.FC<Props> = ({ listItemHistory }) => {
 	return (
 		<Box sx={{ width: '100%' }}>
 			<TabWrapper>

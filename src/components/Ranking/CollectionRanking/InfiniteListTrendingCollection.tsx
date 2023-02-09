@@ -3,7 +3,8 @@ import React, { Fragment, useCallback, useContext, useEffect, useRef, useState }
 import { Avatar, Box, Grid, styled, Typography, useTheme, Skeleton } from '@mui/material';
 //components
 //models
-import { CollectionTop as Collection } from 'models/collection';
+import { CollectionTop as Collection, Collection as CollectionModel } from 'models/collection';
+
 //context
 import { SizeContext } from 'contexts/SizeObserver';
 //mui
@@ -19,7 +20,8 @@ import { PATH_COLLECTION } from 'routes/path';
 
 // icon
 import checkicon from 'assets/icons/icon-check.svg';
-import { displayVolume } from 'utils/formatDisplay';
+import { displayVolume, displayUserFullName, displayUserName } from 'utils/formatDisplay';
+import { NoMaxWidthTooltip } from '../TopTrader/InfiniteListTopTrader';
 
 export interface InfiniteListTrendingCollectionProps {
 	listCollection: Collection[];
@@ -41,6 +43,8 @@ export default function InfiniteListTrendingCollection({
 	const listRef = useRef<HTMLDivElement>(null);
 	const navigate = useNavigate();
 	const { innerWidth, innerHeight } = useContext(SizeContext);
+
+	const [hover, setHover] = useState(false);
 
 	//state
 
@@ -179,8 +183,22 @@ export default function InfiniteListTrendingCollection({
 														</Box>
 													</Box>
 
-													<Typography fontWeight="500">
-														{collection.collectionName}
+													<Typography
+														onMouseEnter={() => setHover(true)}
+														onMouseLeave={() => setHover(false)}
+														fontWeight="500"
+													>
+														<NoMaxWidthTooltip
+															title={displayUserFullName(
+																collection.collectionName
+															)}
+														>
+															<Typography>
+																{displayUserName(
+																	collection.collectionName
+																)}
+															</Typography>
+														</NoMaxWidthTooltip>
 													</Typography>
 												</CollectionName>
 											</FlexBox>

@@ -11,12 +11,13 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectSettingModal, selectUser, toggleSettingModalA } from 'redux/slices/userInfo';
 import EditInfoUser from 'components/EditInfoUser/EditInfoUser';
 import { nftItem } from 'models/item';
-import { getUserInfo } from 'api/userApi';
+import { getListItemF, getUserInfo } from 'api/userApi';
 import { getUserItem } from 'api/items/itemsApi';
 import CardNFT from 'components/Marketplace/CardNFT';
 import useInteraction from 'hooks/useInteraction';
 import { selectTrigger } from 'redux/slices/nftFilter';
 import SkeletonCardNft from 'components/SkeletonCardNft';
+import TabUserInfo from './TabUserInfo/TabUserInfo';
 
 const ProfileUser = () => {
 	const bioRef: any = useRef();
@@ -32,6 +33,7 @@ const ProfileUser = () => {
 	let myInfo = useAppSelector(selectUser);
 	const [infoUser, setInfoUser] = useState<any>();
 	const [items, setItems] = useState<nftItem[]>([]);
+	const [itemsF, setItemsF] = useState<nftItem[]>([]);
 	const isSettingModal = useAppSelector(selectSettingModal);
 	const [isLoading, setIsLoading] = useState(true);
 	const { likeItem, checkIsLike } = useInteraction();
@@ -57,8 +59,12 @@ const ProfileUser = () => {
 	}
 	async function fetchItems(userAddress: string) {
 		let items = (await getUserItem('2', userAddress)).data;
+		await fetchItemsF(userAddress);
 		setItems(items);
 		setIsLoading(false);
+	}
+	async function fetchItemsF(userAddress: string) {
+		setItemsF((await getListItemF(userAddress)).data);
 	}
 	useEffect(() => {
 		if (address) {
@@ -168,8 +174,8 @@ const ProfileUser = () => {
 						)}
 					</Box>
 				</Box>
-				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto', textAlign: 'center' }}>
-					<Box sx={{ width: '100%' }}>
+				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto' }}>
+					<Box sx={{ width: '100%', textAlign: 'center' }}>
 						<Typography variant="h4" fontWeight="500">
 							{infoUser?.username}
 						</Typography>
@@ -208,7 +214,8 @@ const ProfileUser = () => {
 							sx={{
 								// transition: 'all ease-in-out 12s',
 								margin: '16px auto',
-								width: '50%',
+								padding: '0px 24px',
+								width: '100%',
 								whiteSpace: `${show ? 'unset' : 'nowrap'}`,
 								textAlign: ` ${
 									bioRef.current?.offsetHeight > 50 ? 'justify' : 'center'
@@ -228,29 +235,7 @@ const ProfileUser = () => {
 						</Typography>
 					</Box>
 					<Box py={4}>
-						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-							{isLoading ? (
-								<>
-									{new Array(4).fill(null).map((_, index) => (
-										<SkeletonCardNft key={index} />
-									))}
-								</>
-							) : (
-								<>
-									{items.map((item: nftItem, index: any) => (
-										<CardNFT
-											itemLiked={checkIsLike}
-											likeItem={likeItem}
-											offers={[]}
-											offer={item}
-											index={index}
-											key={index}
-											loadingOffers={false}
-										/>
-									))}
-								</>
-							)}
-						</Grid>
+						<TabUserInfo items={items} itemsF={itemsF} isLoading={isLoading} />
 					</Box>
 				</Box>
 			</Box>

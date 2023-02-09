@@ -14,6 +14,8 @@ import IconTradingCards from 'assets/icons/NavBar/icon-trading.svg';
 import IconEsports from 'assets/icons/NavBar/icon-esports.svg';
 import IconRankings from 'assets/icons/icon-rankings.svg';
 import IconTopTrader from 'assets/icons/icon-top-trader.svg';
+import IconCreateItem from 'assets/icons/item-icon.svg';
+import IconCreateCollection from 'assets/icons/collection-icon.svg';
 import IconEvent from 'assets/icons/NavBar/icon-event.svg';
 import IconDrops from 'assets/icons/NavBar/icon-drops.svg';
 import IconXmas from 'assets/icons/NavBar/icon-xmas.svg';
@@ -176,7 +178,7 @@ const listCreate = [
 		target: '_self',
 		link: `/#/mint?query=1`,
 		isFilter: true,
-		icon: IconColectibles,
+		icon: IconCreateCollection,
 	},
 	{
 		id: 2,
@@ -184,7 +186,7 @@ const listCreate = [
 		target: '_self',
 		link: `/#/mint?query=2`,
 		isFilter: true,
-		icon: IconArt,
+		icon: IconCreateItem,
 	},
 ];
 const Header: React.FC = () => {

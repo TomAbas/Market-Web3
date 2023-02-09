@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DropdownMenuLink } from 'components/Header/styled';
 import { DropdownMenu } from './styled';
-import IconCollection from '../../assets/images/planets/icon-collection-help.svg';
-import IconItem from '../../assets/images/planets/icon-nft-help.svg';
 
 interface Props {
 	item: { id: number; name: string; link: string };
