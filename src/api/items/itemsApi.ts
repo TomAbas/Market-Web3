@@ -21,5 +21,20 @@ function getItemHistory(itemId: string): Promise<Response<any>> {
 	const url = `/history/get-by-item/itemId/${itemId}`;
 	return ClientAxios.get(url).then((res) => res.data);
 }
-
-export { getAllItems, getOfferOfItem, getItemDetail, getUserItem, getItemHistory };
+function getItemCreate(userAddress: string): Promise<Response<any>> {
+	const url = `/item/get-item-by-created/${userAddress}`;
+	return ClientAxios.get(url).then((res) => res.data);
+}
+function getItemCollected(userAddress: string): Promise<Response<any>> {
+	const url = `/item/get-item-by-collected/${userAddress}`;
+	return ClientAxios.get(url).then((res) => res.data);
+}
+export {
+	getAllItems,
+	getOfferOfItem,
+	getItemDetail,
+	getUserItem,
+	getItemHistory,
+	getItemCreate,
+	getItemCollected,
+};

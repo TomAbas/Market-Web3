@@ -38,8 +38,9 @@ export interface filterNft {
 	tokenSymbol?: string;
 	minPrice: string;
 	maxPrice: string;
-	itemName?: string;
+	itemName: string;
 	owner?: string;
 	text?: string;
 	isFiltering: boolean;
+	statusRoyal: number[];
 }

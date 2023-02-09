@@ -11,6 +11,7 @@ import StepContent from '@mui/material/StepContent';
 import { CircularProgress } from '@mui/material';
 
 interface Props {
+	itemPrice?: number;
 	title: string;
 	steps: { label: string; description: string }[];
 	openState: boolean;
@@ -39,6 +40,7 @@ const ModalBuy: React.FC<Props> = ({
 	activeStep,
 	statusBuyNft,
 	steps,
+	itemPrice,
 }) => {
 	return (
 		<>
@@ -70,7 +72,12 @@ const ModalBuy: React.FC<Props> = ({
 									</StepLabel>
 									<StepContent>
 										<Typography>{step.description}</Typography>
-										<Box sx={{ mb: 2 }}>
+										{itemPrice && (
+											<Typography variant="body1">
+												Total : {itemPrice} APT
+											</Typography>
+										)}
+										<Box sx={{ my: 2 }}>
 											<div>
 												{statusBuyNft.isLoading ? (
 													<Button disabled={true} variant="contained">

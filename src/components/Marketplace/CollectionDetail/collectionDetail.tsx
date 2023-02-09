@@ -162,22 +162,20 @@ const CollectionDetail = () => {
 						</Box>
 						<Typography
 							sx={{
-								transition: 'max-height ease 0.5s',
+								transition: 'max-height 0.5s ease ',
 								margin: '16px auto',
 								padding: '0px 24px',
 								width: '100%',
 								whiteSpace: `${show ? 'unset' : 'nowrap'}`,
-								textAlign: ` ${
-									desRef.current?.offsetHeight > 50 ? 'center' : 'justify'
-								}`,
+								maxHeight: `${show ? '500px' : '49px'}`,
+								height: `${show ? 'auto' : '49px'}`,
+								textAlign: ` ${show ? 'center' : 'center'}`,
 								overflow: 'hidden',
 								textOverflow: 'ellipsis',
-								maxHeight: `${show ? '500px' : '51px'}`,
-								height: `${show ? 'auto' : '50px'}`,
 							}}
 							ref={desRef}
 							onClick={() => {
-								if (desRef.current?.offsetHeight < 50) {
+								if (desRef.current?.offsetHeight < 48) {
 									return;
 								}
 								setShow(!show);

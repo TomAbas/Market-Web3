@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Grid, Box, Tooltip } from '@mui/material';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import CardNFT from 'components/Marketplace/CardNFT';
@@ -10,70 +10,71 @@ import FilterCollection from 'components/Marketplace/FilterItem/FilterCollection
 import { InputItem } from 'components/Mint/styled';
 import AddIcon from '@mui/icons-material/Add';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
-
+import { useAppDispatch } from 'redux/hooks';
+import { setFilter } from 'redux/slices/nftFilter';
+import FilterRoyal from 'components/Marketplace/FilterItem/FilterRoyal/FilterRoyal';
+import { useSearchParams } from 'react-router-dom';
 interface Props {
 	items: nftItem[];
 	isLoading: boolean;
 }
 const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
+	const [searchParams] = useSearchParams();
+	const address = searchParams.get('address');
+	const dispatch = useAppDispatch();
 	const { likeItem, checkIsLike } = useInteraction();
+	const inputRef: any = useRef();
+	function filterNameItem() {
+		dispatch(setFilter({ itemName: inputRef.current.value.toLowerCase() }));
+	}
 	return (
 		<>
 			{' '}
-			<Box sx={{ display: 'flex', width: 'auto', justifyContent: 'space-between' }}>
+			<Box
+				sx={{
+					display: 'flex',
+					width: 'auto',
+					justifyContent: 'space-between',
+					padding: '0px 8px',
+				}}
+			>
 				<Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
 					<FilterPrice />
 					<FilterStatus />
 					<FilterCollection />
+					<FilterRoyal />
 				</Box>
 				<Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
 					<InputItem sx={{ marginTop: '0' }}>
 						<input
 							type="text"
 							placeholder="Search name ..."
-							// {...register('name', { required: true })}
-							// onChange={checkCollectionNameValid}
+							onChange={filterNameItem}
+							ref={inputRef}
 						/>
 					</InputItem>
-					<Tooltip title="Add Item" placement="top" arrow sx={{ marginLeft: 'auto' }}>
-						<Box>
-							<ButtonWhite
-								sx={{
-									py: '10px',
-									minWidth: '46px',
-									mb: 0,
-									background: '#fff',
-									border: '1px solid #E7E8EC',
-									px: 0,
-								}}
-								// onClick={() => navigate(`${PATH_ITEM.createItem}`)}
-							>
-								<AddIcon />
-							</ButtonWhite>
-						</Box>
-					</Tooltip>
+					{!address && (
+						<Tooltip title="Add Item" placement="top" arrow sx={{ marginLeft: 'auto' }}>
+							<Box>
+								<ButtonWhite
+									sx={{
+										py: '10px',
+										minWidth: '46px',
+										mb: 0,
+										background: '#fff',
+										border: '1px solid #E7E8EC',
+										px: 0,
+									}}
+									// onClick={() => navigate(`${PATH_ITEM.createItem}`)}
+								>
+									<AddIcon />
+								</ButtonWhite>
+							</Box>
+						</Tooltip>
+					)}
 				</Box>
 			</Box>
-			{/* <Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
-				<FilterPrice />
-				<FilterStatus />
-				<FilterCollection />
-
-				<InputItem sx={{ marginTop: '0', float: 'right', height: '46px' }}>
-					<input
-						type="text"
-						placeholder="Search name ..."
-						{...register('name', { required: true })}
-						onChange={checkCollectionNameValid}
-					/>
-					{errors.name && (
-						<ErrorMessage>
-							{errors.name.message ? errors.name.message : 'Name is required'}
-						</ErrorMessage>
-					)}
-				</InputItem>
-			</Box> */}
-			<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+			<Grid container maxWidth="1440px" mx="auto" spacing={1} mt={1}>
 				{isLoading ? (
 					<>
 						{new Array(4).fill(null).map((_, index) => (

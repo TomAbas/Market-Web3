@@ -219,17 +219,15 @@ const MyCollectionDetail = () => {
 					</Box>
 					<Typography
 						sx={{
-							transition: 'max-height ease 0.5s',
+							transition: 'max-height 0.5s ease ',
 							margin: '16px auto',
 							width: '100%',
 							whiteSpace: `${show ? 'unset' : 'nowrap'}`,
-							textAlign: ` ${
-								desRef.current?.offsetHeight > 50 ? 'center' : 'justify'
-							}`,
+							textAlign: ` ${show ? 'center' : 'center'}`,
 							overflow: 'hidden',
 							textOverflow: 'ellipsis',
-							maxHeight: `${show ? '500px' : '51px'}`,
-							height: `${show ? 'auto' : '50px'}`,
+							maxHeight: `${show ? '500px' : '49px'}`,
+							height: `${show ? 'auto' : '49px'}`,
 						}}
 						ref={desRef}
 						onClick={() => {

@@ -266,6 +266,7 @@ export default function CardNFT({
 
 			<ModalBuy
 				title="Buy Item"
+				itemPrice={itemPrice}
 				openState={openModalBuy}
 				closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
 				funcBuyNft={claimOffer}
