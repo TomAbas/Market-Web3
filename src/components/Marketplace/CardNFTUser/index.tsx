@@ -288,45 +288,6 @@ const CardNFTUser = ({
 													/>
 												</Box>
 											</Box>
-											<Box px={3} py={2}>
-												<Typography variant="body1" fontWeight={500} mb={1}>
-													Price
-												</Typography>
-												<Box
-													sx={{
-														input: {
-															border: '1.5px solid #e7e8ec',
-															padding: '10px 24px',
-															outline: 'none',
-															borderRadius: '10px',
-															fontSize: '18px',
-															fontStyle: 'italic',
-															width: '100%',
-														},
-													}}
-												>
-													<input
-														type="number"
-														// onInput={(e: any) =>
-														// 	(e.target.value = Math.abs(
-														// 		e.target.value
-														// 	))
-														// }
-														onChange={(e) => {
-															if (Number(e.target.value) < 0) {
-																let a = -Number(e.target.value);
-																setPrice(a.toString());
-															} else {
-																setPrice(e.target.value);
-															}
-														}}
-														value={price}
-														id="price"
-														placeholder="0"
-													/>
-												</Box>
-											</Box>
-
 											<Stack
 												direction="row"
 												pt={3}

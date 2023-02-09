@@ -18,6 +18,7 @@ import useInteraction from 'hooks/useInteraction';
 import { selectTrigger } from 'redux/slices/nftFilter';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import TabUserInfo from './TabUserInfo/TabUserInfo';
+import useFilterItem from 'hooks/useFilterItem';
 
 const ProfileUser = () => {
 	const bioRef: any = useRef();
@@ -33,10 +34,10 @@ const ProfileUser = () => {
 	let myInfo = useAppSelector(selectUser);
 	const [infoUser, setInfoUser] = useState<any>();
 	const [items, setItems] = useState<nftItem[]>([]);
+	const { itemsDisplay } = useFilterItem(items, infoUser);
 	const [itemsF, setItemsF] = useState<nftItem[]>([]);
 	const isSettingModal = useAppSelector(selectSettingModal);
 	const [isLoading, setIsLoading] = useState(true);
-	const { likeItem, checkIsLike } = useInteraction();
 	const trigger = useAppSelector(selectTrigger);
 	const handleClickAway = () => {
 		setViewFull(false);
@@ -215,17 +216,16 @@ const ProfileUser = () => {
 								margin: '16px auto',
 								padding: '0px 24px',
 								width: '100%',
-								whiteSpace: `${show ? 'unset' : 'nowrap'}`,
-								textAlign: ` ${
-									bioRef.current?.offsetHeight > 50 ? 'justify' : 'center'
-								}`,
-								overflow: 'hidden',
 								textOverflow: 'ellipsis',
+								wordWrap: 'break-word',
+								whiteSpace: `${show ? 'unset' : 'nowrap'}`,
 								maxHeight: `${show ? '500px' : '49px'}`,
 								height: `${show ? 'auto' : '49px'}`,
+								textAlign: ` ${show ? 'center' : 'center'}`,
+								overflow: 'hidden',
 							}}
 							onClick={() => {
-								if (bioRef.current?.offsetHeight < 48) {
+								if (bioRef.current?.offsetHeight < 45) {
 									return;
 								}
 								setShow(!show);
@@ -234,9 +234,9 @@ const ProfileUser = () => {
 							{infoUser?.bio}
 						</Typography>
 					</Box>
-					<Box py={4}>
+					<Box pb={4}>
 						<TabUserInfo
-							items={items}
+							items={itemsDisplay}
 							itemsF={itemsF}
 							isLoading={isLoading}
 							infoUser={infoUser}

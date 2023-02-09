@@ -17,11 +17,13 @@ const initialState: AllNftsState = {
 	errorMessage: '',
 	listNFTs: [],
 	filter: {
+		itemName: '',
 		minPrice: '',
 		maxPrice: '',
 		isFiltering: false,
 		status: [],
 		collectionId: [],
+		statusRoyal: [],
 	},
 	trigger: false,
 };

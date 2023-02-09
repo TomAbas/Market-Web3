@@ -30,7 +30,11 @@ const useInteraction = () => {
 				await putLikesToItem(userInfo.userAddress, itemId, state);
 				getLikesStatusOfItem();
 				dispatch(handleTrigger());
-				toast.success('Successful like an item!');
+				if (state === true) {
+					toast.success('Successful like an item!');
+				} else {
+					toast.success('Successful unlike an item!');
+				}
 			} catch (error) {
 				toast.error("Cant't like item");
 			}
