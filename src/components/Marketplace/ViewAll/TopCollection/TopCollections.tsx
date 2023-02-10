@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import CardTopCollection from '../../CardTopCollection/CardTopCollection';
 import SkeletonCollectionRankingList from 'components/SkeletonCardTopCollections/SkeletonCardTopCollections';
 import ErrorBoundary from 'components/SkeletonCardTopCollections/ErrorHandleComponents';
@@ -15,17 +15,20 @@ const TopCollections: React.FC<Props> = ({ filter }) => {
 		isLoading: true,
 	});
 	const [list, setList] = useState<any>({ list24Hours: [], list7Days: [], list30Days: [] });
+
+	let a: any[] = [1, 2, 3, 4, 5];
+
 	async function getTopCollections() {
 		let volume24Hours;
 		let volume7Days;
 		let volume30Days;
+		console.log('chay at homepage');
 		try {
 			await Promise.all([
 				(volume24Hours = await getTopCollectionsAPI('2', '12', '1', 'volume24Hour')),
 				(volume7Days = await getTopCollectionsAPI('2', '12', '1', 'volume7Days')),
 				(volume30Days = await getTopCollectionsAPI('2', '12', '1', 'volume30Days').then(
 					(res) => {
-						console.log(res);
 						return res;
 					}
 				)),
@@ -46,7 +49,6 @@ const TopCollections: React.FC<Props> = ({ filter }) => {
 				isError: true,
 				isLoading: false,
 			});
-			console.log(error);
 		}
 	}
 	useEffect(() => {

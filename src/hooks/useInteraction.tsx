@@ -11,6 +11,7 @@ const useInteraction = () => {
 	const dispatch = useAppDispatch();
 	const userInfo = useAppSelector(selectUser);
 	const [itemLiked, setItemLiked] = useState<string[]>([]);
+
 	useEffect(() => {
 		console.log(itemLiked);
 	}, []);
