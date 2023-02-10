@@ -38,6 +38,8 @@ import { useEffect, useState } from 'react';
 import useBuyItemAptos from '../../../utils/putAptos';
 import { TwitterShareButton } from 'react-share';
 import { RELATED_URLS } from 'constants/index';
+import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
+import { displayUserFullName, displayUserName } from 'utils/formatDisplay';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 // const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -71,6 +73,7 @@ export default function CardNFT({
 	} = useControlModal();
 	const { buyItemAptos } = useBuyItemAptos(offer);
 	const [itemPrice, setItemPrice] = useState<number>();
+	const [hover, setHover] = useState(false);
 	function changePrice() {
 		setItemPrice(changePriceToToken(offer.price));
 	}
@@ -191,7 +194,7 @@ export default function CardNFT({
 							>
 								<Box
 									sx={{
-										width: '70%',
+										width: '100%',
 										display: 'flex',
 										flexDirection: 'row',
 										alignItems: 'center',
@@ -200,12 +203,20 @@ export default function CardNFT({
 									onClick={handleClickItem}
 								>
 									<Typography
+										onMouseEnter={() => setHover(true)}
+										onMouseLeave={() => setHover(false)}
 										variant="subtitle1"
 										fontWeight="500"
 										noWrap
-										sx={{ cursor: 'pointer' }}
+										sx={{ cursor: 'pointer', flex: '1' }}
 									>
-										{offer.itemName}
+										<NoMaxWidthTooltip
+											title={displayUserFullName(offer.itemName)}
+										>
+											<Typography fontWeight="500" variant="subtitle1" noWrap>
+												{offer.itemName}
+											</Typography>
+										</NoMaxWidthTooltip>
 									</Typography>
 									<ImageBlockchain>
 										<img src={aptos} alt="aptos" />

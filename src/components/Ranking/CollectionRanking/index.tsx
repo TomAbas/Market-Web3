@@ -22,13 +22,13 @@ const CollectionRanking = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
+			console.log('chay at ranking');
 			const listCollectionTop = await getTopCollections(
 				'2',
 				'100',
 				'1',
 				selectedFilter.value
 			);
-			console.log(listCollectionTop);
 			setListCollectionTop(listCollectionTop.data);
 			setIsLoading(false);
 		};
