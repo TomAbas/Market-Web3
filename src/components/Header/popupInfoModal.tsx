@@ -56,6 +56,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 	const disConnect = () => {
 		try {
 			disconnect();
+			localStorage.clear();
 			toast.success('Successful logout');
 			navigate('/');
 		} catch (error: any) {
