@@ -11,30 +11,24 @@ const Notification = () => {
 			>
 				<Typography
 					variant="h6"
-					fontWeight="700"
+					fontWeight="500"
 					color="red"
 					fontStyle="italic"
 					textAlign="center"
+					fontSize="16px"
 				>
-					We are currently under maintenance our systems
+					Thank you all for your support for a while in our demo version.
 				</Typography>
 				<Typography
 					variant="h6"
-					fontWeight="700"
+					fontWeight="500"
 					color="red"
 					fontStyle="italic"
 					textAlign="center"
+					fontSize="16px"
 				>
-					Today, we will reset our database to bring better experiment to our users
-				</Typography>
-				<Typography
-					variant="h6"
-					fontWeight="700"
-					color="red"
-					fontStyle="italic"
-					textAlign="center"
-				>
-					Please, come back later
+					We would like to inform that we update to the testnet version and your
+					information is reset. Sorry for the inconvenience!
 				</Typography>
 			</Stack>
 		</>
