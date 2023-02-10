@@ -147,7 +147,8 @@ const FormMint: React.FC<Props> = ({
 							objectFit: 'contain',
 						}}
 						accept={{
-							'image/*': ['.png', '.jpeg', '.jpg'],
+							'image/*': ['.png', '.gif', '.jpeg', '.jpg', '.mp3', '.mp4', '.glb'],
+							'video/*': ['.mp3', '.mp4', '.glb'],
 						}}
 						file={base64image}
 						maxSize={10485760}
