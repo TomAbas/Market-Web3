@@ -11,6 +11,7 @@ function updateUser(data: User): Promise<Response<User>> {
 	return axiosClient.put(url, data);
 }
 function loginUser(data: UserLoginModel) {
+	console.log('data', data);
 	let info: any = axiosClient.post('/users/login', data);
 	info.then((res: any) => {
 		if (res.data.token) {
