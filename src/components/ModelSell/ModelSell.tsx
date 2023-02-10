@@ -12,6 +12,7 @@ interface Props {
 	handleValidateAmount: any;
 	statusList: string;
 	userAmountOfItem: string;
+	royaltyFee: string;
 }
 const ModelSell: React.FC<Props> = ({
 	open,
@@ -23,6 +24,7 @@ const ModelSell: React.FC<Props> = ({
 	handleValidateAmount,
 	statusList,
 	userAmountOfItem,
+	royaltyFee,
 }) => {
 	return (
 		<>
@@ -114,7 +116,133 @@ const ModelSell: React.FC<Props> = ({
 						<Box mx={2}>APT</Box>
 					</Box>
 				</Box>
-
+				<Box px={3}>
+					<Stack direction="row" justifyContent="space-between">
+						<Typography variant="body1" fontWeight={500} mb={1}>
+							Total fee
+						</Typography>
+						<Typography
+							variant="body1"
+							fontWeight={500}
+							mb={1}
+							sx={{ fontSize: '12px' }}
+						>
+							{2 + Number(royaltyFee) / 100}%
+						</Typography>
+					</Stack>
+					{/* <Box
+						sx={{
+							border: '1.5px solid #e7e8ec',
+							borderRadius: '10px',
+							display: 'flex',
+							alignItems: 'center',
+							input: {
+								border: '0px solid white',
+								padding: '10px 24px',
+								outline: 'none',
+								borderRadius: '10px',
+								fontSize: '18px',
+								fontStyle: 'italic',
+								width: '100%',
+								borderRight: '1.5px solid #e7e8ec',
+								borderBottomRightRadius: '0px 0px',
+								borderTopRightRadius: '0px 0px',
+							},
+						}}
+					>
+						<input
+							type="number"
+							min={0}
+							onChange={(e) => {
+								if (Number(e.target.value) < 0) {
+									let a = -Number(e.target.value);
+									setPrice(a.toString());
+								} else {
+									setPrice(e.target.value);
+								}
+							}}
+							value={price}
+							id="price"
+							placeholder="0"
+						/>
+						<Box mx={2}>APT</Box>
+					</Box> */}
+				</Box>
+				<Box px={3} py={0}>
+					<Stack direction="row" justifyContent="space-between">
+						<Typography
+							variant="body1"
+							fontWeight={500}
+							mb={1}
+							sx={{ fontSize: '12px' }}
+						>
+							Service fee:{' '}
+						</Typography>
+						<Typography
+							variant="body1"
+							fontWeight={500}
+							mb={1}
+							sx={{ fontSize: '12px' }}
+						>
+							2%
+						</Typography>
+					</Stack>
+					<Stack direction="row" justifyContent="space-between">
+						<Typography
+							variant="body1"
+							fontWeight={500}
+							mb={1}
+							sx={{ fontSize: '12px' }}
+						>
+							Royalty fee:{' '}
+						</Typography>
+						<Typography
+							variant="body1"
+							fontWeight={500}
+							mb={1}
+							sx={{ fontSize: '12px' }}
+						>
+							{Number(royaltyFee) / 100}%
+						</Typography>
+					</Stack>
+					{/* <Box
+						sx={{
+							border: '1.5px solid #e7e8ec',
+							borderRadius: '10px',
+							display: 'flex',
+							alignItems: 'center',
+							input: {
+								border: '0px solid white',
+								padding: '10px 24px',
+								outline: 'none',
+								borderRadius: '10px',
+								fontSize: '18px',
+								fontStyle: 'italic',
+								width: '100%',
+								borderRight: '1.5px solid #e7e8ec',
+								borderBottomRightRadius: '0px 0px',
+								borderTopRightRadius: '0px 0px',
+							},
+						}}
+					>
+						<input
+							type="number"
+							min={0}
+							onChange={(e) => {
+								if (Number(e.target.value) < 0) {
+									let a = -Number(e.target.value);
+									setPrice(a.toString());
+								} else {
+									setPrice(e.target.value);
+								}
+							}}
+							value={price}
+							id="price"
+							placeholder="0"
+						/>
+						<Box mx={2}>APT</Box>
+					</Box> */}
+				</Box>
 				<Stack direction="row" pt={3} pb={4} justifyContent="center" gap="10px">
 					<Box
 						onClick={handleClose}

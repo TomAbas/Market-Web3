@@ -53,3 +53,5 @@ export const getItemData = async (creator: string, collectionName: string, itemN
 
 	return tokenClient.getTokenData(creator, collectionName, itemName);
 };
+
+// export const getChainId = async () => {

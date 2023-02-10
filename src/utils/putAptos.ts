@@ -53,7 +53,7 @@ function useBuyItemAptos(offer: nftItem) {
 					'0',
 				],
 			};
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
+			await await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				let listItem: any = {
 					maker: userInfo?.userAddress,
 					chainId: '2',

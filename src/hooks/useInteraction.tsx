@@ -28,6 +28,7 @@ const useInteraction = () => {
 			}
 		}
 	}
+
 	async function likeItem(itemId: string, state: boolean) {
 		if (userInfo?.userAddress) {
 			try {
