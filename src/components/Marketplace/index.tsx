@@ -39,6 +39,7 @@ import { getUserInfo } from 'api/userApi';
 import { getAllItems } from 'api/items/itemsApi';
 import { getAllCollections } from '../../api/collectionApi';
 import useInteraction from 'hooks/useInteraction';
+import Notification from 'components/Notification/Notification';
 
 export default function Marketplace() {
 	let arr = new Array(12).fill(null);
@@ -52,6 +53,7 @@ export default function Marketplace() {
 					paddingTop: '100px',
 				}}
 			>
+				<Notification />
 				<Container maxWidth="xl">
 					<Box>
 						<HeaderSection sx={{ marginTop: '30px' }}>
