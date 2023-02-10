@@ -11,6 +11,7 @@ const useInteraction = () => {
 	const dispatch = useAppDispatch();
 	const userInfo = useAppSelector(selectUser);
 	const [itemLiked, setItemLiked] = useState<string[]>([]);
+
 	useEffect(() => {
 		console.log(itemLiked);
 	}, []);
@@ -27,6 +28,7 @@ const useInteraction = () => {
 			}
 		}
 	}
+
 	async function likeItem(itemId: string, state: boolean) {
 		if (userInfo?.userAddress) {
 			try {

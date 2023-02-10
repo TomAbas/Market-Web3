@@ -29,95 +29,49 @@ import TopTrader from 'components/Ranking/TopTrader';
 import MyItemDetail from 'components/Marketplace/MyItemdetail';
 import Collections from 'components/Marketplace/ViewAll/Collections';
 import Items from 'components/Marketplace/ViewAll/Items';
+import Error from 'components/Error/Error';
+
 const router = createHashRouter([
 	{
 		element: <App />,
-		errorElement: (
-			<>
-				<h1>error test app</h1>
-			</>
-		),
+		errorElement: <Error />,
 		children: [
 			{
 				path: '/',
 				element: <Marketplace />,
-				errorElement: (
-					<>
-						<h1>error test market</h1>
-					</>
-				),
 			},
 			{
 				path: 'mint',
 				element: <Mint />,
-				errorElement: (
-					<>
-						<h1>error test mint</h1>
-					</>
-				),
 			},
 			{
 				path: '/item/:itemId',
 				element: <DetailCard />,
-				errorElement: (
-					<>
-						<h1>error test market</h1>
-					</>
-				),
 			},
 			{
 				path: '/collection-detail/:collectionId',
 				element: <CollectionDetail />,
-				errorElement: (
-					<>
-						<h1>error test market</h1>
-					</>
-				),
 			},
 			{
 				path: '/rank',
 				element: <Ranking />,
-				errorElement: (
-					<>
-						<h1>error test market</h1>
-					</>
-				),
 			},
 			{
 				path: '/drop',
 				element: <WhiteList />,
-				errorElement: (
-					<>
-						<h1>error test market</h1>
-					</>
-				),
 			},
 			{
 				path: 'profile',
 				element: <ProfileUser />,
-				errorElement: (
-					<>
-						<h1>error test profile</h1>
-					</>
-				),
 			},
 			{
 				path: 'myCollection',
 				element: <MyCollection />,
-				errorElement: (
-					<>
-						<h1>error test my collection</h1>
-					</>
-				),
 			},
 			{
 				path: 'view-all',
 				element: <ViewAll />,
-				errorElement: (
-					<>
-						<h1>error test view all</h1>
-					</>
-				),
+
 				children: [
 					{
 						path: 'collections',
@@ -140,11 +94,6 @@ const router = createHashRouter([
 			{
 				path: 'myCollection/detail',
 				element: <MyCollectionDetail />,
-				errorElement: (
-					<>
-						<h1>error test view all</h1>
-					</>
-				),
 			},
 		],
 	},

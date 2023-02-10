@@ -18,8 +18,9 @@ import React, { useEffect, useState } from 'react';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import DropDown from 'components/CustomUI/DropDown';
 import { getCategoryCollections, getAllCollections } from 'api/collectionApi';
-import { displayAddress } from 'utils/formatDisplay';
+import { displayAddress, displayUserFullName } from 'utils/formatDisplay';
 import { getListCategory } from 'api/collectionApi';
+import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
 
 interface Props0 {
 	selectedFilter: any;
@@ -73,6 +74,7 @@ const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption, 
 
 const FeaturedCollection = () => {
 	let arr = new Array(4).fill(null);
+	const [hover, setHover] = useState(false);
 	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
 	const [selectedFilter, setSelectedFilter] = useState<string>('All');
 	const [listFilter, setListFilter] = useState<any[]>([]);
@@ -188,12 +190,29 @@ const FeaturedCollection = () => {
 
 										<Box py={1.5}>
 											<Typography
-												variant="h6"
+												onMouseEnter={() => setHover(true)}
+												onMouseLeave={() => setHover(false)}
+												variant="subtitle1"
+												fontWeight={500}
+												noWrap
+												sx={{ cursor: 'pointer', flex: '1' }}
 												onClick={() => {
 													handleCollectionDetail(collection._id);
 												}}
 											>
-												{collection.collectionName}
+												<NoMaxWidthTooltip
+													title={displayUserFullName(
+														collection.collectionName
+													)}
+												>
+													<Typography
+														fontWeight="500"
+														variant="subtitle1"
+														noWrap
+													>
+														{collection.collectionName}
+													</Typography>
+												</NoMaxWidthTooltip>
 											</Typography>
 											<Stack
 												mt={1}

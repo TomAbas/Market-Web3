@@ -91,36 +91,37 @@ export default function Items() {
 									))}
 								</>
 							)}
-							{!viewFull && (
-								<Box
-									mx={'auto'}
-									mt={2}
-									sx={{
-										button: {
-											padding: '10px 30px',
-											border: '1.5px solid #e7e8ec',
-											transition: 'all 0.4s',
-											borderRadius: '12px',
-											background: '#fff',
-											fontSize: '16px',
-											cursor: 'pointer',
-											fontFamily: 'Montserrat, sans-serif !important',
-											fontStyle: 'italic !important',
-											width: 'auto',
-											'&:hover': {
-												background: '#007aff',
-												borderColor: 'transparent',
-												color: '#fff',
-											},
-										},
-									}}
-								>
-									<button onClick={() => setViewFull(true)}>Load more</button>
-								</Box>
-							)}
 						</>
 					)}
 				</Grid>
+				{!viewFull && offersDisplay.length > 12 && (
+					<Box
+						mx={'auto'}
+						mt={2}
+						width="fit-content"
+						sx={{
+							button: {
+								padding: '10px 30px',
+								border: '1.5px solid #e7e8ec',
+								transition: 'all 0.4s',
+								borderRadius: '12px',
+								background: '#fff',
+								fontSize: '16px',
+								cursor: 'pointer',
+								fontFamily: 'Montserrat, sans-serif !important',
+								fontStyle: 'italic !important',
+								width: 'auto',
+								'&:hover': {
+									background: '#007aff',
+									borderColor: 'transparent',
+									color: '#fff',
+								},
+							},
+						}}
+					>
+						<button onClick={() => setViewFull(true)}>Load more</button>
+					</Box>
+				)}
 				{/* <>
 					{arr.map((item, idx) => (
 						<SkeletonCardNft key={item} />

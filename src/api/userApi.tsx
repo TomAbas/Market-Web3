@@ -12,6 +12,11 @@ function updateUser(data: User): Promise<Response<User>> {
 }
 function loginUser(data: UserLoginModel) {
 	let info: any = axiosClient.post('/users/login', data);
+	info.then((res: any) => {
+		if (res.data.token) {
+			localStorage.setItem('token', res.data.token);
+		}
+	});
 	return info;
 }
 
