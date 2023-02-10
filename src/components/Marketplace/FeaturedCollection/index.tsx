@@ -93,31 +93,13 @@ const FeaturedCollection = () => {
 		getListCategory('2')
 			.then((res: any) => res.data)
 			.then((res: any) => {
-				console.log('res', res);
 				let listCategoy: any = Object.keys(res).map((key, index) => {
-					console.log('key', key);
 					return { id: index, name: key, value: key };
 				});
 				setListFilter(listCategoy);
-				// if (selectedFilter === 'All') {
-				// 	setCollections
 				setCollections(res[selectedFilter].slice(0, 4));
-				// console.log('listCategoy', res[selectedFilter]);
 				setIsLoading(false);
 			});
-		// let category = listFilter.find((item: any) => item.name === selectedFilter).value;
-		// if (category === null) {
-		// 	getAllCollections('2').then((res: any) => {
-		// 		console.log('dsd', res.data);
-		// 		setCollections(res.data.slice(0, 4));
-		// 		setIsLoading(false);
-		// 	});
-		// } else {
-		// 	getCategoryCollections('2', category.toString()).then((res: any) => {
-		// 		setCollections(res.data.slice(0, 4));
-		// 		setIsLoading(false);
-		// 	});
-		// }
 	}, [selectedFilter]);
 
 	return (
