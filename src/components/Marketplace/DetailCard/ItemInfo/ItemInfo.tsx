@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { nftItem } from 'models/item';
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Stack, Typography, Skeleton, CircularProgress } from '@mui/material';
+import { Box, Stack, Typography, Skeleton, List, ListItem } from '@mui/material';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { ItemImage, FeatureWrapper } from 'components/Marketplace/styled';
 import MediaDisplayCard from 'components/Marketplace/MediaDisplayCard/MediaDisplayCard';
@@ -21,6 +21,7 @@ import {
 } from 'components/Marketplace/CardNFT/styled';
 import useInteraction from 'hooks/useInteraction';
 import { RELATED_URLS } from 'constants/index';
+import { displayAddress } from 'utils/function';
 interface Props {
 	loadingItem: boolean;
 	itemResource: any;
@@ -165,34 +166,25 @@ const ItemInfo: React.FC<Props> = ({
 									Sell Quantity : {itemResource?.amount}
 								</Typography>
 							)}
-							<Typography variant="body1">
+							<Stack direction={'row'}>
 								Owner:{' '}
-								<a
-									href={`https://explorer.aptoslabs.com/account/${item?.owner}`}
-									target="_blank"
-								>
-									{item!.owner.length > 0
-										? item?.owner[0].slice(0, 6) +
-										  '...' +
-										  item?.owner[0].slice(
-												item?.owner[0].length - 4,
-												item?.owner[0].length
-										  )
-										: ''}
-								</a>
-							</Typography>
+								<Box display={'inline'} marginLeft={1}>
+									{item?.owner.map((address, index) => {
+										return (
+											<>
+												<a href={`/#/profile?address=${address}`}>
+													{displayAddress(address)}
+												</a>
+												<br></br>
+											</>
+										);
+									})}
+								</Box>
+							</Stack>
 							<Typography variant="body1">
-								Creator:
-								<a
-									href={`https://explorer.aptoslabs.com/account/${item?.creator}`}
-									target="_blank"
-								>
-									{item?.creator.slice(0, 6) +
-										'...' +
-										item?.creator.slice(
-											item?.creator.length - 4,
-											item?.creator.length
-										)}
+								Creator:{' '}
+								<a href={`/#/profile?address=${item?.creator}`}>
+									{displayAddress(item?.creator!)}
 								</a>
 							</Typography>
 							{item?.status === 1 && (

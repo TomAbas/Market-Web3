@@ -245,6 +245,7 @@ const CollectionDetail = () => {
 								placement="top"
 								arrow
 								sx={{ marginLeft: 'auto' }}
+								onClick={() => navigate(`/mint?query=2`)}
 							>
 								<Box>
 									<ButtonWhite
@@ -256,7 +257,6 @@ const CollectionDetail = () => {
 											border: '1px solid #E7E8EC',
 											px: 0,
 										}}
-										onClick={() => navigate(`/mint?query=2`)}
 									>
 										<AddIcon />
 									</ButtonWhite>
