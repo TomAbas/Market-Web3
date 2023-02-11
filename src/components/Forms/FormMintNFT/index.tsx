@@ -65,6 +65,28 @@ const FormMintNft: React.FC<Props> = ({
 	const longDescription = useRef();
 	const longName: any = useRef();
 	const [collection, setCollection] = useState('');
+	const checkNameItem = (e: any) => {
+		let value = e.target.value;
+		value = value.slice(0, 128);
+		setValue('name', value);
+		longName.current = value.length;
+		let collectionInfo = collections.find((item: any) => item.collectionName === collection);
+		console.log('collectionInfo', collectionInfo);
+		if (collectionInfo) {
+			let listItem = collectionInfo.listItem.find((item: any) => item.itemName === value);
+			if (listItem) {
+				setError('name', {
+					type: 'custom',
+					message: 'This name is already taken',
+				});
+				return;
+			}
+		} else {
+			setError('name', { type: 'custom', message: 'Choose a collection first' });
+			return;
+		}
+		clearErrors('name');
+	};
 	const checkCollectionDesValid = (e: any, long: number, name: any, ref: any) => {
 		let value = e.target.value;
 		value = value.slice(0, long);
@@ -188,12 +210,14 @@ const FormMintNft: React.FC<Props> = ({
 					<input
 						type="text"
 						placeholder="Example: Metaspacecy item"
-						{...register('name', { required: true })}
+						{...register('name', {
+							required: 'Item name is required',
+						})}
 						onChange={(e) => {
-							checkCollectionDesValid(e, 128, 'name', longName);
+							checkNameItem(e);
 						}}
 					/>
-					{errors.name && <ErrorMessage>Item name is required</ErrorMessage>}
+					{errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
 				</InputItem>
 				<InputItem>
 					<InputTitle sx={{ display: 'flex' }}>

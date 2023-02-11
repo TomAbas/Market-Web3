@@ -94,7 +94,7 @@ export default function Items() {
 						</>
 					)}
 				</Grid>
-				{!viewFull && offersDisplay.length > 12 && (
+				{!viewFull && offers.length > 12 && (
 					<Box
 						mx={'auto'}
 						mt={2}

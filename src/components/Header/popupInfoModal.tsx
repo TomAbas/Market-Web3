@@ -32,6 +32,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 	const navigate = useNavigate();
 	const [myBalance, setMyBalance] = useState(0);
 	const [sliceAdd, setSliceAdd] = useState('');
+	const [error, setError] = useState(false);
 	const userInfo = useAppSelector(selectUser);
 	// useState
 	const { disconnect } = useWallet();
@@ -47,7 +48,9 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 			try {
 				let balance: number = await getBalanceUser(userAddress);
 				setMyBalance(balance);
+				setError(false);
 			} catch (error) {
+				setError(true);
 				console.log(error);
 			}
 		}
@@ -96,6 +99,11 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 								<img src={userInfo?.avatar} alt="Wallet" width={50} height={50} />
 								<Typography variant="body1">{sliceAdd}</Typography>
 							</Stack>
+							{error && (
+								<Typography color="red" pl={2}>
+									Can't get ballance
+								</Typography>
+							)}
 							<Stack
 								justifyContent="space-between"
 								alignItems="center"
@@ -115,7 +123,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 									<img src={aptos} alt="Aptos" width={20} height={20} />
 									<Box>APT</Box>
 								</Stack>
-								<Box>{Math.floor(myBalance / 1000000) / 100} APT</Box>
+								<Box>{error ? '_' : Math.floor(myBalance / 1000000) / 100} APT</Box>
 							</Stack>
 							<Stack gap={2} pl={2}>
 								<Stack

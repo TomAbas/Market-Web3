@@ -13,7 +13,7 @@ import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import { useAppDispatch } from 'redux/hooks';
 import { setFilter } from 'redux/slices/nftFilter';
 import FilterRoyal from 'components/Marketplace/FilterItem/FilterRoyal/FilterRoyal';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 interface Props {
 	items: nftItem[];
 	isLoading: boolean;
@@ -23,6 +23,7 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 	const address = searchParams.get('address');
 	const dispatch = useAppDispatch();
 	const { likeItem, checkIsLike } = useInteraction();
+	const navigate = useNavigate();
 	const inputRef: any = useRef();
 	function filterNameItem() {
 		dispatch(setFilter({ itemName: inputRef.current.value.toLowerCase() }));
@@ -54,7 +55,13 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 						/>
 					</InputItem>
 					{!address && (
-						<Tooltip title="Add Item" placement="top" arrow sx={{ marginLeft: 'auto' }}>
+						<Tooltip
+							title="Add Item"
+							placement="top"
+							arrow
+							sx={{ marginLeft: 'auto' }}
+							onClick={() => navigate(`/mint?query=2`)}
+						>
 							<Box>
 								<ButtonWhite
 									sx={{
