@@ -25,11 +25,15 @@ import TabItemDetail from './TabItemDetail/TabItemDetail';
 import { getBalanceToken } from 'service/aptos.service';
 import ItemInfo from './ItemInfo/ItemInfo';
 import { selectTrigger } from 'redux/slices/nftFilter';
-
+import MoreItem from './MoreItem/MoreItem';
+import useGetItemCollection from 'hooks/useGetItemCollection';
 export default function DetailCard() {
 	let { itemId } = useParams();
 	const search = useLocation().search;
 	const [item, setItem] = useState<nftItem>();
+	const { collectionInfo, loadingCollectionImg } = useGetItemCollection(
+		item?.collectionInfo?._id
+	);
 	const [loadingItem, setLoadingItem] = useState(true);
 	const [itemPrice, setItemPrice] = useState<number>(0);
 	const [itemResource, setItemResource] = useState<any>();
@@ -157,6 +161,21 @@ export default function DetailCard() {
 				</Stack>
 				<Box>
 					<TabItemDetail userAmountOfItem={userAmountOfItem} item={item!} />
+				</Box>
+				<Box sx={{ mt: 5 }}>
+					<Typography variant="h3" sx={{ textAlign: 'center', fontWeight: '700' }}>
+						More from this collection
+					</Typography>
+
+					<Box sx={{ mt: 5, px: 1 }}>
+						{collectionInfo && (
+							<MoreItem
+								currentItemId={item?._id}
+								collection={collectionInfo}
+								// loadingCollectionImg={loadingCollectionImg}
+							/>
+						)}
+					</Box>
 				</Box>
 			</Box>
 			{item?.status === 1 ? (

@@ -11,6 +11,8 @@ import {
 	getCategoryCollections as getCategoryCollectionsAPI,
 } from 'api/collectionApi';
 import { async } from '@firebase/util';
+import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
+import { displayUserFullName } from 'utils/formatDisplay';
 export default function Items() {
 	let [searchParams, setSearchParams] = useSearchParams();
 	const category = searchParams.get('category');
@@ -88,8 +90,28 @@ export default function Items() {
 									</ItemImage>
 
 									<Box py={1.5}>
-										<Typography variant="h6">
-											{collection.collectionName}
+										<Typography
+											variant="subtitle1"
+											fontWeight={500}
+											noWrap
+											sx={{ cursor: 'pointer', flex: '1' }}
+											onClick={() => {
+												handleCollectionDetail(collection._id);
+											}}
+										>
+											<NoMaxWidthTooltip
+												title={displayUserFullName(
+													collection.collectionName
+												)}
+											>
+												<Typography
+													fontWeight="500"
+													variant="subtitle1"
+													noWrap
+												>
+													{collection.collectionName}
+												</Typography>
+											</NoMaxWidthTooltip>
 										</Typography>
 										<Stack
 											mt={1}

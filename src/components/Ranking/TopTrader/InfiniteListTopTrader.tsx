@@ -60,7 +60,6 @@ export default function InfiniteListTopTrader({
 	const listRef = useRef<HTMLDivElement>(null);
 	const navigate = useNavigate();
 	const { innerWidth, innerHeight } = useContext(SizeContext);
-	const [hover, setHover] = useState(false);
 	//state
 	const renderPercent = (percent: number) => (
 		<Typography
@@ -171,11 +170,7 @@ export default function InfiniteListTopTrader({
 														</Box>
 													</Box>
 
-													<Typography
-														onMouseEnter={() => setHover(true)}
-														onMouseLeave={() => setHover(false)}
-														fontWeight="500"
-													>
+													<Typography fontWeight="500">
 														<NoMaxWidthTooltip
 															title={displayUserFullName(
 																item.user.username
