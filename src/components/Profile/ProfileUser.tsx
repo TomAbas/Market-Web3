@@ -15,7 +15,7 @@ import { getListItemF, getUserInfo } from 'api/userApi';
 import { getUserItem } from 'api/items/itemsApi';
 import CardNFT from 'components/Marketplace/CardNFT';
 import useInteraction from 'hooks/useInteraction';
-import { selectTrigger } from 'redux/slices/nftFilter';
+import { handleReset, selectTrigger } from 'redux/slices/nftFilter';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import TabUserInfo from './TabUserInfo/TabUserInfo';
 import useFilterItem from 'hooks/useFilterItem';
@@ -77,6 +77,9 @@ const ProfileUser = () => {
 		if (infoUser) {
 			fetchItems(infoUser.userAddress);
 		}
+		return () => {
+			dispatch(handleReset());
+		};
 	}, [infoUser, trigger]);
 	return (
 		<>

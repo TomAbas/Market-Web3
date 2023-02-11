@@ -1,4 +1,3 @@
-import React from 'react';
 // styled
 import { CardContent, CardImage, CardText, NoItemCard, NoItemWrapper } from './styled';
 
@@ -11,8 +10,8 @@ function NoItem({ title, image }: NoItemProps) {
 	return (
 		<NoItemWrapper className="b">
 			<NoItemCard>
-				{/* <motion.div
-					style={{
+				{/* <Box
+					sx={{
 						position: 'absolute',
 						height: 170,
 						width: 170,
@@ -50,7 +49,7 @@ function NoItem({ title, image }: NoItemProps) {
 							height: '12px',
 						}}
 					/>
-				</motion.div> */}
+				</Box> */}
 
 				<CardContent className="a">
 					<CardImage>

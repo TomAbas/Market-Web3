@@ -13,8 +13,8 @@ import { useSearchParams, useOutletContext } from 'react-router-dom';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import useInteraction from 'hooks/useInteraction';
 import { getItemOfCollection } from 'api/collectionApi';
-import { useAppSelector } from 'redux/hooks';
-import { selectTrigger } from 'redux/slices/nftFilter';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { handleReset, selectTrigger, setFilter } from 'redux/slices/nftFilter';
 import { displayAddress } from 'utils/formatDisplay';
 import { DetailCollectionStatistic } from './DetailStatistic';
 import { FeatureWrapper } from '../styled';
@@ -23,30 +23,39 @@ import FilterStatus from '../FilterItem/FilterStatus/FilterStatus';
 import { InputItem } from 'components/Mint/styled';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import { RELATED_URLS } from 'constants/index';
+import useFilterItem from 'hooks/useFilterItem';
+import { Collection } from 'models/collection';
 const CollectionDetail = () => {
 	const desRef: any = useRef();
+	const inputRef: any = useRef();
+	const dispatch = useAppDispatch();
 	const [show, setShow] = useState(false);
 	const { collectionId } = useParams();
 	let arr = [1, 2, 3, 4];
 	const { checkIsLike, likeItem } = useInteraction();
 	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 	const search = useLocation().search;
-	const [collectionInfo, setCollectionInfo] = useState<any>('');
+	const [collectionInfo, setCollectionInfo] = useState<Collection>();
+	const { itemsDisplay } = useFilterItem(collectionInfo?.listItem || []);
 	const [loadingCollectionImg, setLoadingCollectionImg] = useState(true);
 	const triggerFetchNft = useAppSelector(selectTrigger);
+
 	const navigate = useNavigate();
 	async function fetchCollectionItems() {
 		let collection = await getItemOfCollection(collectionId!).then((res: any) => res.data);
-		console.log(collection);
 		setCollectionInfo(collection);
 		setLoadingCollectionImg(false);
 	}
+	function filterNameItem() {
+		dispatch(setFilter({ itemName: inputRef.current.value.toLowerCase() }));
+	}
 	useEffect(() => {
 		fetchCollectionItems();
+		return () => {
+			dispatch(handleReset());
+		};
 	}, [triggerFetchNft]);
-	useEffect(() => {
-		console.log(collectionInfo);
-	}, [collectionInfo]);
+
 	return (
 		<>
 			<Box pt={13}>
@@ -129,7 +138,7 @@ const CollectionDetail = () => {
 				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto' }}>
 					<Box sx={{ width: '100%', textAlign: 'center' }}>
 						<Typography variant="h4" fontWeight="500">
-							{collectionInfo.collectionName}
+							{collectionInfo?.collectionName}
 						</Typography>
 						<Stack
 							direction="row"
@@ -153,12 +162,14 @@ const CollectionDetail = () => {
 							<Box>{displayAddress(collectionInfo?.userAddress)}</Box>
 						</Stack>
 						<Box sx={{ width: '500px', mx: 'auto', mt: 2 }}>
-							<DetailCollectionStatistic
-								numberItems={collectionInfo?.listItem?.length}
-								numberOwners={1}
-								floorPrice={0}
-								volumeTrades={0}
-							/>
+							{collectionInfo && (
+								<DetailCollectionStatistic
+									numberItems={collectionInfo?.listItem?.length}
+									numberOwners={1}
+									floorPrice={0}
+									volumeTrades={0}
+								/>
+							)}
 						</Box>
 						<Typography
 							sx={{
@@ -181,7 +192,7 @@ const CollectionDetail = () => {
 								setShow(!show);
 							}}
 						>
-							{collectionInfo.description}
+							{collectionInfo?.description}
 						</Typography>
 					</Box>
 					<Stack
@@ -191,13 +202,6 @@ const CollectionDetail = () => {
 						spacing={2}
 						sx={{ mt: 4, mx: 'auto' }}
 					>
-						<FeatureWrapper sx={{ padding: '14px 14px' }}>
-							<img
-								src={HeartBlack}
-								alt="icon heart"
-								style={{ width: '20px', height: '20px' }}
-							/>
-						</FeatureWrapper>
 						<TwitterShareButton
 							url={`${RELATED_URLS.MetaSpacecyHomePage}/#/collection-detail/${collectionInfo?._id}`}
 							title={`Look what I found! Collection ${collectionInfo?.collectionName}`}
@@ -205,11 +209,16 @@ const CollectionDetail = () => {
 							via="Metaspacecy"
 							style={{ textAlign: 'left' }}
 						>
-							<FeatureWrapper sx={{ padding: '14px 15px' }}>
+							<FeatureWrapper sx={{ padding: '14px 15px', cursor: 'pointer' }}>
 								<img src={Share} alt="icon share" style={{ height: '20px' }} />
 							</FeatureWrapper>
 						</TwitterShareButton>
-						<FeatureWrapper sx={{ padding: '14px 14px' }}>
+						<FeatureWrapper
+							sx={{ padding: '14px 14px', cursor: 'pointer' }}
+							onClick={() => {
+								window.location.reload();
+							}}
+						>
 							<img
 								src={IconReload}
 								alt="icon heart"
@@ -227,8 +236,8 @@ const CollectionDetail = () => {
 								<input
 									type="text"
 									placeholder="Search name ..."
-									// {...register('name', { required: true })}
-									// onChange={checkCollectionNameValid}
+									onChange={filterNameItem}
+									ref={inputRef}
 								/>
 							</InputItem>
 							<Tooltip
@@ -265,7 +274,7 @@ const CollectionDetail = () => {
 								</>
 							) : (
 								<>
-									{collectionInfo?.listItem?.map((offer: any, index: any) => (
+									{itemsDisplay?.map((offer: any, index: any) => (
 										<CardNFT
 											itemLiked={checkIsLike}
 											likeItem={likeItem}

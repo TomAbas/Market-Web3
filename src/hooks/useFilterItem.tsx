@@ -4,20 +4,22 @@ import { nftItem } from 'models/item';
 import { User } from 'models/user';
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from 'redux/hooks';
-import { selectFilter } from 'redux/slices/nftFilter';
+import { handleReset, selectFilter } from 'redux/slices/nftFilter';
+import { dispatch } from 'redux/store';
 
-const useFilterItem = (items: nftItem[], infoUser: User) => {
+const useFilterItem = (items: nftItem[], infoUser?: User) => {
 	const filterPar = useAppSelector(selectFilter);
 	const [itemsDisplay, setItemDisplay] = useState<nftItem[]>([]);
 	const [itemCreate, setItemCreate] = useState([]);
 	const [itemCollected, setItemCollected] = useState([]);
 	async function getItemCreateAndCollected() {
+		if (!infoUser) return;
 		setItemCreate(await getItemCreate(infoUser.userAddress).then((res: any) => res.data));
 		setItemCollected(await getItemCollected(infoUser.userAddress).then((res: any) => res.data));
 	}
 	useEffect(() => {
 		console.log('items ', items);
-		console.log('itemCollected ', itemCollected);
+		// console.log('itemCollected ', itemCollected);
 	}, [itemCollected]);
 	useEffect(() => {
 		getItemCreateAndCollected();

@@ -5,7 +5,7 @@ import CardCollection from 'components/Marketplace/CardCollection/CardCollection
 import CardNFT from 'components/Marketplace/CardNFT';
 import useInteraction from 'hooks/useInteraction';
 import { nftItem } from 'models/item';
-import Nodata from '../../../../assets/icons/nodata.svg';
+import Nodata from '../../../../assets/icons/Nodata.svg';
 import React from 'react';
 
 interface Props {
@@ -43,7 +43,6 @@ const MoreItem: React.FC<Props> = ({ collection, currentItemId }) => {
 					})}
 				</Grid>
 			)}
-			<NoItem title="No items left!" image={Nodata} />
 		</>
 	);
 };
