@@ -1,4 +1,4 @@
-export const displayAddress = (address: string) => {
+export const displayAddress = (address: string | undefined) => {
 	if (!address) return null;
 	return `${address.slice(0, 6)}...${address.slice(-4)}`;
 };

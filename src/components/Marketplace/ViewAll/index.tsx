@@ -11,13 +11,15 @@ import Collections from './Collections';
 import { Typography } from '@mui/material';
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 import { getListCollectionMarketplace } from 'utils/dataResource';
+import { useAppDispatch } from 'redux/hooks';
+import { handleReset } from 'redux/slices/nftFilter';
 // import LayoutMintNFT from './mintNFT';
 // import LayoutCreateCollection from './createCollection';
 
 export default function ViewAll() {
 	const navigate = useNavigate();
 	const [value, setValue] = React.useState('1');
-
+	const dispatch = useAppDispatch();
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
 	};
@@ -25,6 +27,9 @@ export default function ViewAll() {
 		if (window.location.href.includes('collections')) {
 			setValue('2');
 		}
+		return () => {
+			dispatch(handleReset());
+		};
 	}, [window.location.href]);
 	return (
 		<Box sx={{ maxWidth: '1350px', mx: 'auto', paddingTop: '150px' }}>

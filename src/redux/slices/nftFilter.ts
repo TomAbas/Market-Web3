@@ -40,7 +40,7 @@ export const nftFilterSlice = createSlice({
 			state.filter = { ...state.filter, ...action.payload, isFiltering: true };
 		},
 		handleReset(state) {
-			state = initialState;
+			state.filter = initialState.filter;
 		},
 		handleTrigger(state) {
 			state.trigger = !state.trigger;

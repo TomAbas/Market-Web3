@@ -29,6 +29,7 @@ function getListCategory(chainId: string): Promise<Response<any>> {
 	const url = `/collection/category/chainId/${chainId}`;
 	return ClientAxios.get(url).then(({ data }) => data);
 }
+
 export {
 	getAllCollections,
 	getCategoryCollections,

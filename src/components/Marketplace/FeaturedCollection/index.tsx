@@ -74,7 +74,6 @@ const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption, 
 
 const FeaturedCollection = () => {
 	let arr = new Array(4).fill(null);
-	const [hover, setHover] = useState(false);
 	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
 	const [selectedFilter, setSelectedFilter] = useState<string>('All');
 	const [listFilter, setListFilter] = useState<any[]>([]);
@@ -190,8 +189,6 @@ const FeaturedCollection = () => {
 
 										<Box py={1.5}>
 											<Typography
-												onMouseEnter={() => setHover(true)}
-												onMouseLeave={() => setHover(false)}
 												variant="subtitle1"
 												fontWeight={500}
 												noWrap

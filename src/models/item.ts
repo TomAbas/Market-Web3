@@ -53,6 +53,7 @@ export const ITEM_STATUS = {
 export interface itemHistory {
 	_id: string;
 	collectionId: string;
+	collectionInfo: Collection;
 	itemId: string;
 	from: string;
 	to: string;

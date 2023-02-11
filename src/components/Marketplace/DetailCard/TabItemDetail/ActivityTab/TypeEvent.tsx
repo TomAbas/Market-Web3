@@ -11,13 +11,20 @@ interface Props {
 function getTransactionType(type: number) {
 	return TYPE_TRANSACTION[type];
 }
+
 const TypeEvent: React.FC<Props> = ({ itemHistory, userAddress }) => {
+	console.log('TypeEvent.tsx, itemHistory: ', itemHistory);
 	if (itemHistory.type === 1) {
 		//mint
 		return (
 			<Typography variant="body1" sx={{ fontWeight: '500' }}>
 				<StyledSpan>{formatAddressHistory(itemHistory!.from, userAddress)}</StyledSpan>{' '}
 				{getTransactionType(itemHistory.type)}{' '}
+				<StyledSpan>
+					{itemHistory.itemInfo
+						? `${itemHistory.itemInfo.itemName}`
+						: `${itemHistory.collectionInfo.collectionName}`}
+				</StyledSpan>
 			</Typography>
 		);
 	} else if (itemHistory.type === 5) {

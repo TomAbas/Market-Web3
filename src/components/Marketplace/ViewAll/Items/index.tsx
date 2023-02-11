@@ -5,12 +5,18 @@ import CardNFT from 'components/Marketplace/CardNFT';
 import FilterItem from './FilterItem';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import { useEffect, useState } from 'react';
-import { selectAllNfts, selectFilter, selectLoadingAllNfts } from 'redux/slices/nftFilter';
-import { useAppSelector } from 'redux/hooks';
+import {
+	handleReset,
+	selectAllNfts,
+	selectFilter,
+	selectLoadingAllNfts,
+} from 'redux/slices/nftFilter';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import useInteraction from 'hooks/useInteraction';
 import { nftItem } from 'models/item';
 
 export default function Items() {
+	const dispatch = useAppDispatch();
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	const { checkIsLike, likeItem } = useInteraction();
 	const filterPar = useAppSelector(selectFilter);
@@ -94,7 +100,7 @@ export default function Items() {
 						</>
 					)}
 				</Grid>
-				{!viewFull && offersDisplay.length > 12 && (
+				{!viewFull && offers.length > 12 && (
 					<Box
 						mx={'auto'}
 						mt={2}

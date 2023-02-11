@@ -73,7 +73,6 @@ export default function CardNFT({
 	} = useControlModal();
 	const { buyItemAptos } = useBuyItemAptos(offer);
 	const [itemPrice, setItemPrice] = useState<number>();
-	const [hover, setHover] = useState(false);
 	function changePrice() {
 		setItemPrice(changePriceToToken(offer.price));
 	}
@@ -203,8 +202,6 @@ export default function CardNFT({
 									onClick={handleClickItem}
 								>
 									<Typography
-										onMouseEnter={() => setHover(true)}
-										onMouseLeave={() => setHover(false)}
 										variant="subtitle1"
 										fontWeight="500"
 										noWrap
