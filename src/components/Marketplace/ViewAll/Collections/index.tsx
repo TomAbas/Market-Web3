@@ -13,10 +13,15 @@ import {
 import { async } from '@firebase/util';
 import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
 import { displayUserFullName } from 'utils/formatDisplay';
+import CardCollection from 'components/Marketplace/CardCollection/CardCollection';
+import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
+import NoItem from 'customComponents/NoItem/NoItem';
+import NoData from '../../../../assets/icons/Nodata.svg';
 export default function Items() {
-	let [searchParams, setSearchParams] = useSearchParams();
+	let [searchParams] = useSearchParams();
 	const category = searchParams.get('category');
 	const [collections, setCollections] = useState([]);
+	const [loading, setLoading] = useState(true);
 	let navigate = useNavigate();
 	const handleCollectionDetail = (collectionId: string) => {
 		//encodeURIComponent
@@ -24,13 +29,14 @@ export default function Items() {
 	};
 	async function getAllCollections() {
 		let { data } = await getAllCollectionsAPI('2');
-
 		setCollections(data);
+		setLoading(false);
 	}
 	async function getCategoryCollections() {
+		setLoading(true);
 		let { data } = await getCategoryCollectionsAPI('2', category!);
-
 		setCollections(data);
+		setLoading(false);
 	}
 	useEffect(() => {
 		if (category === null) {
@@ -44,118 +50,27 @@ export default function Items() {
 			<>
 				<FilterCollection />
 				<Grid container spacing={1}>
-					{collections.map((collection: any, index: any) => (
-						<Grid
-							item
-							xs={6}
-							sm={4}
-							md={3}
-							p={1}
-							key={index}
-							onClick={() => {
-								handleCollectionDetail(collection._id);
-							}}
-						>
-							<Link
-								// href={`https://explorer.aptoslabs.com/account/${
-								// 	collection[0].split('*/////*')[1]
-								// }`}
-								target="_blank"
-								sx={{
-									textDecoration: 'none',
-									color: '#131740',
-									'&:hover': {
-										boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
-									},
-								}}
-							>
-								<Box
-									sx={{
-										border: '1.5px solid #e7e8ec',
-										borderRadius: '12px',
-										overflow: 'hidden',
-										cursor: 'pointer',
-										transition: 'all 0.4s',
-										padding: '12px 12px 0',
-										background: '#fff',
-										'&:hover': {
-											boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
-										},
-									}}
-								>
-									<ItemImage>
-										<Box className="main-img">
-											<img src={collection.logo} alt="collection" />
-										</Box>
-									</ItemImage>
-
-									<Box py={1.5}>
-										<Typography
-											variant="subtitle1"
-											fontWeight={500}
-											noWrap
-											sx={{ cursor: 'pointer', flex: '1' }}
-											onClick={() => {
-												handleCollectionDetail(collection._id);
-											}}
-										>
-											<NoMaxWidthTooltip
-												title={displayUserFullName(
-													collection.collectionName
-												)}
-											>
-												<Typography
-													fontWeight="500"
-													variant="subtitle1"
-													noWrap
-												>
-													{collection.collectionName}
-												</Typography>
-											</NoMaxWidthTooltip>
-										</Typography>
-										<Stack
-											mt={1}
-											direction="row"
-											alignItems="center"
-											justifyContent="space-between"
-											gap={1}
-										>
-											<Stack direction="row" gap={1} alignItems="center">
-												<Box
-													sx={{
-														img: {
-															width: '32px',
-															height: '32px',
-															objectFit: 'cover',
-															objectPosition: 'center',
-															borderRadius: '50%',
-														},
-													}}
-												>
-													<img src={collection.logo} alt="collection" />
-												</Box>
-												<Typography variant="body1">
-													{collection.userAddress.slice(0, 6) +
-														'...' +
-														collection.userAddress.slice(
-															collection.userAddress.length - 4
-														)}
-												</Typography>
-											</Stack>
-											<Box>
-												<Typography variant="body1">
-													{collection.listItem.length}{' '}
-													{collection.listItem.length > 1
-														? 'items'
-														: 'item'}
-												</Typography>
-											</Box>
-										</Stack>
-									</Box>
-								</Box>
-							</Link>
-						</Grid>
-					))}
+					{loading ? (
+						<>
+							{new Array(12).fill(null).map((item, idx) => (
+								<SkeletonCardNft key={idx} />
+							))}
+						</>
+					) : (
+						<>
+							{collections.length > 0 ? (
+								<>
+									{collections.map((collection: any, index: any) => (
+										<CardCollection collection={collection} key={index} />
+									))}
+								</>
+							) : (
+								<>
+									<NoItem title="No item" image={NoData} />
+								</>
+							)}
+						</>
+					)}
 				</Grid>
 			</>
 		</TabPanel>

@@ -22,6 +22,7 @@ function NoItem({ title, image }: NoItemProps) {
 						height: 170,
 						width: 170,
 						borderRadius: '50%',
+						animation: 'spin 10s linear infinite',
 					}}
 					// animate={{ rotate: 360 }}
 					// transition={spinTransition}
@@ -31,7 +32,7 @@ function NoItem({ title, image }: NoItemProps) {
 							left: '50%',
 							top: '-9px',
 							transform: 'translateX(-50%)',
-							backgroundColor: '#fff',
+							backgroundColor: '#007aff',
 							width: '12px',
 							height: '12px',
 							margin: '3px',
@@ -41,7 +42,7 @@ function NoItem({ title, image }: NoItemProps) {
 						sx={{
 							left: '5%',
 							bottom: '20%',
-							backgroundColor: '#fff',
+							backgroundColor: '#007aff',
 							width: '12px',
 							height: '12px',
 						}}
@@ -50,7 +51,7 @@ function NoItem({ title, image }: NoItemProps) {
 						sx={{
 							right: '5%',
 							bottom: '20%',
-							backgroundColor: '#fff',
+							backgroundColor: '#007aff',
 							width: '12px',
 							height: '12px',
 						}}

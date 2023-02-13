@@ -3,22 +3,25 @@ import { Box } from '@mui/material';
 import { TabWrapper } from './styled';
 import UserActivityCard from './UserActivityCard';
 import { itemHistory } from 'models/item';
+import SkeletonNftActivityList from 'components/Skeletons/SkeletonNftActivityList/SkeletonNftActivityList';
 
 interface Props {
 	listItemHistory: itemHistory[];
+	loading: boolean;
 }
-const InfiniteListActivity: React.FC<Props> = ({ listItemHistory }) => {
+const InfiniteListActivity: React.FC<Props> = ({ listItemHistory, loading }) => {
 	return (
 		<Box sx={{ width: '100%' }}>
 			<TabWrapper>
-				{listItemHistory.map((itemHistory: itemHistory, index: number) => {
-					return <UserActivityCard itemHistory={itemHistory} key={index} />;
-				})}
-				{/* {isLoading && <SkeletonNftActivityList />}
-
-				{!isLoading && listTokenId && listTokenId.length === 0 && (
-					<NoItemCircleCard title="No data yet!" image={ImageNoOffer} />
-				)} */}
+				{loading ? (
+					<SkeletonNftActivityList />
+				) : (
+					<>
+						{listItemHistory.map((itemHistory: itemHistory, index: number) => {
+							return <UserActivityCard itemHistory={itemHistory} key={index} />;
+						})}
+					</>
+				)}
 			</TabWrapper>
 		</Box>
 	);

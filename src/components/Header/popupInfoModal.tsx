@@ -101,7 +101,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 							</Stack>
 							{error && (
 								<Typography color="red" pl={2}>
-									Can't get ballance
+									Can’t get your balance
 								</Typography>
 							)}
 							<Stack
@@ -165,7 +165,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 										},
 									}}
 									onClick={() => {
-										navigate('#');
+										navigate('profile?tab=2');
 										popupState.close();
 									}}
 								>

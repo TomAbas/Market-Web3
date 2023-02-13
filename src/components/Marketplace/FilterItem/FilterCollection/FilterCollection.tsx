@@ -20,6 +20,8 @@ import { setFilter } from 'redux/slices/nftFilter';
 import { useAppDispatch } from 'redux/hooks';
 import { getAllCollections as getAllCollectionsAPI } from 'api/collectionApi';
 import { Collection } from 'models/collection';
+import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
+import { displayUserFullName } from 'utils/formatDisplay';
 
 const FilterCollection = () => {
 	const dispath = useAppDispatch();
@@ -68,7 +70,7 @@ const FilterCollection = () => {
 				{open && (
 					<ClickAwayListener onClickAway={() => openModal()}>
 						<Box sx={{ position: 'absolute', zIndex: 999, left: 0, top: '110%' }}>
-							<DropdownWrapper sx={{ minWidth: '300px' }}>
+							<DropdownWrapper sx={{ minWidth: '300px', maxWidth: '400px' }}>
 								<Stack
 									direction="row"
 									alignItems="center"
@@ -88,7 +90,19 @@ const FilterCollection = () => {
 												}}
 											>
 												<OptionItemText>
-													{item.collectionName}
+													<NoMaxWidthTooltip
+														title={displayUserFullName(
+															item.collectionName
+														)}
+													>
+														<Typography
+															fontWeight="500"
+															variant="subtitle1"
+															noWrap
+														>
+															{item.collectionName}
+														</Typography>
+													</NoMaxWidthTooltip>
 												</OptionItemText>
 
 												{isItemSelected && (

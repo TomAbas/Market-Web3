@@ -3,7 +3,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import { Grid, Box } from '@mui/material';
 import CardNFT from 'components/Marketplace/CardNFT';
 import FilterItem from './FilterItem';
-import SkeletonCardNft from 'components/SkeletonCardNft';
+import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import { useEffect, useState } from 'react';
 import {
 	handleReset,

@@ -9,9 +9,10 @@ interface Props {
 }
 const ActivityTab: React.FC<Props> = ({ infoUser }) => {
 	const [listUserHistory, setListUserHistory] = useState<itemHistory[]>([]);
-
+	const [loading, setLoading] = useState(true);
 	async function getUserHistoryFc() {
 		setListUserHistory(await getUserHistory(infoUser.userAddress).then((res: any) => res.data));
+		setLoading(false);
 	}
 	useEffect(() => {
 		if (infoUser) {
@@ -22,6 +23,7 @@ const ActivityTab: React.FC<Props> = ({ infoUser }) => {
 		<TabWrapperContainer>
 			<InfiniteListActivity
 				listItemHistory={listUserHistory}
+				loading={loading}
 				// listTokenId={listItemActivity}
 				// isLoading={isLoading}
 				// hasNextPage={hasNextPage}

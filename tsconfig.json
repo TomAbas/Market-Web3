@@ -28,7 +28,7 @@
   "include": [
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/customComponents/NoItem"  ],
   "exclude": [
     "node_modules"
   ],

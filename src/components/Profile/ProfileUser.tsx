@@ -16,9 +16,10 @@ import { getUserItem } from 'api/items/itemsApi';
 import CardNFT from 'components/Marketplace/CardNFT';
 import useInteraction from 'hooks/useInteraction';
 import { handleReset, selectTrigger } from 'redux/slices/nftFilter';
-import SkeletonCardNft from 'components/SkeletonCardNft';
+import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import TabUserInfo from './TabUserInfo/TabUserInfo';
 import useFilterItem from 'hooks/useFilterItem';
+import SkeletonTopProfile from 'components/Skeletons/SkeletonTopProfile/SkeletonTopProfile';
 
 const ProfileUser = () => {
 	const bioRef: any = useRef();
@@ -84,169 +85,176 @@ const ProfileUser = () => {
 	return (
 		<>
 			<Box pt={13}>
-				<Box
-					sx={{
-						position: 'relative',
-						display: 'flex',
-						justifyContent: 'center',
-						'& > img': {
-							width: '100%',
-							objectFit: 'cover',
-							objectPosition: 'center',
-							height: innerHeight,
-							cursor: 'pointer',
-						},
-					}}
-				>
-					<ClickAwayListener onClickAway={handleClickAway}>
-						<img
-							src={infoUser?.background}
-							alt="banner"
-							onClick={() => {
-								setViewFull(true);
-							}}
-						/>
-					</ClickAwayListener>
-
-					<Box
-						sx={{
-							position: 'absolute',
-							left: '50%',
-							bottom: '-60px',
-							transform: 'translateX(-50%)',
-							border: '2px solid #fff',
-							borderRadius: '10px',
-							img: {
-								width: '120px',
-								height: '120px',
-								objectFit: 'cover',
-								objectPosition: 'center',
-								borderRadius: '10px',
-								display: 'block',
-								cursor: 'pointer',
-							},
-						}}
-					>
-						<ClickAwayListener onClickAway={handleClickAvatar}>
-							<img
-								src={infoUser?.avatar}
-								alt="avatar"
-								onClick={() => {
-									setViewAvatar(true);
-								}}
-							/>
-						</ClickAwayListener>
-					</Box>
-					<Box
-						sx={{
-							position: 'absolute',
-							right: '30px',
-							bottom: '20px',
-							button: {
-								padding: '10px 30px',
-								border: '1.5px solid #e7e8ec',
-								transition: 'all 0.4s',
-								borderRadius: '12px',
-								fontWeight: 500,
-								background: 'rgba(157, 195, 230, 0.6)',
-								fontSize: '16px',
-								cursor: 'pointer',
-								fontFamily: 'Montserrat, sans-serif !important',
-								fontStyle: 'italic !important',
-								width: '180px',
-								color: '#fff',
-								'&:hover': {
-									background: '#9DC3E6',
-									borderColor: 'transparent',
-								},
-								img: {
-									width: '20px',
-								},
+				{infoUser ? (
+					<>
+						<Box
+							sx={{
+								position: 'relative',
 								display: 'flex',
-								alignItems: 'center',
-								gap: '6px',
-							},
-						}}
-					>
-						{/* <img src={infoUser?.avatar} alt="avatar" /> */}
-						{!address && (
-							<button onClick={openEditModal}>
-								<img src={editIcon} alt="edit" />
-								<Box>Edit Profile</Box>
-							</button>
-						)}
-					</Box>
-				</Box>
-				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto' }}>
-					<Box sx={{ width: '100%', textAlign: 'center' }}>
-						<Typography variant="h4" fontWeight="500">
-							{infoUser?.username}
-						</Typography>
-						<Stack
-							direction="row"
-							alignItems="center"
-							justifyContent="center"
-							gap={1}
-							sx={{
-								background: '#fff',
-								padding: '8px 32px',
-								width: 'fit-content',
-								mx: 'auto',
-								mt: 2,
-								border: '1.5px solid #E7E8EC',
-								borderRadius: '12px',
-								img: {
-									width: '24px',
+								justifyContent: 'center',
+								'& > img': {
+									width: '100%',
+									objectFit: 'cover',
+									objectPosition: 'center',
+									height: innerHeight,
+									cursor: 'pointer',
 								},
 							}}
 						>
-							<img src={aptos} alt="aptos" />
-							<Box>
-								{infoUser?.userAddress.slice(0, 6) +
-									'...' +
-									infoUser?.userAddress.slice(
-										infoUser.userAddress.length - 4,
-										infoUser.userAddress.length
-									)}
+							<ClickAwayListener onClickAway={handleClickAway}>
+								<img
+									src={infoUser?.background}
+									alt="banner"
+									onClick={() => {
+										setViewFull(true);
+									}}
+								/>
+							</ClickAwayListener>
+
+							<Box
+								sx={{
+									position: 'absolute',
+									left: '50%',
+									bottom: '-60px',
+									transform: 'translateX(-50%)',
+									border: '2px solid #fff',
+									borderRadius: '10px',
+									img: {
+										width: '120px',
+										height: '120px',
+										objectFit: 'cover',
+										objectPosition: 'center',
+										borderRadius: '10px',
+										display: 'block',
+										cursor: 'pointer',
+									},
+								}}
+							>
+								<ClickAwayListener onClickAway={handleClickAvatar}>
+									<img
+										src={infoUser?.avatar}
+										alt="avatar"
+										onClick={() => {
+											setViewAvatar(true);
+										}}
+									/>
+								</ClickAwayListener>
 							</Box>
-						</Stack>
-						<Typography
-							variant="body1"
-							mt={2}
-							ref={bioRef}
-							sx={{
-								transition: 'max-height 0.5s ease-in-out ',
-								margin: '16px auto',
-								padding: '0px 24px',
-								width: '100%',
-								textOverflow: 'ellipsis',
-								wordWrap: 'break-word',
-								whiteSpace: `${show ? 'unset' : 'nowrap'}`,
-								maxHeight: `${show ? '500px' : '49px'}`,
-								height: `${show ? 'auto' : '49px'}`,
-								textAlign: ` ${show ? 'center' : 'center'}`,
-								overflow: 'hidden',
-							}}
-							onClick={() => {
-								if (bioRef.current?.offsetHeight < 45) {
-									return;
-								}
-								setShow(!show);
-							}}
-						>
-							{infoUser?.bio}
-						</Typography>
-					</Box>
-					<Box pb={4}>
-						<TabUserInfo
-							items={itemsDisplay}
-							itemsF={itemsF}
-							isLoading={isLoading}
-							infoUser={infoUser}
-						/>
-					</Box>
+							<Box
+								sx={{
+									position: 'absolute',
+									right: '30px',
+									bottom: '20px',
+									button: {
+										padding: '10px 30px',
+										border: '1.5px solid #e7e8ec',
+										transition: 'all 0.4s',
+										borderRadius: '12px',
+										fontWeight: 500,
+										background: 'rgba(157, 195, 230, 0.6)',
+										fontSize: '16px',
+										cursor: 'pointer',
+										fontFamily: 'Montserrat, sans-serif !important',
+										fontStyle: 'italic !important',
+										width: '180px',
+										color: '#fff',
+										'&:hover': {
+											background: '#9DC3E6',
+											borderColor: 'transparent',
+										},
+										img: {
+											width: '20px',
+										},
+										display: 'flex',
+										alignItems: 'center',
+										gap: '6px',
+									},
+								}}
+							>
+								{/* <img src={infoUser?.avatar} alt="avatar" /> */}
+								{!address && (
+									<button onClick={openEditModal}>
+										<img src={editIcon} alt="edit" />
+										<Box>Edit Profile</Box>
+									</button>
+								)}
+							</Box>
+						</Box>
+						<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto' }}>
+							<Box sx={{ width: '100%', textAlign: 'center' }}>
+								<Typography variant="h4" fontWeight="500">
+									{infoUser?.username}
+								</Typography>
+								<Stack
+									direction="row"
+									alignItems="center"
+									justifyContent="center"
+									gap={1}
+									sx={{
+										background: '#fff',
+										padding: '8px 32px',
+										width: 'fit-content',
+										mx: 'auto',
+										mt: 2,
+										border: '1.5px solid #E7E8EC',
+										borderRadius: '12px',
+										img: {
+											width: '24px',
+										},
+									}}
+								>
+									<img src={aptos} alt="aptos" />
+									<Box>
+										{infoUser?.userAddress.slice(0, 6) +
+											'...' +
+											infoUser?.userAddress.slice(
+												infoUser.userAddress.length - 4,
+												infoUser.userAddress.length
+											)}
+									</Box>
+								</Stack>
+								<Typography
+									variant="body1"
+									mt={2}
+									ref={bioRef}
+									sx={{
+										transition: 'max-height 0.5s ease-in-out ',
+										margin: '16px auto',
+										padding: '0px 24px',
+										width: '100%',
+										textOverflow: 'ellipsis',
+										wordWrap: 'break-word',
+										whiteSpace: `${show ? 'unset' : 'nowrap'}`,
+										maxHeight: `${show ? '500px' : '49px'}`,
+										height: `${show ? 'auto' : '49px'}`,
+										textAlign: ` ${show ? 'center' : 'center'}`,
+										overflow: 'hidden',
+									}}
+									onClick={() => {
+										if (bioRef.current?.offsetHeight < 45) {
+											return;
+										}
+										setShow(!show);
+									}}
+								>
+									{infoUser?.bio}
+								</Typography>
+							</Box>
+						</Box>
+					</>
+				) : (
+					<SkeletonTopProfile />
+				)}
+				<Box pb={4} sx={{ maxWidth: '1440px', mx: 'auto' }}>
+					<TabUserInfo
+						items={itemsDisplay}
+						itemsF={itemsF}
+						isLoading={isLoading}
+						infoUser={infoUser}
+					/>
 				</Box>
 			</Box>
+
 			{infoUser && (
 				<SettingInfoUser
 					infoUser={infoUser}

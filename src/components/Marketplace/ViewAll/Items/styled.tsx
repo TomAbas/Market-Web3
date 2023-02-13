@@ -1,23 +1,9 @@
 import { styled, Typography, Box } from '@mui/material';
 export const screenBreakpoint = 1150;
 export const FilterWrapper = styled(Box)(({ theme }) => ({
-	'& .big-screen': {
-		display: 'block',
-	},
-
-	'& .small-screen': {
-		display: 'none',
-	},
-
-	[theme.breakpoints.down(screenBreakpoint)]: {
-		'& .big-screen': {
-			display: 'none',
-		},
-
-		'& .small-screen': {
-			display: 'block',
-		},
-	},
+	display: 'flex',
+	width: '300px',
+	gap: '10px',
 }));
 
 export const FilterBox = styled(Box)(({ theme }) => ({

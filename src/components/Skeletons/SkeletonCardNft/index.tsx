@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Grid, Skeleton, Typography } from '@mui/material';
-import { ItemCardStyle, ItemContent, ItemImage } from '../Marketplace/CardNFT/styled';
+import { ItemCardStyle, ItemContent, ItemImage } from '../../Marketplace/CardNFT/styled';
 const SkeletonCardNft = () => {
 	return (
 		<>

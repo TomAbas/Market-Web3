@@ -119,6 +119,7 @@ export const OptionItemImage = styled(Box)(({ theme }) => ({
 }));
 
 export const OptionItemText = styled(Typography)(({ theme }) => ({
+	width: '85%',
 	textAlign: 'left',
 	paddingLeft: '24px',
 	fontWeight: 500,

@@ -61,7 +61,7 @@ export default function CardNFTCollection({
 	} = useControlModal();
 	const steps = [
 		{
-			label: 'Confirm order',
+			label: 'Confirm Order',
 			description: 'Please confirm your order',
 		},
 		{
@@ -69,7 +69,7 @@ export default function CardNFTCollection({
 				statusBuyNft.isSuccess
 					? 'Congrats'
 					: statusBuyNft.isError
-					? 'Something went wrong'
+					? 'Something Went Wrong'
 					: 'Result'
 			}`,
 			description: `${

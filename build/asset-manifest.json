@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.daaf3fd5.css",
-    "main.js": "/static/js/main.be57c458.js",
+    "main.css": "/static/css/main.17cbba15.css",
+    "main.js": "/static/js/main.8594aebb.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.d69eb72d.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.fd7bcfd0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.a460d097.chunk.js",
@@ -36,7 +36,6 @@
     "static/media/history-black.webp": "/static/media/history-black.2eeeff35010330433aa4.webp",
     "static/media/Asset10.webp": "/static/media/Asset10.3ab1baa662cd903be010.webp",
     "static/media/graph-blue.webp": "/static/media/graph-blue.64799883fb3df1163b47.webp",
-    "static/media/avatar_default.png": "/static/media/avatar_default.bace53df3c8ea0517a39.png",
     "static/media/Asset9.webp": "/static/media/Asset9.11ceabc91760ce784306.webp",
     "static/media/share-black.webp": "/static/media/share-black.ea926f81e3163465b2a1.webp",
     "static/media/Asset3.webp": "/static/media/Asset3.08f01d8bd2bbb8daa8de.webp",
@@ -90,7 +89,7 @@
     "static/media/icon-verify-check.svg": "/static/media/icon-verify-check.8438e37a3c0c44dcdd51991ad3d9c3d5.svg"
   },
   "entrypoints": [
-    "static/css/main.daaf3fd5.css",
-    "static/js/main.be57c458.js"
+    "static/css/main.17cbba15.css",
+    "static/js/main.8594aebb.js"
   ]
 }
