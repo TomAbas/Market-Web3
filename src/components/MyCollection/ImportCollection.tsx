@@ -21,8 +21,9 @@ interface Props {
 	open: boolean;
 	onClose: () => void;
 	setTrigger: React.Dispatch<React.SetStateAction<boolean>>;
+	collections: any[];
 }
-const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger }) => {
+const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collections }) => {
 	const userInfo = useAppSelector(selectUser);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -67,6 +68,14 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger }) => {
 					setLoading(false);
 					return;
 				}
+				let isExist = collections
+					.map((item) => item.collectionName)
+					.includes(collectionName);
+				if (isExist) {
+					setError('Collection name already exist');
+					setLoading(false);
+					return;
+				}
 				getCollectionData(userInfo?.userAddress!, collectionName)
 					.then((res) => {
 						console.log(res);
@@ -93,12 +102,18 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger }) => {
 				setError(null);
 			} else if (activeStep === 1) {
 				setLoading(true);
-				createCollection(collectionData).then((res) => {
-					setLoading(false);
-					setActiveStep(2);
-					setButtonText('Done');
-					setTrigger((prev) => !prev);
-				});
+				createCollection(collectionData)
+					.then((res) => {
+						setLoading(false);
+						setActiveStep(2);
+						setButtonText('Done');
+						setTrigger((prev) => !prev);
+					})
+					.catch((err) => {
+						setLoading(false);
+						setError('Something went wrong');
+						return;
+					});
 			} else {
 				setLoading(false);
 				setActiveStep(0);

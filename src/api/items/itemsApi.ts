@@ -29,6 +29,10 @@ function getItemCollected(userAddress: string): Promise<Response<any>> {
 	const url = `/item/get-item-by-collected/${userAddress}`;
 	return ClientAxios.get(url).then((res) => res.data);
 }
+function getItemSelected(): Promise<Response<any>> {
+	const url = `/item/getItem`;
+	return ClientAxios.get(url).then((res) => res.data);
+}
 export {
 	getAllItems,
 	getOfferOfItem,
@@ -37,4 +41,5 @@ export {
 	getItemHistory,
 	getItemCreate,
 	getItemCollected,
+	getItemSelected,
 };

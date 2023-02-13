@@ -36,7 +36,7 @@ export default function LayoutMintNFT() {
 				statusBuyNft.isSuccess
 					? 'Congrats'
 					: statusBuyNft.isError
-					? 'Something went wrong'
+					? 'Something Went Wrong'
 					: 'Result'
 			}`,
 			description: `${

@@ -6,6 +6,8 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { ItemImage, FeatureWrapper } from 'components/Marketplace/styled';
 import MediaDisplayCard from 'components/Marketplace/MediaDisplayCard/MediaDisplayCard';
 import { TwitterShareButton } from 'react-share';
+import Share from 'assets/icons/share-black.webp';
+
 //img
 import HeartFullRed from '../../../../assets/icons/heart-full-red.svg';
 import HeartFullBlack from '../../../../assets/icons/heart-black.svg';
@@ -271,8 +273,18 @@ const ItemInfo: React.FC<Props> = ({
 									<Typography variant="body1">{item?.countFav}</Typography>
 								</Stack>
 							</FeatureWrapper>
-
-							<FeatureWrapper>
+							<TwitterShareButton
+								url={`${RELATED_URLS.MetaSpacecyHomePage}/#/item/${item?._id}`}
+								title={`Look what I found! Item ${item?.itemName}`}
+								// hashtags={['Music', 'Game']}
+								via="Metaspacecy"
+								style={{ textAlign: 'left' }}
+							>
+								<FeatureWrapper sx={{ padding: '14px 15px', cursor: 'pointer' }}>
+									<img src={Share} alt="icon share" style={{ height: '13px' }} />
+								</FeatureWrapper>
+							</TwitterShareButton>
+							{/* <FeatureWrapper>
 								<DropDown
 									activeDropDown={activeDropDown}
 									setActiveDropDown={setActiveDropDown}
@@ -280,7 +292,7 @@ const ItemInfo: React.FC<Props> = ({
 									dropdownContent={<DropdownContent item={item} />}
 									sx={{ right: 0, left: 'unset' }}
 								/>
-							</FeatureWrapper>
+							</FeatureWrapper> */}
 						</Stack>
 					</Stack>
 				</>

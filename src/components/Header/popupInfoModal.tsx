@@ -179,7 +179,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 											},
 										}}
 									>
-										Favorite
+										Favorites
 									</Link>
 								</Stack>
 								<Stack
@@ -258,7 +258,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 											},
 										}}
 									>
-										Logout
+										Log Out
 									</Box>
 								</Stack>
 							</Stack>

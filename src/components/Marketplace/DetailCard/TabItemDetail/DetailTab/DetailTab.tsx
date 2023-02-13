@@ -3,6 +3,7 @@ import { TabWrapper, DetailTitle } from './styled';
 import { Skeleton, Stack, Typography } from '@mui/material';
 import { nftItem } from 'models/item';
 import { NETWORKINFO } from 'constants/etherscan.constant';
+import { displayAddress } from 'utils/formatDisplay';
 interface Props {
 	userAmountOfItem: string;
 	item: nftItem;
@@ -18,6 +19,8 @@ const DetailTab: React.FC<Props> = ({ userAmountOfItem, item }) => {
 							<Typography variant="body1">Blockchain:</Typography>
 							<Typography variant="body1">Owned Quantity:</Typography>
 							<Typography variant="body1">Royalty Fee:</Typography>
+							<Typography variant="body1">Royalty Payee:</Typography>
+							<Typography variant="body1">Description:</Typography>
 							{/* <Typography variant="body1">Supply:</Typography> */}
 						</DetailTitle>
 
@@ -28,6 +31,8 @@ const DetailTab: React.FC<Props> = ({ userAmountOfItem, item }) => {
 							</Typography>
 							<Typography variant="body1">{userAmountOfItem}</Typography>
 							<Typography variant="body1">{item?.royalties / 100}%</Typography>
+							<Typography variant="body1">{displayAddress(item?.creator)}</Typography>
+							<Typography variant="body1">{item?.description}</Typography>
 						</Stack>
 					</Stack>
 				</TabWrapper>
