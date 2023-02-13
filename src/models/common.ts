@@ -44,3 +44,8 @@ export interface filterNft {
 	isFiltering: boolean;
 	statusRoyal: number[];
 }
+
+export interface PriceActivity {
+	date: string;
+	avgPrice: number;
+}

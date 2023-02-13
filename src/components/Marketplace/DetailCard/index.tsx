@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, Stack, Typography, Skeleton } from '@mui/material';
+import { Box, Stack, Typography, Skeleton, Grid } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useOutletContext, useLocation, useParams } from 'react-router-dom';
 import useControlModal from 'hooks/useControlModal';
@@ -27,6 +27,7 @@ import ItemInfo from './ItemInfo/ItemInfo';
 import { selectTrigger } from 'redux/slices/nftFilter';
 import MoreItem from './MoreItem/MoreItem';
 import useGetItemCollection from 'hooks/useGetItemCollection';
+import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 export default function DetailCard() {
 	let { itemId } = useParams();
 	const search = useLocation().search;
@@ -168,12 +169,18 @@ export default function DetailCard() {
 					</Typography>
 
 					<Box sx={{ mt: 5, px: 1 }}>
-						{collectionInfo && (
+						{collectionInfo ? (
 							<MoreItem
 								currentItemId={item?._id}
 								collection={collectionInfo}
-								// loadingCollectionImg={loadingCollectionImg}
+								loadingCollectionImg={loadingCollectionImg}
 							/>
+						) : (
+							<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+								{new Array(4).fill(null).map((item, idx) => (
+									<SkeletonCardNft key={idx} />
+								))}
+							</Grid>
 						)}
 					</Box>
 				</Box>

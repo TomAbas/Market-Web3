@@ -27,28 +27,24 @@ import useFilterItem from 'hooks/useFilterItem';
 import { Collection } from 'models/collection';
 import { FilterWrapper } from '../ViewAll/Items/styled';
 import SkeletonTopProfile from 'components/Skeletons/SkeletonTopProfile/SkeletonTopProfile';
+import { selectUser } from 'redux/slices/userInfo';
+import TabCollectionDetail from './TabCollectionDetail/TabCollectionDetail';
 const CollectionDetail = () => {
 	const desRef: any = useRef();
-	const inputRef: any = useRef();
 	const dispatch = useAppDispatch();
 	const [show, setShow] = useState(false);
 	const { collectionId } = useParams();
 	let arr = [1, 2, 3, 4];
-	const { checkIsLike, likeItem } = useInteraction();
 	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 	const [collectionInfo, setCollectionInfo] = useState<Collection>();
-	const { itemsDisplay } = useFilterItem(collectionInfo?.listItem || []);
 	const [loadingCollectionImg, setLoadingCollectionImg] = useState(true);
 	const triggerFetchNft = useAppSelector(selectTrigger);
+	const userInfo = useAppSelector(selectUser);
 
-	const navigate = useNavigate();
 	async function fetchCollectionItems() {
 		let collection = await getItemOfCollection(collectionId!).then((res: any) => res.data);
 		setCollectionInfo(collection);
 		setLoadingCollectionImg(false);
-	}
-	function filterNameItem() {
-		dispatch(setFilter({ itemName: inputRef.current.value.toLowerCase() }));
 	}
 	useEffect(() => {
 		fetchCollectionItems();
@@ -187,71 +183,8 @@ const CollectionDetail = () => {
 							/>
 						</FeatureWrapper>
 					</Stack>
-					<Box
-						sx={{ display: 'flex', width: 'auto', justifyContent: 'space-between' }}
-						px={1}
-					>
-						<FilterWrapper>
-							<FilterPrice />
-							<FilterStatus />
-						</FilterWrapper>
-						<Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
-							<InputItem sx={{ marginTop: '0' }}>
-								<input
-									type="text"
-									placeholder="Search name ..."
-									onChange={filterNameItem}
-									ref={inputRef}
-								/>
-							</InputItem>
-							<Tooltip
-								title="Add Item"
-								placement="top"
-								arrow
-								sx={{ marginLeft: 'auto' }}
-								onClick={() => navigate(`/mint?query=2`)}
-							>
-								<Box>
-									<ButtonWhite
-										sx={{
-											py: '10px',
-											minWidth: '46px',
-											mb: 0,
-											background: '#fff',
-											border: '1px solid #E7E8EC',
-											px: 0,
-										}}
-									>
-										<AddIcon />
-									</ButtonWhite>
-								</Box>
-							</Tooltip>
-						</Box>
-					</Box>
-					<Box py={4}>
-						<Grid container maxWidth="1440px" mx="auto" spacing={1}>
-							{loadingOffers ? (
-								<>
-									{arr.map((item, idx) => (
-										<SkeletonCardNft key={idx} />
-									))}
-								</>
-							) : (
-								<>
-									{itemsDisplay?.map((offer: any, index: any) => (
-										<CardNFT
-											itemLiked={checkIsLike}
-											likeItem={likeItem}
-											offers={offers}
-											offer={offer}
-											index={index}
-											key={index}
-											loadingOffers={loadingOffers}
-										/>
-									))}
-								</>
-							)}
-						</Grid>
+					<Box>
+						<TabCollectionDetail collectionInfo={collectionInfo!} />
 					</Box>
 				</Box>
 			</Box>
