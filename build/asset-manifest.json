@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.17cbba15.css",
-    "main.js": "/static/js/main.8594aebb.js",
+    "main.js": "/static/js/main.2702cf9a.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.d69eb72d.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.fd7bcfd0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.a460d097.chunk.js",
@@ -17,8 +17,6 @@
     "reactPlayerPreview.js": "/static/js/reactPlayerPreview.26a7f5a6.chunk.js",
     "static/media/Metaspacecy-blue.svg": "/static/media/Metaspacecy-blue.5af39b2d25a1f86f45affa2d6bcc9b63.svg",
     "static/media/logo-metaspacecy-gray-moblie.webp": "/static/media/logo-metaspacecy-gray-moblie.24d43050f1a6e8f1e08c.webp",
-    "static/media/Asset8.webp": "/static/media/Asset8.fa9e2c095872c8a33f89.webp",
-    "static/media/Asset7.webp": "/static/media/Asset7.78e976b83a5b2519865c.webp",
     "static/media/Asset2.webp": "/static/media/Asset2.b1ce348ff08ee0bcdcc6.webp",
     "static/media/Asset1.webp": "/static/media/Asset1.431c3a85d8a801026a7c.webp",
     "static/media/logo-metaspacecy-gray.webp": "/static/media/logo-metaspacecy-gray.f30a4fc82aa9b0222131.webp",
@@ -31,12 +29,9 @@
     "static/media/history-blue.webp": "/static/media/history-blue.e1ed7726ac720b6566ca.webp",
     "static/media/favorite-blue.webp": "/static/media/favorite-blue.0a94523550e4eca7b0da.webp",
     "static/media/Asset5.webp": "/static/media/Asset5.f665022a9620334872a6.webp",
-    "static/media/Asset6.webp": "/static/media/Asset6.acf57e7b8c1e547d2b4e.webp",
     "static/media/favorite-black.webp": "/static/media/favorite-black.e19164320ef4e4ed6aa2.webp",
     "static/media/history-black.webp": "/static/media/history-black.2eeeff35010330433aa4.webp",
-    "static/media/Asset10.webp": "/static/media/Asset10.3ab1baa662cd903be010.webp",
     "static/media/graph-blue.webp": "/static/media/graph-blue.64799883fb3df1163b47.webp",
-    "static/media/Asset9.webp": "/static/media/Asset9.11ceabc91760ce784306.webp",
     "static/media/share-black.webp": "/static/media/share-black.ea926f81e3163465b2a1.webp",
     "static/media/Asset3.webp": "/static/media/Asset3.08f01d8bd2bbb8daa8de.webp",
     "static/media/Asset4.webp": "/static/media/Asset4.60b9700c2ddc864894de.webp",
@@ -78,6 +73,7 @@
     "static/media/icon-heart-black.svg": "/static/media/icon-heart-black.cc812cc871988983211ff255413d2f3f.svg",
     "static/media/youtubeicon.svg": "/static/media/youtubeicon.2c5308a46e1dff035bdffaa2abb09f66.svg",
     "static/media/icon-top-trader.svg": "/static/media/icon-top-trader.0fdca5b5e378fef07ca35fc6b0ffa496.svg",
+    "static/media/icon-check.svg": "/static/media/icon-check.6d55e8f4a45170c3870128315659a94b.svg",
     "static/media/item-icon.svg": "/static/media/item-icon.1268efff668f0bf7938cb0e35891d7f6.svg",
     "static/media/icon-colectibles.svg": "/static/media/icon-colectibles.c4979bcae6a76bb5f9770bd61063dbd1.svg",
     "static/media/telegram-gray.svg": "/static/media/telegram-gray.f1b2cc3510e3b1136c1f92b57a65303e.svg",
@@ -90,6 +86,6 @@
   },
   "entrypoints": [
     "static/css/main.17cbba15.css",
-    "static/js/main.8594aebb.js"
+    "static/js/main.2702cf9a.js"
   ]
 }
