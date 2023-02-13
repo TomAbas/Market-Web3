@@ -211,7 +211,7 @@ export default function Marketplace() {
 					<Box sx={{ mt: 0, mb: 4 }}>
 						<HeaderSection>
 							<MainHeader variant="h2" fontWeight="500" fontStyle="italic">
-								Metaspacecy is the universal NFT marketplace
+								Metaspacecy Is The Universal NFT Marketplace
 							</MainHeader>
 						</HeaderSection>
 

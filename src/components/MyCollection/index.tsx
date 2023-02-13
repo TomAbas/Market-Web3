@@ -12,11 +12,14 @@ import { useNavigate } from 'react-router-dom';
 import SkeletonCardNft from 'components/SkeletonCardNft';
 import { Collection } from 'models/collection';
 import { displayAddress } from 'utils/formatDisplay';
+import ImportCollection from './ImportCollection';
 export default function MyCollection() {
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	const navigate = useNavigate();
 	const [collections, setCollections] = useState<Collection[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [trigger, setTrigger] = useState(false);
+	const [openModalImport, setOpenModalImport] = useState(false);
 	const userInfo = useAppSelector(selectUser);
 	useEffect(() => {
 		if (!userInfo?.userAddress) return;
@@ -27,7 +30,8 @@ export default function MyCollection() {
 			});
 		}
 		fetchCollection();
-	}, [userInfo]);
+	}, [userInfo, trigger]);
+
 	return (
 		<>
 			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 16, pb: 4 }}>
@@ -44,20 +48,20 @@ export default function MyCollection() {
 						sx={{ width: '100%', marginTop: '20px' }}
 						spacing={2}
 					>
-						<Box sx={{ width: '230px' }}>
+						<Box sx={{ width: '240px' }}>
 							<ButtonWhite
 								sx={{ height: '100%', mb: 0 }}
 								onClick={() => navigate(`/mint?query=1`)}
 							>
-								<span>Create a collection</span>
+								<span>Create A Collection</span>
 							</ButtonWhite>
 						</Box>
 						<Box sx={{ width: '250px' }}>
 							<ButtonWhite
 								sx={{ height: '100%', mb: 0 }}
-								// onClick={() => navigate(`/mint?query=1`)}
+								onClick={() => setOpenModalImport(true)}
 							>
-								<span>Import a collection</span>
+								<span>Import A Collection</span>
 							</ButtonWhite>
 						</Box>
 					</Stack>
@@ -153,6 +157,11 @@ export default function MyCollection() {
 					)}
 				</Grid>
 			</Box>
+			<ImportCollection
+				open={openModalImport}
+				onClose={() => setOpenModalImport(false)}
+				setTrigger={setTrigger}
+			/>
 		</>
 	);
 }

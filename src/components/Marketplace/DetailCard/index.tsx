@@ -66,7 +66,7 @@ export default function DetailCard() {
 	} = useControlModal();
 	const steps = [
 		{
-			label: 'Confirm order',
+			label: 'Confirm Order',
 			description: 'Please confirm your order',
 		},
 		{
@@ -74,7 +74,7 @@ export default function DetailCard() {
 				statusBuyNft.isSuccess
 					? 'Congrats'
 					: statusBuyNft.isError
-					? 'Something went wrong'
+					? 'Something Went Wrong'
 					: 'Result'
 			}`,
 			description: `${
@@ -126,7 +126,7 @@ export default function DetailCard() {
 				)
 			);
 		} catch (error) {
-			toast.error("Can't not get your balance of Aptos Coin");
+			toast.error('Can’t get your balance of Aptos Coin');
 		}
 	}
 	useEffect(() => {
@@ -164,7 +164,7 @@ export default function DetailCard() {
 				</Box>
 				<Box sx={{ mt: 5 }}>
 					<Typography variant="h3" sx={{ textAlign: 'center', fontWeight: '700' }}>
-						More from this collection
+						More From This Collection
 					</Typography>
 
 					<Box sx={{ mt: 5, px: 1 }}>
