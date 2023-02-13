@@ -343,7 +343,7 @@ const EditInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal }) =>
 											size={25}
 										/>
 									)}
-									<Typography>Submit</Typography>
+									<Typography>Save</Typography>
 								</Stack>
 							</ButtonWhite>
 						</Stack>

@@ -289,13 +289,6 @@ export const SubTitle = styled(Typography)(({ theme }) => ({
 }));
 
 export const LinkWrapper = styled('a')(({ theme }) => ({
-	// ...(theme.palette.mode === 'light'
-	// 	? {
-	// 			color: 'black',
-	// 	  }
-	// 	: {
-	// 			color: 'white',
-	// 	  }),
 	color: '#131740',
 }));
 
