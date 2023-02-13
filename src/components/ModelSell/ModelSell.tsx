@@ -119,7 +119,7 @@ const ModelSell: React.FC<Props> = ({
 				<Box px={3}>
 					<Stack direction="row" justifyContent="space-between">
 						<Typography variant="body1" fontWeight={500} mb={1}>
-							Total fee
+							Total Fee
 						</Typography>
 						<Typography
 							variant="body1"
@@ -176,7 +176,7 @@ const ModelSell: React.FC<Props> = ({
 							mb={1}
 							sx={{ fontSize: '12px' }}
 						>
-							Service fee:{' '}
+							Service Fee:{' '}
 						</Typography>
 						<Typography
 							variant="body1"
@@ -194,7 +194,7 @@ const ModelSell: React.FC<Props> = ({
 							mb={1}
 							sx={{ fontSize: '12px' }}
 						>
-							Royalty fee:{' '}
+							Royalty Fee:{' '}
 						</Typography>
 						<Typography
 							variant="body1"

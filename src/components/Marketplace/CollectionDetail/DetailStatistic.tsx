@@ -14,8 +14,8 @@ export const DetailCollectionStatistic = (props: Props) => {
 	const listStatistic = [
 		{ title: 'Items', number: props.numberItems },
 		{ title: 'Owners', number: props.numberOwners },
-		{ title: 'Floor Price', number: props.floorPrice },
-		{ title: 'Volume Traded', number: props.volumeTrades },
+		{ title: 'Floor Price', number: props.floorPrice / 10 ** 8 },
+		{ title: 'Volume Traded', number: (props.volumeTrades / 10 ** 8).toFixed(2) },
 	];
 	return (
 		<DetailStatistic>
