@@ -83,7 +83,7 @@ const Index = () => {
 			<HeaderSection>
 				<FilterContent>
 					<MainHeader variant="h2" fontWeight="600" fontStyle="italic">
-						Top collections
+						Top Collections
 					</MainHeader>
 					<DropDown
 						activeDropDown={activeDropDown}
@@ -132,7 +132,7 @@ const Index = () => {
 					},
 				}}
 			>
-				<button onClick={handleGoToRanking}>Go to ranking</button>
+				<button onClick={handleGoToRanking}>Go To Rankings</button>
 			</Box>
 
 			{/* <Box sx={{ marginTop: '50px', display: 'flex', justifyContent: 'center' }}>

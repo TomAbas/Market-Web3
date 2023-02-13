@@ -218,7 +218,7 @@ const ItemInfo: React.FC<Props> = ({
 											<>
 												{itemResource?.owner != userInfo?.userAddress ? (
 													<button onClick={handleOpenModalBuy}>
-														Buy now
+														Buy Now
 													</button>
 												) : (
 													<button onClick={handleWithdrawItem}>
@@ -230,7 +230,7 @@ const ItemInfo: React.FC<Props> = ({
 											<>
 												{item?.owner.includes(userInfo?.userAddress!) && (
 													<button onClick={handleOpenModalBuy}>
-														Sell item
+														Sell Item
 													</button>
 												)}
 											</>

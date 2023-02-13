@@ -40,7 +40,7 @@ const LayoutCreateCollection: React.FC<Props> = ({ setValue, handleCreateItem })
 	const { handleInputFile, createCollection, base64image, updateFormInput } = useCreateMintSell();
 	const steps = [
 		{
-			label: 'Create your collection',
+			label: 'Create Your Collection',
 			description: 'Please confirm your transaction',
 		},
 		{
@@ -48,7 +48,7 @@ const LayoutCreateCollection: React.FC<Props> = ({ setValue, handleCreateItem })
 				statusBuyNft.isSuccess
 					? 'Congrats'
 					: statusBuyNft.isError
-					? 'Something went wrong'
+					? 'Something Went Wrong'
 					: 'Result'
 			}`,
 			description: `${

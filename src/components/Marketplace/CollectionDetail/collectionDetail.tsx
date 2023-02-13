@@ -126,9 +126,9 @@ const CollectionDetail = () => {
 							{collectionInfo && (
 								<DetailCollectionStatistic
 									numberItems={collectionInfo?.listItem?.length}
-									numberOwners={1}
-									floorPrice={0}
-									volumeTrades={0}
+									numberOwners={collectionInfo?.countOwner}
+									floorPrice={collectionInfo?.minTradeItem[0]?.minTradeItem || 0}
+									volumeTrades={collectionInfo?.volumeTrade}
 								/>
 							)}
 						</Box>

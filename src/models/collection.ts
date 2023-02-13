@@ -19,6 +19,8 @@ export interface Collection {
 	ownerInfo: User;
 	listItem: nftItem[];
 	isINO: Number;
+	minTradeItem: any[];
+	countOwner: number;
 }
 
 export interface CollectionTop extends Collection {

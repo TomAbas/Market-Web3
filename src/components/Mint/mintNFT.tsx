@@ -28,7 +28,7 @@ export default function LayoutMintNFT() {
 		useCreateMintSell();
 	const steps = [
 		{
-			label: 'Create your item',
+			label: 'Create Your Item',
 			description: 'Please confirm your transaction',
 		},
 		{
@@ -91,7 +91,7 @@ export default function LayoutMintNFT() {
 				setDataFormInput={setDataFormInput}
 			/>
 			<ModalBuy
-				title="Create an item"
+				title="Create An Item"
 				steps={steps}
 				openState={openModalBuy}
 				closeModal={() => {

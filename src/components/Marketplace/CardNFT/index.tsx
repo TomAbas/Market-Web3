@@ -78,7 +78,7 @@ export default function CardNFT({
 	}
 	const steps = [
 		{
-			label: 'Confirm order',
+			label: 'Confirm Order',
 			description: 'Please confirm your order',
 		},
 		{
@@ -86,7 +86,7 @@ export default function CardNFT({
 				statusBuyNft.isSuccess
 					? 'Congrats'
 					: statusBuyNft.isError
-					? 'Something went wrong'
+					? 'Something Went Wrong'
 					: 'Result'
 			}`,
 			description: `${
@@ -94,7 +94,7 @@ export default function CardNFT({
 					? 'Successfully bought NFT item'
 					: statusBuyNft.isError
 					? 'Try again'
-					: '123'
+					: ''
 			}`,
 		},
 	];
