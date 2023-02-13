@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect, useState } from 'react';
 import CardTopCollection from '../../CardTopCollection/CardTopCollection';
-import SkeletonCollectionRankingList from 'components/SkeletonCardTopCollections/SkeletonCardTopCollections';
-import ErrorBoundary from 'components/SkeletonCardTopCollections/ErrorHandleComponents';
+import SkeletonCollectionRankingList from 'components/Skeletons/SkeletonCardTopCollections/SkeletonCardTopCollections';
+import ErrorBoundary from 'components/Skeletons/SkeletonCardTopCollections/ErrorHandleComponents';
 import { CollectionTop } from 'models/collection';
 import { getTopCollections as getTopCollectionsAPI } from '../../../../api/collectionApi';
 interface Props {

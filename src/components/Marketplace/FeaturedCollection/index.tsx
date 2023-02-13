@@ -15,7 +15,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import SkeletonCardNft from 'components/SkeletonCardNft';
+import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import DropDown from 'components/CustomUI/DropDown';
 import { getCategoryCollections, getAllCollections } from 'api/collectionApi';
 import { displayAddress, displayUserFullName } from 'utils/formatDisplay';

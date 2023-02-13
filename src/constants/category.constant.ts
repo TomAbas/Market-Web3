@@ -5,7 +5,7 @@ export interface Category {
 }
 
 export const listCategory: Category[] = [
-	{ id: 0, name: 'Other', value: 0 },
+	// { id: 0, name: 'Other', value: 0 },
 	{ id: 1, name: 'Art', value: 1 },
 	{ id: 2, name: 'Music', value: 2 },
 	{ id: 3, name: 'Photography', value: 3 },

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid } from '@mui/material';
-import SkeletonCardNft from 'components/SkeletonCardNft';
+import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import CardNFT from 'components/Marketplace/CardNFT';
 import { nftItem } from 'models/item';
 import useInteraction from 'hooks/useInteraction';

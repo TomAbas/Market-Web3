@@ -15,6 +15,7 @@ export interface Collection {
 	chainId: string;
 	category: number;
 	isConfirm: boolean;
+	creatorInfo: User;
 	ownerInfo: User;
 	listItem: nftItem[];
 	isINO: Number;

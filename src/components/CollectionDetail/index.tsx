@@ -10,7 +10,7 @@ import { getCollectionByUserAddress } from '../../api/collections/collectionApi'
 import { getCollectionData } from '../../service/aptos.service';
 import aptos from '../../assets/images/card/aptos.jpg';
 import { useSizeObersver } from 'contexts/SizeObserver';
-import SkeletonCardNft from 'components/SkeletonCardNft';
+import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectUser, toggleSettingModalA } from 'redux/slices/userInfo';
 const MyCollectionDetail = () => {

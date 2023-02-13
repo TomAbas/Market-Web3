@@ -165,7 +165,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 										},
 									}}
 									onClick={() => {
-										navigate('#');
+										navigate('profile?tab=2');
 										popupState.close();
 									}}
 								>

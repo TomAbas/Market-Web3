@@ -9,9 +9,9 @@ import { selectUser } from 'redux/slices/userInfo';
 import { getCollectionByUserAddress } from '../../api/collections/collectionApi';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import { useNavigate } from 'react-router-dom';
-import SkeletonCardNft from 'components/SkeletonCardNft';
+import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import { Collection } from 'models/collection';
-import { displayAddress } from 'utils/formatDisplay';
+import CardCollection from 'components/Marketplace/CardCollection/CardCollection';
 export default function MyCollection() {
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	const navigate = useNavigate();
@@ -74,80 +74,7 @@ export default function MyCollection() {
 					) : (
 						<>
 							{collections.map((collection, index) => (
-								<Grid
-									xs={6}
-									sm={4}
-									md={3}
-									p={1}
-									key={index}
-									onClick={() => {
-										navigate(`/collection-detail/${collection._id}`);
-									}}
-								>
-									<Box
-										sx={{
-											border: '1.5px solid #e7e8ec',
-											borderRadius: '12px',
-											overflow: 'hidden',
-											cursor: 'pointer',
-											transition: 'all 0.4s',
-											padding: '12px 12px 0',
-											background: '#fff',
-											'&:hover': {
-												boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
-											},
-										}}
-									>
-										<ItemImage>
-											<Box className="main-img">
-												<img src={collection.logo} alt="collection" />
-											</Box>
-										</ItemImage>
-										<Box py={1.5}>
-											<Typography variant="h6">
-												{collection.collectionName}
-											</Typography>
-											<Stack
-												mt={1}
-												direction="row"
-												alignItems="center"
-												justifyContent="space-between"
-												gap={1}
-											>
-												<Stack direction="row" gap={1} alignItems="center">
-													<Box
-														sx={{
-															img: {
-																width: '32px',
-																height: '32px',
-																objectFit: 'cover',
-																objectPosition: 'center',
-																borderRadius: '50%',
-															},
-														}}
-													>
-														<img src={item} alt="collection" />
-													</Box>
-													<Typography variant="body1">
-														<a
-															href={`/#/profile?address=${collection.userAddress}`}
-														>
-															{displayAddress(collection.userAddress)}
-														</a>
-													</Typography>
-												</Stack>
-												<Box>
-													<Typography variant="body1">
-														{collection.listItem.length}{' '}
-														{collection.listItem.length > 1
-															? 'items'
-															: 'item'}
-													</Typography>
-												</Box>
-											</Stack>
-										</Box>
-									</Box>
-								</Grid>
+								<CardCollection key={index} collection={collection} />
 							))}
 						</>
 					)}
@@ -155,4 +82,75 @@ export default function MyCollection() {
 			</Box>
 		</>
 	);
+}
+
+{
+	/* <Grid
+	xs={6}
+	sm={4}
+	md={3}
+	p={1}
+	key={index}
+	onClick={() => {
+		navigate(`/collection-detail/${collection._id}`);
+	}}
+>
+	<Box
+		sx={{
+			border: '1.5px solid #e7e8ec',
+			borderRadius: '12px',
+			overflow: 'hidden',
+			cursor: 'pointer',
+			transition: 'all 0.4s',
+			padding: '12px 12px 0',
+			background: '#fff',
+			'&:hover': {
+				boxShadow: '0px 3px 6px rgb(13 16 45 / 25%)',
+			},
+		}}
+	>
+		<ItemImage>
+			<Box className="main-img">
+				<img src={collection.logo} alt="collection" />
+			</Box>
+		</ItemImage>
+		<Box py={1.5}>
+			<Typography variant="h6">{collection.collectionName}</Typography>
+			<Stack
+				mt={1}
+				direction="row"
+				alignItems="center"
+				justifyContent="space-between"
+				gap={1}
+			>
+				<Stack direction="row" gap={1} alignItems="center">
+					<Box
+						sx={{
+							img: {
+								width: '32px',
+								height: '32px',
+								objectFit: 'cover',
+								objectPosition: 'center',
+								borderRadius: '50%',
+							},
+						}}
+					>
+						<img src={item} alt="collection" />
+					</Box>
+					<Typography variant="body1">
+						<a href={`/#/profile?address=${collection.userAddress}`}>
+							{displayAddress(collection.userAddress)}
+						</a>
+					</Typography>
+				</Stack>
+				<Box>
+					<Typography variant="body1">
+						{collection.listItem.length}{' '}
+						{collection.listItem.length > 1 ? 'items' : 'item'}
+					</Typography>
+				</Box>
+			</Stack>
+		</Box>
+	</Box>
+</Grid>; */
 }

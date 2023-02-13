@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Grid, Box, Tooltip } from '@mui/material';
-import SkeletonCardNft from 'components/SkeletonCardNft';
+import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import CardNFT from 'components/Marketplace/CardNFT';
 import { nftItem } from 'models/item';
 import useInteraction from 'hooks/useInteraction';
@@ -14,6 +14,7 @@ import { useAppDispatch } from 'redux/hooks';
 import { setFilter } from 'redux/slices/nftFilter';
 import FilterRoyal from 'components/Marketplace/FilterItem/FilterRoyal/FilterRoyal';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { FilterWrapper } from 'components/Marketplace/ViewAll/Items/styled';
 interface Props {
 	items: nftItem[];
 	isLoading: boolean;
@@ -39,12 +40,12 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 					padding: '0px 8px',
 				}}
 			>
-				<Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
+				<FilterWrapper>
 					<FilterPrice />
 					<FilterStatus />
 					<FilterCollection />
 					<FilterRoyal />
-				</Box>
+				</FilterWrapper>
 				<Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
 					<InputItem sx={{ marginTop: '0' }}>
 						<input
@@ -81,7 +82,7 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 					)}
 				</Box>
 			</Box>
-			<Grid container maxWidth="1440px" mx="auto" spacing={1} mt={1}>
+			<Grid container maxWidth="1440px" mx="auto" spacing={1} mt={3}>
 				{isLoading ? (
 					<>
 						{new Array(4).fill(null).map((_, index) => (

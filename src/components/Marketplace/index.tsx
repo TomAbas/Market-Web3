@@ -31,7 +31,7 @@ import {
 	ItemImage,
 } from './styled';
 import Newsletter from './NewsLetter';
-import SkeletonCardNft from 'components/SkeletonCardNft';
+import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import { useOutletContext } from 'react-router-dom';
 import TopCollection from './ViewAll/TopCollection';
 import FeaturedCollection from './FeaturedCollection';

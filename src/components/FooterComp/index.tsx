@@ -256,7 +256,7 @@ const FooterComp: React.FC = () => {
 				{
 					id: 2,
 					name: 'Favorites',
-					link: '',
+					link: '#/profile?tab=2',
 					target: '',
 				},
 

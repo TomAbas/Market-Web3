@@ -82,6 +82,14 @@ body::-webkit-scrollbar-thumb {
 		width: 1px;
 	}
 }
+@keyframes spin{
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
 @keyframes smoothAppear {
 	0% {
 		opacity: 0.5;

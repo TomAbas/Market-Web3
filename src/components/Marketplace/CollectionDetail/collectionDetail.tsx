@@ -9,8 +9,8 @@ import HeartBlack from 'assets/icons/icon-heart-black.svg';
 import AddIcon from '@mui/icons-material/Add';
 import IconReload from 'assets/icons/icon-reload.svg';
 import Share from 'assets/icons/share-black.webp';
-import { useSearchParams, useOutletContext } from 'react-router-dom';
-import SkeletonCardNft from 'components/SkeletonCardNft';
+import { useOutletContext } from 'react-router-dom';
+import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import useInteraction from 'hooks/useInteraction';
 import { getItemOfCollection } from 'api/collectionApi';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
@@ -25,6 +25,8 @@ import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import { RELATED_URLS } from 'constants/index';
 import useFilterItem from 'hooks/useFilterItem';
 import { Collection } from 'models/collection';
+import { FilterWrapper } from '../ViewAll/Items/styled';
+import SkeletonTopProfile from 'components/Skeletons/SkeletonTopProfile/SkeletonTopProfile';
 const CollectionDetail = () => {
 	const desRef: any = useRef();
 	const inputRef: any = useRef();
@@ -60,47 +62,7 @@ const CollectionDetail = () => {
 		<>
 			<Box pt={13}>
 				{loadingCollectionImg ? (
-					<Box
-						sx={{
-							position: 'relative',
-							img: {
-								width: '100%',
-								objectFit: 'cover',
-								objectPosition: 'center',
-								height: '300px',
-							},
-						}}
-					>
-						{' '}
-						<Skeleton width="100%">
-							<Box sx={{ height: '400px' }}>
-								<img src={collectionInfo?.logo} alt="banner" />
-							</Box>
-						</Skeleton>
-						<Box
-							sx={{
-								position: 'absolute',
-								left: '50%',
-								bottom: '0px',
-								transform: 'translateX(-50%)',
-								border: '2px solid #fff',
-								borderRadius: '10px',
-								img: {
-									width: '100px',
-									height: '100px',
-									objectFit: 'cover',
-									objectPosition: 'center',
-									borderRadius: '10px',
-								},
-							}}
-						>
-							<Skeleton width="100%">
-								<Box sx={{ width: '100px', height: '100px' }}>
-									<img src={collectionInfo?.logo} alt="avatar" />
-								</Box>
-							</Skeleton>
-						</Box>
-					</Box>
+					<SkeletonTopProfile />
 				) : (
 					<Box
 						sx={{
@@ -226,11 +188,14 @@ const CollectionDetail = () => {
 							/>
 						</FeatureWrapper>
 					</Stack>
-					<Box sx={{ display: 'flex', width: 'auto', justifyContent: 'space-between' }}>
-						<Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
+					<Box
+						sx={{ display: 'flex', width: 'auto', justifyContent: 'space-between' }}
+						px={1}
+					>
+						<FilterWrapper>
 							<FilterPrice />
 							<FilterStatus />
-						</Box>
+						</FilterWrapper>
 						<Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
 							<InputItem sx={{ marginTop: '0' }}>
 								<input
@@ -265,7 +230,7 @@ const CollectionDetail = () => {
 						</Box>
 					</Box>
 					<Box py={4}>
-						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+						<Grid container maxWidth="1440px" mx="auto" spacing={1}>
 							{loadingOffers ? (
 								<>
 									{arr.map((item, idx) => (

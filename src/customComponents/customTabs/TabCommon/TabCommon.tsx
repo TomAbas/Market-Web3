@@ -7,7 +7,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import { Stack, Tab, Typography, useTheme } from '@mui/material';
 // styled
 import { TabListStyled, TabStyled } from './styled';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { PATH_VIEWALL } from 'routes/path';
 
 export interface TabCommonProps {
@@ -19,7 +19,9 @@ export interface TabCommonProps {
 const TabCommon = ({ tabItems, tabSections, tabAlignment = 'center' }: TabCommonProps) => {
 	const theme = useTheme();
 	const { pathname } = useLocation();
-
+	let [searchParams] = useSearchParams();
+	const tab = searchParams.get('tab');
+	console.log(tab);
 	// useState
 	const [value, setValue] = React.useState('0');
 
@@ -27,9 +29,15 @@ const TabCommon = ({ tabItems, tabSections, tabAlignment = 'center' }: TabCommon
 	const tabBreakpoint = 700; // need this because on small screen, the scroll + .MuiTabs-flexContainer justifyContent: 'center' will error, we can not see full the text
 
 	// functions
+
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
 	};
+	useEffect(() => {
+		if (tab === '2') {
+			setValue('2');
+		}
+	}, [tab]);
 	return (
 		<>
 			{value !== '' && (
