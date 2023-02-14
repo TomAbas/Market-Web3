@@ -6,7 +6,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useSearchParams } from 'react-router-dom';
-import InfiniteListTrendingCollection from './CollectionRanking';
+import TopCollection from './CollectionRanking';
 import InfiniteListTopTrader from './TopTrader';
 const Ranking = () => {
 	let [searchParams, setSearchParams] = useSearchParams();
@@ -46,15 +46,12 @@ const Ranking = () => {
 						<Tab label="Top Traders" value="2" />
 					</TabList>
 				</Box>
+
 				<TabPanel value="2">
 					<InfiniteListTopTrader />
 				</TabPanel>
 				<TabPanel value="1">
-					<InfiniteListTrendingCollection
-					// topCollection={topCollection}
-					// loading={loadingTopCollection}
-					// fi
-					/>
+					<TopCollection />
 				</TabPanel>
 			</TabContext>
 		</Box>
