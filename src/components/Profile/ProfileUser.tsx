@@ -21,6 +21,7 @@ import TabUserInfo from './TabUserInfo/TabUserInfo';
 import useFilterItem from 'hooks/useFilterItem';
 import SkeletonTopProfile from 'components/Skeletons/SkeletonTopProfile/SkeletonTopProfile';
 import checkicon from 'assets/icons/icon-check.svg';
+import useTransfer from 'utils/transfer';
 const ProfileUser = () => {
 	const bioRef: any = useRef();
 	const [searchParams, setSearchParams] = useSearchParams();
