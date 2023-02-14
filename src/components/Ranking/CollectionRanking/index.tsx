@@ -11,7 +11,6 @@ const CollectionRanking = () => {
 	const [selectedFilter, setSelectedFilter] = useState<any>(initFilter);
 	const handleClickOption = (filterDay: any) => {
 		setSelectedFilter(filterDay);
-		// setSortBy(filter.value);
 		setActiveDropDown(false);
 	};
 	const [listCollectionTop, setListCollectionTop] = useState<CollectionTop[]>([]);
@@ -22,7 +21,6 @@ const CollectionRanking = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			console.log('chay at ranking');
 			const listCollectionTop = await getTopCollections(
 				'2',
 				'100',

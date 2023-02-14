@@ -11,6 +11,9 @@ import InfiniteListTopTrader from './TopTrader';
 const Ranking = () => {
 	let [searchParams, setSearchParams] = useSearchParams();
 	const [value, setValue] = React.useState('1');
+	const [topCollection, setTopCollection] = React.useState<any>([]);
+	const [loadingTopCollection, setLoadingTopCollection] = React.useState(true);
+	const [topTrader, setTopTrader] = React.useState<any>([]);
 	let query = searchParams.get('query');
 	React.useEffect(() => {
 		if (query) {
@@ -19,12 +22,6 @@ const Ranking = () => {
 	}, [query]);
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
-	};
-
-	const handleCreateItem = (status: boolean) => {
-		if (status === true) {
-			setValue('2');
-		}
 	};
 
 	return (
@@ -53,7 +50,11 @@ const Ranking = () => {
 					<InfiniteListTopTrader />
 				</TabPanel>
 				<TabPanel value="1">
-					<InfiniteListTrendingCollection />
+					<InfiniteListTrendingCollection
+					// topCollection={topCollection}
+					// loading={loadingTopCollection}
+					// fi
+					/>
 				</TabPanel>
 			</TabContext>
 		</Box>
