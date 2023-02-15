@@ -11,8 +11,6 @@ import AutoCompleteCustom from '../../CustomField/AutoCompleteCustom';
 import { listCategory, Category } from '../../../constants/category.constant';
 import { OptionSelectCustom } from '../../../models/common';
 import { TextArea } from 'customComponents/FieldTextArea/styled';
-import { toast } from 'react-toastify';
-
 interface Props {
 	base64image: any;
 	handleOpenModalBuy: any;
@@ -31,7 +29,6 @@ const FormMint: React.FC<Props> = ({
 		register,
 		handleSubmit,
 		setValue,
-		getValues,
 		formState: { errors },
 		setError,
 		clearErrors,
@@ -68,21 +65,20 @@ const FormMint: React.FC<Props> = ({
 		});
 	const checkCollectionNameValid = (e: any) => {
 		let value = e.target.value;
-		let isExist = collections.findIndex((collection: any) => collection.name === value);
-		if (isExist >= 0) setError('name', { type: 'required', message: 'Name is used' });
-		else if (value === '') setError('name', { type: 'custom', message: 'Name is required' });
-		else clearErrors('name');
 		value = value.slice(0, 128);
-		setValue('name', value);
-		if (value.length > 128) {
-			setError('name', {
-				type: 'custom',
-				message: 'Name: 0 of 1500 characters used',
-			});
-		} else {
-			clearErrors('name');
-		}
 		longName.current = value.length | 0;
+		let isExist = collections.findIndex(
+			(collection: any) => collection.collectionName === value
+		);
+		if (isExist >= 0) {
+			setError('name', { type: 'required', message: 'Name is used' });
+			return;
+		} else if (value === '') {
+			setError('name', { type: 'custom', message: 'Name is required' });
+			return;
+		}
+		setValue('name', value);
+		clearErrors('name');
 	};
 	const longName: any = useRef();
 	const longDescription: any = useRef();

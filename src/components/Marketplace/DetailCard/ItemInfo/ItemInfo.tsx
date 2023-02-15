@@ -1,7 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { nftItem } from 'models/item';
+import SendIcon from '@mui/icons-material/Send';
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Stack, Typography, Skeleton, List, ListItem } from '@mui/material';
+import {
+	Box,
+	Stack,
+	Typography,
+	Skeleton,
+	List,
+	ListItem,
+	Avatar,
+	Tooltip,
+	Link,
+} from '@mui/material';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { ItemImage, FeatureWrapper } from 'components/Marketplace/styled';
 import MediaDisplayCard from 'components/Marketplace/MediaDisplayCard/MediaDisplayCard';
@@ -16,14 +27,11 @@ import defaultImg from '../../../../assets/icons/default-img-input2.png';
 import { User } from 'models/user';
 import { useNavigate } from 'react-router-dom';
 import DropDown from 'components/CustomUI/DropDown';
-import {
-	DropDownOption,
-	DropDownWrapper,
-	IconFavorite,
-} from 'components/Marketplace/CardNFT/styled';
+import { IconFavorite } from 'components/Marketplace/CardNFT/styled';
 import useInteraction from 'hooks/useInteraction';
 import { RELATED_URLS } from 'constants/index';
 import { displayAddress } from 'utils/function';
+import ModalTransferNFT from './ModalTransfer';
 interface Props {
 	loadingItem: boolean;
 	itemResource: any;
@@ -33,39 +41,9 @@ interface Props {
 	statusWithdraw: any;
 	userInfo: User | null;
 	itemPrice: number;
-}
-interface Props1 {
-	item: nftItem | undefined;
+	userAmountOfItem: number;
 }
 
-const DropdownContent: React.FC<Props1> = ({ item }) => {
-	return (
-		<DropDownWrapper sx={{ padding: '10px' }}>
-			<DropDownOption variant="subtitle2" onClick={() => window.location.reload()}>
-				Refresh metadata
-			</DropDownOption>
-
-			<TwitterShareButton
-				url={`${RELATED_URLS.MetaSpacecyHomePage}/#/item/${item?._id}`}
-				title={`Look what I found! ${item?.itemName} collectible`}
-				hashtags={['Music', 'Game']}
-				via="Metaspacecy"
-				style={{ width: '100%', textAlign: 'left' }}
-			>
-				<DropDownOption variant="subtitle2">Share</DropDownOption>
-			</TwitterShareButton>
-			{/* Enable/Disable Report */}
-			{/* <DropDownOption variant="subtitle2">Report</DropDownOption> */}
-		</DropDownWrapper>
-	);
-};
-const ButtonContent = () => {
-	return (
-		<Stack direction="row" alignItems="center" sx={{ padding: '8px', cursor: 'pointer' }}>
-			<MoreHorizOutlinedIcon sx={{ width: '32px' }} />
-		</Stack>
-	);
-};
 const ItemInfo: React.FC<Props> = ({
 	loadingItem,
 	item,
@@ -75,14 +53,14 @@ const ItemInfo: React.FC<Props> = ({
 	userInfo,
 	statusWithdraw,
 	itemPrice,
+	userAmountOfItem,
 }) => {
 	const [show, setShow] = useState(false);
 	const desRef: any = useRef();
-	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
 	const { likeItem, checkIsLike } = useInteraction();
+	const [openModalTransfer, setOpenModalTransfer] = useState(false);
 	const navigate = useNavigate();
 	const navigateCollection = () => {
-		// console.log(name, creater);
 		navigate(`/collection-detail/${item?.collectionId}`);
 	};
 
@@ -168,27 +146,50 @@ const ItemInfo: React.FC<Props> = ({
 									Sell Quantity : {itemResource?.amount}
 								</Typography>
 							)}
-							<Stack direction={'row'}>
-								Owner:{' '}
-								<Box display={'inline'} marginLeft={1}>
-									{item?.owner.map((address, index) => {
-										return (
-											<>
-												<a href={`/#/profile?address=${address}`}>
-													{displayAddress(address)}
-												</a>
-												<br></br>
-											</>
-										);
-									})}
-								</Box>
+							<Stack direction={'row'} alignItems={'center'} spacing={2}>
+								<Avatar src={item?.creatorInfo.avatar} variant="square" />
+								<Stack direction={'column'}>
+									<Typography variant="body1" fontWeight={500}>
+										Creator
+									</Typography>
+									<Tooltip title={item?.creator}>
+										<Link
+											href={`/#/profile?address=${item?.creator}`}
+											underline="none"
+										>
+											{item?.creatorInfo.username}
+										</Link>
+									</Tooltip>
+								</Stack>
 							</Stack>
-							<Typography variant="body1">
-								Creator:{' '}
-								<a href={`/#/profile?address=${item?.creator}`}>
-									{displayAddress(item?.creator!)}
-								</a>
-							</Typography>
+							<Stack direction={'row'} alignItems={'center'} spacing={2}>
+								{item?.ownerInfo?.map((owner, index) => {
+									return (
+										<>
+											<Stack
+												direction={'row'}
+												alignItems={'center'}
+												spacing={2}
+											>
+												<Avatar src={owner?.avatar} variant="square" />
+												<Stack direction={'column'}>
+													<Typography variant="body1" fontWeight={500}>
+														Owner
+													</Typography>
+													<Tooltip title={owner?.userAddress}>
+														<Link
+															href={`/#/profile?address=${owner?.userAddress}`}
+															underline="none"
+														>
+															{owner.username}
+														</Link>
+													</Tooltip>
+												</Stack>
+											</Stack>
+										</>
+									);
+								})}
+							</Stack>
 							{item?.status === 1 && (
 								<Typography variant="body1">Price: {itemPrice} APT</Typography>
 							)}
@@ -273,6 +274,15 @@ const ItemInfo: React.FC<Props> = ({
 									<Typography variant="body1">{item?.countFav}</Typography>
 								</Stack>
 							</FeatureWrapper>
+							{userAmountOfItem > 0 && (
+								<FeatureWrapper
+									sx={{ cursor: 'pointer' }}
+									onClick={() => setOpenModalTransfer(true)}
+								>
+									<SendIcon sx={{ m: 1 }}></SendIcon>
+								</FeatureWrapper>
+							)}
+
 							<TwitterShareButton
 								url={`${RELATED_URLS.MetaSpacecyHomePage}/#/item/${item?._id}`}
 								title={`Look what I found! Item ${item?.itemName}`}
@@ -297,6 +307,12 @@ const ItemInfo: React.FC<Props> = ({
 					</Stack>
 				</>
 			)}
+			<ModalTransferNFT
+				quantity={userAmountOfItem}
+				itemInfo={item!}
+				setOpen={setOpenModalTransfer}
+				open={openModalTransfer}
+			/>
 		</>
 	);
 };

@@ -30,11 +30,8 @@ import useGetItemCollection from 'hooks/useGetItemCollection';
 import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 export default function DetailCard() {
 	let { itemId } = useParams();
-	const search = useLocation().search;
 	const [item, setItem] = useState<nftItem>();
-	const { collectionInfo, loadingCollectionImg } = useGetItemCollection(
-		item?.collectionInfo?._id
-	);
+	const { collectionInfo } = useGetItemCollection(item?.collectionInfo?._id);
 	const [loadingItem, setLoadingItem] = useState(true);
 	const [itemPrice, setItemPrice] = useState<number>(0);
 	const [itemResource, setItemResource] = useState<any>();
@@ -108,12 +105,10 @@ export default function DetailCard() {
 	};
 
 	const navigateCollection = () => {
-		// console.log(name, creater);
 		navigate(`/collection-detail/${item?.collectionId}`);
 	};
 	function changePrice(item: nftItem) {
 		setItemPrice(changePriceToToken(item.price));
-		// setItemResource(getItemFromOrder(listNftOrders, item!));
 	}
 	async function getUserAmountOfItem(item: nftItem) {
 		try {
@@ -158,6 +153,7 @@ export default function DetailCard() {
 						userInfo={userInfo}
 						statusWithdraw={statusWithdraw}
 						itemPrice={itemPrice}
+						userAmountOfItem={Number(userAmountOfItem)}
 					/>
 				</Stack>
 				<Box>
@@ -213,33 +209,3 @@ export default function DetailCard() {
 		</>
 	);
 }
-
-/* <Box mt={3}>
-					<Box sx={{ textAlign: 'center', mb: 3 }}>
-						<Typography variant="h4" fontWeight={500}>
-							History
-						</Typography>
-					</Box>
-					<Stack gap="10px">
-						<Stack
-							direction="row"
-							gap={1}
-							alignItems="center"
-							sx={{
-								padding: '6px 24px',
-								background: '#fff',
-								border: '1.5px solid #E7E8EC',
-								borderRadius: '12px',
-							}}
-						>
-							<Box
-								sx={{ img: { width: '42px', height: '42px', borderRadius: '50%' } }}
-							>
-								<img src={item} alt="avatar" />
-							</Box>
-							<Box>
-								<Typography variant="body1">Address: 0x000000...000</Typography>
-							</Box>
-						</Stack>
-					</Stack>
-				</Box> */
