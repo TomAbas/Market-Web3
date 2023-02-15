@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import '../../../node_modules/swiper/modules/navigation/navigation.min.css';
 import '../../../node_modules/swiper/modules/effect-coverflow/effect-coverflow.min.css';
 import '../../../node_modules/swiper/swiper.min.css';
-
 // import required modules
 import { EffectCoverflow, Navigation, Autoplay } from 'swiper';
 
@@ -18,72 +17,141 @@ import Asset7 from 'assets/images/card/Asset7.webp';
 import Asset8 from 'assets/images/card/Asset8.webp';
 import Asset9 from 'assets/images/card/Asset9.webp';
 import Asset10 from 'assets/images/card/Asset10.webp';
-
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Grid, Link, Stack, Typography } from '@mui/material';
+import { getItemSelected } from 'api/items/itemsApi';
+import { ItemImage } from 'components/Marketplace/CardCollection/styled';
+import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
+import { displayUserFullName } from 'utils/formatDisplay';
 
 const ListImages = [
 	{
-		id: 1,
-		image: Asset1,
+		_id: 1,
+		itemMedia: Asset1,
+		itemName: 'Asset1',
+		creatorInfo: {
+			avatar: Asset1,
+			username: 'Asset1',
+		},
 	},
 	{
-		id: 2,
-		image: Asset2,
+		_id: 2,
+		itemMedia: Asset2,
+		itemName: 'Asset2',
+		creatorInfo: {
+			avatar: Asset2,
+			username: 'Asset2',
+		},
 	},
 	{
-		id: 3,
-		image: Asset3,
+		_id: 3,
+		itemMedia: Asset3,
+		itemName: 'Asset3',
+		creatorInfo: {
+			avatar: Asset3,
+			username: 'Asset3',
+		},
 	},
 	{
-		id: 4,
-		image: Asset4,
+		_id: 4,
+		itemMedia: Asset4,
+		itemName: 'Asset4',
+		creatorInfo: {
+			avatar: Asset4,
+			username: 'Asset4',
+		},
 	},
 	{
-		id: 5,
-		image: Asset5,
-	},
-	{
-		id: 6,
-		image: Asset6,
-	},
-	{
-		id: 7,
-		image: Asset7,
-	},
-	{
-		id: 8,
-		image: Asset8,
-	},
-	{
-		id: 9,
-		image: Asset9,
-	},
-	{
-		id: 10,
-		image: Asset10,
+		_id: 5,
+		itemMedia: Asset5,
+		itemName: 'Asset5',
+		creatorInfo: {
+			avatar: Asset5,
+			username: 'Asset5',
+		},
 	},
 ];
 
-const renderListImages = () => {
-	return ListImages.map((item) => {
+const renderListImages = (ListImages: any) => {
+	return ListImages.map((item: any) => {
 		return (
-			<SwiperSlide key={item.id}>
+			<SwiperSlide key={item._id}>
 				<Box
 					sx={{
 						borderRadius: '14px',
 					}}
 				>
-					<Box
+					<Link
 						sx={{
-							img: {
-								borderRadius: '14px',
-								width: '100%',
-								height: 'auto',
-							},
+							textDecoration: 'none',
+							color: '#131740',
 						}}
 					>
-						<img src={item.image} alt="item" />
-					</Box>
+						<Box
+							sx={{
+								border: '1.5px solid #e7e8ec',
+								borderRadius: '12px',
+								overflow: 'hidden',
+								cursor: 'pointer',
+								transition: 'all 0.4s',
+								padding: '12px 12px 0',
+								background: '#fff',
+							}}
+						>
+							<ItemImage>
+								<Box className="main-img">
+									<img src={item.itemMedia} alt="collection" />
+								</Box>
+							</ItemImage>
+
+							<Box py={1.5}>
+								<Typography
+									variant="subtitle1"
+									fontWeight={500}
+									noWrap
+									sx={{ cursor: 'pointer', flex: '1' }}
+								>
+									<NoMaxWidthTooltip title={displayUserFullName(item?.itemName)}>
+										<Typography fontWeight="500" variant="subtitle1" noWrap>
+											{item?.itemName}
+										</Typography>
+									</NoMaxWidthTooltip>
+								</Typography>
+								<Stack
+									mt={1}
+									direction="row"
+									alignItems="center"
+									justifyContent="space-between"
+									gap={1}
+								>
+									<Stack direction="row" gap={1} alignItems="center">
+										<Box
+											sx={{
+												img: {
+													width: '32px',
+													height: '32px',
+													objectFit: 'cover',
+													objectPosition: 'center',
+													borderRadius: '50%',
+												},
+											}}
+										>
+											<img src={item?.creatorInfo?.avatar} alt="collection" />
+										</Box>
+										<NoMaxWidthTooltip
+											title={displayUserFullName(item?.creatorInfo?.username)}
+										>
+											<Typography variant="body1" noWrap>
+												{item?.creatorInfo?.username}
+											</Typography>
+										</NoMaxWidthTooltip>
+										{/* <Typography variant="body1">
+											{item?.creatorInfo?.username}{' '}
+										</Typography> */}
+									</Stack>
+								</Stack>
+							</Box>
+						</Box>
+					</Link>
 				</Box>
 			</SwiperSlide>
 		);
@@ -91,6 +159,14 @@ const renderListImages = () => {
 };
 
 export default function Slider() {
+	let [listItem, setListItem] = useState([]);
+	useEffect(() => {
+		getItemSelected().then((res: any) => {
+			console.log(res.data);
+			setListItem(res.data);
+		});
+		// install Swiper modules
+	}, []);
 	return (
 		<Box
 			px={4}
@@ -163,7 +239,7 @@ export default function Slider() {
 					},
 				}}
 			>
-				{renderListImages()}
+				{listItem.length > 0 ? renderListImages(listItem) : renderListImages(ListImages)}
 			</Swiper>
 		</Box>
 	);

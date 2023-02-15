@@ -4,6 +4,7 @@ import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import CardNFT from 'components/Marketplace/CardNFT';
 import { nftItem } from 'models/item';
 import useInteraction from 'hooks/useInteraction';
+import NoItem from 'customComponents/NoItem/NoItem';
 interface Props {
 	itemsF: nftItem[];
 	isLoading: boolean;
@@ -22,17 +23,21 @@ const FavoriteTab: React.FC<Props> = ({ itemsF, isLoading }) => {
 					</>
 				) : (
 					<>
-						{itemsF.map((item: nftItem, index: any) => (
-							<CardNFT
-								itemLiked={checkIsLike}
-								likeItem={likeItem}
-								offers={[]}
-								offer={item}
-								index={index}
-								key={index}
-								loadingOffers={false}
-							/>
-						))}
+						{itemsF.length > 0 ? (
+							itemsF.map((item: nftItem, index: any) => (
+								<CardNFT
+									itemLiked={checkIsLike}
+									likeItem={likeItem}
+									offers={[]}
+									offer={item}
+									index={index}
+									key={index}
+									loadingOffers={false}
+								/>
+							))
+						) : (
+							<NoItem title="No items left!" />
+						)}
 					</>
 				)}
 			</Grid>

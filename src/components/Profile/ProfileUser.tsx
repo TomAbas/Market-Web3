@@ -20,7 +20,7 @@ import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import TabUserInfo from './TabUserInfo/TabUserInfo';
 import useFilterItem from 'hooks/useFilterItem';
 import SkeletonTopProfile from 'components/Skeletons/SkeletonTopProfile/SkeletonTopProfile';
-
+import checkicon from 'assets/icons/icon-check.svg';
 const ProfileUser = () => {
 	const bioRef: any = useRef();
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -131,13 +131,34 @@ const ProfileUser = () => {
 								}}
 							>
 								<ClickAwayListener onClickAway={handleClickAvatar}>
-									<img
-										src={infoUser?.avatar}
-										alt="avatar"
-										onClick={() => {
-											setViewAvatar(true);
-										}}
-									/>
+									<>
+										<Box sx={{ position: 'relative' }}>
+											<img
+												src={infoUser?.avatar}
+												alt="avatar"
+												onClick={() => {
+													setViewAvatar(true);
+												}}
+											/>
+											{infoUser?.confirmEmail && (
+												<Box
+													sx={{
+														position: 'absolute',
+														bottom: '0',
+														right: '0',
+														borderRadius: '50%',
+														transform: 'translate(50%, 50%)',
+													}}
+												>
+													<img
+														src={checkicon}
+														alt="icon verified"
+														style={{ width: '100%', height: 'auto' }}
+													/>
+												</Box>
+											)}
+										</Box>
+									</>
 								</ClickAwayListener>
 							</Box>
 							<Box

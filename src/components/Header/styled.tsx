@@ -160,7 +160,7 @@ export const IconItem = styled(Box)(({ theme }) => ({
 	width: '34px',
 	borderRadius: '50%',
 	position: 'relative',
-	transition: 'all 0.4s',
+	transition: 'all 0.0s',
 	color: '#000',
 	border: '1.5px solid #e7e8ec',
 	cursor: 'pointer',
@@ -181,7 +181,7 @@ export const DropDownContent = styled(Stack)(() => ({
 }));
 
 export const LinkWrapper = styled('a')(() => ({
-	transition: 'all ease 0.5s',
+	transition: 'all ease 0.0s',
 	color: '#000',
 }));
 
@@ -193,7 +193,7 @@ export const DropdownMenu = styled('div')(({ theme }) => ({
 	top: '100%',
 	left: '50%',
 	transform: 'translateX(-50%)',
-	transition: 'all 0.1s',
+	transition: 'all 0.0s',
 	zIndex: 100,
 	backdropFilter: 'blur(8px)',
 	width: 'fit-content',
@@ -215,7 +215,7 @@ export const DropdownMenuLink = styled('a')(({ theme }) => ({
 	padding: '12px 10px',
 	color: theme.palette.text.primary,
 	cursor: 'pointer',
-	transition: 'all ease 0.1s',
+	transition: 'all ease 0.0s',
 	minWidth: '160px',
 
 	'&:not(:last-child):after': {
@@ -259,7 +259,7 @@ export const NavigationBarBigScreen = styled('ul')({
 export const NavigationItemBigScreen = styled('li')(({ theme }) => ({
 	position: 'relative',
 	listStyleType: 'none',
-	transition: 'all 0.1s',
+	transition: 'all 0.0s',
 	textAlign: 'center',
 	padding: '12px',
 	borderRadius: '12px 12px 0 0',

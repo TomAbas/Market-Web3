@@ -15,6 +15,7 @@ import { setFilter } from 'redux/slices/nftFilter';
 import FilterRoyal from 'components/Marketplace/FilterItem/FilterRoyal/FilterRoyal';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { FilterWrapper } from 'components/Marketplace/ViewAll/Items/styled';
+import NoItem from 'customComponents/NoItem/NoItem';
 interface Props {
 	items: nftItem[];
 	isLoading: boolean;
@@ -91,17 +92,21 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 					</>
 				) : (
 					<>
-						{items.map((item: nftItem, index: any) => (
-							<CardNFT
-								itemLiked={checkIsLike}
-								likeItem={likeItem}
-								offers={[]}
-								offer={item}
-								index={index}
-								key={index}
-								loadingOffers={false}
-							/>
-						))}
+						{items.length > 0 ? (
+							items.map((item: nftItem, index: any) => (
+								<CardNFT
+									itemLiked={checkIsLike}
+									likeItem={likeItem}
+									offers={[]}
+									offer={item}
+									index={index}
+									key={index}
+									loadingOffers={false}
+								/>
+							))
+						) : (
+							<NoItem title="No items left!" />
+						)}
 					</>
 				)}
 			</Grid>

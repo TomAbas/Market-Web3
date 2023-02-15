@@ -89,6 +89,7 @@ export default function MyCollection() {
 				open={openModalImport}
 				onClose={() => setOpenModalImport(false)}
 				setTrigger={setTrigger}
+				collections={collections}
 			/>
 		</>
 	);
