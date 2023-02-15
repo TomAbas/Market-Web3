@@ -37,7 +37,7 @@ const TabCollectionDetail: React.FC<Props> = ({ collectionInfo }) => {
 				isShow: true,
 			},
 			{
-				Section: <ActivityTab />,
+				Section: <ActivityTab collectionInfo={collectionInfo} />,
 				isShow: true,
 			},
 		],

@@ -29,6 +29,8 @@ import { FilterWrapper } from '../ViewAll/Items/styled';
 import SkeletonTopProfile from 'components/Skeletons/SkeletonTopProfile/SkeletonTopProfile';
 import { selectUser } from 'redux/slices/userInfo';
 import TabCollectionDetail from './TabCollectionDetail/TabCollectionDetail';
+import MediaDisplayCard from '../MediaDisplayCardSmall/MediaDisplayCard';
+import TwitterIcon from '../../../assets/icons/twitter-white.svg';
 const CollectionDetail = () => {
 	const desRef: any = useRef();
 	const dispatch = useAppDispatch();
@@ -62,6 +64,7 @@ const CollectionDetail = () => {
 					<Box
 						sx={{
 							position: 'relative',
+							border: '2px solid red',
 							img: {
 								width: '100%',
 								objectFit: 'cover',
@@ -71,6 +74,11 @@ const CollectionDetail = () => {
 						}}
 					>
 						<img src={collectionInfo?.logo} alt="banner" />
+						{/* <MediaDisplayCard
+							media={collectionInfo?.logo}
+							preview={TwitterIcon}
+							name={collectionInfo?.collectionName}
+						/> */}
 						<Box
 							sx={{
 								position: 'absolute',
@@ -88,6 +96,11 @@ const CollectionDetail = () => {
 								},
 							}}
 						>
+							{/* <MediaDisplayCard
+								media={collectionInfo!.logo}
+								preview={TwitterIcon}
+								name={collectionInfo!.collectionName}
+							/> */}
 							<img src={collectionInfo?.logo} alt="avatar" />
 						</Box>
 					</Box>

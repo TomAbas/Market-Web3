@@ -6,7 +6,8 @@ import { Collection } from 'models/collection';
 import { ItemImage } from './styled';
 import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
 import { displayAddress, displayUserFullName } from 'utils/formatDisplay';
-
+import MediaDisplayCard from '../MediaDisplayCard/MediaDisplayCard';
+import TwitterIcon from '../../../assets/icons/twitter-white.svg';
 interface Props {
 	collection: Collection;
 }
@@ -54,7 +55,12 @@ const CardCollection: React.FC<Props> = ({ collection }) => {
 							}}
 						>
 							<Box className="main-img">
-								<img src={collection.logo} alt="collection" />
+								{/* <img src={collection.logo} alt="collection" /> */}
+								<MediaDisplayCard
+									media={collection?.logo}
+									preview={TwitterIcon}
+									name={collection?.collectionName}
+								/>
 							</Box>
 						</ItemImage>
 

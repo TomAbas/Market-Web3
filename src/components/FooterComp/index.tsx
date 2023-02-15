@@ -57,6 +57,8 @@ import {
 	PATH_VIEWALL,
 	PATH_VIRTUAL_WORLD,
 } from '../../routes/path';
+import { useAppSelector } from 'redux/hooks';
+import { selectUser } from 'redux/slices/userInfo';
 // import Link from "theme/overrides/Link";
 
 //
@@ -132,7 +134,7 @@ const FooterComp: React.FC = () => {
 	const ScrollToTop = () => {
 		window.scrollTo(0, 0);
 	};
-
+	const userInfo = useAppSelector(selectUser);
 	const marketplace = [
 		{
 			title: 'Explore',
@@ -266,12 +268,6 @@ const FooterComp: React.FC = () => {
 					link: '#/myCollection',
 					target: '',
 				},
-
-				// {
-				// 	id: 5,
-				// 	name: 'Create Item',
-				// 	link: `#${PATH_ITEM.createItem}`,
-				// },
 			],
 		},
 
@@ -512,50 +508,61 @@ const FooterComp: React.FC = () => {
 								</DetailList>
 							</DetailColumn>
 						))}
-						{detailList.map((item, index) => (
-							<DetailColumn key={index}>
-								<DetailTitle
-									sx={{
-										fontSize: '22px',
-										fontStyle: 'italic',
-										[theme.breakpoints.down(500)]: {
-											fontSize: '18px',
-										},
-									}}
-								>
-									{item.title}
-								</DetailTitle>
-								<DetailList>
-									{item.contents.map((item, index) => (
-										<ListRow
-											key={index}
+						{detailList.map((item, index) =>
+							index === 2 && !userInfo ? (
+								<></>
+							) : (
+								<>
+									{' '}
+									<DetailColumn key={index}>
+										<DetailTitle
 											sx={{
-												opacity: item.link === '' ? '0.6' : '1',
-												fontSize: '18px',
-												padding: '4px 0',
+												fontSize: '22px',
+												fontStyle: 'italic',
 												[theme.breakpoints.down(500)]: {
-													fontSize: '13px',
+													fontSize: '18px',
 												},
 											}}
 										>
-											<DetailLink
-												sx={{
-													cursor:
-														item.link === '' ? 'default' : 'pointer',
-													pointerEvents:
-														item.link === '' ? 'none' : 'pointer',
-													fontStyle: 'italic',
-												}}
-												// target="_blank"
-												href={item.link}
-											>
-												{item.name}
-											</DetailLink>
-										</ListRow>
-									))}
-								</DetailList>
-							</DetailColumn>
-						))}
+											{item.title}
+										</DetailTitle>
+										<DetailList>
+											{item.contents.map((item, index) => (
+												<ListRow
+													key={index}
+													sx={{
+														opacity: item.link === '' ? '0.6' : '1',
+														fontSize: '18px',
+														padding: '4px 0',
+														[theme.breakpoints.down(500)]: {
+															fontSize: '13px',
+														},
+													}}
+												>
+													<DetailLink
+														sx={{
+															cursor:
+																item.link === ''
+																	? 'default'
+																	: 'pointer',
+															pointerEvents:
+																item.link === ''
+																	? 'none'
+																	: 'pointer',
+															fontStyle: 'italic',
+														}}
+														// target="_blank"
+														href={item.link}
+													>
+														{item.name}
+													</DetailLink>
+												</ListRow>
+											))}
+										</DetailList>
+									</DetailColumn>
+								</>
+							)
+						)}
 					</DetailContainer>
 				</GridContent>
 			</BigContainer>
