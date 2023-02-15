@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { nftItem } from 'models/item';
+import SendIcon from '@mui/icons-material/Send';
 import React, { useEffect, useRef, useState } from 'react';
 import {
 	Box,
@@ -30,6 +31,7 @@ import { IconFavorite } from 'components/Marketplace/CardNFT/styled';
 import useInteraction from 'hooks/useInteraction';
 import { RELATED_URLS } from 'constants/index';
 import { displayAddress } from 'utils/function';
+import ModalTransferNFT from './ModalTransfer';
 interface Props {
 	loadingItem: boolean;
 	itemResource: any;
@@ -39,6 +41,7 @@ interface Props {
 	statusWithdraw: any;
 	userInfo: User | null;
 	itemPrice: number;
+	userAmountOfItem: number;
 }
 
 const ItemInfo: React.FC<Props> = ({
@@ -50,10 +53,12 @@ const ItemInfo: React.FC<Props> = ({
 	userInfo,
 	statusWithdraw,
 	itemPrice,
+	userAmountOfItem,
 }) => {
 	const [show, setShow] = useState(false);
 	const desRef: any = useRef();
 	const { likeItem, checkIsLike } = useInteraction();
+	const [openModalTransfer, setOpenModalTransfer] = useState(false);
 	const navigate = useNavigate();
 	const navigateCollection = () => {
 		navigate(`/collection-detail/${item?.collectionId}`);
@@ -269,6 +274,15 @@ const ItemInfo: React.FC<Props> = ({
 									<Typography variant="body1">{item?.countFav}</Typography>
 								</Stack>
 							</FeatureWrapper>
+							{userAmountOfItem > 0 && (
+								<FeatureWrapper
+									sx={{ cursor: 'pointer' }}
+									onClick={() => setOpenModalTransfer(true)}
+								>
+									<SendIcon sx={{ m: 1 }}></SendIcon>
+								</FeatureWrapper>
+							)}
+
 							<TwitterShareButton
 								url={`${RELATED_URLS.MetaSpacecyHomePage}/#/item/${item?._id}`}
 								title={`Look what I found! Item ${item?.itemName}`}
@@ -293,6 +307,12 @@ const ItemInfo: React.FC<Props> = ({
 					</Stack>
 				</>
 			)}
+			<ModalTransferNFT
+				quantity={userAmountOfItem}
+				itemInfo={item!}
+				setOpen={setOpenModalTransfer}
+				open={openModalTransfer}
+			/>
 		</>
 	);
 };

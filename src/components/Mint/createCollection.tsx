@@ -8,6 +8,7 @@ import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import React, { useState, useEffect } from 'react';
 import { getListCollectionUserResource } from '../../utils/dataResource';
 import FormMint from 'components/Forms/FormCreateCollection';
+import { getCollectionByUserAddress } from 'api/collections/collectionApi';
 function RedBar() {
 	return (
 		<Box
@@ -65,10 +66,9 @@ const LayoutCreateCollection: React.FC<Props> = ({ setValue, handleCreateItem })
 	const fetchCollection = async () => {
 		if (account?.address) {
 			try {
-				const newCollections = await getListCollectionUserResource(
-					account?.address?.toString()
-				);
-				setCollections(newCollections);
+				getCollectionByUserAddress(account?.address?.toString(), 2).then((res) => {
+					setCollections(res.data);
+				});
 			} catch (error) {
 				console.log(error);
 			}
@@ -108,27 +108,4 @@ const LayoutCreateCollection: React.FC<Props> = ({ setValue, handleCreateItem })
 	);
 };
 
-{
-	/* Category */
-}
-{
-	/* <InputItem>
-				<InputTitle>Category</InputTitle>
-				<FormControl sx={{ minWidth: 120, width: '100%' }}>
-					<Select
-						value={age}
-						onChange={handleChange}
-						displayEmpty
-						inputProps={{ 'aria-label': 'Without label' }}
-					>
-						<MenuItem value="">
-							<em>Category Name</em>
-						</MenuItem>
-						<MenuItem value={10}>Other</MenuItem>
-						<MenuItem value={20}>Art</MenuItem>
-						<MenuItem value={30}>Sport</MenuItem>
-					</Select>
-				</FormControl>
-			</InputItem> */
-}
 export default LayoutCreateCollection;

@@ -152,6 +152,7 @@ export default function DetailCard() {
 						userInfo={userInfo}
 						statusWithdraw={statusWithdraw}
 						itemPrice={itemPrice}
+						userAmountOfItem={Number(userAmountOfItem)}
 					/>
 				</Stack>
 				<Box>

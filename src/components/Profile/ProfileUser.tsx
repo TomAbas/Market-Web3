@@ -24,6 +24,7 @@ import checkicon from 'assets/icons/icon-check.svg';
 import useTransfer from 'utils/transfer';
 const ProfileUser = () => {
 	const bioRef: any = useRef();
+	const { checkEnableReceivingNFT, enableReceivingNFT } = useTransfer();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const address = searchParams.get('address');
 	const dispatch = useAppDispatch();
@@ -41,6 +42,7 @@ const ProfileUser = () => {
 	const isSettingModal = useAppSelector(selectSettingModal);
 	const [isLoading, setIsLoading] = useState(true);
 	const trigger = useAppSelector(selectTrigger);
+	const [isEnableReceivingNFT, setIsEnableReceivingNFT] = useState(true);
 	const handleClickAway = () => {
 		setViewFull(false);
 	};
@@ -68,6 +70,12 @@ const ProfileUser = () => {
 	async function fetchItemsF(userAddress: string) {
 		setItemsF((await getListItemF(userAddress)).data);
 	}
+
+	function handleClickEnable() {
+		enableReceivingNFT(infoUser.userAddress).then((res) => {
+			setIsEnableReceivingNFT(true);
+		});
+	}
 	useEffect(() => {
 		if (address) {
 			fetchData(address);
@@ -75,9 +83,13 @@ const ProfileUser = () => {
 			setInfoUser(myInfo);
 		}
 	}, [address, myInfo]);
+
 	useEffect(() => {
 		if (infoUser) {
 			fetchItems(infoUser.userAddress);
+			checkEnableReceivingNFT(infoUser.userAddress).then((res) => {
+				setIsEnableReceivingNFT(res);
+			});
 		}
 		return () => {
 			dispatch(handleReset());
@@ -195,10 +207,18 @@ const ProfileUser = () => {
 							>
 								{/* <img src={infoUser?.avatar} alt="avatar" /> */}
 								{!address && (
-									<button onClick={openEditModal}>
-										<img src={editIcon} alt="edit" />
-										<Box>Edit Profile</Box>
-									</button>
+									<Stack spacing={2} direction={'row'}>
+										{!isEnableReceivingNFT && (
+											<button onClick={handleClickEnable}>
+												{/* <img src={editIcon} alt="edit" /> */}
+												<Box>Enable Receiving NFT</Box>
+											</button>
+										)}
+										<button onClick={openEditModal}>
+											<img src={editIcon} alt="edit" />
+											<Box>Edit Profile</Box>
+										</button>
+									</Stack>
 								)}
 							</Box>
 						</Box>
