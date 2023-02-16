@@ -27,6 +27,7 @@ import useFilterItem from 'hooks/useFilterItem';
 import { Collection } from 'models/collection';
 import { FilterWrapper } from '../ViewAll/Items/styled';
 import SkeletonTopProfile from 'components/Skeletons/SkeletonTopProfile/SkeletonTopProfile';
+import NoItem from 'customComponents/NoItem/NoItem';
 const CollectionDetail = () => {
 	const desRef: any = useRef();
 	const inputRef: any = useRef();
@@ -239,18 +240,27 @@ const CollectionDetail = () => {
 								</>
 							) : (
 								<>
-									{itemsDisplay?.map((offer: any, index: any) => (
-										<CardNFT
-											itemLiked={checkIsLike}
-											likeItem={likeItem}
-											offers={offers}
-											offer={offer}
-											index={index}
-											key={index}
-											loadingOffers={loadingOffers}
-										/>
-									))}
+									{itemsDisplay.length > 0 ? (
+										<>
+											{itemsDisplay?.map((offer: any, index: any) => (
+												<CardNFT
+													itemLiked={checkIsLike}
+													likeItem={likeItem}
+													offers={offers}
+													offer={offer}
+													index={index}
+													key={index}
+													loadingOffers={loadingOffers}
+												/>
+											))}
+										</>
+									) : (
+										<NoItem title="No item"></NoItem>
+									)}
 								</>
+								// <>
+
+								// </>
 							)}
 						</Grid>
 					</Box>

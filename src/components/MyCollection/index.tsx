@@ -14,6 +14,7 @@ import { Collection } from 'models/collection';
 import CardCollection from 'components/Marketplace/CardCollection/CardCollection';
 import { displayAddress } from 'utils/formatDisplay';
 import ImportCollection from './ImportCollection';
+import NoItem from 'customComponents/NoItem/NoItem';
 export default function MyCollection() {
 	let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	const navigate = useNavigate();
@@ -78,10 +79,19 @@ export default function MyCollection() {
 						</>
 					) : (
 						<>
-							{collections.map((collection, index) => (
-								<CardCollection key={index} collection={collection} />
-							))}
+							{collections.length > 0 ? (
+								<>
+									{collections.map((collection, index) => (
+										<CardCollection key={index} collection={collection} />
+									))}
+								</>
+							) : (
+								<NoItem title="No Collection"></NoItem>
+							)}
 						</>
+						// <>
+
+						// </>
 					)}
 				</Grid>
 			</Box>

@@ -14,6 +14,8 @@ import {
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import useInteraction from 'hooks/useInteraction';
 import { nftItem } from 'models/item';
+import NoItem from 'customComponents/NoItem/NoItem';
+import ViewAll from '..';
 
 export default function Items() {
 	const dispatch = useAppDispatch();
@@ -62,7 +64,8 @@ export default function Items() {
 					return filterPar.collectionId.includes(item.collectionId);
 				});
 			}
-			let newOffersDisplay = viewFull ? newOffers : newOffers.slice(0, 12);
+			let newOffersDisplay = newOffers;
+			console.log('newOffersDisplay', newOffersDisplay);
 			setOffersDisplay(newOffersDisplay);
 		}
 	}, [filterPar, loadingOffers, offers, viewFull]);
@@ -82,25 +85,31 @@ export default function Items() {
 						</>
 					) : (
 						<>
-							{offersDisplay && (
+							{offersDisplay.length > 0 ? (
 								<>
-									{offersDisplay?.map((offer: any, index: any) => (
-										<CardNFT
-											itemLiked={checkIsLike}
-											likeItem={likeItem}
-											offers={offers}
-											offer={offer}
-											index={index}
-											key={index}
-											loadingOffers={loadingOffers}
-										/>
-									))}
+									{offersDisplay?.map((offer: any, index: any) => {
+										return viewFull || index < 12 ? (
+											<CardNFT
+												itemLiked={checkIsLike}
+												likeItem={likeItem}
+												offers={offers}
+												offer={offer}
+												index={index}
+												key={index}
+												loadingOffers={loadingOffers}
+											/>
+										) : (
+											<></>
+										);
+									})}
 								</>
+							) : (
+								<NoItem title="No Item"></NoItem>
 							)}
 						</>
 					)}
 				</Grid>
-				{!viewFull && offers.length > 12 && (
+				{!viewFull && offersDisplay.length > 12 && (
 					<Box
 						mx={'auto'}
 						mt={2}

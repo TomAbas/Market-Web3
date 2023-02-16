@@ -15,6 +15,7 @@ import { PATH_COLLECTION } from 'routes/path';
 import checkicon from 'assets/icons/icon-check.svg';
 import { displayVolume, displayUserFullName, displayUserName } from 'utils/formatDisplay';
 import { NoMaxWidthTooltip } from '../TopTrader';
+import NoItem from 'customComponents/NoItem/NoItem';
 
 export interface InfiniteListTrendingCollectionProps {
 	listCollection: Collection[];
@@ -154,16 +155,7 @@ export default function InfiniteListTrendingCollection({
 																bottom: -10,
 																right: 1,
 															}}
-														>
-															{/* <img
-                                                                src={checkicon}
-                                                                alt="icon verified"
-                                                                style={{
-                                                                    width: '100%',
-                                                                    height: 'auto',
-                                                                }}
-                                                            /> */}
-														</Box>
+														></Box>
 													</Box>
 
 													<Typography fontWeight="500">
