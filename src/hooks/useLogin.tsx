@@ -14,7 +14,7 @@ const useLogin = () => {
 	async function login() {
 		try {
 			localStorage.setItem('wallet', wallet?.adapter.name!);
-			let { data } = (await loginUser({ userAddress })).data;
+			let { data, token } = (await loginUser({ userAddress })).data;
 			dispatch(getUserSuccessA(data));
 			setLoginSuccess(true);
 			toast.success('Successful login');

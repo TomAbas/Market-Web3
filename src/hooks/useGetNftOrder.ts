@@ -9,7 +9,7 @@ const useGetNftOrder = () => {
 		try {
 			dispatch(startLoading());
 			let listNftOrders = await getListItemResource();
-			console.log('123');
+			console.log(listNftOrders);
 			dispatch(getListNftOrders(listNftOrders));
 		} catch (error) {
 			dispatch(hasError(error));

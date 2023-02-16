@@ -11,10 +11,9 @@ import CustomSlider from 'customComponents/CustomSlider/CustomSlider';
 interface Props {
 	collection: any;
 	currentItemId: string | undefined;
-	loadingCollectionImg: boolean;
 }
 
-const MoreItem: React.FC<Props> = ({ collection, currentItemId, loadingCollectionImg }) => {
+const MoreItem: React.FC<Props> = ({ collection, currentItemId }) => {
 	const { likeItem, checkIsLike } = useInteraction();
 	let listFilterCurrentItem = collection.listItem.filter(
 		(item: nftItem) => item._id !== currentItemId
@@ -36,31 +35,12 @@ const MoreItem: React.FC<Props> = ({ collection, currentItemId, loadingCollectio
 				);
 			});
 	};
-	let collectionDisplay =
-		listFilterCurrentItem.length > 4
-			? listFilterCurrentItem.slice(0, 4)
-			: listFilterCurrentItem;
+
 	return (
 		<>
 			{listFilterCurrentItem.length === 0 ? (
 				<NoItem title="No items left!" image={Nodata} />
 			) : (
-				// <Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
-				// 	{collectionDisplay.map((item: nftItem) => {
-				// 		return (
-				// 			<CardNFT
-				// 				index={item._id}
-				// 				key={item._id}
-				// 				offer={item}
-				// 				itemLiked={checkIsLike}
-				// 				likeItem={likeItem}
-				// 				offers=""
-				// 				loadingOffers=""
-				// 			/>
-				// 		);
-				// 	})}
-				// </Grid>
-
 				<CustomSlider
 					slidesPerView={4}
 					loop={false}

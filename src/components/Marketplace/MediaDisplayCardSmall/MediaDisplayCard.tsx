@@ -69,7 +69,7 @@ const MediaDisplayCard = ({ media, preview, name, lazyType = 'progress' }: IMedi
 							// src={compressImage(media, 480, 'best')}
 							src={media}
 							alt="item"
-							wrapperPosition="absolute"
+							wrapperPosition="relative"
 							imgStyle={{ borderRadius: '10px' }}
 							type={lazyType}
 							errorComponent={<ErrorMediaRender setRendered={setRendered} />}

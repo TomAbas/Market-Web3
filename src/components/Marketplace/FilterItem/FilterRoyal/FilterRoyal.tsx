@@ -15,7 +15,7 @@ import {
 	CheckIconWrapper,
 } from '../styled';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
-import iconPriceBlack from '../../../../assets/icons/icon-filter-price.svg';
+import iconPriceBlack from '../../../../assets/icons/icon-user-black.svg';
 import { setFilter } from 'redux/slices/nftFilter';
 import { useAppDispatch } from 'redux/hooks';
 import { ITEM_STATUS } from 'models/item';

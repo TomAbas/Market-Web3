@@ -12,14 +12,16 @@ export const MediaErrorContent = styled(Box)({
 });
 
 export const MediaWrapper = styled(Box)({
-	position: 'absolute',
+	// position: 'absolute',
 	top: 0,
 	left: 0,
 	height: '100%',
 	width: '100%',
 
-	// '.react-player': {
-	// 	width: '0 !important',
-	// 	height: '0 !important',
-	// },
+	'.react-player': {
+		width: '100% !important',
+	},
+	video: {
+		objectFit: 'fill !important',
+	},
 });

@@ -62,6 +62,8 @@ import useLogin from '../../hooks/useLogin';
 //component
 import NavBar from 'components/NavBar';
 import NavBarMobile from 'components/NavBarMobile';
+import { userInfo } from 'os';
+import { selectUser } from 'redux/slices/userInfo';
 
 const listCategoryMarketplace = [
 	// {
@@ -201,9 +203,9 @@ const Header: React.FC = () => {
 	let [option, setOption] = useState(false);
 	const [chainId, setChainId] = useState('Testnet');
 	const { network, wallet } = useWallet();
-
+	const userInfo = useAppSelector(selectUser);
 	const openModal = () => {
-		if (!userAddress) {
+		if (!userInfo) {
 			dispatch(openFirstModal());
 		} else {
 			dispatch(openSecondModal());
@@ -583,7 +585,7 @@ const Header: React.FC = () => {
 						<Stack direction="row" alignItems="center" gap="8px">
 							<IconItem onClick={openModal}>
 								<img src={connectIcon} alt="connect icon" />
-								{modalWalletSteps.steps.firstModal && !userAddress && (
+								{modalWalletSteps.steps.firstModal && !userInfo && (
 									<ClickAwayListener
 										onClickAway={() => {
 											openModal();
@@ -740,7 +742,7 @@ const Header: React.FC = () => {
 									</ClickAwayListener>
 								)}
 							</IconItem>
-							{userAddress && (
+							{userInfo && (
 								<IconItem onClick={openModalInfoUser}>
 									<img src={userIcon} alt="model info" />
 									{modalWalletSteps.steps.thirdModal && userAddress && (

@@ -64,7 +64,6 @@ const CollectionDetail = () => {
 					<Box
 						sx={{
 							position: 'relative',
-							border: '2px solid red',
 							img: {
 								width: '100%',
 								objectFit: 'cover',
@@ -73,39 +72,51 @@ const CollectionDetail = () => {
 							},
 						}}
 					>
-						<img src={collectionInfo?.logo} alt="banner" />
-						{/* <MediaDisplayCard
+						{/* <img src={collectionInfo?.logo} alt="banner" /> */}
+						<MediaDisplayCard
 							media={collectionInfo?.logo}
 							preview={TwitterIcon}
 							name={collectionInfo?.collectionName}
-						/> */}
+						/>
 						<Box
 							sx={{
 								position: 'absolute',
 								left: '50%',
-								bottom: '-50px',
-								transform: 'translateX(-50%)',
-								border: '2px solid #fff',
-								borderRadius: '10px',
+								transform: 'translate(-50%,-50%)',
+								border: '4px solid #fff',
+								borderRadius: '15px',
+								height: '150px',
+								width: '150px',
 								img: {
-									width: '100px',
-									height: '100px',
+									width: '100% !important',
+									height: '100% !important',
 									objectFit: 'cover',
 									objectPosition: 'center',
 									borderRadius: '10px',
 								},
+								video: {
+									width: '100% !important',
+									height: '100% !important',
+									objectFit: 'cover !important',
+									objectPosition: 'center',
+									borderRadius: '10px',
+								},
+								'.react-player': {
+									width: '100% !important',
+									height: '100% !important',
+								},
 							}}
 						>
-							{/* <MediaDisplayCard
+							<MediaDisplayCard
 								media={collectionInfo!.logo}
 								preview={TwitterIcon}
 								name={collectionInfo!.collectionName}
-							/> */}
-							<img src={collectionInfo?.logo} alt="avatar" />
+							/>
+							{/* <img src={collectionInfo?.logo} alt="avatar" /> */}
 						</Box>
 					</Box>
 				)}
-				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto' }}>
+				<Box pt={12} sx={{ maxWidth: '1440px', mx: 'auto' }}>
 					<Box sx={{ width: '100%', textAlign: 'center' }}>
 						<Typography variant="h4" fontWeight="500">
 							{collectionInfo?.collectionName}

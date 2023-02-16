@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { nftItem } from 'models/item';
 import SendIcon from '@mui/icons-material/Send';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
 	Box,
 	Stack,
@@ -29,9 +29,10 @@ import { useNavigate } from 'react-router-dom';
 import DropDown from 'components/CustomUI/DropDown';
 import { IconFavorite } from 'components/Marketplace/CardNFT/styled';
 import useInteraction from 'hooks/useInteraction';
-import { RELATED_URLS } from 'constants/index';
+import { OptionSelectCustom, RELATED_URLS } from 'constants/index';
 import { displayAddress } from 'utils/function';
 import ModalTransferNFT from './ModalTransfer';
+import AutoCompleteCustom from 'components/CustomField/DropdownOwner';
 interface Props {
 	loadingItem: boolean;
 	itemResource: any;
@@ -55,6 +56,15 @@ const ItemInfo: React.FC<Props> = ({
 	itemPrice,
 	userAmountOfItem,
 }) => {
+	const listOwner: any = item?.ownerInfo?.map((item: User) => ({
+		name: item.username,
+		value: item.userAddress,
+		image: item.avatar,
+	})) || [{ name: '', value: '', image: '' }];
+
+	const [currentCategoryTransformed, setCurrentCategoryTransformed] = useState<
+		OptionSelectCustom<string> | null | undefined
+	>();
 	const [show, setShow] = useState(false);
 	const desRef: any = useRef();
 	const { likeItem, checkIsLike } = useInteraction();
@@ -63,10 +73,12 @@ const ItemInfo: React.FC<Props> = ({
 	const navigateCollection = () => {
 		navigate(`/collection-detail/${item?.collectionId}`);
 	};
-
+	const handleChangeCategory = (item: any) => {
+		setCurrentCategoryTransformed(item);
+	};
 	useEffect(() => {
-		console.log(desRef.current?.offsetHeight);
-	}, [show]);
+		setCurrentCategoryTransformed(listOwner[0]);
+	}, [item]);
 	return (
 		<>
 			{' '}
@@ -146,9 +158,17 @@ const ItemInfo: React.FC<Props> = ({
 									Sell Quantity : {itemResource?.amount}
 								</Typography>
 							)}
-							<Stack direction={'row'} alignItems={'center'} spacing={2}>
+							<Stack
+								direction={'row'}
+								alignItems={'center'}
+								spacing={2}
+								sx={{ maxWidth: '300px' }}
+							>
 								<Avatar src={item?.creatorInfo.avatar} variant="square" />
-								<Stack direction={'column'}>
+								<Stack
+									direction={'column'}
+									sx={{ maxWidth: '100%', overflow: 'hidden' }}
+								>
 									<Typography variant="body1" fontWeight={500}>
 										Creator
 									</Typography>
@@ -157,38 +177,20 @@ const ItemInfo: React.FC<Props> = ({
 											href={`/#/profile?address=${item?.creator}`}
 											underline="none"
 										>
-											{item?.creatorInfo.username}
+											<Typography fontWeight="400" variant="subtitle1" noWrap>
+												{item?.creatorInfo.username}
+											</Typography>
 										</Link>
 									</Tooltip>
 								</Stack>
 							</Stack>
-							<Stack direction={'row'} alignItems={'center'} spacing={2}>
-								{item?.ownerInfo?.map((owner, index) => {
-									return (
-										<>
-											<Stack
-												direction={'row'}
-												alignItems={'center'}
-												spacing={2}
-											>
-												<Avatar src={owner?.avatar} variant="square" />
-												<Stack direction={'column'}>
-													<Typography variant="body1" fontWeight={500}>
-														Owner
-													</Typography>
-													<Tooltip title={owner?.userAddress}>
-														<Link
-															href={`/#/profile?address=${owner?.userAddress}`}
-															underline="none"
-														>
-															{owner.username}
-														</Link>
-													</Tooltip>
-												</Stack>
-											</Stack>
-										</>
-									);
-								})}
+							<Stack alignItems="flex-start" spacing={2} sx={{ maxWidth: '300px' }}>
+								<AutoCompleteCustom
+									onChange={handleChangeCategory}
+									currentItem={currentCategoryTransformed}
+									listItem={listOwner}
+									sx={{ width: '100%' }}
+								/>
 							</Stack>
 							{item?.status === 1 && (
 								<Typography variant="body1">Price: {itemPrice} APT</Typography>

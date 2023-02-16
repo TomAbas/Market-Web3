@@ -166,11 +166,7 @@ export default function DetailCard() {
 
 					<Box sx={{ mt: 5, px: 1 }}>
 						{collectionInfo ? (
-							<MoreItem
-								currentItemId={item?._id}
-								collection={collectionInfo}
-								loadingCollectionImg={loadingCollectionImg}
-							/>
+							<MoreItem currentItemId={item?._id} collection={collectionInfo} />
 						) : (
 							<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
 								{new Array(4).fill(null).map((item, idx) => (

@@ -31,7 +31,7 @@ const TabItemDetail: React.FC<Props> = ({ userAmountOfItem, item }) => {
 	const tabsDetail = {
 		items: [
 			{
-				title: 'Detail',
+				title: 'Details',
 				icon: <img src={iconAssetBlack} alt="asset icon" width={20} height={20} />,
 				iconSelected: <img src={iconAssetBlue} alt="asset icon" width={20} height={20} />,
 				isShow: true,

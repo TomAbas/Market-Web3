@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { logOutUserSuccessA } from 'redux/slices/userInfo';
+import { dispatch } from 'redux/store';
 import sha256 from 'sha256';
 import { loginUser } from '../api/userApi';
 // import useLogin from './useLogin';
@@ -20,6 +22,7 @@ const SignMessagesFc = () => {
 
 	function identifyWallet() {
 		let wallet = localStorage.getItem('wallet');
+
 		if (wallet === 'Pontem') {
 			pontemSign();
 		} else if (wallet === 'Spacecy') {
@@ -29,7 +32,6 @@ const SignMessagesFc = () => {
 		} else if (wallet === 'Petra') {
 			petraSign();
 		}
-		// pontemSign();
 	}
 	identifyWallet();
 	async function pontemSign() {
@@ -53,7 +55,9 @@ const SignMessagesFc = () => {
 				};
 				loginUser(objSent);
 			})
-			.catch((e: any) => console.log('Error', e));
+			.catch((error: any) => {
+				dispatch(logOutUserSuccessA());
+			});
 	}
 	async function spacecySign() {
 		await window.spacecy.connect().then((result: any) => {
@@ -64,19 +68,16 @@ const SignMessagesFc = () => {
 			userAddress = result.data.address;
 			dataMessage.message = sha256(publicKey);
 		});
-		window.spacecy
-			.signMessage(dataMessage)
-			.then((result: any) => {
-				let objSent = {
-					userAddress: userAddress,
-					publicKey: publicKey,
-					nonce: nonce,
-					signature: result.data.signature,
-				};
-				console.log('Obj sent', objSent);
-				loginUser(objSent);
-			})
-			.catch((e: any) => console.log('Error', e));
+		window.spacecy.signMessage(dataMessage).then((result: any) => {
+			let objSent = {
+				userAddress: userAddress,
+				publicKey: publicKey,
+				nonce: nonce,
+				signature: result.data.signature,
+			};
+			console.log('Obj sent', objSent);
+			loginUser(objSent);
+		});
 	}
 	async function martianSign() {
 		await window.martian.connect().then((result: any) => {
@@ -86,22 +87,19 @@ const SignMessagesFc = () => {
 			dataMessage.message = sha256(publicKey);
 			userAddress = result.address;
 		});
-		window.martian
-			.signMessage(dataMessage)
-			.then((result: any) => {
-				let objSent = {
-					userAddress: userAddress,
-					publicKey: publicKey,
-					nonce: nonce,
-					signature: result.signature.startsWith('0x')
-						? result.signature.slice(2)
-						: result.signature,
-				};
-				console.log('Result', result);
-				console.log('Obj sent', objSent);
-				loginUser(objSent);
-			})
-			.catch((e: any) => console.log('Error', e));
+		window.martian.signMessage(dataMessage).then((result: any) => {
+			let objSent = {
+				userAddress: userAddress,
+				publicKey: publicKey,
+				nonce: nonce,
+				signature: result.signature.startsWith('0x')
+					? result.signature.slice(2)
+					: result.signature,
+			};
+			console.log('Result', result);
+			console.log('Obj sent', objSent);
+			loginUser(objSent);
+		});
 	}
 	async function petraSign() {
 		await window.aptos.connect().then((result: any) => {
@@ -111,20 +109,17 @@ const SignMessagesFc = () => {
 				: result.publicKey;
 			dataMessage.message = sha256(publicKey);
 		});
-		window.petra
-			.signMessage(dataMessage)
-			.then((result: any) => {
-				let objSent = {
-					userAddress: result.address,
-					publicKey: publicKey,
-					nonce: nonce,
-					signature: result.signature,
-				};
-				console.log('Full message', result.fullMessage);
-				console.log('Obj sent', objSent);
-				loginUser(objSent);
-			})
-			.catch((e: any) => console.log('Error', e));
+		window.petra.signMessage(dataMessage).then((result: any) => {
+			let objSent = {
+				userAddress: result.address,
+				publicKey: publicKey,
+				nonce: nonce,
+				signature: result.signature,
+			};
+			console.log('Full message', result.fullMessage);
+			console.log('Obj sent', objSent);
+			loginUser(objSent);
+		});
 	}
 };
 
