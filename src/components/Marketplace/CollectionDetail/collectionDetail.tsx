@@ -37,7 +37,6 @@ const CollectionDetail = () => {
 	let arr = [1, 2, 3, 4];
 	const { checkIsLike, likeItem } = useInteraction();
 	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
-	const search = useLocation().search;
 	const [collectionInfo, setCollectionInfo] = useState<Collection>();
 	const { itemsDisplay } = useFilterItem(collectionInfo?.listItem || []);
 	const [loadingCollectionImg, setLoadingCollectionImg] = useState(true);
