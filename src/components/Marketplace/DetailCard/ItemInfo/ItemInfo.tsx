@@ -158,39 +158,50 @@ const ItemInfo: React.FC<Props> = ({
 									Sell Quantity : {itemResource?.amount}
 								</Typography>
 							)}
-							<Stack
-								direction={'row'}
-								alignItems={'center'}
-								spacing={2}
-								sx={{ maxWidth: '300px' }}
-							>
-								<Avatar src={item?.creatorInfo.avatar} variant="square" />
+							<Stack direction="row" gap="20px">
 								<Stack
-									direction={'column'}
-									sx={{ maxWidth: '100%', overflow: 'hidden' }}
+									// direction={'row'}
+									// alignItems={'center'}
+									spacing={2}
+									sx={{ width: '50%' }}
 								>
-									<Typography variant="body1" fontWeight={500}>
-										Creator
-									</Typography>
-									<Tooltip title={item?.creator}>
-										<Link
-											href={`/#/profile?address=${item?.creator}`}
-											underline="none"
-										>
-											<Typography fontWeight="400" variant="subtitle1" noWrap>
-												{item?.creatorInfo.username}
-											</Typography>
-										</Link>
-									</Tooltip>
+									<Stack>
+										<Typography variant="body1" fontWeight={500}>
+											Creator
+										</Typography>
+									</Stack>
+									<Stack direction="row" alignItems={'center'} spacing={2}>
+										<Avatar src={item?.creatorInfo.avatar} variant="square" />
+										<Box sx={{ overflow: 'hidden' }}>
+											<Tooltip title={item?.creator}>
+												<Link
+													href={`/#/profile?address=${item?.creator}`}
+													underline="none"
+												>
+													<Typography
+														fontWeight="400"
+														variant="subtitle1"
+														noWrap
+													>
+														{item?.creatorInfo.username}
+													</Typography>
+												</Link>
+											</Tooltip>
+										</Box>
+									</Stack>
 								</Stack>
-							</Stack>
-							<Stack alignItems="flex-start" spacing={2} sx={{ maxWidth: '300px' }}>
-								<AutoCompleteCustom
-									onChange={handleChangeCategory}
-									currentItem={currentCategoryTransformed}
-									listItem={listOwner}
-									sx={{ width: '100%' }}
-								/>
+								<Stack
+									alignItems="flex-start"
+									spacing={2}
+									sx={{ maxWidth: '300px' }}
+								>
+									<AutoCompleteCustom
+										onChange={handleChangeCategory}
+										currentItem={currentCategoryTransformed}
+										listItem={listOwner}
+										sx={{ width: '100%' }}
+									/>
+								</Stack>
 							</Stack>
 							{item?.status === 1 && (
 								<Typography variant="body1">Price: {itemPrice} APT</Typography>

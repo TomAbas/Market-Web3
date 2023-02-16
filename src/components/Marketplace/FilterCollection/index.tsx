@@ -17,10 +17,10 @@ export default function FilterCollection() {
 		{ id: '2', name: 'Music', link: '#/view-all/collections/?category=2' },
 		{ id: '3', name: 'Photography', link: '#/view-all/collections/?category=3' },
 		{ id: '4', name: 'Games', link: '#/view-all/collections/?category=4' },
-		{ id: '5', name: 'Sport', link: '#/view-all/collections/?category=5' },
+		{ id: '5', name: 'Sports', link: '#/view-all/collections/?category=5' },
 		{ id: '6', name: 'Metaverse', link: '#/view-all/collections/?category=6' },
-		{ id: '7', name: 'Box', link: '#/view-all/collections/?category=7' },
-		{ id: '8', name: 'Trading Card', link: '#/view-all/collections/?category=8' },
+		{ id: '7', name: 'Trading Cards', link: '#/view-all/collections/?category=7' },
+		{ id: '8', name: 'Domain Names', link: '#/view-all/collections/?category=8' },
 	];
 	return (
 		<>

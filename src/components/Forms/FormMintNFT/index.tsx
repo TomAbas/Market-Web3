@@ -118,23 +118,9 @@ const FormMintNft: React.FC<Props> = ({
 				<InputTitle>
 					Image, Video, Audio, or 3D Model <Asterisk />
 				</InputTitle>
-				{/* <FieldSubTitle>
-						Recommended file types: JPG, PNG, GIF, SVG, WEBM, MP4, MP3. Max size: 10 MB.
-					</FieldSubTitle> */}
+
 				<FieldSubTitle>Drag or choose your file to upload</FieldSubTitle>
 				<InputImage>
-					{/* <input
-						type="file"
-						className="my-4"
-						{...register('file', { required: true })}
-						onChange={(e) => {
-							handleInputFileMintNft(e);
-							errors.file = undefined;
-						}}
-					/> */}
-					{/* <InputTitle>
-						Image<span>*</span>
-					</InputTitle> */}
 					<UploadMediaCustom
 						onDrop={handleDropFile}
 						sx={{
@@ -144,7 +130,6 @@ const FormMintNft: React.FC<Props> = ({
 							width: '100%',
 							height: '100%',
 							borderRadius: '12px',
-							padding: 1,
 							border: '1px dashed #5A5D79',
 							objectFit: 'contain',
 						}}

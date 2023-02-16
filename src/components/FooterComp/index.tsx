@@ -139,22 +139,25 @@ const FooterComp: React.FC = () => {
 		{
 			title: 'Explore',
 			contents: [
-				{
-					title: 'Collectible',
-					link: `/#/view-all/collections`,
-					isFilter: false,
-				},
+				{ id: '0', title: 'Collectible', link: `/#/view-all/collections`, isFilter: false },
 				{ id: '1', title: 'Art', link: `/#/view-all/collections`, isFilter: true },
 				{ id: '2', title: 'Music', link: `/#/view-all/collections`, isFilter: true },
-				{ id: '5', title: 'Sport', link: `/#/view-all/collections`, isFilter: true },
-				{ title: 'Domain Name', link: `/#/view-all/collections`, isFilter: false },
+				{ id: '3', title: 'Photography', link: `/#/view-all/collections`, isFilter: true },
+				{ id: '4', title: 'Games', link: `/#/view-all/collections`, isFilter: true },
+				{ id: '5', title: 'Sports', link: `/#/view-all/collections`, isFilter: true },
+				{ id: '6', title: 'Metaverse', link: `/#/view-all/collections`, isFilter: true },
 				{
-					id: '8',
-					title: 'Trading Card',
+					id: '7',
+					title: 'Trading Cards',
 					link: `/#/view-all/collections`,
 					isFilter: true,
 				},
-				{ id: '4', title: 'Esport', link: `/#/view-all/collections`, isFilter: true },
+				{
+					id: '8',
+					title: 'Domain Names',
+					link: `/#/view-all/collections`,
+					isFilter: true,
+				},
 			],
 		},
 	];

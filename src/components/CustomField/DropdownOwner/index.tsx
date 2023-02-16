@@ -130,9 +130,6 @@ function AutoCompleteCustom({
 									direction={'column'}
 									sx={{ maxWidth: '100%', overflow: 'hidden' }}
 								>
-									<Typography variant="body1" fontWeight={500}>
-										Owner
-									</Typography>
 									<Tooltip title={item?.value}>
 										<Link
 											href={`/#/profile?address=${item?.value}`}
@@ -155,59 +152,41 @@ function AutoCompleteCustom({
 
 	return (
 		<SelectOptionBox onClick={showOptionBox} sx={sx}>
-			<Stack direction="row" alignItems="center" gap="16px">
-				{currentItem?.name && (
-					<>
-						<Avatar src={currentItem?.image} variant="square" />
-						<Stack direction={'column'} sx={{ width: '80%' }}>
-							<Typography variant="body1" fontWeight={500}>
-								Owner
-							</Typography>
-							<Tooltip title={currentItem?.value}>
-								<Link
-									href={`/#/profile?address=${currentItem?.value}`}
-									underline="none"
-								>
-									<Typography fontWeight="400" variant="subtitle1" noWrap>
-										{currentItem.name}
-									</Typography>
-								</Link>
-							</Tooltip>
+			<Stack spacing={2}>
+				<Typography variant="body1" fontWeight={500}>
+					Owner
+				</Typography>
+				<Stack>
+					{currentItem?.name && (
+						<Stack direction="row" alignItems="center" spacing={2}>
+							<Avatar src={currentItem?.image} variant="square" />
+							<Stack direction="row">
+								<Tooltip title={currentItem?.value}>
+									<Link
+										href={`/#/profile?address=${currentItem?.value}`}
+										underline="none"
+									>
+										<Typography fontWeight="400" variant="subtitle1" noWrap>
+											{currentItem.name}
+										</Typography>
+									</Link>
+								</Tooltip>
+								{!disabled && listItemFiltered.length > 1 && (
+									<ArrowDropDownOutlinedIcon
+										sx={{
+											position: 'absolute',
+											top: '50%',
+											right: '10px',
+											transform: 'translateY(-50%)',
+											zIndex: 0,
+										}}
+									/>
+								)}
+							</Stack>
 						</Stack>
-					</>
-				)}
-
-				{/* <Box sx={{ flexGrow: 1 }}>
-					<FieldInput
-						otherProps={{ ref: inputRef }}
-						type="text"
-						readOnly={true}
-						sx={{
-							zIndex: 1,
-							paddingLeft: '0px',
-							backgroundColor: 'transparent',
-							fontStyle: 'italic',
-							color: '#131740',
-							padding: '15px 5px',
-							border: 0,
-							boxShadow: 0,
-						}}
-					/>
-				</Box> */}
-
-				{!disabled && listItemFiltered.length > 1 && (
-					<ArrowDropDownOutlinedIcon
-						sx={{
-							position: 'absolute',
-							top: '50%',
-							right: '10px',
-							transform: 'translateY(-50%)',
-							zIndex: 0,
-						}}
-					/>
-				)}
+					)}
+				</Stack>
 			</Stack>
-
 			<DropDownOverlay className={activeSelectOption ? 'active' : ''} />
 
 			<DropDownContent ref={ref} className={activeSelectOption ? 'active' : ''}>

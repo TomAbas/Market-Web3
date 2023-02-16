@@ -4,7 +4,7 @@ import { Console } from 'console';
 import { APTOS_NODE_URL } from '../constants/aptos.constant';
 const MARKET_ADDRESS =
 	process.env.REACT_APP_MARKET_ADDRESS ||
-	'0xed08f5856d2e5a1ab7282964922b7ec8c18b85c911d99b3f23eb25af5965d270';
+	'0x5501332ea130b2bc65a0f2531d62c26cb2c7086f856632a6a579e99ed0f186c5';
 
 const chainId = '2';
 // const tokenId = {
@@ -53,13 +53,18 @@ export const getItemData = async (creator: string, collectionName: string, itemN
 
 export const getTokenFromResource = async () => {
 	const client = new AptosClient(APTOS_NODE_URL[chainId]);
-	let data = await client.getAccountResources(MARKET_ADDRESS);
+	let data = await client.getAccountResources(
+		'0x2709ce0b27f0b4ff85ab2b28dceaf546c76c6b8365072935d9aa65406eebbc04'
+		// '0x35c6eb07698e3aff7dd5bb0a2adef7467965e4d5430dc3c446f8bfb8d0a40771'
+		// '0x5501332ea130b2bc65a0f2531d62c26cb2c7086f856632a6a579e99ed0f186c5::market::TokenInfo'
+	);
+	console.log('getTokenFromResource', data);
 	data = data
 		.filter((item: any) => {
-			return item.type.includes('nft::TokenInfo');
+			return item.type.includes('market::TokenInfo');
 		})
 		.map((item: any) => item.data.token_list)
 		.reduce((a: any, b: any) => a.concat(b), []);
-	console.log('itemResource', data);
+
 	return data;
 };

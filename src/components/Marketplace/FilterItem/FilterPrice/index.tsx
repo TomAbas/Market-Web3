@@ -16,7 +16,7 @@ import {
 import FieldInput from '../../../../components/CustomField/FieldInput/index';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import iconPriceBlack from '../../../../assets/icons/icon-filter-price.svg';
-import { setFilter } from 'redux/slices/nftFilter';
+import { handleReset, setFilter } from 'redux/slices/nftFilter';
 import { useAppDispatch } from 'redux/hooks';
 import { toast } from 'react-toastify';
 export interface IFormFilterPrice {
@@ -65,6 +65,7 @@ const FilterPrice = () => {
 	}
 	function handleClear() {
 		reset();
+		dispatch(handleReset());
 	}
 	//end function
 	return (
