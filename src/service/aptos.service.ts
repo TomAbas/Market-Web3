@@ -2,12 +2,9 @@
 import { AptosClient, AptosAccount, FaucetClient, TokenClient, CoinClient } from 'aptos';
 import { Console } from 'console';
 import { APTOS_NODE_URL } from '../constants/aptos.constant';
-
-// const address = '0x09e161f7a5f223d8852594af6f8b20ea9717c9114d16d9c23b66c1f0d6f4734d';
-// const collectName = 'Metaverse Collectible';
-// const tokenName = 'test #2';
-
-//  signHexString by AptosAccount
+const MARKET_ADDRESS =
+	process.env.REACT_APP_MARKET_ADDRESS ||
+	'0xed08f5856d2e5a1ab7282964922b7ec8c18b85c911d99b3f23eb25af5965d270';
 
 const chainId = '2';
 // const tokenId = {
@@ -54,4 +51,15 @@ export const getItemData = async (creator: string, collectionName: string, itemN
 	return tokenClient.getTokenData(creator, collectionName, itemName);
 };
 
-// export const getChainId = async () => {
+export const getTokenFromResource = async () => {
+	const client = new AptosClient(APTOS_NODE_URL[chainId]);
+	let data = await client.getAccountResources(MARKET_ADDRESS);
+	data = data
+		.filter((item: any) => {
+			return item.type.includes('nft::TokenInfo');
+		})
+		.map((item: any) => item.data.token_list)
+		.reduce((a: any, b: any) => a.concat(b), []);
+	console.log('itemResource', data);
+	return data;
+};
