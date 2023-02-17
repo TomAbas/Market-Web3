@@ -5,6 +5,12 @@
 */
 
 /*!
+ * ApexCharts v3.37.0
+ * (c) 2018-2023 ApexCharts
+ * Released under the MIT License.
+ */
+
+/*!
  * The buffer module from node.js, for the browser.
  *
  * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
@@ -41,6 +47,14 @@
 /*! scure-base - MIT License (c) 2022 Paul Miller (paulmillr.com) */
 
 /*! scure-bip39 - MIT License (c) 2022 Patricio Palladino, Paul Miller (paulmillr.com) */
+
+/*! svg.draggable.js - v2.2.2 - 2019-01-08
+* https://github.com/svgdotjs/svg.draggable.js
+* Copyright (c) 2019 Wout Fierens; Licensed MIT */
+
+/*! svg.filter.js - v2.0.2 - 2016-02-24
+* https://github.com/wout/svg.filter.js
+* Copyright (c) 2016 Wout Fierens; Licensed MIT */
 
 /**
  * @license
