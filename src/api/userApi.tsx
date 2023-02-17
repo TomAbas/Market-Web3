@@ -15,7 +15,7 @@ function loginUser(data: UserLoginModel) {
 	info.then((res: any) => {
 		if (res.data.token) {
 			localStorage.setItem('token', res.data.token);
-			window.location.reload();
+			// window.location.reload();
 		}
 		return res;
 	});
