@@ -1,19 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import TabPanel from '@mui/lab/TabPanel';
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Stack } from '@mui/material';
 import CardNFT from 'components/Marketplace/CardNFT';
 import FilterItem from './FilterItem';
 import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
 	handleReset,
 	selectAllNfts,
 	selectFilter,
 	selectLoadingAllNfts,
+	setFilter,
 } from 'redux/slices/nftFilter';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import useInteraction from 'hooks/useInteraction';
 import { nftItem } from 'models/item';
+import { InputItem } from 'components/Mint/styled';
 
 export default function Items() {
 	const dispatch = useAppDispatch();
@@ -24,6 +26,10 @@ export default function Items() {
 	const loadingOffers = useAppSelector(selectLoadingAllNfts);
 	const [offersDisplay, setOffersDisplay] = useState<any[]>([]);
 	const [viewFull, setViewFull] = useState(false);
+	const inputRef: any = useRef();
+	function filterNameItem() {
+		dispatch(setFilter({ itemName: inputRef.current.value.toLowerCase() }));
+	}
 	useEffect(() => {
 		if (offers.length > 0) {
 			let newOffers = offers.filter((item: any) => {
@@ -70,9 +76,17 @@ export default function Items() {
 		<>
 			{/* <FilterItem /> */}
 			<TabPanel value="1" sx={{ px: 0 }}>
-				<Box mb={1}>
+				<Stack mb={1} direction="row" justifyContent="space-between">
 					<FilterItem />
-				</Box>
+					<InputItem sx={{ marginTop: '0' }}>
+						<input
+							type="text"
+							placeholder="Search name ..."
+							onChange={filterNameItem}
+							ref={inputRef}
+						/>
+					</InputItem>
+				</Stack>
 				<Grid container maxWidth="1440px" mx="auto" spacing={1}>
 					{loadingOffers ? (
 						<>

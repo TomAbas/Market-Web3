@@ -33,6 +33,8 @@ import { OptionSelectCustom, RELATED_URLS } from 'constants/index';
 import { displayAddress } from 'utils/function';
 import ModalTransferNFT from './ModalTransfer';
 import AutoCompleteCustom from 'components/CustomField/DropdownOwner';
+import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
+import { displayUserFullName } from 'utils/formatDisplay';
 interface Props {
 	loadingItem: boolean;
 	itemResource: any;
@@ -120,17 +122,24 @@ const ItemInfo: React.FC<Props> = ({
 					>
 						<Stack gap="16px" sx={{ flex: '1', overflow: 'hidden' }}>
 							{' '}
-							<Typography
-								variant="h6"
-								fontWeight={500}
-								sx={{ color: '#007aff', cursor: 'pointer' }}
-								onClick={navigateCollection}
+							<NoMaxWidthTooltip
+								title={displayUserFullName(item!.collectionInfo.collectionName)}
 							>
-								{item?.collectionInfo.collectionName}
-							</Typography>
-							<Typography variant="h4" fontWeight={500}>
-								{item?.itemName}
-							</Typography>
+								<Typography
+									variant="h6"
+									fontWeight={500}
+									sx={{ color: '#007aff', cursor: 'pointer' }}
+									onClick={navigateCollection}
+									noWrap
+								>
+									{item?.collectionInfo.collectionName}
+								</Typography>
+							</NoMaxWidthTooltip>
+							<NoMaxWidthTooltip title={displayUserFullName(item!.itemName)}>
+								<Typography variant="h4" fontWeight={500} noWrap>
+									{item?.itemName}
+								</Typography>
+							</NoMaxWidthTooltip>
 							<Typography
 								variant="body1"
 								ref={desRef}
