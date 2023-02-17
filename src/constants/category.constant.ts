@@ -12,8 +12,8 @@ export const listCategory: Category[] = [
 	{ id: 4, name: 'Games', value: 4 },
 	{ id: 5, name: 'Sport', value: 5 },
 	{ id: 6, name: 'Metaverse', value: 6 },
-	{ id: 7, name: 'Box', value: 7 },
-	{ id: 8, name: 'Trading Card', value: 8 },
+	{ id: 7, name: 'Trading Cards', value: 7 },
+	{ id: 8, name: 'Domain Names', value: 8 },
 ];
 
 export interface OptionSelectCustom<T> {

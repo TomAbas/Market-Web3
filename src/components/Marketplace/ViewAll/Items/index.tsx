@@ -134,7 +134,7 @@ export default function Items() {
 							},
 						}}
 					>
-						<button onClick={() => setViewFull(true)}>Load more</button>
+						<button onClick={() => setViewFull(true)}>Load More</button>
 					</Box>
 				)}
 				{/* <>

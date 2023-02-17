@@ -6,6 +6,7 @@ export const TabWrapperContainer = styled(Box)(({ theme }) => ({
 	boxShadow: '2px 2px 8px rgba(0, 0, 0, 0.25)',
 	backgroundColor: '#fff',
 	borderColor: '#5A5D79',
+	flex: '1',
 }));
 
 export const TabWrapper = styled(Box)(({ theme }) => ({

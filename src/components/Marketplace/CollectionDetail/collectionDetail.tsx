@@ -28,28 +28,26 @@ import { Collection } from 'models/collection';
 import { FilterWrapper } from '../ViewAll/Items/styled';
 import SkeletonTopProfile from 'components/Skeletons/SkeletonTopProfile/SkeletonTopProfile';
 import NoItem from 'customComponents/NoItem/NoItem';
+import { selectUser } from 'redux/slices/userInfo';
+import TabCollectionDetail from './TabCollectionDetail/TabCollectionDetail';
+import MediaDisplayCard from '../MediaDisplayCardSmall/MediaDisplayCard';
+import TwitterIcon from '../../../assets/icons/twitter-white.svg';
 const CollectionDetail = () => {
 	const desRef: any = useRef();
-	const inputRef: any = useRef();
 	const dispatch = useAppDispatch();
 	const [show, setShow] = useState(false);
 	const { collectionId } = useParams();
 	let arr = [1, 2, 3, 4];
-	const { checkIsLike, likeItem } = useInteraction();
 	const [offers, setOffers, loadingOffers] = useOutletContext<any>();
 	const [collectionInfo, setCollectionInfo] = useState<Collection>();
-	const { itemsDisplay } = useFilterItem(collectionInfo?.listItem || []);
 	const [loadingCollectionImg, setLoadingCollectionImg] = useState(true);
 	const triggerFetchNft = useAppSelector(selectTrigger);
+	const userInfo = useAppSelector(selectUser);
 
-	const navigate = useNavigate();
 	async function fetchCollectionItems() {
 		let collection = await getItemOfCollection(collectionId!).then((res: any) => res.data);
 		setCollectionInfo(collection);
 		setLoadingCollectionImg(false);
-	}
-	function filterNameItem() {
-		dispatch(setFilter({ itemName: inputRef.current.value.toLowerCase() }));
 	}
 	useEffect(() => {
 		fetchCollectionItems();
@@ -75,29 +73,51 @@ const CollectionDetail = () => {
 							},
 						}}
 					>
-						<img src={collectionInfo?.logo} alt="banner" />
+						{/* <img src={collectionInfo?.logo} alt="banner" /> */}
+						<MediaDisplayCard
+							media={collectionInfo?.logo}
+							preview={TwitterIcon}
+							name={collectionInfo?.collectionName}
+						/>
 						<Box
 							sx={{
 								position: 'absolute',
 								left: '50%',
-								bottom: '-50px',
-								transform: 'translateX(-50%)',
-								border: '2px solid #fff',
-								borderRadius: '10px',
+								transform: 'translate(-50%,-50%)',
+								border: '4px solid #fff',
+								borderRadius: '15px',
+								height: '150px',
+								width: '150px',
 								img: {
-									width: '100px',
-									height: '100px',
+									width: '100% !important',
+									height: '100% !important',
 									objectFit: 'cover',
 									objectPosition: 'center',
 									borderRadius: '10px',
 								},
+								video: {
+									width: '100% !important',
+									height: '100% !important',
+									objectFit: 'cover !important',
+									objectPosition: 'center',
+									borderRadius: '10px',
+								},
+								'.react-player': {
+									width: '100% !important',
+									height: '100% !important',
+								},
 							}}
 						>
-							<img src={collectionInfo?.logo} alt="avatar" />
+							<MediaDisplayCard
+								media={collectionInfo!.logo}
+								preview={TwitterIcon}
+								name={collectionInfo!.collectionName}
+							/>
+							{/* <img src={collectionInfo?.logo} alt="avatar" /> */}
 						</Box>
 					</Box>
 				)}
-				<Box pt={8} sx={{ maxWidth: '1440px', mx: 'auto' }}>
+				<Box pt={12} sx={{ maxWidth: '1440px', mx: 'auto' }}>
 					<Box sx={{ width: '100%', textAlign: 'center' }}>
 						<Typography variant="h4" fontWeight="500">
 							{collectionInfo?.collectionName}
@@ -188,80 +208,8 @@ const CollectionDetail = () => {
 							/>
 						</FeatureWrapper>
 					</Stack>
-					<Box
-						sx={{ display: 'flex', width: 'auto', justifyContent: 'space-between' }}
-						px={1}
-					>
-						<FilterWrapper>
-							<FilterPrice />
-							<FilterStatus />
-						</FilterWrapper>
-						<Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
-							<InputItem sx={{ marginTop: '0' }}>
-								<input
-									type="text"
-									placeholder="Search name ..."
-									onChange={filterNameItem}
-									ref={inputRef}
-								/>
-							</InputItem>
-							<Tooltip
-								title="Add Item"
-								placement="top"
-								arrow
-								sx={{ marginLeft: 'auto' }}
-								onClick={() => navigate(`/mint?query=2`)}
-							>
-								<Box>
-									<ButtonWhite
-										sx={{
-											py: '10px',
-											minWidth: '46px',
-											mb: 0,
-											background: '#fff',
-											border: '1px solid #E7E8EC',
-											px: 0,
-										}}
-									>
-										<AddIcon />
-									</ButtonWhite>
-								</Box>
-							</Tooltip>
-						</Box>
-					</Box>
-					<Box py={4}>
-						<Grid container maxWidth="1440px" mx="auto" spacing={1}>
-							{loadingOffers ? (
-								<>
-									{arr.map((item, idx) => (
-										<SkeletonCardNft key={idx} />
-									))}
-								</>
-							) : (
-								<>
-									{itemsDisplay.length > 0 ? (
-										<>
-											{itemsDisplay?.map((offer: any, index: any) => (
-												<CardNFT
-													itemLiked={checkIsLike}
-													likeItem={likeItem}
-													offers={offers}
-													offer={offer}
-													index={index}
-													key={index}
-													loadingOffers={loadingOffers}
-												/>
-											))}
-										</>
-									) : (
-										<NoItem title="No item"></NoItem>
-									)}
-								</>
-								// <>
-
-								// </>
-							)}
-						</Grid>
+					<Box>
+						<TabCollectionDetail collectionInfo={collectionInfo!} />
 					</Box>
 				</Box>
 			</Box>

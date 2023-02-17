@@ -30,10 +30,15 @@ function getListCategory(chainId: string): Promise<Response<any>> {
 	return ClientAxios.get(url).then(({ data }) => data);
 }
 
+function getCollectionHistory(collectionId: string): Promise<Response<any>> {
+	const url = `/history/get-by-collection/collectionId/${collectionId}`;
+	return ClientAxios.get(url).then(({ data }) => data);
+}
 export {
 	getAllCollections,
 	getCategoryCollections,
 	getTopCollections,
 	getListCategory,
 	getItemOfCollection,
+	getCollectionHistory,
 };

@@ -57,6 +57,8 @@ import {
 	PATH_VIEWALL,
 	PATH_VIRTUAL_WORLD,
 } from '../../routes/path';
+import { useAppSelector } from 'redux/hooks';
+import { selectUser } from 'redux/slices/userInfo';
 // import Link from "theme/overrides/Link";
 
 //
@@ -132,27 +134,30 @@ const FooterComp: React.FC = () => {
 	const ScrollToTop = () => {
 		window.scrollTo(0, 0);
 	};
-
+	const userInfo = useAppSelector(selectUser);
 	const marketplace = [
 		{
 			title: 'Explore',
 			contents: [
-				{
-					title: 'Collectible',
-					link: `/#/view-all/collections`,
-					isFilter: false,
-				},
+				{ id: '0', title: 'Collectible', link: `/#/view-all/collections`, isFilter: false },
 				{ id: '1', title: 'Art', link: `/#/view-all/collections`, isFilter: true },
 				{ id: '2', title: 'Music', link: `/#/view-all/collections`, isFilter: true },
-				{ id: '5', title: 'Sport', link: `/#/view-all/collections`, isFilter: true },
-				{ title: 'Domain Name', link: `/#/view-all/collections`, isFilter: false },
+				{ id: '3', title: 'Photography', link: `/#/view-all/collections`, isFilter: true },
+				{ id: '4', title: 'Games', link: `/#/view-all/collections`, isFilter: true },
+				{ id: '5', title: 'Sports', link: `/#/view-all/collections`, isFilter: true },
+				{ id: '6', title: 'Metaverse', link: `/#/view-all/collections`, isFilter: true },
 				{
-					id: '8',
-					title: 'Trading Card',
+					id: '7',
+					title: 'Trading Cards',
 					link: `/#/view-all/collections`,
 					isFilter: true,
 				},
-				{ id: '4', title: 'Esport', link: `/#/view-all/collections`, isFilter: true },
+				{
+					id: '8',
+					title: 'Domain Names',
+					link: `/#/view-all/collections`,
+					isFilter: true,
+				},
 			],
 		},
 	];
@@ -266,12 +271,6 @@ const FooterComp: React.FC = () => {
 					link: '#/myCollection',
 					target: '',
 				},
-
-				// {
-				// 	id: 5,
-				// 	name: 'Create Item',
-				// 	link: `#${PATH_ITEM.createItem}`,
-				// },
 			],
 		},
 
@@ -512,50 +511,61 @@ const FooterComp: React.FC = () => {
 								</DetailList>
 							</DetailColumn>
 						))}
-						{detailList.map((item, index) => (
-							<DetailColumn key={index}>
-								<DetailTitle
-									sx={{
-										fontSize: '22px',
-										fontStyle: 'italic',
-										[theme.breakpoints.down(500)]: {
-											fontSize: '18px',
-										},
-									}}
-								>
-									{item.title}
-								</DetailTitle>
-								<DetailList>
-									{item.contents.map((item, index) => (
-										<ListRow
-											key={index}
+						{detailList.map((item, index) =>
+							index === 2 && !userInfo ? (
+								<></>
+							) : (
+								<>
+									{' '}
+									<DetailColumn key={index}>
+										<DetailTitle
 											sx={{
-												opacity: item.link === '' ? '0.6' : '1',
-												fontSize: '18px',
-												padding: '4px 0',
+												fontSize: '22px',
+												fontStyle: 'italic',
 												[theme.breakpoints.down(500)]: {
-													fontSize: '13px',
+													fontSize: '18px',
 												},
 											}}
 										>
-											<DetailLink
-												sx={{
-													cursor:
-														item.link === '' ? 'default' : 'pointer',
-													pointerEvents:
-														item.link === '' ? 'none' : 'pointer',
-													fontStyle: 'italic',
-												}}
-												// target="_blank"
-												href={item.link}
-											>
-												{item.name}
-											</DetailLink>
-										</ListRow>
-									))}
-								</DetailList>
-							</DetailColumn>
-						))}
+											{item.title}
+										</DetailTitle>
+										<DetailList>
+											{item.contents.map((item, index) => (
+												<ListRow
+													key={index}
+													sx={{
+														opacity: item.link === '' ? '0.6' : '1',
+														fontSize: '18px',
+														padding: '4px 0',
+														[theme.breakpoints.down(500)]: {
+															fontSize: '13px',
+														},
+													}}
+												>
+													<DetailLink
+														sx={{
+															cursor:
+																item.link === ''
+																	? 'default'
+																	: 'pointer',
+															pointerEvents:
+																item.link === ''
+																	? 'none'
+																	: 'pointer',
+															fontStyle: 'italic',
+														}}
+														// target="_blank"
+														href={item.link}
+													>
+														{item.name}
+													</DetailLink>
+												</ListRow>
+											))}
+										</DetailList>
+									</DetailColumn>
+								</>
+							)
+						)}
 					</DetailContainer>
 				</GridContent>
 			</BigContainer>

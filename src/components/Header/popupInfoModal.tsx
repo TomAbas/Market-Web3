@@ -6,7 +6,7 @@ import { getBalanceUser } from '../../utils/getUser';
 import { Box, Link, Stack, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { selectUser, toggleSettingModalA } from 'redux/slices/userInfo';
+import { selectUser, toggleSettingModalA, logOutUserSuccessA } from 'redux/slices/userInfo';
 // import userIcon from '../../assets/icons/icon-user-black.svg';
 //img
 //Img update
@@ -60,6 +60,7 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 		try {
 			disconnect();
 			localStorage.clear();
+			dispatch(logOutUserSuccessA());
 			toast.success('Successful logout');
 			navigate('/');
 		} catch (error: any) {

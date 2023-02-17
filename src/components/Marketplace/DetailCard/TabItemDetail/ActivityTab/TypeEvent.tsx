@@ -13,7 +13,6 @@ function getTransactionType(type: number) {
 }
 
 const TypeEvent: React.FC<Props> = ({ itemHistory, userAddress }) => {
-	console.log('TypeEvent.tsx, itemHistory: ', itemHistory);
 	if (itemHistory.type === 1) {
 		//mint
 		return (

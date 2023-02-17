@@ -13,11 +13,11 @@ import { IconButton, Typography } from '@mui/material';
 import ErrorMediaRender from '../MediaDisplayCardError/MediaDisplayCardError';
 
 export interface IMediaDisplayProps {
-	media: string;
-	preview: string;
-	name: string;
+	media: any;
+	preview: any;
+	name: any;
 	lazyType?: 'progress' | 'skeleton';
-	className?: string;
+	className?: any;
 }
 
 const MediaDisplayCard = ({ media, preview, name, lazyType = 'progress' }: IMediaDisplayProps) => {

@@ -15,7 +15,7 @@ import {
 	CheckIconWrapper,
 } from '../styled';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
-import iconPriceBlack from '../../../../assets/icons/icon-filter-price.svg';
+import iconPriceBlack from '../../../../assets/icons/icon-filter-collection.svg';
 import { setFilter } from 'redux/slices/nftFilter';
 import { useAppDispatch } from 'redux/hooks';
 import { getAllCollections as getAllCollectionsAPI } from 'api/collectionApi';
@@ -45,7 +45,7 @@ const FilterCollection = () => {
 	}
 	function handleClear() {
 		setSelected([]);
-		dispath(setFilter({ status: [] }));
+		dispath(setFilter({ collectionId: [] }));
 	}
 	function handleApply() {
 		dispath(setFilter({ collectionId: selected }));

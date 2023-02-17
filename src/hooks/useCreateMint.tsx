@@ -168,7 +168,7 @@ const useCreateMintSell = () => {
 								gas_unit_price: 100,
 							}
 						).then((res) => res.hash);
-						toast.success('Successful create an item');
+						toast.success('Successful create new item');
 						completeTaskSuccess();
 						let ItemInfo: Item = {
 							creator: account?.address?.toString()!,

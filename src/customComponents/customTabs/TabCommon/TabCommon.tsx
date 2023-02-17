@@ -21,7 +21,6 @@ const TabCommon = ({ tabItems, tabSections, tabAlignment = 'center' }: TabCommon
 	const { pathname } = useLocation();
 	let [searchParams] = useSearchParams();
 	const tab = searchParams.get('tab');
-	console.log(tab);
 	// useState
 	const [value, setValue] = React.useState('0');
 

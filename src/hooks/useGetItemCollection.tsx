@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { getItemOfCollection } from 'api/collectionApi';
 // import { Collection } from 'models/collection';
 import { useEffect, useState } from 'react';

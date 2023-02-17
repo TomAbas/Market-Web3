@@ -16,7 +16,7 @@ import {
 
 // declare let window: any;
 const ModalWallet: React.FC = () => {
-	const { wallets, connect, connected, account } = useWallet();
+	const { wallets, connect, connected, account, disconnect } = useWallet();
 	const DECIMAL = 100000000;
 	const dispatch = useAppDispatch();
 
@@ -24,8 +24,8 @@ const ModalWallet: React.FC = () => {
 		connect(wallet.adapter.name);
 		dispatch(closeModal());
 	}
-	let myAddress = account?.address?.toString();
 	const connect1 = async (wallet: any) => {
+		disconnect();
 		await connectWallet(wallet);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 	};
@@ -50,7 +50,10 @@ const ModalWallet: React.FC = () => {
 									<img width={48} height={48} src={wallet.adapter.icon} />
 								)}
 
-								<Typography fontStyle="italic">
+								<Typography
+									fontStyle="italic"
+									sx={{ '&:hover': { color: '#1976d2' } }}
+								>
 									{wallet.adapter.name === 'Spacecy'
 										? `${wallet.adapter.name} Wallet`
 										: wallet.adapter.name}
@@ -65,13 +68,11 @@ const ModalWallet: React.FC = () => {
 
 	return (
 		<>
-			{!myAddress && (
-				<DropDownContent>
-					<Box>
-						<Stack>{renderListWallet()}</Stack>
-					</Box>
-				</DropDownContent>
-			)}
+			<DropDownContent>
+				<Box>
+					<Stack>{renderListWallet()}</Stack>
+				</Box>
+			</DropDownContent>
 		</>
 	);
 };

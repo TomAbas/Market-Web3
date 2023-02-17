@@ -62,6 +62,8 @@ import useLogin from '../../hooks/useLogin';
 //component
 import NavBar from 'components/NavBar';
 import NavBarMobile from 'components/NavBarMobile';
+import { userInfo } from 'os';
+import { selectUser } from 'redux/slices/userInfo';
 
 const listCategoryMarketplace = [
 	// {
@@ -74,7 +76,7 @@ const listCategoryMarketplace = [
 	// },
 	{
 		id: 0,
-		title: 'Collectible',
+		title: 'Collectibles',
 		target: '_self',
 		link: `/#/view-all/collections/`,
 		isFilter: false,
@@ -97,36 +99,52 @@ const listCategoryMarketplace = [
 		icon: IconMusic,
 	},
 	{
-		id: 5,
-		title: 'Sport',
+		id: 3,
+		title: 'Photography',
 		target: '_self',
 		link: `/#/view-all/collections/`,
 		isFilter: true,
 		icon: IconSports,
 	},
 	{
-		id: 1,
-		title: 'Domain Name',
+		id: 4,
+		title: 'Games',
 		target: '_self',
 		link: `/#/view-all/collections/`,
 		isFilter: false,
 		icon: IconDomainNames,
 	},
 	{
-		id: 8,
-		title: 'Trading Card',
+		id: 5,
+		title: 'Sports',
 		target: '_self',
 		link: `/#/view-all/collections/`,
 		isFilter: true,
 		icon: IconTradingCards,
 	},
 	{
-		id: 4,
-		title: 'Esport',
+		id: 6,
+		title: 'Metaverse',
 		target: '_self',
 		link: `/#/view-all/collections/`,
 		isFilter: true,
 		icon: IconEsports,
+	},
+	{
+		id: 7,
+		title: 'Trading Cards',
+		target: '_self',
+		link: `/#/view-all/collections/`,
+		isFilter: true,
+		icon: IconAution,
+	},
+	{
+		id: 8,
+		title: 'Domain Names',
+		target: '_self',
+		link: `/#/view-all/collections/`,
+		isFilter: true,
+		icon: IconEvent,
 	},
 ];
 
@@ -201,9 +219,9 @@ const Header: React.FC = () => {
 	let [option, setOption] = useState(false);
 	const [chainId, setChainId] = useState('Testnet');
 	const { network, wallet } = useWallet();
-
+	const userInfo = useAppSelector(selectUser);
 	const openModal = () => {
-		if (!userAddress) {
+		if (!userInfo) {
 			dispatch(openFirstModal());
 		} else {
 			dispatch(openSecondModal());
@@ -583,7 +601,7 @@ const Header: React.FC = () => {
 						<Stack direction="row" alignItems="center" gap="8px">
 							<IconItem onClick={openModal}>
 								<img src={connectIcon} alt="connect icon" />
-								{modalWalletSteps.steps.firstModal && !userAddress && (
+								{modalWalletSteps.steps.firstModal && !userInfo && (
 									<ClickAwayListener
 										onClickAway={() => {
 											openModal();
@@ -740,7 +758,7 @@ const Header: React.FC = () => {
 									</ClickAwayListener>
 								)}
 							</IconItem>
-							{userAddress && (
+							{userInfo && (
 								<IconItem onClick={openModalInfoUser}>
 									<img src={userIcon} alt="model info" />
 									{modalWalletSteps.steps.thirdModal && userAddress && (
