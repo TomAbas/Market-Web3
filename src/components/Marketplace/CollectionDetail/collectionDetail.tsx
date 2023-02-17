@@ -27,6 +27,7 @@ import useFilterItem from 'hooks/useFilterItem';
 import { Collection } from 'models/collection';
 import { FilterWrapper } from '../ViewAll/Items/styled';
 import SkeletonTopProfile from 'components/Skeletons/SkeletonTopProfile/SkeletonTopProfile';
+import NoItem from 'customComponents/NoItem/NoItem';
 import { selectUser } from 'redux/slices/userInfo';
 import TabCollectionDetail from './TabCollectionDetail/TabCollectionDetail';
 import MediaDisplayCard from '../MediaDisplayCardSmall/MediaDisplayCard';

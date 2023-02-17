@@ -16,6 +16,7 @@ import { useAppSelector } from 'redux/hooks';
 import { selectUser } from 'redux/slices/userInfo';
 import { createCollection } from 'api/collections/collectionApi';
 import { selectTrigger } from 'redux/slices/nftFilter';
+import { toast } from 'react-toastify';
 
 interface Props {
 	open: boolean;
@@ -121,6 +122,7 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 				setCollectionName('');
 				setCollectionData(null);
 				onClose();
+				toast.success('Successfully imported collection');
 			}
 		} catch (err: any) {
 			setError(err);

@@ -16,6 +16,7 @@ import useFilterItem from 'hooks/useFilterItem';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import CardNFT from 'components/Marketplace/CardNFT';
+import NoItem from 'customComponents/NoItem/NoItem';
 interface Props {
 	collectionInfo: Collection;
 }
@@ -82,17 +83,25 @@ const ItemsTab: React.FC<Props> = ({ collectionInfo }) => {
 						</>
 					) : (
 						<>
-							{itemsDisplay?.map((offer: any, index: any) => (
-								<CardNFT
-									itemLiked={checkIsLike}
-									likeItem={likeItem}
-									offers={offers}
-									offer={offer}
-									index={index}
-									key={index}
-									loadingOffers={loadingOffers}
-								/>
-							))}
+							{itemsDisplay.length > 0 ? (
+								<>
+									{itemsDisplay?.map((offer: any, index: any) => (
+										<CardNFT
+											itemLiked={checkIsLike}
+											likeItem={likeItem}
+											offers={offers}
+											offer={offer}
+											index={index}
+											key={index}
+											loadingOffers={loadingOffers}
+										/>
+									))}
+								</>
+							) : (
+								<>
+									<NoItem title="No Item"></NoItem>
+								</>
+							)}
 						</>
 					)}
 				</Grid>
