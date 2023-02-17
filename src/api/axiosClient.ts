@@ -15,8 +15,12 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(
-	function (config) {
+	function (config: any) {
 		// Do something before request is sent
+		config.headers = {
+			...config.headers,
+			Authorization: 'Bearer ' + localStorage.getItem('token'),
+		};
 		return config;
 	},
 	function (error) {
