@@ -30,6 +30,7 @@ import {
 } from 'utils/formatDisplay';
 // icon
 import checkicon from 'assets/icons/icon-check.svg';
+import NoItem from 'customComponents/NoItem/NoItem';
 
 export interface InfiniteListTrendingCollectionProps {
 	listTopTrader: any[];
@@ -195,6 +196,9 @@ export default function InfiniteListTopTrader({
 						</>
 					)}
 				</TableScrollable>
+				{!isLoading && listTopTrader.length === 0 && (
+					<NoItem title="No top trader"></NoItem>
+				)}
 			</TableWrapper>
 		</Box>
 	);

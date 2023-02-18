@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Typography } from '@mui/material';
 import Modal from '@mui/material/Modal';
+import { transferItem } from 'api/items/itemsApi';
 import { nftItem } from 'models/item';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { useEffect, useState } from 'react';
+import { selectUser } from 'redux/slices/userInfo';
 import { toast } from 'react-toastify';
 import useTransfer from 'utils/transfer';
 interface Props {
@@ -23,6 +26,7 @@ const style = {
 	p: 4,
 };
 const ModalTransferNFT: React.FC<Props> = ({ itemInfo, setOpen, open, quantity }) => {
+	const userInfo = useAppSelector(selectUser);
 	const [receiver, setReceiver] = useState('');
 	const [amount, setAmount] = useState<any>();
 	const [error, setError] = useState<any>({});
@@ -76,7 +80,15 @@ const ModalTransferNFT: React.FC<Props> = ({ itemInfo, setOpen, open, quantity }
 				itemInfo.itemName,
 				amount
 			)
-				.then(() => {
+				.then((res) => {
+					let data = {
+						itemId: itemInfo._id,
+						quantity: amount,
+						receive: receiver,
+						send: userInfo?.userAddress!,
+						txHash: res.hash,
+					};
+					transferItem(data);
 					toast.success('Successfully transfer');
 				})
 				.catch((err) => {
