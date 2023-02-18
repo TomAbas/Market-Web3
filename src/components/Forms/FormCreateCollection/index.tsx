@@ -58,11 +58,9 @@ const FormMint: React.FC<Props> = ({
 		}
 	});
 
-	const listCategoryTransformed: OptionSelectCustom<string>[] = listCategory
-		.map((item: Category) => ({ name: item.name, value: item.value.toString() }))
-		.filter((item: OptionSelectCustom<string>, idx: number) => {
-			return item.name !== 'Box';
-		});
+	const listCategoryTransformed: OptionSelectCustom<string>[] = listCategory.map(
+		(item: Category) => ({ name: item.name, value: item.value.toString() })
+	);
 	const checkCollectionNameValid = (e: any) => {
 		let value = e.target.value;
 		value = value.slice(0, 128);

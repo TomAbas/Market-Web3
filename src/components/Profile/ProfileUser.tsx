@@ -152,7 +152,7 @@ const ProfileUser = () => {
 													setViewAvatar(true);
 												}}
 											/>
-											{infoUser?.confirmEmail && (
+											{isEnableReceivingNFT && (
 												<Box
 													sx={{
 														position: 'absolute',
