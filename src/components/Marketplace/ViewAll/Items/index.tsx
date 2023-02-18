@@ -70,8 +70,13 @@ export default function Items() {
 					return filterPar.collectionId.includes(item.collectionId);
 				});
 			}
+			if (filterPar.itemName !== '') {
+				newOffers = newOffers.filter((item: nftItem) => {
+					return item.itemName.toLowerCase().indexOf(filterPar.itemName) !== -1;
+				});
+			}
 			let newOffersDisplay = newOffers;
-			console.log('newOffersDisplay', newOffersDisplay);
+			// console.log('newOffersDisplay', newOffersDisplay);
 			setOffersDisplay(newOffersDisplay);
 		}
 	}, [filterPar, loadingOffers, offers, viewFull]);

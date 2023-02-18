@@ -64,6 +64,7 @@ import NavBar from 'components/NavBar';
 import NavBarMobile from 'components/NavBarMobile';
 import { userInfo } from 'os';
 import { selectUser } from 'redux/slices/userInfo';
+import GlobalSearch from './SearchBar/GlobalSearch';
 
 const listCategoryMarketplace = [
 	// {
@@ -318,53 +319,20 @@ const Header: React.FC = () => {
 								)}
 							</LogoLink>
 						</PageLogo>
-						<Stack
-							direction="row"
-							justifyContent="space-between"
-							alignItems="center"
-							gap={3}
-							sx={{
-								width: '60%',
-								'@media (max-width: 1024px)': {
-									width: '90%',
-								},
-							}}
-						>
+						<GlobalSearch />
+						{innerWidth > 1500 ? (
 							<Stack
 								direction="row"
+								justifyContent="space-between"
 								alignItems="center"
-								gap={1}
+								gap={3}
 								sx={{
-									width: '40%',
-									boxShadow: 'rgb(0 0 0 / 20%) 2px 3px 2px 0px',
-									borderRadius: '10px',
-									px: 2,
-									py: 1,
-									background: '#fff',
+									width: '50%',
 									'@media (max-width: 1024px)': {
-										width: '100%',
-									},
-									input: {
-										width: '100%',
-										border: '0',
-										outline: 'none',
-										fontStyle: 'italic',
-										fontWeight: '500',
-									},
-									'input::placeholder': {
-										fontStyle: 'italic',
-										fontWeight: '500',
+										width: '90%',
 									},
 								}}
 							>
-								<img src={searchIcon} alt="search" />
-								<input
-									type="text"
-									placeholder="Search"
-									style={{ minWidth: '200px' }}
-								/>
-							</Stack>
-							{innerWidth > 1500 ? (
 								<NavigationBarBigScreen>
 									<NavigationItemBigScreen sx={{ width: '165px' }}>
 										<NavLinkBigScreen
@@ -420,7 +388,9 @@ const Header: React.FC = () => {
 																</Box>
 																<Typography
 																	variant="body2"
-																	sx={{ padding: '0 0 0 8px' }}
+																	sx={{
+																		padding: '0 0 0 8px',
+																	}}
 																	textAlign="center"
 																	noWrap
 																	fontStyle="italic"
@@ -582,7 +552,9 @@ const Header: React.FC = () => {
 															</Box>
 															<Typography
 																variant="body2"
-																sx={{ padding: '0 0 0 8px' }}
+																sx={{
+																	padding: '0 0 0 8px',
+																}}
 																textAlign="center"
 																noWrap
 																fontStyle="italic"
@@ -596,8 +568,9 @@ const Header: React.FC = () => {
 										</DropdownMenu>
 									</NavigationItemBigScreen>
 								</NavigationBarBigScreen>
-							) : null}
-						</Stack>
+							</Stack>
+						) : null}
+
 						<Stack direction="row" alignItems="center" gap="8px">
 							<IconItem onClick={openModal}>
 								<img src={connectIcon} alt="connect icon" />

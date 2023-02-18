@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useState } from 'react';
-import Graph from './Graph/Graph';
+import GraphTab from 'components/Marketplace/DetailCard/TabItemDetail/GraphTab/GraphTab';
 import { Box, Stack } from '@mui/material';
 import ActivityTabComp from 'components/Marketplace/DetailCard/TabItemDetail/ActivityTab/ActivityTab';
 import { Collection } from 'models/collection';
@@ -42,7 +42,7 @@ const ActivityTab: React.FC<Props> = ({ collectionInfo }) => {
 	}, []);
 	return (
 		<>
-			<Graph listActivityPriceChart={dataChart} />
+			<GraphTab listActivityPriceChart={dataChart} />
 			<Stack direction="row" gap="80px">
 				<ActivityTabComp
 					inputSearch={inputSearch}

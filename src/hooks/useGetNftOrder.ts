@@ -9,7 +9,6 @@ const useGetNftOrder = () => {
 		try {
 			dispatch(startLoading());
 			let listNftOrders = await getTokenFromResource();
-			console.log(listNftOrders);
 			dispatch(getListNftOrders(listNftOrders));
 		} catch (error) {
 			dispatch(hasError(error));
