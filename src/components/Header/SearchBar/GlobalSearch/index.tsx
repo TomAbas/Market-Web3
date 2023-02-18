@@ -58,6 +58,7 @@ const GlobalSearch: React.FC = () => {
 						name: displayUserName(item.collectionName),
 						logo: item.logo,
 						userAddress: displayUserName(item.userAddress),
+						id: item._id,
 					};
 				})
 				.slice(0, 2);
@@ -70,6 +71,7 @@ const GlobalSearch: React.FC = () => {
 						name: displayUserName(item.itemName),
 						logo: item.itemMedia,
 						userAddress: displayUserName(item.creator),
+						id: item._id,
 					};
 				})
 				.slice(0, 2);

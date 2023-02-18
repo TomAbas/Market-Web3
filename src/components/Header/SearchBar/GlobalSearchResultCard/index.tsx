@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // mui
-import { Avatar, Box, Typography } from '@mui/material';
+import { Avatar, Box, Typography, Link } from '@mui/material';
 // components
 
 // styled
@@ -18,7 +18,7 @@ interface SearchResult {
 }
 
 export interface IGlobalSearchResultCardProps {
-	resultId: { name: string; userAddress: string; logo: string };
+	resultId: { name: string; userAddress: string; logo: string; id: string };
 	type: 'collection' | 'item' | 'user';
 	deactivateDropdown: Function;
 	isLoading: boolean;
@@ -34,24 +34,33 @@ export default function GlobalSearchResultCard({
 	// useEffect
 
 	return !isLoading ? (
-		<ResultItem
-			onClick={() => {
-				deactivateDropdown();
-				// navigate(searchResult.src);
-			}}
+		<Link
+			href={
+				type === 'collection'
+					? `#/collection-detail/${resultId.id}`
+					: `#/item/${resultId.id}`
+			}
+			underline="none"
 		>
-			<Avatar
-				src={resultId.logo}
-				alt="collection logo"
-				sx={{ width: '40px', height: '40px' }}
-			/>
-			<Box>
-				<Typography variant="body1">{resultId.name}</Typography>
-				<Typography variant="body2" sx={{ opacity: 0.5 }}>
-					{resultId.userAddress}
-				</Typography>
-			</Box>
-		</ResultItem>
+			<ResultItem
+				onClick={() => {
+					deactivateDropdown();
+					// navigate(searchResult.src);
+				}}
+			>
+				<Avatar
+					src={resultId.logo}
+					alt="collection logo"
+					sx={{ width: '40px', height: '40px' }}
+				/>
+				<Box>
+					<Typography variant="body1">{resultId.name}</Typography>
+					<Typography variant="body2" sx={{ opacity: 0.5 }}>
+						{resultId.userAddress}
+					</Typography>
+				</Box>
+			</ResultItem>
+		</Link>
 	) : (
 		<SkeletonGlobalSearchResultCard />
 	);
