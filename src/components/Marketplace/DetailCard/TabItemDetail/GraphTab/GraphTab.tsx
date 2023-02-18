@@ -27,7 +27,7 @@ const GraphTab: React.FC<IGraphTabProps> = ({ listActivityPriceChart }) => {
 			categories: categoriesDataList,
 			labels: {
 				style: {
-					colors: '#fff',
+					colors: '#000',
 				},
 			},
 		},
