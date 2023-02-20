@@ -15,7 +15,6 @@ import { getCollectionData } from 'service/aptos.service';
 import { useAppSelector } from 'redux/hooks';
 import { selectUser } from 'redux/slices/userInfo';
 import { createCollection } from 'api/collections/collectionApi';
-import { selectTrigger } from 'redux/slices/nftFilter';
 import { toast } from 'react-toastify';
 import AutoCompleteCustom from 'components/CustomField/AutoCompleteCustom';
 import { OptionSelectCustom } from 'models/common';
@@ -97,27 +96,27 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 					setLoading(false);
 					return;
 				}
-				console.log(collectionName);
 				if (collectionData?.category === 0) {
 					setError('Category is required');
 					setLoading(false);
 					return;
 				}
+				console.log(userInfo?.userAddress!);
 				getCollectionData(userInfo?.userAddress!, collectionName)
 					.then((res) => {
-						console.log(res);
-						setCollectionData({
-							userAddress: userInfo?.userAddress!,
-							chainId: '2',
-							collectionName: res.name,
-							description: res.description,
-							logo: res.uri,
-						});
+						// setCollectionData({
+						// 	userAddress: userInfo?.userAddress!,
+						// 	chainId: '2',
+						// 	collectionName: res.name,
+						// 	description: res.description,
+						// 	logo: res.uri,
+						// });
 						setLoading(false);
 						setActiveStep(1);
 						setButtonText('Import');
 					})
 					.catch((err) => {
+						console.log(err);
 						setLoading(false);
 						if (err.status === 404) {
 							setError('Cannot find collection');

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
-import { Box, Link, Stack, Typography } from '@mui/material';
+import { Box, Link, Stack, Tooltip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DropdownMenuLink } from 'components/Header/styled';
@@ -255,25 +255,27 @@ const NavBarMobile: React.FC<Props> = ({
 			<>
 				{' '}
 				<Box px={2} py={1}>
-					<Box>
-						<Link
-							onClick={() => navigate(item.link)}
-							href={'#'}
-							title={'Coming Soon'}
-							sx={{
-								textDecoration: 'none',
-								color: '#131740',
-								fontWeight: '500',
-								transition: 'all 0.4s ',
-								// cursor: 'pointer',
-								// '&:hover': {
-								// 	color: '#007aff',
-								// },
-							}}
-						>
-							{item.name}
-						</Link>
-					</Box>
+					<Tooltip title="Coming Soon" placement="right" arrow>
+						<Box>
+							<Link
+								onClick={() => navigate(item.link)}
+								href={'#'}
+								sx={{
+									textDecoration: 'none',
+									color: '#131740',
+									fontWeight: '500',
+									transition: 'all 0.4s ',
+									pointerEvents: 'none',
+									// cursor: 'pointer',
+									// '&:hover': {
+									// 	color: '#007aff',
+									// },
+								}}
+							>
+								{item.name}
+							</Link>
+						</Box>
+					</Tooltip>
 				</Box>
 			</>
 		);
