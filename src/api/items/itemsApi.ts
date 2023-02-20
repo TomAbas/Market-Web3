@@ -33,6 +33,11 @@ function getItemSelected(): Promise<Response<any>> {
 	const url = `/item/getItem`;
 	return ClientAxios.get(url).then((res) => res.data);
 }
+
+function transferItem(data: any): Promise<Response<any>> {
+	const url = `/item/transfer`;
+	return ClientAxios.put(url, data).then((res) => res.data);
+}
 export {
 	getAllItems,
 	getOfferOfItem,
@@ -42,4 +47,5 @@ export {
 	getItemCreate,
 	getItemCollected,
 	getItemSelected,
+	transferItem,
 };

@@ -27,7 +27,7 @@ const GraphTab: React.FC<IGraphTabProps> = ({ listActivityPriceChart }) => {
 			categories: categoriesDataList,
 			labels: {
 				style: {
-					colors: '#fff',
+					colors: '#000',
 				},
 			},
 		},
@@ -36,7 +36,7 @@ const GraphTab: React.FC<IGraphTabProps> = ({ listActivityPriceChart }) => {
 			{
 				labels: {
 					style: {
-						colors: '#fff',
+						colors: '#000',
 					},
 					formatter: function (val: number, index: number): string {
 						// lib give number 5e-324 when compile, too small

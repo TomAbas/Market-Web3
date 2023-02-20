@@ -81,6 +81,8 @@ const renderListImages = (ListImages: any) => {
 					}}
 				>
 					<Link
+						href={item._id.length > 0 ? `/#/item/${item._id}` : '/#'}
+						target="_self"
 						sx={{
 							textDecoration: 'none',
 							color: '#131740',

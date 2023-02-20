@@ -17,7 +17,9 @@ import { selectUser } from 'redux/slices/userInfo';
 import { createCollection } from 'api/collections/collectionApi';
 import { selectTrigger } from 'redux/slices/nftFilter';
 import { toast } from 'react-toastify';
-
+import AutoCompleteCustom from 'components/CustomField/AutoCompleteCustom';
+import { OptionSelectCustom } from 'models/common';
+import { listCategory, Category } from 'constants/category.constant';
 interface Props {
 	open: boolean;
 	onClose: () => void;
@@ -33,6 +35,9 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 	const [buttonText, setButtonText] = useState('Check' as string);
 	const [collectionName, setCollectionName] = useState('');
 	const [collectionData, setCollectionData] = useState<any>(null);
+	const [currentCategoryTransformed, setCurrentCategoryTransformed] = useState<
+		OptionSelectCustom<string> | null | undefined
+	>();
 	const steps = [
 		{
 			label: 'Check Collection Name',
@@ -59,11 +64,26 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 		boxShadow: 24,
 		p: 4,
 	};
+	const listCategoryTransformed: OptionSelectCustom<string>[] = listCategory.map(
+		(item: Category) => ({ name: item.name, value: item.value.toString() })
+	);
+	const handleChangeCategory = (
+		categoryTransformed: OptionSelectCustom<string> | null | undefined
+	) => {
+		if (categoryTransformed) {
+			setCollectionData({ ...collectionData, category: categoryTransformed.value });
+			setCurrentCategoryTransformed(categoryTransformed);
+		} else {
+			setCollectionData({ ...collectionData, category: 0 });
+			setCurrentCategoryTransformed(undefined);
+		}
+	};
 
 	const handleImport = async () => {
 		try {
 			if (activeStep === 0) {
 				setLoading(true);
+
 				if (collectionName === '') {
 					setError('Collection name is required');
 					setLoading(false);
@@ -74,6 +94,12 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 					.includes(collectionName);
 				if (isExist) {
 					setError('Collection name already exist');
+					setLoading(false);
+					return;
+				}
+				console.log(collectionName);
+				if (collectionData?.category === 0) {
+					setError('Category is required');
 					setLoading(false);
 					return;
 				}
@@ -157,30 +183,47 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 							<StepContent>
 								{/* "Input collection name" */}
 								{index === 0 && (
-									<Box
-										sx={{
-											border: '1.5px solid #e7e8ec',
-											borderRadius: '10px',
-											input: {
+									<>
+										<Box
+											sx={{
+												border: '1.5px solid #e7e8ec',
 												borderRadius: '10px',
-												border: '0px solid white',
-												padding: '10px 24px',
-												outline: 'none',
-												fontSize: '18px',
-												fontStyle: 'italic',
-												width: '100%',
-											},
-										}}
-									>
-										<input
-											type="text"
-											value={collectionName}
-											onChange={(e) => {
-												setCollectionName(e.target.value);
+												height: '48px',
+												input: {
+													borderRadius: '10px',
+													border: '0px solid white',
+													padding: '10px 24px',
+													outline: 'none',
+													fontSize: '18px',
+													fontStyle: 'italic',
+													width: '100%',
+												},
 											}}
-											placeholder="Collection Name"
+										>
+											<input
+												type="text"
+												value={collectionName}
+												onChange={(e) => {
+													setCollectionName(e.target.value);
+												}}
+												placeholder="Collection Name"
+											/>
+										</Box>
+										<AutoCompleteCustom
+											currentItem={currentCategoryTransformed}
+											listItem={listCategoryTransformed}
+											// {...register('category', {
+											// 	required: 'Category is required.',
+											// })}
+											onChange={handleChangeCategory}
+											placeholder="Category name..."
+											sx={{
+												border: '1px solid #E7E8EC',
+												borderRadius: '12px',
+												marginTop: '10px',
+											}}
 										/>
-									</Box>
+									</>
 								)}
 
 								<Box sx={{ my: 2 }}>

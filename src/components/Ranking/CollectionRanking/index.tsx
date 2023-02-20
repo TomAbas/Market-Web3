@@ -218,6 +218,9 @@ export default function InfiniteListTrendingCollection({
 						</>
 					)}
 				</TableScrollable>
+				{!isLoading && listCollection.length === 0 && (
+					<NoItem title="No top collection"></NoItem>
+				)}
 			</TableWrapper>
 		</Box>
 	);

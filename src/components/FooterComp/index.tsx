@@ -433,6 +433,7 @@ const FooterComp: React.FC = () => {
 										[theme.breakpoints.down(500)]: {
 											fontSize: '13px',
 										},
+										'&:hover': { color: '#1976d2' },
 									}}
 									fontSize="16px"
 									fontStyle="italic"
@@ -454,6 +455,7 @@ const FooterComp: React.FC = () => {
 										[theme.breakpoints.down(500)]: {
 											fontSize: '13px',
 										},
+										'&:hover': { color: '#1976d2' },
 									}}
 									fontSize="16px"
 									fontStyle="italic"
@@ -501,6 +503,7 @@ const FooterComp: React.FC = () => {
 													fontStyle: 'italic',
 													pointerEvents:
 														item.link === '' ? 'none' : 'pointer',
+													'&:hover': { color: '#1976d2' },
 												}}
 												onClick={ScrollToTop}
 											>
@@ -553,6 +556,7 @@ const FooterComp: React.FC = () => {
 																	? 'none'
 																	: 'pointer',
 															fontStyle: 'italic',
+															'&:hover': { color: '#1976d2' },
 														}}
 														// target="_blank"
 														href={item.link}

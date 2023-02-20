@@ -35,11 +35,7 @@ import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import { useOutletContext } from 'react-router-dom';
 import TopCollection from './ViewAll/TopCollection';
 import FeaturedCollection from './FeaturedCollection';
-import { getUserInfo } from 'api/userApi';
-import { getAllItems } from 'api/items/itemsApi';
-import { getAllCollections } from '../../api/collectionApi';
 import useInteraction from 'hooks/useInteraction';
-import Notification from 'components/Notification/Notification';
 
 export default function Marketplace() {
 	let arr = new Array(12).fill(null);

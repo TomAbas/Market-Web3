@@ -26,6 +26,18 @@ const TypeEvent: React.FC<Props> = ({ itemHistory, userAddress }) => {
 				</StyledSpan>
 			</Typography>
 		);
+	} else if (itemHistory.type === 4) {
+		//cancel
+		return (
+			<Typography variant="body1" sx={{ fontWeight: '500' }}>
+				<StyledSpan>{formatAddressHistory(itemHistory!.from, userAddress)}</StyledSpan>{' '}
+				{getTransactionType(itemHistory.type)}{' '}
+				<StyledSpan>
+					{itemHistory.quantity} {itemHistory.itemInfo.itemName} to{' '}
+					{formatAddressHistory(itemHistory!.to, userAddress)}
+				</StyledSpan>
+			</Typography>
+		);
 	} else if (itemHistory.type === 5) {
 		//cancel
 		return (

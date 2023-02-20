@@ -17,10 +17,11 @@ import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import DropDown from 'components/CustomUI/DropDown';
-import { getCategoryCollections, getAllCollections } from 'api/collectionApi';
 import { displayAddress, displayUserFullName } from 'utils/formatDisplay';
 import { getListCategory } from 'api/collectionApi';
 import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
+import { useAppDispatch } from 'redux/hooks';
+import { getAllCollections } from 'redux/slices/nftFilter';
 
 interface Props0 {
 	selectedFilter: any;
@@ -74,6 +75,7 @@ const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption, 
 
 const FeaturedCollection = () => {
 	let arr = new Array(4).fill(null);
+	const dispatch = useAppDispatch();
 	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
 	const [selectedFilter, setSelectedFilter] = useState<string>('All');
 	const [listFilter, setListFilter] = useState<any[]>([]);
@@ -97,6 +99,7 @@ const FeaturedCollection = () => {
 				let listCategoy: any = Object.keys(res).map((key, index) => {
 					return { id: index, name: key, value: key };
 				});
+				dispatch(getAllCollections(res.All));
 				setListFilter(listCategoy);
 				setCollections(res[selectedFilter].slice(0, 4));
 				setIsLoading(false);

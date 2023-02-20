@@ -244,7 +244,7 @@ export const DropdownMenuLink = styled('a')(({ theme }) => ({
 export const NavigationBarBigScreen = styled('ul')({
 	display: 'flex',
 	alignItems: 'center',
-	justifyContent: 'flex-end',
+	justifyContent: 'center',
 	gap: '2px',
 	padding: '0 5px',
 	width: '80%',

@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.4cf926a5.css",
-    "main.js": "/static/js/main.5aa12e68.js",
+    "main.js": "/static/js/main.f19608cd.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.d69eb72d.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.fd7bcfd0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.a460d097.chunk.js",
@@ -77,7 +77,6 @@
     "static/media/icon-domain.svg": "/static/media/icon-domain.b1bb075b44927e0db2235e5059fdb57b.svg",
     "static/media/facebook-gray.svg": "/static/media/facebook-gray.a570a69d44e98d3538413e38c317a7c2.svg",
     "static/media/collection-icon.svg": "/static/media/collection-icon.6eda3d4caca0b9d5b49c0ea5101904f8.svg",
-    "static/media/search.svg": "/static/media/search.64a8b92cd3c3094c1d8ee0e767575925.svg",
     "static/media/icon-filter-collection.svg": "/static/media/icon-filter-collection.cd364743e865ff881ce6fb84e8827632.svg",
     "static/media/icon-reload.svg": "/static/media/icon-reload.084452d0fc96207d42d2bcefe9141272.svg",
     "static/media/icon-heart-black.svg": "/static/media/icon-heart-black.cc812cc871988983211ff255413d2f3f.svg",
@@ -99,6 +98,6 @@
   },
   "entrypoints": [
     "static/css/main.4cf926a5.css",
-    "static/js/main.5aa12e68.js"
+    "static/js/main.f19608cd.js"
   ]
 }
