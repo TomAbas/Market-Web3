@@ -30,6 +30,7 @@ import MyItemDetail from 'components/Marketplace/MyItemdetail';
 import Collections from 'components/Marketplace/ViewAll/Collections';
 import Items from 'components/Marketplace/ViewAll/Items';
 import Error from 'components/Error/Error';
+import SellItemPage from 'components/Marketplace/SellItemPage/SellItemPage';
 
 const router = createHashRouter([
 	{
@@ -45,8 +46,18 @@ const router = createHashRouter([
 				element: <Mint />,
 			},
 			{
-				path: '/item/:itemId',
-				element: <DetailCard />,
+				path: 'item',
+				// element: <DetailCard />,
+				children: [
+					{
+						path: '/item/:itemId',
+						element: <DetailCard />,
+					},
+					{
+						path: '/item/sell-item/:itemId',
+						element: <SellItemPage />,
+					},
+				],
 			},
 			{
 				path: '/collection-detail/:collectionId',

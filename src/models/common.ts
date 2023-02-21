@@ -49,3 +49,10 @@ export interface PriceActivity {
 	date: string;
 	avgPrice: number;
 }
+
+export interface OptionSelectCustom<T> {
+	name: string;
+	value: T;
+	image?: string;
+	chainId?: number;
+}

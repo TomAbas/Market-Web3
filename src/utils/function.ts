@@ -67,3 +67,16 @@ export const formatAddressHistory = (
 
 	return result;
 };
+
+export const compareDate = (date1: Date, date2: Date): number => {
+	const date1TimeStamp: number = new Date(date1).getTime();
+	const date2TimeStamp: number = new Date(date2).getTime();
+
+	if (date1TimeStamp > date2TimeStamp) {
+		return 1;
+	} else if (date1TimeStamp < date2TimeStamp) {
+		return -1;
+	} else {
+		return 0;
+	}
+};
