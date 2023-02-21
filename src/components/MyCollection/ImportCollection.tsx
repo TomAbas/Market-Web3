@@ -28,12 +28,12 @@ interface Props {
 const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collections }) => {
 	const userInfo = useAppSelector(selectUser);
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
+	const [error, setError] = useState<any>({});
 	const [success, setSuccess] = useState(false);
 	const [activeStep, setActiveStep] = useState(0);
 	const [buttonText, setButtonText] = useState('Check' as string);
 	const [collectionName, setCollectionName] = useState('');
-	const [collectionData, setCollectionData] = useState<any>(null);
+	const [collectionData, setCollectionData] = useState<any>({ category: 0 });
 	const [currentCategoryTransformed, setCurrentCategoryTransformed] = useState<
 		OptionSelectCustom<string> | null | undefined
 	>();
@@ -81,36 +81,43 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 	const handleImport = async () => {
 		try {
 			if (activeStep === 0) {
+				setError({});
 				setLoading(true);
-
-				if (collectionName === '') {
-					setError('Collection name is required');
-					setLoading(false);
-					return;
-				}
+				let errorName = '';
+				let errorCategory = '';
 				let isExist = collections
 					.map((item) => item.collectionName)
 					.includes(collectionName);
-				if (isExist) {
-					setError('Collection name already exist');
+				if (collectionName === '') {
+					errorName = 'Collection name is required';
 					setLoading(false);
-					return;
+				} else if (isExist) {
+					errorName = 'Collection name is already exist';
+					setLoading(false);
+				} else {
+					errorName = '';
 				}
 				if (collectionData?.category === 0) {
-					setError('Category is required');
+					console.log(collectionData?.category);
+					errorCategory = 'Category is required';
 					setLoading(false);
+				} else {
+					errorCategory = '';
+				}
+				if (errorName !== '' || errorCategory !== '') {
+					setLoading(false);
+					setError({ collectionName: errorName, category: errorCategory });
 					return;
 				}
-				console.log(userInfo?.userAddress!);
 				getCollectionData(userInfo?.userAddress!, collectionName)
 					.then((res) => {
-						// setCollectionData({
-						// 	userAddress: userInfo?.userAddress!,
-						// 	chainId: '2',
-						// 	collectionName: res.name,
-						// 	description: res.description,
-						// 	logo: res.uri,
-						// });
+						setCollectionData({
+							userAddress: userInfo?.userAddress!,
+							chainId: '2',
+							collectionName: res.name,
+							description: res.description,
+							logo: res.uri,
+						});
 						setLoading(false);
 						setActiveStep(1);
 						setButtonText('Import');
@@ -119,13 +126,12 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 						console.log(err);
 						setLoading(false);
 						if (err.status === 404) {
-							setError('Cannot find collection');
+							setError({ ...error, collectionName: 'Collection not found' });
 						} else {
-							setError('Something went wrong');
+							setError({ ...error, collectionName: 'Something went wrong' });
 						}
 						return;
 					});
-				setError(null);
 			} else if (activeStep === 1) {
 				setLoading(true);
 				createCollection(collectionData)
@@ -137,7 +143,8 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 					})
 					.catch((err) => {
 						setLoading(false);
-						setError('Something went wrong');
+						toast.error('Something went wrong');
+						// setError('Something went wrong');
 						return;
 					});
 			} else {
@@ -149,9 +156,7 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 				onClose();
 				toast.success('Successfully imported collection');
 			}
-		} catch (err: any) {
-			setError(err);
-		}
+		} catch (err: any) {}
 	};
 
 	return (
@@ -208,6 +213,11 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 												placeholder="Collection Name"
 											/>
 										</Box>
+										{error?.collectionName && (
+											<Typography variant="caption" color="error">
+												{error?.collectionName}
+											</Typography>
+										)}
 										<AutoCompleteCustom
 											currentItem={currentCategoryTransformed}
 											listItem={listCategoryTransformed}
@@ -222,15 +232,15 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 												marginTop: '10px',
 											}}
 										/>
+										{error?.category && (
+											<Typography variant="caption" color="error">
+												{error?.category}
+											</Typography>
+										)}
 									</>
 								)}
 
 								<Box sx={{ my: 2 }}>
-									{error && (
-										<Typography variant="caption" color="error">
-											{error}
-										</Typography>
-									)}
 									<div>
 										{loading ? (
 											<CircularProgress />
