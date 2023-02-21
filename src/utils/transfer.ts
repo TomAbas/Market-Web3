@@ -10,8 +10,7 @@ import {
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { APTOS_NODE_URL, APTOS_FAUCET_URL } from 'constants/aptos.constant';
-import { create } from 'lodash';
-import axios from 'axios';
+
 const chainId = '2';
 const COIN_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '0x1::aptos_coin::AptosCoin';
 

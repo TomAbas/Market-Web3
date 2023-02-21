@@ -487,27 +487,27 @@ const Header: React.FC = () => {
 											</Stack>
 										</DropdownMenu>
 									</NavigationItemBigScreen>
-									<NavigationItemBigScreen
-										sx={{ width: '165px' }}
-										title="Coming Soon"
-									>
-										<NavLinkBigScreen
-											className="navLink"
-											// href={`/#${PATH_MARKETPLACE.root}`}
-											// target="_self"
-											// onClick={(e: any) => {
-											// 	e.preventDefault();
-											// }}
-										>
-											<Typography
-												variant="body1"
-												fontStyle="italic"
-												fontWeight="500"
+									<Tooltip title="Coming Soon" arrow placement="bottom">
+										<NavigationItemBigScreen sx={{ width: '165px' }}>
+											<NavLinkBigScreen
+												className="navLink"
+												// href={`/#${PATH_MARKETPLACE.root}`}
+												// target="_self"
+												// onClick={(e: any) => {
+												// 	e.preventDefault();
+												// }}
 											>
-												Drops
-											</Typography>
-										</NavLinkBigScreen>
-									</NavigationItemBigScreen>
+												<Typography
+													variant="body1"
+													fontStyle="italic"
+													fontWeight="500"
+												>
+													Drops
+												</Typography>
+											</NavLinkBigScreen>
+										</NavigationItemBigScreen>
+									</Tooltip>
+
 									<NavigationItemBigScreen sx={{ width: '165px' }}>
 										<NavLinkBigScreen
 											className="navLink"
