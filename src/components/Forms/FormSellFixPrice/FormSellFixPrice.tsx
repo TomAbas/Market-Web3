@@ -71,6 +71,7 @@ const FormSellFixPrice = () => {
 		handleSubmit,
 		setValue,
 		setError,
+		clearErrors,
 		formState: { errors, isSubmitting },
 	} = useForm<IFormSellItemInputs>({
 		resolver: yupResolver(schema),
@@ -85,7 +86,12 @@ const FormSellFixPrice = () => {
 				dispatch(setCurrentPaymentToken(tokenPayment));
 				setTokenPayment(tokenPayment);
 				setCoinType(tokenPayment);
+				clearErrors('currentPaymentToken');
 			} else {
+				setTokenPayment(null);
+				setCoinType(null);
+				dispatch(setCurrentPaymentToken(null));
+				setValue('currentPaymentToken', null);
 				setError('currentPaymentToken', {
 					message: 'You do not have enough coins to pay for this item',
 				});

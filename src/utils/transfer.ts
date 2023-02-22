@@ -69,6 +69,7 @@ function useTransfer() {
 			let res = await client
 				.getAccountResource(address, `0x1::coin::CoinStore<${coinType}>`)
 				.then((res: any) => res.data);
+			console.log(res);
 			if (res) return true;
 			return false;
 		} catch (error) {
