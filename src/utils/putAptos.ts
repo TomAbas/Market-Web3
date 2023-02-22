@@ -112,7 +112,6 @@ function useBuyItemAptos(offer: nftItem) {
 				};
 				cancelOrder(listItem).then((res: any) => dispatch(handleTrigger()));
 			});
-
 			toast.success('Successful cancel listing');
 			navigate('/profile');
 		} catch {

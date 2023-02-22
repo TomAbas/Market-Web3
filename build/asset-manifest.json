@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.4cf926a5.css",
-    "main.js": "/static/js/main.5ba20fdc.js",
+    "main.js": "/static/js/main.34388aec.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.d69eb72d.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.fd7bcfd0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.a460d097.chunk.js",
@@ -16,13 +16,13 @@
     "reactPlayerFilePlayer.js": "/static/js/reactPlayerFilePlayer.99a73733.chunk.js",
     "reactPlayerPreview.js": "/static/js/reactPlayerPreview.26a7f5a6.chunk.js",
     "static/media/Metaspacecy-blue.svg": "/static/media/Metaspacecy-blue.5af39b2d25a1f86f45affa2d6bcc9b63.svg",
-    "static/media/logo-metaspacecy-gray-moblie.webp": "/static/media/logo-metaspacecy-gray-moblie.24d43050f1a6e8f1e08c.webp",
+    "static/media/LogoMetaDark.png": "/static/media/LogoMetaDark.0b370b529bc32ed6f4e8.png",
+    "static/media/LogoMetaDarkMobo.png": "/static/media/LogoMetaDarkMobo.a59f95e530b006e9fa66.png",
     "static/media/Asset2.webp": "/static/media/Asset2.b1ce348ff08ee0bcdcc6.webp",
     "static/media/Asset1.webp": "/static/media/Asset1.431c3a85d8a801026a7c.webp",
     "static/media/logo-metaspacecy-gray.webp": "/static/media/logo-metaspacecy-gray.f30a4fc82aa9b0222131.webp",
     "static/media/MSMobile-blue.webp": "/static/media/MSMobile-blue.f51a76bea02ba8daa5f2.webp",
     "static/media/asset-blue.webp": "/static/media/asset-blue.6a18f75adf3e317973ab.webp",
-    "static/media/MSMobile-white.webp": "/static/media/MSMobile-white.feb6e115bb0e8a6926e2.webp",
     "service-worker.js": "/service-worker.js",
     "static/media/asset-black.webp": "/static/media/asset-black.472abd5001aa7e0edf58.webp",
     "static/media/default-img-input2.png": "/static/media/default-img-input2.9b6cd16b4b75e92d4b8c.png",
@@ -32,6 +32,7 @@
     "static/media/favorite-black.webp": "/static/media/favorite-black.e19164320ef4e4ed6aa2.webp",
     "static/media/history-black.webp": "/static/media/history-black.2eeeff35010330433aa4.webp",
     "static/media/graph-blue.webp": "/static/media/graph-blue.64799883fb3df1163b47.webp",
+    "static/media/calendar-black.webp": "/static/media/calendar-black.d9e36f18dab3a2bba257.webp",
     "static/media/share-black.webp": "/static/media/share-black.ea926f81e3163465b2a1.webp",
     "static/media/Asset3.webp": "/static/media/Asset3.08f01d8bd2bbb8daa8de.webp",
     "static/media/Asset4.webp": "/static/media/Asset4.60b9700c2ddc864894de.webp",
@@ -98,6 +99,6 @@
   },
   "entrypoints": [
     "static/css/main.4cf926a5.css",
-    "static/js/main.5ba20fdc.js"
+    "static/js/main.34388aec.js"
   ]
 }

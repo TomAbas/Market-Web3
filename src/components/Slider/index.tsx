@@ -164,10 +164,8 @@ export default function Slider() {
 	let [listItem, setListItem] = useState([]);
 	useEffect(() => {
 		getItemSelected().then((res: any) => {
-			console.log(res.data);
 			setListItem(res.data);
 		});
-		// install Swiper modules
 	}, []);
 	return (
 		<Box

@@ -4,6 +4,7 @@ import { TabWrapper } from './styled';
 import UserActivityCard from './UserActivityCard';
 import { itemHistory } from 'models/item';
 import SkeletonNftActivityList from 'components/Skeletons/SkeletonNftActivityList/SkeletonNftActivityList';
+import NoItem from 'customComponents/NoItem/NoItem';
 
 interface Props {
 	listItemHistory: itemHistory[];
@@ -17,9 +18,20 @@ const InfiniteListActivity: React.FC<Props> = ({ listItemHistory, loading }) => 
 					<SkeletonNftActivityList />
 				) : (
 					<>
-						{listItemHistory.map((itemHistory: itemHistory, index: number) => {
-							return <UserActivityCard itemHistory={itemHistory} key={index} />;
-						})}
+						{listItemHistory.length > 0 ? (
+							<>
+								{' '}
+								{listItemHistory.map((itemHistory: itemHistory, index: number) => {
+									return (
+										<UserActivityCard itemHistory={itemHistory} key={index} />
+									);
+								})}
+							</>
+						) : (
+							<>
+								<NoItem title="No data" />
+							</>
+						)}
 					</>
 				)}
 			</TabWrapper>

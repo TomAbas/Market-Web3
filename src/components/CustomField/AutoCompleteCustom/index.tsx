@@ -26,7 +26,7 @@ export interface OptionSelectCustom<T> {
 export interface AutoCompleteCustomProps {
 	headerIcon?: string;
 	currentItem: OptionSelectCustom<any> | null | undefined;
-	listItem: OptionSelectCustom<any>[];
+	listItem: any[];
 	placeholder?: string;
 	onChange?: (value: OptionSelectCustom<any> | null | undefined) => void; // use when this select box impact on another state (ex: datetimepicker)
 	disabled?: boolean;

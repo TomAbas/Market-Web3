@@ -10,8 +10,7 @@ import {
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { APTOS_NODE_URL, APTOS_FAUCET_URL } from 'constants/aptos.constant';
-import { create } from 'lodash';
-import axios from 'axios';
+
 const chainId = '2';
 const COIN_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '0x1::aptos_coin::AptosCoin';
 
@@ -63,8 +62,40 @@ function useTransfer() {
 		};
 		return signAndSubmitTransaction(payload);
 	}
+	async function checkCoinStore(address: string, coinType: string): Promise<boolean> {
+		try {
+			const NODE_URL = APTOS_NODE_URL[chainId];
+			const client = new AptosClient(NODE_URL);
+			let res = await client
+				.getAccountResource(address, `0x1::coin::CoinStore<${coinType}>`)
+				.then((res: any) => res.data);
+			console.log(res);
+			if (res) return true;
+			return false;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	}
 
-	return { checkEnableReceivingNFT, enableReceivingNFT, directTransferToken };
+	async function registerCoin(coinType = COIN_TYPE) {
+		const func = '0x1::managed_coin::register';
+		const payload: TransactionPayload = {
+			type: 'entry_function_payload',
+			function: func,
+			type_arguments: [coinType],
+			arguments: [],
+		};
+		return signAndSubmitTransaction(payload);
+	}
+
+	return {
+		checkEnableReceivingNFT,
+		enableReceivingNFT,
+		directTransferToken,
+		checkCoinStore,
+		registerCoin,
+	};
 }
 
 export default useTransfer;

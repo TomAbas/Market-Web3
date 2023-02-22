@@ -18,7 +18,7 @@ const useCreateMintSell = () => {
 	const infoUser = useAppSelector(selectUser);
 	const dispatch = useAppDispatch();
 	const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-	const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
+	// const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 	const { account, signAndSubmitTransaction } = useWallet();
 	const [base64image, setBase64image] = useState<any>(ImageInputDefault);
 	const [formInput, updateFormInput] = useState<InputCreateCollection>({
@@ -81,9 +81,15 @@ const useCreateMintSell = () => {
 						let txHash = await signAndSubmitTransaction(
 							{
 								type: 'entry_function_payload',
-								function: `${MARKET_ADDRESS}::nft::create_collection`,
-								type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
-								arguments: [name, description, downLoadUrl],
+								function: `0x3::token::create_collection_script`,
+								type_arguments: [],
+								arguments: [
+									name,
+									description,
+									downLoadUrl,
+									0,
+									[false, false, false],
+								],
 							},
 							{
 								gas_unit_price: 100,
@@ -151,17 +157,22 @@ const useCreateMintSell = () => {
 						let txHash = await signAndSubmitTransaction(
 							{
 								type: 'entry_function_payload',
-								function: `${MARKET_ADDRESS}::nft::mint_nft`,
-								type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
+								function: `0x3::token::create_token_script`,
+								type_arguments: [],
 								arguments: [
+									collection,
 									name,
 									description,
-									downloadURL,
-									collection,
 									Number(amount),
+									0,
+									downloadURL,
 									account.address,
-									royaltyFeeNumerator,
 									royaltyFeeDenominator,
+									royaltyFeeNumerator,
+									[false, false, false, false, false],
+									[],
+									[],
+									[],
 								],
 							},
 							{

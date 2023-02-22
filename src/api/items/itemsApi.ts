@@ -38,6 +38,10 @@ function transferItem(data: any): Promise<Response<any>> {
 	const url = `/item/transfer`;
 	return ClientAxios.put(url, data).then((res) => res.data);
 }
+function getOrderOfItem(itemId: string): Promise<Response<any>> {
+	const url = `/order/get-order-by-itemId/${itemId}`;
+	return ClientAxios.get(url).then((res) => res.data.data);
+}
 export {
 	getAllItems,
 	getOfferOfItem,
@@ -48,4 +52,5 @@ export {
 	getItemCollected,
 	getItemSelected,
 	transferItem,
+	getOrderOfItem,
 };
