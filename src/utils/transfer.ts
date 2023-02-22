@@ -63,6 +63,20 @@ function useTransfer() {
 		};
 		return signAndSubmitTransaction(payload);
 	}
+	async function checkCoinStore(address: string, coinType: string): Promise<boolean> {
+		try {
+			const NODE_URL = APTOS_NODE_URL[chainId];
+			const client = new AptosClient(NODE_URL);
+			let res = await client
+				.getAccountResource(address, `0x1::coin::CoinStore<${coinType}>`)
+				.then((res: any) => res.data);
+			if (res) return true;
+			return false;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	}
 
 	return { checkEnableReceivingNFT, enableReceivingNFT, directTransferToken };
 }
