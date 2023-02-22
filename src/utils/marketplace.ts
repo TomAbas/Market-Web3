@@ -73,6 +73,7 @@ function useBuyItemAptos(item: nftItem, orderInfo?: orderSell) {
 					orderId: orderInfo?._id,
 				};
 				buyItem(listItem).then((res: any) => dispatch(handleTrigger()));
+				navigate('/profile');
 				completeTaskSuccess();
 				toast.success('Successful purchase an item');
 			});

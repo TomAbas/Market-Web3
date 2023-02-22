@@ -163,11 +163,6 @@ const ItemInfo: React.FC<Props> = ({
 							>
 								{item?.description}
 							</Typography>
-							{item?.status === 1 && (
-								<Typography variant="body1">
-									Sell Quantity : {itemResource?.amount}
-								</Typography>
-							)}
 							<Stack direction="row" gap="20px">
 								<Stack
 									// direction={'row'}

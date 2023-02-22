@@ -150,9 +150,6 @@ const FormSellFixPrice = () => {
 			new Date(new Date().getTime() + 7 * 24 * 60 * 60000 + 5 * 60000).getTime()
 		);
 	}, []);
-	useEffect(() => {
-		console.log(amountOwned);
-	}, [amountOwned]);
 
 	return (
 		<>
