@@ -19,7 +19,8 @@ import { nftItem } from 'models/item';
 import { getBalanceToken } from 'service/aptos.service';
 import useBuyItemAptos from 'utils/marketplace';
 import { setCurrentPaymentToken, setPriceOrder } from 'redux/slices/sellItem';
-
+import useTransfer from 'utils/transfer';
+import { async } from '@firebase/util';
 export interface IFormSellItemInputs {
 	price: string;
 	currentPaymentToken: any;
@@ -29,6 +30,7 @@ export interface IFormSellItemInputs {
 }
 
 const FormSellFixPrice = () => {
+	const { checkCoinStore } = useTransfer();
 	const dispatch = useAppDispatch();
 	const { itemId } = useParams();
 	const userInfo = useAppSelector(selectUser);
@@ -68,18 +70,26 @@ const FormSellFixPrice = () => {
 		register,
 		handleSubmit,
 		setValue,
+		setError,
 		formState: { errors, isSubmitting },
 	} = useForm<IFormSellItemInputs>({
 		resolver: yupResolver(schema),
 	});
 	//function
-	function handleChangePaymentToken(tokenPayment: any) {
+	async function handleChangePaymentToken(tokenPayment: any) {
 		if (tokenPayment) {
 			console.log(tokenPayment);
-			setTokenPayment(tokenPayment);
-			setCoinType(tokenPayment);
-			setValue('currentPaymentToken', tokenPayment);
-			dispatch(setCurrentPaymentToken(tokenPayment));
+
+			if (await checkCoinStore(userInfo!.userAddress, tokenPayment.type)) {
+				setValue('currentPaymentToken', tokenPayment);
+				dispatch(setCurrentPaymentToken(tokenPayment));
+				setTokenPayment(tokenPayment);
+				setCoinType(tokenPayment);
+			} else {
+				setError('currentPaymentToken', {
+					message: 'You do not have enough coins to pay for this item',
+				});
+			}
 		} else {
 			setTokenPayment(null);
 		}
