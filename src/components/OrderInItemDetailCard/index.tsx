@@ -7,7 +7,7 @@ import SkeletonOrderInItemDetailCard from 'components/Skeletons/SkeletonOrderInI
 // styled
 import { ButtonBox, OrderCard, StyledSpan, GradIcon } from './styled';
 import { displayAddress } from 'utils/formatDisplay';
-import { formatTimeHistory } from 'utils/function';
+import { changePriceToToken, formatTimeHistory } from 'utils/function';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import useBuyItemAptos from 'utils/marketplace';
 import { orderSell } from 'models/transaction';
@@ -48,7 +48,7 @@ export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInIt
 					</Box>
 					<Typography variant="body2">
 						<Typography variant="body2" sx={{ fontWeight: '600', marginBottom: '4px' }}>
-							{/* {formatNumber(currentOrderPrice, 0, 4)}{' '} */}
+							{changePriceToToken(orderId.minPrice, orderId.coinType)}{' '}
 							{orderId.coinType?.split('::').slice(-1)[0].toUpperCase()}{' '}
 							<StyledSpan>for</StyledSpan> {orderId.amount} item(s){' '}
 							<StyledSpan>by</StyledSpan> {displayAddress(orderId.maker)}
@@ -70,15 +70,26 @@ export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInIt
 								{statusWithdraw}
 							</ButtonWhite>
 						) : (
-							<ButtonWhite
-								sx={{ padding: '5px 32px' }}
-								onClick={() => {
-									console.log('buy now');
-									buyItemAptos();
-								}}
-							>
-								Buy Now
-							</ButtonWhite>
+							<>
+								{new Date().getTime() <
+								new Date(orderId.expirationTime).getTime() ? (
+									<ButtonWhite
+										sx={{ padding: '5px 32px' }}
+										onClick={() => {
+											console.log('buy now');
+											buyItemAptos();
+										}}
+									>
+										Buy Now
+									</ButtonWhite>
+								) : (
+									<>
+										<ButtonWhite disabled={true} sx={{ padding: '5px 32px' }}>
+											Expired
+										</ButtonWhite>
+									</>
+								)}
+							</>
 						)}
 					</Box>
 				)}
