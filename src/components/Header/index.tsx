@@ -45,8 +45,8 @@ import {
 	NavigationItemBigScreen,
 } from './styled';
 //image
-import LogoMSWhite from '../../assets/images/logo/logoMetaBlue.png';
-import LogoMSMobileWhite from '../../assets/images/logo/logoMetaBlue.png';
+import LogoMSWhite from '../../assets/images/logo/LogoMetaDark.png';
+import LogoMSMobileWhite from '../../assets/images/logo/LogoMetaDark.png';
 import LogoMSGray from '../../assets/images/logo/logo-metaspacecy-gray.webp';
 import LogoMSGrayMoblie from '../../assets/images/logo/logo-metaspacecy-gray-moblie.webp';
 import aptos from '../../assets/images/logo/aptos.png';
@@ -291,7 +291,7 @@ const Header: React.FC = () => {
 								{isLightTheme ? (
 									<img
 										className="logoMobile"
-										src={LogoMSGrayMoblie}
+										// src={LogoMSGrayMoblie}
 										alt="page logo"
 									/>
 								) : (
@@ -409,9 +409,6 @@ const Header: React.FC = () => {
 											className="navLink"
 											href={`#/rank?query=1`}
 											target="_self"
-											// onClick={(e: any) => {
-											// 	e.preventDefault();
-											// }}
 										>
 											<Typography
 												variant="body1"

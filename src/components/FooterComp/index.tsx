@@ -20,7 +20,7 @@ import {
 import LogoMSBlue from '../../assets/images/logo/MSMobile-blue.webp';
 import LogoMSWhite from '../../assets/images/logo/logoMetaBlue.png';
 import LogoMSMobileBlue from '../../assets/images/logo/Metaspacecy-blue.svg';
-import LogoMSMobileWhite from '../../assets/images/logo/MSMobile-white.webp';
+import LogoMSMobileWhite from '../../assets/images/logo/LogoMetaDarkMobo.png';
 import LogoMSGray from '../../assets/images/logo/logo-metaspacecy-gray.png';
 import LogoMSGrayMoblie from '../../assets/images/logo/logo-metaspacecy-gray-moblie.png';
 import { Box, useTheme, Container, Typography, Stack } from '@mui/material';
