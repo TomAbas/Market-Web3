@@ -54,7 +54,8 @@ const TypeEvent: React.FC<Props> = ({ itemHistory, userAddress }) => {
 				{getTransactionType(itemHistory.type)}{' '}
 				<StyledSpan>
 					{itemHistory.quantity} {itemHistory.itemInfo.itemName} for{' '}
-					{changePriceToToken(itemHistory.price)} {itemHistory.priceType.toUpperCase()}
+					{changePriceToToken(itemHistory.price)}{' '}
+					{itemHistory.priceType?.split('::').slice(-1)[0].toUpperCase()}{' '}
 				</StyledSpan>
 			</Typography>
 		);
@@ -66,7 +67,8 @@ const TypeEvent: React.FC<Props> = ({ itemHistory, userAddress }) => {
 				{getTransactionType(itemHistory.type)}{' '}
 				<StyledSpan>
 					{itemHistory.quantity} {itemHistory.itemInfo.itemName} with{' '}
-					{changePriceToToken(itemHistory.price)} {itemHistory.priceType.toUpperCase()} to{' '}
+					{changePriceToToken(itemHistory.price)}{' '}
+					{itemHistory.priceType?.split('::').slice(-1)[0].toUpperCase()}{' '}
 					{formatAddressHistory(itemHistory.to, userAddress)}
 				</StyledSpan>
 			</Typography>

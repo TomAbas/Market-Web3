@@ -13,7 +13,7 @@ const TabSellMethod = () => {
 				title: 'Fixed Price',
 				icon: <img src={iconAssetBlack} alt="asset icon" width={20} height={20} />,
 				iconSelected: <img src={iconAssetBlue} alt="asset icon" width={20} height={20} />,
-				isShow: true,
+				isShow: false,
 			},
 			{
 				title: 'Auction',
@@ -21,7 +21,7 @@ const TabSellMethod = () => {
 				iconSelected: (
 					<img src={iconHistoryBlue} alt="history icon" width={20} height={20} />
 				),
-				isShow: true,
+				isShow: false,
 			},
 		],
 		sections: [
@@ -32,7 +32,13 @@ const TabSellMethod = () => {
 			{ Section: <FormCreateAuction />, isShow: false },
 		],
 	};
-	return <TabCommon tabItems={tabsDetail.items} tabSections={tabsDetail.sections} />;
+	return (
+		<TabCommon
+			tabItems={tabsDetail.items}
+			tabSections={tabsDetail.sections}
+			tabAlignment="left"
+		/>
+	);
 };
 
 export default TabSellMethod;

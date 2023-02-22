@@ -34,12 +34,12 @@ export const changePriceToToken = (wei: string) => {
 	return Number(wei) / 10 ** 8;
 };
 
-export const changeTokenToWei = (token: string) => {
-	return (Number(token) * 10 ** 8).toString();
+export const changeTokenToWei = (token: string, decimal: number = 8) => {
+	return (Number(token) * 10 ** decimal).toString();
 };
 export const formatTimeHistory = (time: Date | string): string => {
 	let result: string;
-
+	time = new Date(time);
 	if (!time) {
 		result = '-----';
 	} else {
@@ -79,4 +79,8 @@ export const compareDate = (date1: Date, date2: Date): number => {
 	} else {
 		return 0;
 	}
+};
+
+export const formatTimestamp = (timestamp: number, format: string = 'MMMM Do, YYYY, h:mm A') => {
+	return moment(new Date(timestamp * 1000)).format(format);
 };

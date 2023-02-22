@@ -24,6 +24,9 @@ import { selectEndTime, selectStartTime, setEndTime, setStartTime } from 'redux/
 
 export interface IDateTimeCustomPickerProps {
 	setValue: any;
+	setStartTime: any;
+	setExpirationTime: any;
+	setWithdrawExpirationTime: any;
 }
 
 const dateRanges: any[] = [
@@ -44,20 +47,19 @@ export default function DateTimeCustomPicker({ setValue }: IDateTimeCustomPicker
 	// change endDate base on startDate and selected duration
 	const onChangeDuration = (duration: OptionSelectCustom<string>) => {
 		setCurrentDuration(duration);
-		setValue('startTime', new Date(new Date().getTime() + 5 * 60000).getTime());
+		setValue('startTime', new Date(new Date().getTime()).getTime());
 		const updateEndDate: Moment = moment(startTime).add(duration.value, 'days');
 		dispatch(setEndTime(updateEndDate.toString()));
 	};
 
 	const handleChangeStartDateTime = (newValue: Date | null) => {
 		if (newValue) {
-			dispatch(setStartTime(newValue.toString()));
+			// dispatch(setStartTime(newValue.toString()));
 			setValue('startTime', new Date(newValue.toString()).getTime());
 			// change endDate if new startDate >= endDate
-
 			if (compareDate(newValue, endTime) >= 0) {
 				const newEndDate: Date = moment(newValue).add(1, 'days').toDate();
-				dispatch(setEndTime(newEndDate.toString()));
+				setValue('endTime', new Date(newEndDate.toString()).getTime());
 			}
 		}
 	};
@@ -68,12 +70,13 @@ export default function DateTimeCustomPicker({ setValue }: IDateTimeCustomPicker
 
 			if (compareDate(startTime, newValue) >= 0) {
 				const newEndDate: Date = moment(startTime).add(1, 'days').toDate();
+				setValue('endTime', new Date(newEndDate.toString()).getTime());
 				dispatch(setEndTime(newEndDate.toString()));
 			} else {
+				setValue('endTime', new Date(newValue.toString()).getTime());
+				console.log(new Date(newValue.toString()).getTime());
 				dispatch(setEndTime(newValue.toString()));
 			}
-
-			// setValue('endDate', moment(newValue).format('L'));
 		}
 	};
 

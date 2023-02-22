@@ -42,6 +42,7 @@ import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
 import { displayUserFullName, displayUserName } from 'utils/formatDisplay';
 import { getItemFromOrder } from 'utils/dataResource';
 import ModelSell from 'components/ModelSell/ModelSell';
+import ModalListOrder from 'components/ModalListOrder/ModalListOrder';
 import { nftItem } from 'models/item';
 import { getBalanceToken } from 'service/aptos.service';
 import { selectUser } from 'redux/slices/userInfo';
@@ -93,7 +94,6 @@ export default function CardNFT({
 	} = useBuyItemAptos(offer);
 	const [userAmountOfItem, setUserAmountOfItem] = useState('');
 	const [itemPrice, setItemPrice] = useState<number>();
-
 	const userInfo = useAppSelector(selectUser);
 	function changePrice() {
 		setItemPrice(changePriceToToken(offer.price));
@@ -156,7 +156,7 @@ export default function CardNFT({
 		}
 		return false;
 	};
-
+	function getOrderOfItem() {}
 	useEffect(() => {
 		changePrice();
 	}, [offer]);
@@ -384,16 +384,29 @@ export default function CardNFT({
 					royaltyFee={offer?.royalties.toString()!}
 				/>
 			) : (
-				<ModalBuy
-					title="Buy Item"
-					itemPrice={itemPrice}
-					openState={openModalBuy}
-					closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
-					funcBuyNft={claimOffer}
-					activeStep={activeStep}
-					statusBuyNft={statusBuyNft}
-					steps={steps}
-				/>
+				<>
+					{/* <ModalBuy
+						title="Buy Item"
+						itemPrice={itemPrice}
+						openState={openModalBuy}
+						closeModal={() =>
+							handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))
+						}
+						funcBuyNft={claimOffer}
+						activeStep={activeStep}
+						statusBuyNft={statusBuyNft}
+						steps={steps}
+					/> */}
+					{openModalBuy && (
+						<ModalListOrder
+							itemId={offer._id}
+							isOpenModal={openModalBuy}
+							setIsOpenModal={() => {
+								handleCloseModalBuy();
+							}}
+						/>
+					)}
+				</>
 			)}
 		</>
 	);

@@ -18,16 +18,18 @@ import useGetAcountTokenAmount from 'hooks/useGetAcountTokenAmount';
 import { handleTrigger } from 'redux/slices/nftFilter';
 import { AptosClient, HexString } from 'aptos';
 import { APTOS_NODE_URL, APTOS_FAUCET_URL } from 'constants/aptos.constant';
+import { orderSell } from 'models/transaction';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 
-function useBuyItemAptos(item: nftItem) {
+function useBuyItemAptos(item: nftItem, orderInfo?: orderSell) {
 	const [supply, setSupply] = useState('');
 	const [price, setPrice] = useState('');
-	const [startTime, setStartTime] = useState('1676868030');
-	const [expirationTime, setExpirationTime] = useState('1677858030');
-	const [withdrawExpirationTime, setWithdrawExpirationTime] = useState('1776858030');
+	const [coinType, setCoinType] = useState<any>();
+	const [startTime, setStartTime] = useState('');
+	const [expirationTime, setExpirationTime] = useState('');
+	const [withdrawExpirationTime, setWithdrawExpirationTime] = useState('');
 	const [statusWithdraw, setStatusWithdraw] = useState('Cancel');
 	const [statusList, setStatusList] = useState('Sell Item');
 	const dispatch = useAppDispatch();
@@ -36,11 +38,16 @@ function useBuyItemAptos(item: nftItem) {
 	const { account, signAndSubmitTransaction } = useWallet();
 	const { userTokenAmount } = useGetAcountTokenAmount(userInfo?.userAddress!, item);
 	const navigate = useNavigate();
+	useEffect(() => {
+		console.log(startTime);
+		console.log(expirationTime);
+		console.log(withdrawExpirationTime);
+	}, [startTime, expirationTime, withdrawExpirationTime]);
 	async function buyItemAptos(
-		handleNext: () => void,
-		startLoading: () => void,
-		failToComplete: () => void,
-		completeTaskSuccess: () => void
+		handleNext: () => void = () => {},
+		startLoading: () => void = () => {},
+		failToComplete: () => void = () => {},
+		completeTaskSuccess: () => void = () => {}
 	) {
 		if (!userInfo?.userAddress) {
 			dispatch(openFirstModal());
@@ -50,17 +57,17 @@ function useBuyItemAptos(item: nftItem) {
 		try {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
-				function: `${MARKET_ADDRESS}::market::buy_token`,
-				type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
-				arguments: [item.creator, item.collectionInfo.collectionName, item.itemName, '0'],
+				function: `${MARKET_ADDRESS}::marketplace::buy_token`,
+				type_arguments: [orderInfo!.coinType],
+				arguments: [orderInfo!.maker, orderInfo!.creationNumber],
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				let listItem: any = {
 					maker: userInfo?.userAddress,
 					chainId: '2',
-					price: item.price,
-					quantity: getItemFromOrder(listNftOrders, item)?.amount,
-					to: getItemFromOrder(listNftOrders, item)?.owner,
+					price: orderInfo!.minPrice,
+					quantity: orderInfo?.amount,
+					to: orderInfo?.maker,
 					txHash: res.hash,
 					itemName: item.itemName,
 					collectionName: item.collectionInfo.collectionName,
@@ -88,31 +95,34 @@ function useBuyItemAptos(item: nftItem) {
 		try {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
-				function: `${MARKET_ADDRESS}::market::withdraw_token`,
-				type_arguments: [MARKET_COINT_TYPE || '0x1::aptos_coin::AptosCoin'],
-				arguments: [
-					item?.creator,
-					item?.collectionInfo.collectionName,
-					item?.itemName,
-					'0',
-				],
+				function: `${MARKET_ADDRESS}::marketplace::cancel_list_token`,
+				type_arguments: [orderInfo!.coinType],
+				arguments: [orderInfo?.creationNumber.toString()],
 			};
+			console.log(payload);
 
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
-				let listItem: any = {
-					maker: userInfo?.userAddress,
-					chainId: '2',
-					price: item?.price,
-					quantity: getItemFromOrder(listNftOrders, item!)?.amount,
-					to: MARKET_ADDRESS,
-					txHash: res.hash,
-					itemName: item.itemName,
-					collectionName: item.collectionInfo.collectionName,
-					creator: item.creator,
-					owner: getItemFromOrder(listNftOrders, item!)?.owner,
-				};
-				cancelOrder(listItem).then((res: any) => dispatch(handleTrigger()));
-			});
+			// await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
+			// 	let listItem: any = {
+			// 		maker: userInfo?.userAddress,
+			// 		chainId: '2',
+			// 		price: item?.price,
+			// 		quantity: getItemFromOrder(listNftOrders, item!)?.amount,
+			// 		to: MARKET_ADDRESS,
+			// 		txHash: res.hash,
+			// 		itemName: item.itemName,
+			// 		collectionName: item.collectionInfo.collectionName,
+			// 		creator: item.creator,
+			// 		owner: getItemFromOrder(listNftOrders, item!)?.owner,
+			// 	};
+			// 	cancelOrder(listItem).then((res: any) => dispatch(handleTrigger()));
+			// });
+			let listItem: any = {
+				maker: orderInfo?.maker,
+				txHash: 'hjasjkhabdskjsd',
+				orderId: orderInfo?._id,
+				chainId: '2',
+			};
+			cancelOrder(listItem).then((res: any) => dispatch(handleTrigger()));
 
 			toast.success('Successful cancel listing');
 			navigate('/profile');
@@ -143,12 +153,12 @@ function useBuyItemAptos(item: nftItem) {
 				return;
 			}
 
-			let newPrice = changeTokenToWei(price);
+			let newPrice = changeTokenToWei(price, coinType!.decimals);
 			setStatusList('Processing...');
 			const payload: any = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::marketplace::list_token`,
-				type_arguments: [MARKET_COINT_TYPE],
+				type_arguments: [coinType!.type],
 				arguments: [
 					item.creator,
 					item.collectionInfo.collectionName,
@@ -156,23 +166,26 @@ function useBuyItemAptos(item: nftItem) {
 					'0',
 					supply,
 					newPrice.toString(),
-					startTime,
-					expirationTime,
-					withdrawExpirationTime,
+					Math.floor(Number(startTime) / 1000).toString(),
+					Math.floor(Number(expirationTime) / 1000).toString(),
+					Math.floor(Number(withdrawExpirationTime) / 1000).toString(),
 				],
 			};
+			console.log(payload);
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
+				console.log('res', res);
 				let listItem: any = {
+					startTime,
+					endTime: expirationTime,
+					coinType: coinType.type,
+					itemId: item._id,
 					maker: userInfo?.userAddress,
 					chainId: '2',
 					price: newPrice,
 					quantity: supply,
 					to: MARKET_ADDRESS,
 					txHash: res.hash,
-					itemName: item.itemName,
-					collectionName: item.collectionInfo.collectionName,
-					owner: userInfo?.userAddress,
-					creator: item.creator,
+					instantSale: true,
 				};
 				console.log(listItem);
 				toast.success('Successful list an item');
@@ -199,6 +212,10 @@ function useBuyItemAptos(item: nftItem) {
 		statusList,
 		sellItemAptos,
 		handleValidateAmount,
+		setStartTime,
+		setExpirationTime,
+		setWithdrawExpirationTime,
+		setCoinType,
 	};
 }
 

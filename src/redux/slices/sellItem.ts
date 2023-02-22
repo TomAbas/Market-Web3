@@ -7,8 +7,8 @@ import moment from 'moment';
 const initialState: SellingProps = {
 	isErc1155: true,
 	saleKind: ORDER_CONFIGURATION.FIXED_PRICE,
-	tokenPayment: null,
-	fixedPrice: 0,
+	currentPaymentToken: null,
+	price: 0,
 	startPrice: 0,
 	endPrice: 0,
 	quantity: 0,
@@ -24,6 +24,12 @@ export const createOrderNftSlice = createSlice({
 	reducers: {
 		createOrder(state, action) {
 			state = action.payload;
+		},
+		setPriceOrder(state, action) {
+			state.price = action.payload;
+		},
+		setCurrentPaymentToken(state, action) {
+			state.currentPaymentToken = action.payload;
 		},
 		setStartTime(state, action) {
 			state.startTime = action.payload;
@@ -41,5 +47,12 @@ export const createOrderNftSlice = createSlice({
 export const selectOrder = (state: RootState) => state.createOrderNft;
 export const selectStartTime = (state: RootState) => state.createOrderNft.startTime;
 export const selectEndTime = (state: RootState) => state.createOrderNft.endTime;
-export const { createOrder, handleReset, setStartTime, setEndTime } = createOrderNftSlice.actions;
+export const {
+	createOrder,
+	handleReset,
+	setStartTime,
+	setEndTime,
+	setCurrentPaymentToken,
+	setPriceOrder,
+} = createOrderNftSlice.actions;
 export default createOrderNftSlice.reducer;

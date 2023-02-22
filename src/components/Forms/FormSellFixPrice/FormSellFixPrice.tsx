@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Stack, Box, Grid, Typography } from '@mui/material';
+import { Stack, Box, Grid, Typography, CircularProgress, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -8,8 +8,8 @@ import AutoCompleteCustom from 'components/CustomField/AutoCompleteCustom';
 import { SelectAndInputWraper, Title } from 'components/Marketplace/SellItemPage/Styled';
 import FieldInput from 'components/CustomField/FieldInput';
 import DateTimeCustomPicker from 'customComponents/DateTimePickerCustom';
-import { useAppSelector } from 'redux/hooks';
-import { selectOrder } from 'redux/slices/sellItem';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { createOrder, selectOrder } from 'redux/slices/sellItem';
 import { ListTokenPaymentTestNet } from 'constants/sellItem';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import { selectUser } from 'redux/slices/userInfo';
@@ -17,38 +17,51 @@ import { useParams } from 'react-router-dom';
 import { selectAllNfts } from 'redux/slices/nftFilter';
 import { nftItem } from 'models/item';
 import { getBalanceToken } from 'service/aptos.service';
+import useBuyItemAptos from 'utils/marketplace';
+import { setCurrentPaymentToken, setPriceOrder } from 'redux/slices/sellItem';
+
 export interface IFormSellItemInputs {
 	price: string;
-	currentPaymentToken: object;
+	currentPaymentToken: any;
 	quantity: string;
 	startTime: number;
+	endTime: number;
 }
 
 const FormSellFixPrice = () => {
+	const dispatch = useAppDispatch();
 	const { itemId } = useParams();
 	const userInfo = useAppSelector(selectUser);
 	const nftItem: nftItem = useAppSelector(selectAllNfts).filter(
 		(item: nftItem) => item._id === itemId
 	)[0];
+	const {
+		sellItemAptos,
+		price,
+		setPrice,
+		statusList,
+		handleValidateAmount,
+		setStartTime,
+		setExpirationTime,
+		setWithdrawExpirationTime,
+		setCoinType,
+	} = useBuyItemAptos(nftItem!);
+	const [init, setInit] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [tokenPayment, setTokenPayment] = React.useState<any>(null);
-	const [amountOwned, setAmountOwned] = useState<string>();
-	const pickedStartTime = useAppSelector(selectOrder).startTime;
-	const orderSell = useAppSelector(selectOrder);
+	const [amountOwned, setAmountOwned] = useState<string>('0');
 	const schema = yup
 		.object({
 			price: yup.number().required('Required').min(0).typeError('You must specify a number'),
-			currentPaymentToken: yup.string().required('Required'),
+			currentPaymentToken: yup.object().required('Required'),
 			quantity: yup
 				.number()
 				.required('Required')
 				.min(0)
-				.max(10, 'max')
+				.max(Number(amountOwned), 'max')
 				.typeError('You must specify a number'),
-			startTime: yup
-				.number()
-				.required('Required')
-				.min(new Date().getTime(), 'Must be in future')
-				.typeError('Must in future'),
+			startTime: yup.number().required('Required'),
+			endTime: yup.number().required('Required'),
 		})
 		.required();
 	const {
@@ -62,8 +75,11 @@ const FormSellFixPrice = () => {
 	//function
 	function handleChangePaymentToken(tokenPayment: any) {
 		if (tokenPayment) {
+			console.log(tokenPayment);
 			setTokenPayment(tokenPayment);
-			setValue('currentPaymentToken', tokenPayment.name);
+			setCoinType(tokenPayment);
+			setValue('currentPaymentToken', tokenPayment);
+			dispatch(setCurrentPaymentToken(tokenPayment));
 		} else {
 			setTokenPayment(null);
 		}
@@ -84,19 +100,33 @@ const FormSellFixPrice = () => {
 			console.log(error);
 		}
 	}
-	function onSubmit(data: any) {
-		console.log(data);
+	function onSubmit(data: IFormSellItemInputs) {
+		setStartTime(data.startTime.toString());
+		setWithdrawExpirationTime((data.endTime + 5 * 60000).toString());
+		setExpirationTime(data.endTime.toString());
+		setInit(true);
+		setLoading(true);
+		setTimeout(() => {
+			setLoading(false);
+		}, 2000);
+		if (init) {
+			sellItemAptos();
+		} else {
+			dispatch(createOrder(data));
+		}
 	}
 
 	useEffect(() => {
-		console.log(nftItem);
-		console.log(userInfo);
 		if (userInfo?.userAddress && nftItem) {
 			getAmountOwn();
 		}
 	}, [userInfo?.userAddress, nftItem]);
 	useEffect(() => {
-		setValue('startTime', new Date(new Date().getTime() + 5 * 60000).getTime());
+		setValue('startTime', new Date(new Date().getTime()).getTime());
+		setValue(
+			'endTime',
+			new Date(new Date().getTime() + 7 * 24 * 60 * 60000 + 5 * 60000).getTime()
+		);
 	}, []);
 	useEffect(() => {
 		console.log(amountOwned);
@@ -115,7 +145,17 @@ const FormSellFixPrice = () => {
 									id="price"
 									type="number"
 									placeholder="0.0"
-									// onChange={setFixedPrice}
+									value={price}
+									onChange={(e: any) => {
+										if (Number(e.target.value) < 0) {
+											let a = -Number(e.target.value);
+											setPrice(a.toString());
+											dispatch(setPriceOrder(a.toString()));
+										} else {
+											setPrice(e.target.value);
+											dispatch(setPriceOrder(e.target.value));
+										}
+									}}
 									sx={{
 										border: 'none',
 										textAlign: 'left',
@@ -186,7 +226,9 @@ const FormSellFixPrice = () => {
 								id="quantity"
 								type="number"
 								placeholder="Ex: 1, 2,..."
-								// onChange={setQuantity}
+								onChange={(e: any) => {
+									handleValidateAmount(e, amountOwned!);
+								}}
 								sx={{
 									fontSize: '16px',
 									textOverflow: 'ellipsis',
@@ -208,7 +250,12 @@ const FormSellFixPrice = () => {
 						<Title variant="h6" sx={{ pb: 1 }}>
 							Duration
 						</Title>
-						<DateTimeCustomPicker setValue={setValue} />
+						<DateTimeCustomPicker
+							setValue={setValue}
+							setStartTime={setStartTime}
+							setWithdrawExpirationTime={setWithdrawExpirationTime}
+							setExpirationTime={setExpirationTime}
+						/>
 						<Box sx={{ width: '100%' }}>
 							{errors.startTime?.message && (
 								<Typography
@@ -218,9 +265,29 @@ const FormSellFixPrice = () => {
 									<>{errors.startTime?.message}</>
 								</Typography>
 							)}
+							{errors.endTime?.message && (
+								<Typography
+									variant="body1"
+									sx={{ color: 'red', pt: 1, float: 'right' }}
+								>
+									<>{errors.endTime?.message}</>
+								</Typography>
+							)}
 						</Box>
 					</Box>
-					<ButtonWhite type="submit">SELLLLLLL</ButtonWhite>
+					{init ? (
+						<>
+							{loading ? (
+								<ButtonWhite sx={{ margin: '0 auto' }}>
+									<CircularProgress sx={{ color: 'black', mr: 1 }} size={25} />
+								</ButtonWhite>
+							) : (
+								<ButtonWhite type="submit">Confirm</ButtonWhite>
+							)}
+						</>
+					) : (
+						<ButtonWhite type="submit">Sell Item</ButtonWhite>
+					)}
 				</form>
 			</Stack>
 		</>

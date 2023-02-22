@@ -35,6 +35,7 @@ import ModalTransferNFT from './ModalTransfer';
 import AutoCompleteCustom from 'components/CustomField/DropdownOwner';
 import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
 import { displayUserFullName } from 'utils/formatDisplay';
+import OfferingsAndLisings from '../OfferingsAndListings';
 interface Props {
 	loadingItem: boolean;
 	itemResource: any;
@@ -116,7 +117,7 @@ const ItemInfo: React.FC<Props> = ({
 					</ItemImage>
 					<Stack
 						gap="16px"
-						sx={{ width: '50%', height: '750px' }}
+						sx={{ width: '50%', height: '750px', position: 'relative' }}
 						direction="row"
 						spacing={{ xs: 1, sm: 2, md: 4 }}
 					>
@@ -218,17 +219,18 @@ const ItemInfo: React.FC<Props> = ({
 							<Box
 								sx={{
 									button: {
-										padding: '10px 30px',
+										position: 'relative',
+										padding: '10px 20px',
 										border: '1.5px solid #e7e8ec',
 										transition: 'all 0.4s',
 										borderRadius: '12px',
 										fontWeight: 500,
 										background: '#fff',
-										fontSize: '20px',
+										fontSize: '15px',
 										cursor: 'pointer',
 										fontFamily: 'Montserrat, sans-serif !important',
 										fontStyle: 'italic !important',
-										width: '180px',
+										width: '150px',
 										'&:hover': {
 											background: '#007aff',
 											borderColor: 'transparent',
@@ -237,7 +239,7 @@ const ItemInfo: React.FC<Props> = ({
 									},
 								}}
 							>
-								{itemResource !== undefined && (
+								{/* {itemResource !== undefined && (
 									<>
 										{item?.status === 1 ? (
 											<>
@@ -261,7 +263,17 @@ const ItemInfo: React.FC<Props> = ({
 											</>
 										)}
 									</>
+								)} */}
+								{item?.owner.includes(userInfo?.userAddress!) && (
+									<button
+										onClick={() => {
+											navigate(`/item/sell-item/${item!._id}`);
+										}}
+									>
+										Sell Item
+									</button>
 								)}
+								<OfferingsAndLisings itemId={item!._id} />
 							</Box>
 						</Stack>
 						<Stack direction="row" alignItems="flex-start">

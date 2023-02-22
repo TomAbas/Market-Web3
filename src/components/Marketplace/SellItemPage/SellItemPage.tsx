@@ -1,6 +1,8 @@
 import React from 'react';
 import { Container, Grid, Stack, Typography } from '@mui/material';
-import TabSellMethod from './TabSellMethod/TabSellMethod';
+// import TabSellMethod from './TabSellMethod/TabSellMethod';
+import ReviewItem from './ReviewItem/ReviewItem';
+import FormSellFixPrice from 'components/Forms/FormSellFixPrice/FormSellFixPrice';
 const SellItemPage = () => {
 	return (
 		<>
@@ -8,19 +10,20 @@ const SellItemPage = () => {
 				<Typography variant="h3" fontWeight="600" sx={{ p: '2rem 0 0.5rem' }}>
 					List your item for sale
 				</Typography>
-				<Typography variant="h6" sx={{ pb: '1rem' }}>
+				{/* <Typography variant="h6" sx={{ pb: '1rem' }}>
 					Choose the sale method
-				</Typography>
+				</Typography> */}
 				<Grid container spacing={3} mt={0.5}>
 					<Grid item xs={12} md={7}>
-						<TabSellMethod />
+						{/* <TabSellMethod /> */}
+						<FormSellFixPrice />
 					</Grid>
 					<Grid item xs={12} md={5}>
 						<Stack>
 							<Typography variant="h6" fontWeight="500" sx={{ pb: '1rem' }}>
 								Review
 							</Typography>
-
+							<ReviewItem />
 							{/* <SaleItemSummary collection={collection} currentItem={item} /> */}
 						</Stack>
 					</Grid>
