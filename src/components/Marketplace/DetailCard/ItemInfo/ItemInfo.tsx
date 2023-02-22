@@ -213,9 +213,6 @@ const ItemInfo: React.FC<Props> = ({
 									/>
 								</Stack>
 							</Stack>
-							{item?.status === 1 && (
-								<Typography variant="body1">Price: {itemPrice} APT</Typography>
-							)}
 							<Box
 								sx={{
 									button: {

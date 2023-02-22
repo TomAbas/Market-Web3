@@ -299,9 +299,7 @@ export default function CardNFT({
 											)}
 										</>
 									) : (
-										<Box sx={{ display: 'flex', gap: '5px' }}>
-											{itemPrice} APT
-										</Box>
+										<Box sx={{ display: 'flex', gap: '5px' }}></Box>
 									)}
 									{checkSellable() ? (
 										offer.status === 0 ? (

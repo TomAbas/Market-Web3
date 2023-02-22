@@ -69,10 +69,8 @@ function useBuyItemAptos(item: nftItem, orderInfo?: orderSell) {
 					quantity: orderInfo?.amount,
 					to: orderInfo?.maker,
 					txHash: res.hash,
-					itemName: item.itemName,
-					collectionName: item.collectionInfo.collectionName,
-					creator: item.creator,
-					owner: getItemFromOrder(listNftOrders, item)?.owner,
+					itemId: orderInfo?.itemId,
+					orderId: orderInfo?._id,
 				};
 				buyItem(listItem).then((res: any) => dispatch(handleTrigger()));
 				completeTaskSuccess();
@@ -101,28 +99,15 @@ function useBuyItemAptos(item: nftItem, orderInfo?: orderSell) {
 			};
 			console.log(payload);
 
-			// await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
-			// 	let listItem: any = {
-			// 		maker: userInfo?.userAddress,
-			// 		chainId: '2',
-			// 		price: item?.price,
-			// 		quantity: getItemFromOrder(listNftOrders, item!)?.amount,
-			// 		to: MARKET_ADDRESS,
-			// 		txHash: res.hash,
-			// 		itemName: item.itemName,
-			// 		collectionName: item.collectionInfo.collectionName,
-			// 		creator: item.creator,
-			// 		owner: getItemFromOrder(listNftOrders, item!)?.owner,
-			// 	};
-			// 	cancelOrder(listItem).then((res: any) => dispatch(handleTrigger()));
-			// });
-			let listItem: any = {
-				maker: orderInfo?.maker,
-				txHash: 'hjasjkhabdskjsd',
-				orderId: orderInfo?._id,
-				chainId: '2',
-			};
-			cancelOrder(listItem).then((res: any) => dispatch(handleTrigger()));
+			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
+				let listItem: any = {
+					maker: orderInfo?.maker,
+					txHash: 'hjasjkhabdskjsd',
+					orderId: orderInfo?._id,
+					chainId: '2',
+				};
+				cancelOrder(listItem).then((res: any) => dispatch(handleTrigger()));
+			});
 
 			toast.success('Successful cancel listing');
 			navigate('/profile');

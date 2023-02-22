@@ -54,12 +54,13 @@ export default function DateTimeCustomPicker({ setValue }: IDateTimeCustomPicker
 
 	const handleChangeStartDateTime = (newValue: Date | null) => {
 		if (newValue) {
-			// dispatch(setStartTime(newValue.toString()));
+			dispatch(setStartTime(newValue.toString()));
 			setValue('startTime', new Date(newValue.toString()).getTime());
 			// change endDate if new startDate >= endDate
 			if (compareDate(newValue, endTime) >= 0) {
 				const newEndDate: Date = moment(newValue).add(1, 'days').toDate();
 				setValue('endTime', new Date(newEndDate.toString()).getTime());
+				dispatch(setEndTime(newEndDate.toString()));
 			}
 		}
 	};

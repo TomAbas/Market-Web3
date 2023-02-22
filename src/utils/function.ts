@@ -1,3 +1,4 @@
+import { ListTokenPaymentTestNet } from 'constants/sellItem';
 import { CustomFile } from '../models/common';
 import numeral from 'numeral';
 import moment from 'moment';
@@ -30,8 +31,12 @@ export const sliceString = (string: string, limit = 0) => {
 	return '';
 };
 
-export const changePriceToToken = (wei: string) => {
-	return Number(wei) / 10 ** 8;
+export const changePriceToToken = (
+	wei: string,
+	tokenType: string = '0x1::aptos_coin::AptosCoin'
+) => {
+	let decimal = ListTokenPaymentTestNet.find((item) => item.type === tokenType)?.decimals || 8;
+	return Number(wei) / 10 ** decimal;
 };
 
 export const changeTokenToWei = (token: string, decimal: number = 8) => {
