@@ -270,7 +270,7 @@ const ItemInfo: React.FC<Props> = ({
 											navigate(`/item/sell-item/${item!._id}`);
 										}}
 									>
-										Sell Item
+										List
 									</button>
 								)}
 								<OfferingsAndLisings itemId={item!._id} />

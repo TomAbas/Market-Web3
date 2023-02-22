@@ -55,7 +55,7 @@ export default function ModalListOrder({ itemId, isOpenModal, setIsOpenModal }: 
 								</Box>
 							))
 						) : (
-							<Box sx={{ mt: 2, p: 1 }}>
+							<Box sx={{ p: 1 }}>
 								<Typography variant="body1" sx={{ textAlign: 'center' }}>
 									No listing yet!
 								</Typography>

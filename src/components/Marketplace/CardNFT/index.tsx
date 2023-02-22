@@ -308,7 +308,7 @@ export default function CardNFT({
 											<Typography
 												onClick={(e) => {
 													e.stopPropagation();
-													handleOpenModalBuy();
+													navigate(`/item/sell-item/${offer._id}`);
 												}}
 												variant="subtitle2"
 												sx={{
@@ -319,13 +319,13 @@ export default function CardNFT({
 													},
 												}}
 											>
-												Sell Item
+												List
 											</Typography>
 										) : (
 											<Typography
 												onClick={(e) => {
 													e.stopPropagation();
-													handleWithdrawItem();
+													navigate(`/item/sell-item/${offer._id}`);
 												}}
 												variant="subtitle2"
 												sx={{
@@ -336,7 +336,7 @@ export default function CardNFT({
 													},
 												}}
 											>
-												{statusWithdraw}
+												List
 											</Typography>
 										)
 									) : (
