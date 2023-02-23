@@ -8,7 +8,7 @@ const SellItemPage = () => {
 		<>
 			<Container sx={{ pt: 16, pb: 4, maxWidth: '1440px', mx: 'auto', px: 2 }} maxWidth="xl">
 				<Typography variant="h3" fontWeight="600" sx={{ p: '2rem 0 0.5rem' }}>
-					List your item for sale
+					List Your Item For Sale
 				</Typography>
 				{/* <Typography variant="h6" sx={{ pb: '1rem' }}>
 					Choose the sale method

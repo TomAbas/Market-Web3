@@ -24,9 +24,10 @@ import { selectEndTime, selectStartTime, setEndTime, setStartTime } from 'redux/
 
 export interface IDateTimeCustomPickerProps {
 	setValue: any;
-	setStartTime: any;
-	setExpirationTime: any;
-	setWithdrawExpirationTime: any;
+	// setStartTime: any;
+	// setExpirationTime: any;
+	// setWithdrawExpirationTime: any;
+	setInit: any;
 }
 
 const dateRanges: any[] = [
@@ -37,7 +38,7 @@ const dateRanges: any[] = [
 	{ name: '60 days', value: '60' },
 ];
 
-export default function DateTimeCustomPicker({ setValue }: IDateTimeCustomPickerProps) {
+export default function DateTimeCustomPicker({ setValue, setInit }: IDateTimeCustomPickerProps) {
 	const theme = useTheme();
 	const startTime = useAppSelector(selectStartTime);
 	const endTime = useAppSelector(selectEndTime);
@@ -50,6 +51,7 @@ export default function DateTimeCustomPicker({ setValue }: IDateTimeCustomPicker
 		setValue('startTime', new Date(new Date().getTime()).getTime());
 		const updateEndDate: Moment = moment(startTime).add(duration.value, 'days');
 		dispatch(setEndTime(updateEndDate.toString()));
+		setInit(false);
 	};
 
 	const handleChangeStartDateTime = (newValue: Date | null) => {
@@ -63,6 +65,7 @@ export default function DateTimeCustomPicker({ setValue }: IDateTimeCustomPicker
 				dispatch(setEndTime(newEndDate.toString()));
 			}
 		}
+		setInit(false);
 	};
 
 	const handleChangeEndDateTime = (newValue: Date | null) => {
@@ -79,6 +82,7 @@ export default function DateTimeCustomPicker({ setValue }: IDateTimeCustomPicker
 				dispatch(setEndTime(newValue.toString()));
 			}
 		}
+		setInit(false);
 	};
 
 	return (

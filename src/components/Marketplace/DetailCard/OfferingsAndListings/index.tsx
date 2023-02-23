@@ -15,19 +15,25 @@ import { Box, Stack, Typography, useTheme } from '@mui/material';
 import ImageNoOffer from 'assets/icons/Nodata.svg';
 // import { OptionSelectCustom } from 'constants';
 import { getOrderOfItem } from 'api/items/itemsApi';
+import { getBalanceToken } from 'service/aptos.service';
+import { orderSell } from 'models/transaction';
+import { nftItem } from 'models/item';
+import { useAppSelector } from 'redux/hooks';
+import { User } from 'models/user';
 
 const listOption: any = [
 	{ name: 'Listings', value: 0 },
 	{ name: 'Offerings', value: 1 },
 ];
 interface Props {
-	itemId: string;
+	item: nftItem;
+	userInfo: User;
 }
-export default function OfferingsAndLisings({ itemId }: Props) {
+export default function OfferingsAndLisings({ item, userInfo }: Props) {
 	// useState
+
 	const [currentOption, setCurrentOption] = useState<any>(listOption[0]);
-	const [listOrderSell, setListOrderSell] = useState<any>([]);
-	const [listOrderOffer, setListOrderOffer] = useState<any>([]);
+	const [listOrderSell, setListOrderSell] = useState<orderSell[]>([]);
 	const [isLoad, setIsLoading] = useState(false);
 	// useSelector
 	const handleChangeOption = (option: any) => {
@@ -35,17 +41,35 @@ export default function OfferingsAndLisings({ itemId }: Props) {
 			setCurrentOption(option);
 		}
 	};
+
 	async function getOrderOfItemFc() {
 		// call api get order of item
-		setListOrderSell(await getOrderOfItem(itemId));
-		setIsLoading(true);
+		try {
+			let arrayListOrder = await getOrderOfItem(item._id);
+			let result = await Promise.all(
+				arrayListOrder.map(async (order, idx) => {
+					if (order.maker === userInfo?.userAddress) return true;
+					let amountMaker = await getBalanceToken(
+						order.maker,
+						item.creator,
+						item.collectionInfo.collectionName,
+						item.itemName,
+						item.chainId
+					);
+					return amountMaker >= order.amount;
+				})
+			);
+			arrayListOrder = arrayListOrder.filter((order, index) => result[index]);
+			setIsLoading(true);
+			setListOrderSell(arrayListOrder);
+		} catch (error) {
+			console.log(error);
+		}
 	}
-	useEffect(() => {
-		console.log(listOrderSell);
-	}, [listOrderSell]);
+	useEffect(() => {}, [listOrderSell]);
 	useEffect(() => {
 		getOrderOfItemFc();
-	}, [itemId]);
+	}, [item._id, userInfo?.userAddress]);
 	// functions
 
 	return (
@@ -64,7 +88,6 @@ export default function OfferingsAndLisings({ itemId }: Props) {
 					}}
 				/>
 			</Box> */}
-
 			<OrderListWrapper>
 				<>
 					{isLoad ? (
