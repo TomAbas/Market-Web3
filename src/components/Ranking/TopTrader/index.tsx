@@ -54,11 +54,9 @@ export default function InfiniteListTopTrader({
 	const listRef = useRef<HTMLDivElement>(null);
 	const navigate = useNavigate();
 	useEffect(() => {
-		console.log('filter', filter);
 		let newList = listTopTrader.sort((a: any, b: any) => {
 			return b[filter.value] - a[filter.value];
 		});
-		console.log('newList', newList);
 		setListTopTrader(new Array(...newList));
 	}, [filter]);
 	//state
