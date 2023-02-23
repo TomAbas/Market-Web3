@@ -37,12 +37,13 @@ const Ranking = () => {
 			setTopCollection(res.data);
 			setLoadingTopCollection(false);
 		});
-		let time = selectedFilter.name.split(' ')[0];
-		getTopTradeUsers('2', time).then((res: any) => {
+	}, [selectedFilter]);
+	useEffect(() => {
+		getTopTradeUsers('2', '2').then((res: any) => {
 			setTopTrader(res);
 			setLoadingTopTrader(false);
 		});
-	}, [selectedFilter]);
+	}, []);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
