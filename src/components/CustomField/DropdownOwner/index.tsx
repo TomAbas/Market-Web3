@@ -108,14 +108,14 @@ function AutoCompleteCustom({
 	};
 
 	// new filtered list by input value
-	const listItemFiltered =
-		inputValue === ''
-			? listItem
-			: listItem.filter((item: OptionSelectCustom<any>) =>
-					item.name.toLowerCase().includes(inputValue.toLowerCase())
-			  );
+	const listItemFiltered = true
+		? listItem
+		: listItem.filter((item: OptionSelectCustom<any>) =>
+				item.name.toLowerCase().includes(inputValue.toLowerCase())
+		  );
 
 	const renderListOption = () => {
+		console.log(listItemFiltered);
 		return listItemFiltered.map((item: OptionSelectCustom<any>, idx: number) => {
 			if (idx === 0) {
 				return <></>;
@@ -171,6 +171,7 @@ function AutoCompleteCustom({
 										</Typography>
 									</Link>
 								</Tooltip>
+
 								{!disabled && listItemFiltered.length > 1 && (
 									<ArrowDropDownOutlinedIcon
 										sx={{
