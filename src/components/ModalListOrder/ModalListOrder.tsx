@@ -35,7 +35,7 @@ export default function ModalListOrder({ itemId, isOpenModal, setIsOpenModal }: 
 	return (
 		<Modal
 			onOpen={isOpenModal}
-			mainHeader={`Comfirm checkout`}
+			mainHeader={`Confirm Checkout`}
 			style={{ maxWidth: '600px', overflowY: 'auto' }}
 			allowClose={true}
 			onClose={() => {

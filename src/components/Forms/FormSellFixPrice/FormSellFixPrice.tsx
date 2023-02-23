@@ -99,6 +99,7 @@ const FormSellFixPrice = () => {
 		} else {
 			setTokenPayment(null);
 		}
+		setInit(false);
 	}
 	async function getAmountOwn() {
 		try {
@@ -130,11 +131,9 @@ const FormSellFixPrice = () => {
 		setLoading(true);
 		setTimeout(() => {
 			setLoading(false);
-		}, 2000);
+		}, 1000);
 		if (init) {
 			sellItemAptos();
-		} else {
-			dispatch(createOrder(data));
 		}
 	}
 
@@ -174,6 +173,7 @@ const FormSellFixPrice = () => {
 											setPrice(e.target.value);
 											dispatch(setPriceOrder(e.target.value));
 										}
+										setInit(false);
 									}}
 									sx={{
 										border: 'none',
@@ -267,6 +267,7 @@ const FormSellFixPrice = () => {
 								placeholder="Ex: 1, 2,..."
 								onChange={(e: any) => {
 									handleValidateAmount(e, amountOwned!);
+									setInit(false);
 								}}
 								sx={{
 									fontSize: '16px',
@@ -289,12 +290,7 @@ const FormSellFixPrice = () => {
 						<Title variant="h6" sx={{ pb: 1 }}>
 							Duration
 						</Title>
-						<DateTimeCustomPicker
-							setValue={setValue}
-							setStartTime={setStartTime}
-							setWithdrawExpirationTime={setWithdrawExpirationTime}
-							setExpirationTime={setExpirationTime}
-						/>
+						<DateTimeCustomPicker setInit={setInit} setValue={setValue} />
 						<Box sx={{ width: '100%' }}>
 							{errors.startTime?.message && (
 								<Typography

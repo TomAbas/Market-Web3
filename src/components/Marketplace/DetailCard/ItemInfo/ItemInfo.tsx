@@ -265,7 +265,7 @@ const ItemInfo: React.FC<Props> = ({
 										List
 									</button>
 								)}
-								<OfferingsAndLisings itemId={item!._id} />
+								<OfferingsAndLisings item={item!} userInfo={userInfo!} />
 							</Box>
 						</Stack>
 						<Stack direction="row" alignItems="flex-start">

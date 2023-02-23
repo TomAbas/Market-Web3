@@ -135,36 +135,17 @@ export default function CardNFT({
 	const handleClickItem = () => {
 		navigate(`/item/${offer._id}`);
 	};
-	async function getUserAmountOfItem(item: nftItem) {
-		try {
-			setUserAmountOfItem(
-				await getBalanceToken(
-					userInfo?.userAddress!,
-					item.creator,
-					item.collectionInfo.collectionName!,
-					item.itemName,
-					item.chainId
-				)
-			);
-		} catch (error) {
-			toast.error('Can’t get your balance of Aptos Coin');
-		}
-	}
+
 	const checkSellable = () => {
 		if (isProfile && offer?.owner?.includes(userInfo?.userAddress!)) {
 			return true;
 		}
 		return false;
 	};
-	function getOrderOfItem() {}
+
 	useEffect(() => {
 		changePrice();
 	}, [offer]);
-	useEffect(() => {
-		if (checkSellable()) {
-			getUserAmountOfItem(offer);
-		}
-	}, [userInfo]);
 
 	return (
 		<>
