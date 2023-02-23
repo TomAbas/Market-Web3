@@ -39,7 +39,7 @@ function putLikesToItem(
 	return axiosClient.post(url, { itemId, state });
 }
 function getTopTradeUsers(chainId: string, numberDay: string): Promise<Response<any>> {
-	const url = baseURL + `/top-trader/chainId/${chainId}/?request=${numberDay}`;
+	const url = baseURL + `/get-top-trader`;
 	return axiosClient.get(url).then((res) => res.data);
 }
 function getListItemF(userAddress: string): Promise<Response<any>> {
