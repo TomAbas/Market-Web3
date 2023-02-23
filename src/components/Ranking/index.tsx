@@ -40,7 +40,11 @@ const Ranking = () => {
 	}, [selectedFilter]);
 	useEffect(() => {
 		getTopTradeUsers('2', '2').then((res: any) => {
-			setTopTrader(res);
+			setTopTrader(
+				res.sort((a: any, b: any) => {
+					return b[initFilter.value] - a[initFilter.value];
+				})
+			);
 			setLoadingTopTrader(false);
 		});
 	}, []);
