@@ -120,7 +120,12 @@ const Ranking = () => {
 				</Box>
 
 				<TabPanel value="2">
-					<InfiniteListTopTrader listTopTrader={topTrader} isLoading={loadingTopTrader} />
+					<InfiniteListTopTrader
+						listTopTrader={topTrader}
+						setListTopTrader={setTopTrader}
+						isLoading={loadingTopTrader}
+						filter={selectedFilter}
+					/>
 				</TabPanel>
 				<TabPanel value="1">
 					<TopCollection

@@ -34,7 +34,9 @@ import NoItem from 'customComponents/NoItem/NoItem';
 
 export interface InfiniteListTrendingCollectionProps {
 	listTopTrader: any[];
+	setListTopTrader: any;
 	isLoading: boolean;
+	filter: any;
 }
 export const NoMaxWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
 	<Tooltip {...props} classes={{ popper: className }} />
@@ -45,10 +47,18 @@ export const NoMaxWidthTooltip = styled(({ className, ...props }: TooltipProps) 
 });
 export default function InfiniteListTopTrader({
 	listTopTrader,
+	setListTopTrader,
 	isLoading,
+	filter,
 }: InfiniteListTrendingCollectionProps) {
 	const listRef = useRef<HTMLDivElement>(null);
 	const navigate = useNavigate();
+	useEffect(() => {
+		let newList = listTopTrader.sort((a: any, b: any) => {
+			return b[filter.value] - a[filter.value];
+		});
+		setListTopTrader(new Array(...newList));
+	}, [filter]);
 	//state
 	const renderPercent = (percent: number) => (
 		<Typography
@@ -184,11 +194,15 @@ export default function InfiniteListTopTrader({
 
 										<td>
 											<FlexBox>
-												{displayVolume(item.volumeTrade / 10 ** 8, 2)}
+												{displayVolume(item[filter.value] / 10 ** 8, 2)}
 											</FlexBox>
 										</td>
 										<td>
-											<FlexBox>{renderPercent(item.percentTrade)}</FlexBox>
+											<FlexBox>
+												{renderPercent(
+													item[filter.value.replace('volume', 'percent')]
+												)}
+											</FlexBox>
 										</td>
 									</tr>
 								))}
