@@ -30,8 +30,9 @@ export interface IFormSellItemInputs {
 }
 
 const FormSellFixPrice = () => {
-	const { checkCoinStore } = useTransfer();
+	const { checkCoinStore, registerCoin } = useTransfer();
 	const dispatch = useAppDispatch();
+	const [isErrorCoint, setIsErrorCoint] = useState(false);
 	const { itemId } = useParams();
 	const userInfo = useAppSelector(selectUser);
 	const nftItem: nftItem = useAppSelector(selectAllNfts).filter(
@@ -48,6 +49,7 @@ const FormSellFixPrice = () => {
 		setWithdrawExpirationTime,
 		setCoinType,
 	} = useBuyItemAptos(nftItem!);
+	const currentPaymentToken = useAppSelector(selectOrder).currentPaymentToken;
 	const [init, setInit] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [tokenPayment, setTokenPayment] = React.useState<any>(null);
@@ -59,7 +61,7 @@ const FormSellFixPrice = () => {
 			quantity: yup
 				.number()
 				.required('Required')
-				.min(0)
+				.min(1)
 				.max(Number(amountOwned), 'max')
 				.typeError('You must specify a number'),
 			startTime: yup.number().required('Required'),
@@ -80,20 +82,19 @@ const FormSellFixPrice = () => {
 	async function handleChangePaymentToken(tokenPayment: any) {
 		if (tokenPayment) {
 			console.log(tokenPayment);
-			if (await checkCoinStore(userInfo!.userAddress, tokenPayment.type)) {
-				setValue('currentPaymentToken', tokenPayment);
-				dispatch(setCurrentPaymentToken(tokenPayment));
-				setTokenPayment(tokenPayment);
-				setCoinType(tokenPayment);
-				clearErrors('currentPaymentToken');
-			} else {
-				setTokenPayment(null);
-				setCoinType(null);
-				dispatch(setCurrentPaymentToken(null));
-				setValue('currentPaymentToken', null);
+			setValue('currentPaymentToken', tokenPayment);
+			dispatch(setCurrentPaymentToken(tokenPayment));
+			setTokenPayment(tokenPayment);
+			setCoinType(tokenPayment);
+			clearErrors('currentPaymentToken');
+			if (!(await checkCoinStore(userInfo!.userAddress, tokenPayment.type))) {
+				setIsErrorCoint(true);
+				console.log('k co');
 				setError('currentPaymentToken', {
-					message: 'You do not have enough coins to pay for this item',
+					message: 'This coin type is not registered in the coin store',
 				});
+			} else {
+				setIsErrorCoint(false);
 			}
 		} else {
 			setTokenPayment(null);
@@ -117,6 +118,12 @@ const FormSellFixPrice = () => {
 		}
 	}
 	function onSubmit(data: IFormSellItemInputs) {
+		if (isErrorCoint) {
+			setError('currentPaymentToken', {
+				message: 'This coin type is not registered in the coin store',
+			});
+			return;
+		}
 		setStartTime(data.startTime.toString());
 		setWithdrawExpirationTime((data.endTime + 5 * 60000).toString());
 		setExpirationTime(data.endTime.toString());
@@ -217,13 +224,33 @@ const FormSellFixPrice = () => {
 								</Typography>
 							)}
 							<Box sx={{ width: '100%' }}>
-								{errors.currentPaymentToken?.message && (
-									<Typography
-										variant="body1"
-										sx={{ color: 'red', pt: 1, float: 'right' }}
-									>
-										<>{errors.currentPaymentToken?.message}</>
-									</Typography>
+								{(isErrorCoint || errors.currentPaymentToken) && (
+									<Stack justifyContent="flex-end" alignItems="flex-end">
+										<Typography
+											variant="body1"
+											sx={{ color: 'red', pt: 1, float: 'right' }}
+										>
+											<>{errors.currentPaymentToken?.message} </>
+										</Typography>
+										{isErrorCoint && (
+											<ButtonWhite
+												sx={{
+													padding: '5px 10px',
+													width: 'fit-content',
+												}}
+												onClick={() => {
+													registerCoin(currentPaymentToken.type).then(
+														(res) => {
+															clearErrors('currentPaymentToken');
+															setIsErrorCoint(false);
+														}
+													);
+												}}
+											>
+												Register Coin
+											</ButtonWhite>
+										)}
+									</Stack>
 								)}
 							</Box>
 						</Stack>

@@ -78,7 +78,24 @@ function useTransfer() {
 		}
 	}
 
-	return { checkEnableReceivingNFT, enableReceivingNFT, directTransferToken, checkCoinStore };
+	async function registerCoin(coinType = COIN_TYPE) {
+		const func = '0x1::managed_coin::register';
+		const payload: TransactionPayload = {
+			type: 'entry_function_payload',
+			function: func,
+			type_arguments: [coinType],
+			arguments: [],
+		};
+		return signAndSubmitTransaction(payload);
+	}
+
+	return {
+		checkEnableReceivingNFT,
+		enableReceivingNFT,
+		directTransferToken,
+		checkCoinStore,
+		registerCoin,
+	};
 }
 
 export default useTransfer;

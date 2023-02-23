@@ -37,12 +37,17 @@ const Ranking = () => {
 			setTopCollection(res.data);
 			setLoadingTopCollection(false);
 		});
-		let time = selectedFilter.name.split(' ')[0];
-		getTopTradeUsers('2', time).then((res: any) => {
-			setTopTrader(res);
+	}, [selectedFilter]);
+	useEffect(() => {
+		getTopTradeUsers('2', '2').then((res: any) => {
+			setTopTrader(
+				res.sort((a: any, b: any) => {
+					return b[initFilter.value] - a[initFilter.value];
+				})
+			);
 			setLoadingTopTrader(false);
 		});
-	}, [selectedFilter]);
+	}, []);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
@@ -120,7 +125,12 @@ const Ranking = () => {
 				</Box>
 
 				<TabPanel value="2">
-					<InfiniteListTopTrader listTopTrader={topTrader} isLoading={loadingTopTrader} />
+					<InfiniteListTopTrader
+						listTopTrader={topTrader}
+						setListTopTrader={setTopTrader}
+						isLoading={loadingTopTrader}
+						filter={selectedFilter}
+					/>
 				</TabPanel>
 				<TabPanel value="1">
 					<TopCollection
