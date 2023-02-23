@@ -312,8 +312,8 @@ const ItemInfo: React.FC<Props> = ({
 							<TwitterShareButton
 								url={`${RELATED_URLS.MetaSpacecyHomePage}/#/item/${item?._id}`}
 								title={`Look what I found! Item ${item?.itemName}`}
-								// hashtags={['Music', 'Game']}
-								via="Metaspacecy"
+								hashtags={['Metaspacecy', 'AptosNFT', 'NFT', 'NFT_Marketplace']}
+								via="metaspacecy"
 								style={{ textAlign: 'left' }}
 							>
 								<FeatureWrapper sx={{ padding: '14px 15px', cursor: 'pointer' }}>

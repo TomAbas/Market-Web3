@@ -187,8 +187,8 @@ const CollectionDetail = () => {
 						<TwitterShareButton
 							url={`${RELATED_URLS.MetaSpacecyHomePage}/#/collection-detail/${collectionInfo?._id}`}
 							title={`Look what I found! Collection ${collectionInfo?.collectionName}`}
-							// hashtags={['Music', 'Game']}
-							via="Metaspacecy"
+							hashtags={['Metaspacecy', 'AptosNFT', 'NFT', 'NFT_Marketplace']}
+							via="metaspacecy"
 							style={{ textAlign: 'left' }}
 						>
 							<FeatureWrapper sx={{ padding: '14px 15px', cursor: 'pointer' }}>

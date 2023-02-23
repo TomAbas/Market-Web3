@@ -194,8 +194,13 @@ export default function CardNFT({
 									<TwitterShareButton
 										url={`${RELATED_URLS.MetaSpacecyHomePage}/#/item/${offer?._id}`}
 										title={`Look what I found! ${offer?.itemName} collectible`}
-										hashtags={['Music', 'Game']}
-										via="Metaspacecy"
+										hashtags={[
+											'Metaspacecy',
+											'AptosNFT',
+											'NFT',
+											'NFT_Marketplace',
+										]}
+										via="metaspacecy"
 										style={{ width: '100%', textAlign: 'left' }}
 									>
 										{' '}
