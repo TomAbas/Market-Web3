@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import { transferItem } from 'api/items/itemsApi';
 import { nftItem } from 'models/item';
@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { selectUser } from 'redux/slices/userInfo';
 import { toast } from 'react-toastify';
 import useTransfer from 'utils/transfer';
+import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 interface Props {
 	itemInfo: nftItem | undefined;
 	open: boolean;
@@ -30,6 +31,7 @@ const ModalTransferNFT: React.FC<Props> = ({ itemInfo, setOpen, open, quantity }
 	const [receiver, setReceiver] = useState('');
 	const [amount, setAmount] = useState<any>();
 	const [error, setError] = useState<any>({});
+	const [loading, setLoading] = useState(false);
 	const { directTransferToken, checkEnableReceivingNFT } = useTransfer();
 	const handleClose = () => {
 		setOpen(false);
@@ -73,6 +75,7 @@ const ModalTransferNFT: React.FC<Props> = ({ itemInfo, setOpen, open, quantity }
 			if (Object.keys(error).length > 0) {
 				return;
 			}
+			setLoading(true);
 			await directTransferToken(
 				receiver,
 				itemInfo.creator,
@@ -89,11 +92,13 @@ const ModalTransferNFT: React.FC<Props> = ({ itemInfo, setOpen, open, quantity }
 						txHash: res.hash,
 					};
 					transferItem(data);
+
 					toast.success('Successfully transfer');
 				})
 				.catch((err) => {
 					toast.error(err.message);
 				});
+			setLoading(false);
 			setOpen(false);
 		}
 	};
@@ -199,7 +204,16 @@ const ModalTransferNFT: React.FC<Props> = ({ itemInfo, setOpen, open, quantity }
 							},
 						}}
 					>
-						<button onClick={handleSend}>Transfer</button>
+						{loading ? (
+							<>
+								{' '}
+								<ButtonWhite sx={{ margin: '0 auto', maxWidth: '100px' }}>
+									<CircularProgress sx={{ color: 'black' }} size={25} />
+								</ButtonWhite>
+							</>
+						) : (
+							<button onClick={handleSend}>Transfer</button>
+						)}
 					</Box>
 				</Box>
 			</Box>

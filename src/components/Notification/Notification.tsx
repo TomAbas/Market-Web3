@@ -1,7 +1,11 @@
 import { Typography, Stack, Button } from '@mui/material';
+import ModalFaucetCoin from 'components/ModelFaucetCoin';
 import React from 'react';
 
 const Notification = () => {
+	const [open, setOpen] = React.useState(false);
+	const handleClose = () => setOpen(false);
+	const handleOpen = () => setOpen(true);
 	return (
 		<Stack
 			direction={'row'}
@@ -32,9 +36,19 @@ const Notification = () => {
 					information is reset. Sorry for the inconvenience!
 				</Typography>
 			</Stack>
-			<Button variant="contained" sx={{ color: 'white', px: 2, height: 50 }}>
+			<Button
+				variant="contained"
+				sx={{ color: 'white', px: 2, height: 50 }}
+				onClick={handleOpen}
+			>
 				Faucet
 			</Button>
+			<ModalFaucetCoin
+				title="Faucet Of Test Coins"
+				subtitle="Get 1000 test coins for Aptos Marketplace testing, test coins will be sent to your wallet."
+				open={open}
+				closeModal={handleClose}
+			></ModalFaucetCoin>
 		</Stack>
 	);
 };
