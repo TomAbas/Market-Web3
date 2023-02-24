@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Typography, Stack, Button } from '@mui/material';
 import ModalFaucetCoin from 'components/ModelFaucetCoin';
 import React from 'react';
@@ -36,7 +37,7 @@ const Notification = () => {
 					information is reset. Sorry for the inconvenience!
 				</Typography>
 			</Stack>
-			<Button
+			{/* <Button
 				variant="contained"
 				sx={{ color: 'white', px: 2, height: 50 }}
 				onClick={handleOpen}
@@ -49,7 +50,7 @@ const Notification = () => {
 				subtitle="Get 100 test coins for Aptos Marketplace testing, test coins will be sent to your wallet."
 				open={open}
 				closeModal={handleClose}
-			></ModalFaucetCoin>
+			></ModalFaucetCoin> */}
 		</Stack>
 	);
 };

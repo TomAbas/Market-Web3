@@ -20,6 +20,7 @@ import IconEvent from 'assets/icons/NavBar/icon-event.svg';
 import IconDrops from 'assets/icons/NavBar/icon-drops.svg';
 import IconXmas from 'assets/icons/NavBar/icon-xmas.svg';
 import IconAution from 'assets/icons/NavBar/auction.svg';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 //redux
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import {
@@ -65,6 +66,7 @@ import NavBarMobile from 'components/NavBarMobile';
 import { userInfo } from 'os';
 import { selectUser } from 'redux/slices/userInfo';
 import GlobalSearch from './SearchBar/GlobalSearch';
+import ModalFaucetCoin from 'components/ModelFaucetCoin';
 
 const listCategoryMarketplace = [
 	// {
@@ -209,6 +211,9 @@ const listCreate = [
 	},
 ];
 const Header: React.FC = () => {
+	const [open, setOpen] = React.useState(false);
+	const handleClose = () => setOpen(false);
+	const handleOpen = () => setOpen(true);
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
 	const dispatch = useAppDispatch();
 	let ref: any = useRef();
@@ -729,30 +734,37 @@ const Header: React.FC = () => {
 								)}
 							</IconItem>
 							{userInfo && (
-								<IconItem onClick={openModalInfoUser}>
-									<img src={userIcon} alt="model info" />
-									{modalWalletSteps.steps.thirdModal && userAddress && (
-										<ClickAwayListener
-											onClickAway={() => {
-												openModalInfoUser();
-											}}
-										>
-											<DropDownContent ref={ref}>
-												<Box
-													sx={{
-														width: '330px',
-														boxShadow:
-															'rgb(0 0 0 / 40%) 0px 0px 5px 0px',
-														borderRadius: '12px',
-													}}
-													p={4}
-												>
-													<ModalInfo userAddress={userAddress} />
-												</Box>
-											</DropDownContent>
-										</ClickAwayListener>
-									)}
-								</IconItem>
+								<>
+									<Tooltip title="Faucet" placement="bottom" arrow>
+										<IconItem onClick={handleOpen}>
+											<MonetizationOnIcon />
+										</IconItem>
+									</Tooltip>
+									<IconItem onClick={openModalInfoUser}>
+										<img src={userIcon} alt="model info" />
+										{modalWalletSteps.steps.thirdModal && userAddress && (
+											<ClickAwayListener
+												onClickAway={() => {
+													openModalInfoUser();
+												}}
+											>
+												<DropDownContent ref={ref}>
+													<Box
+														sx={{
+															width: '330px',
+															boxShadow:
+																'rgb(0 0 0 / 40%) 0px 0px 5px 0px',
+															borderRadius: '12px',
+														}}
+														p={4}
+													>
+														<ModalInfo userAddress={userAddress} />
+													</Box>
+												</DropDownContent>
+											</ClickAwayListener>
+										)}
+									</IconItem>
+								</>
 							)}
 							<Stack direction="row" gap="10px">
 								{innerWidth < 1500 ? (
@@ -795,6 +807,13 @@ const Header: React.FC = () => {
 					</Stack>
 				</Box>
 			</AppbarHeader>
+			<ModalFaucetCoin
+				title="Faucet Of Test Coins"
+				warning="We only support faucet once time only"
+				subtitle="Get 100 test coins for Aptos Marketplace testing, test coins will be sent to your wallet."
+				open={open}
+				closeModal={handleClose}
+			/>
 		</>
 	);
 };
