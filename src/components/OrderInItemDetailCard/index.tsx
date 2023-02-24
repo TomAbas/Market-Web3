@@ -13,6 +13,7 @@ import useBuyItemAptos from 'utils/marketplace';
 import { orderSell } from 'models/transaction';
 import { useAppSelector } from 'redux/hooks';
 import { selectUser } from 'redux/slices/userInfo';
+import { tokenPaymentSymbol } from 'constants/sellItem';
 
 export interface IOrderInItemDetailCardProps {
 	orderId: orderSell;
@@ -49,7 +50,8 @@ export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInIt
 					<Typography variant="body2">
 						<Typography variant="body2" sx={{ fontWeight: '600', marginBottom: '4px' }}>
 							{changePriceToToken(orderId.minPrice, orderId.coinType)}{' '}
-							{orderId.coinType?.split('::').slice(-1)[0].toUpperCase()}{' '}
+							{tokenPaymentSymbol[orderId.coinType?.split('::').slice(-1)[0]]}{' '}
+							{/* {orderId.coinType?.split('::').slice(-1)[0]} */}
 							<StyledSpan>for</StyledSpan> {orderId.amount} item(s){' '}
 							<StyledSpan>by</StyledSpan> {displayAddress(orderId.maker)}
 						</Typography>
