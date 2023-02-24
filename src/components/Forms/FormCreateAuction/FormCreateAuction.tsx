@@ -21,6 +21,7 @@ import useBuyItemAptos from 'utils/marketplace';
 import { setCurrentPaymentToken, setPriceOrder } from 'redux/slices/sellItem';
 import useTransfer from 'utils/transfer';
 import { async } from '@firebase/util';
+import useAuctionModules from 'utils/auction';
 export interface IFormSellItemInputs {
 	price: string;
 	currentPaymentToken: any;
@@ -39,16 +40,15 @@ const FormSellFixPrice = () => {
 		(item: nftItem) => item._id === itemId
 	)[0];
 	const {
-		sellItemAptos,
-		price,
-		setPrice,
-		statusList,
+		startPrice,
 		handleValidateAmount,
-		setStartTime,
-		setExpirationTime,
-		setWithdrawExpirationTime,
+		setStartPrice,
 		setCoinType,
-	} = useBuyItemAptos(nftItem!);
+		setStartTime,
+		setEndTime,
+		setWithdrawTime,
+		createAuction,
+	} = useAuctionModules(nftItem!);
 	const currentPaymentToken = useAppSelector(selectOrder).currentPaymentToken;
 	const [init, setInit] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -64,7 +64,11 @@ const FormSellFixPrice = () => {
 				.min(1)
 				.max(Number(amountOwned), 'max')
 				.typeError('You must specify a number'),
-			startTime: yup.number().required('Required'),
+			startTime: yup
+				.number()
+				.required('Required')
+				.min(new Date().getTime(), 'Must be in future')
+				.typeError('Must be in future'),
 			endTime: yup.number().required('Required'),
 		})
 		.required();
@@ -125,15 +129,15 @@ const FormSellFixPrice = () => {
 			return;
 		}
 		setStartTime(data.startTime.toString());
-		setWithdrawExpirationTime((data.endTime + 5 * 60000).toString());
-		setExpirationTime(data.endTime.toString());
+		setWithdrawTime((data.endTime + 5 * 60000).toString());
+		setEndTime(data.endTime.toString());
 		setInit(true);
 		setLoading(true);
 		setTimeout(() => {
 			setLoading(false);
 		}, 1000);
 		if (init) {
-			sellItemAptos();
+			createAuction();
 		}
 	}
 
@@ -163,14 +167,14 @@ const FormSellFixPrice = () => {
 									id="price"
 									type="number"
 									placeholder="0.0"
-									value={price}
+									value={startPrice}
 									onChange={(e: any) => {
 										if (Number(e.target.value) < 0) {
 											let a = -Number(e.target.value);
-											setPrice(a.toString());
+											setStartPrice(a.toString());
 											dispatch(setPriceOrder(a.toString()));
 										} else {
-											setPrice(e.target.value);
+											setStartPrice(e.target.value);
 											dispatch(setPriceOrder(e.target.value));
 										}
 										setInit(false);
