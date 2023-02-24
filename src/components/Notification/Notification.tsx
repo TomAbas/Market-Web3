@@ -1,14 +1,15 @@
-import { Typography, Stack } from '@mui/material';
+import { Typography, Stack, Button } from '@mui/material';
 import React from 'react';
 
 const Notification = () => {
 	return (
-		<>
-			<Stack
-				justifyContent="center"
-				alignItems="center"
-				sx={{ padding: '20px 50px', background: 'white' }}
-			>
+		<Stack
+			direction={'row'}
+			sx={{ background: 'white' }}
+			justifyContent="center"
+			alignItems={'center'}
+		>
+			<Stack justifyContent="center" alignItems="center" sx={{ padding: '20px 50px' }}>
 				<Typography
 					variant="h6"
 					fontWeight="500"
@@ -31,7 +32,10 @@ const Notification = () => {
 					information is reset. Sorry for the inconvenience!
 				</Typography>
 			</Stack>
-		</>
+			<Button variant="contained" sx={{ color: 'white', px: 2, height: 50 }}>
+				Faucet
+			</Button>
+		</Stack>
 	);
 };
 

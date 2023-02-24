@@ -10,7 +10,7 @@ import {
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { APTOS_NODE_URL, APTOS_FAUCET_URL } from 'constants/aptos.constant';
-
+const REACT_APP_MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const chainId = '2';
 const COIN_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '0x1::aptos_coin::AptosCoin';
 
@@ -89,12 +89,25 @@ function useTransfer() {
 		return signAndSubmitTransaction(payload);
 	}
 
+	async function faucet(coinType: any, decimal: number) {
+		let amount = 100 * 10 ** decimal;
+		const func = `${REACT_APP_MARKET_ADDRESS}::claim_coin_test::claim`;
+		const payload: TransactionPayload = {
+			type: 'entry_function_payload',
+			function: func,
+			type_arguments: [coinType],
+			arguments: [amount],
+		};
+		return signAndSubmitTransaction(payload);
+	}
+
 	return {
 		checkEnableReceivingNFT,
 		enableReceivingNFT,
 		directTransferToken,
 		checkCoinStore,
 		registerCoin,
+		faucet,
 	};
 }
 
