@@ -45,7 +45,8 @@ const Notification = () => {
 			</Button>
 			<ModalFaucetCoin
 				title="Faucet Of Test Coins"
-				subtitle="Get 1000 test coins for Aptos Marketplace testing, test coins will be sent to your wallet."
+				warning="We only support faucet once time only"
+				subtitle="Get 100 test coins for Aptos Marketplace testing, test coins will be sent to your wallet."
 				open={open}
 				closeModal={handleClose}
 			></ModalFaucetCoin>

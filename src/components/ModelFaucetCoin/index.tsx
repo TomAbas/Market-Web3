@@ -8,11 +8,15 @@ import { Grid } from '@mui/material';
 import useTransfer from 'utils/transfer';
 import { ListTokenPaymentTestNet } from 'constants/sellItem';
 import { toast } from 'react-toastify';
+import { Asterisk } from 'components/Forms/Common/styled';
+import { useAppSelector } from 'redux/hooks';
+import { selectUser } from 'redux/slices/userInfo';
 
 interface Props {
 	open: boolean;
 	title: string;
 	subtitle: string;
+	warning: string;
 	closeModal: any;
 }
 const style = {
@@ -27,17 +31,30 @@ const style = {
 	boxShadow: 24,
 	p: 4,
 };
-const ModalFaucetCoin: React.FC<Props> = ({ title, closeModal, open, subtitle }) => {
-	const { faucet } = useTransfer();
-	const handleFaucte = (coinType: string, decimals: number) => {
-		faucet(coinType, decimals)
-			.then((res) => {
+const ModalFaucetCoin: React.FC<Props> = ({ title, closeModal, open, subtitle, warning }) => {
+	const userInfo = useAppSelector(selectUser);
+	const { faucet, checkCoinStore, registerCoin } = useTransfer();
+	const handleFaucte = async (coinType: string, decimals: number) => {
+		if (!(await checkCoinStore(userInfo?.userAddress!, coinType))) {
+			try {
+				await registerCoin(coinType);
+				await new Promise((resolve) => setTimeout(resolve, 1500));
+				await faucet(coinType, decimals);
 				toast.success('Faucet success');
-			})
-			.catch((err) => {
+			} catch (error) {
 				toast.error('Faucet fail');
-			});
+			}
+		} else {
+			faucet(coinType, decimals)
+				.then((res) => {
+					toast.success('Faucet success');
+				})
+				.catch((err) => {
+					toast.error('Faucet fail');
+				});
+		}
 	};
+
 	return (
 		<Modal
 			open={open}
@@ -59,7 +76,7 @@ const ModalFaucetCoin: React.FC<Props> = ({ title, closeModal, open, subtitle })
 				</Typography>
 				<Stack direction="row" justifyContent="center" alignItems="center">
 					<Grid container>
-						{ListTokenPaymentTestNet.map((token, index) => {
+						{ListTokenPaymentTestNet.slice(0, -1).map((token, index) => {
 							return (
 								<>
 									<Grid item xs={6}>
@@ -102,6 +119,25 @@ const ModalFaucetCoin: React.FC<Props> = ({ title, closeModal, open, subtitle })
 						})}
 					</Grid>
 				</Stack>
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'center',
+						marginBottom: '15px',
+					}}
+				>
+					<Asterisk />
+					<Typography
+						sx={{
+							color: 'red',
+							fontSize: '15px',
+							fontWeight: '500',
+						}}
+						ml={0.5}
+					>
+						{warning}
+					</Typography>
+				</Box>
 			</Box>
 		</Modal>
 	);
