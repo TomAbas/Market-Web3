@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Container, Grid, Link, Stack, Typography, Skeleton } from '@mui/material';
 import Slider from 'components/Slider';
+import Notification from 'components/Notification/Notification';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CardNFT from './CardNFT';
@@ -49,7 +50,7 @@ export default function Marketplace() {
 					paddingTop: '100px',
 				}}
 			>
-				{/* <Notification /> */}
+				<Notification />
 				<Container maxWidth="xl">
 					<Box>
 						<HeaderSection sx={{ marginTop: '30px' }}>

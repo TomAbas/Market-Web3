@@ -11,7 +11,7 @@ function useAuctionModules(itemInfo: nftItem, auctionInfo: any) {
 		try {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
-				function: `${MARKET_ADDRESS}::auction::create_auction`,
+				function: `${MARKET_ADDRESS}::auction::auction_token`,
 				type_arguments: [auctionInfo.coinType],
 				arguments: [
 					itemInfo.creator,
@@ -34,7 +34,7 @@ function useAuctionModules(itemInfo: nftItem, auctionInfo: any) {
 		try {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
-				function: `${MARKET_ADDRESS}::auction::bid_auction`,
+				function: `${MARKET_ADDRESS}::auction::bid`,
 				type_arguments: [coinType],
 				arguments: [],
 			};
@@ -45,11 +45,11 @@ function useAuctionModules(itemInfo: nftItem, auctionInfo: any) {
 			console.log(error);
 		}
 	}
-	async function cancelAuction() {
+	async function cancelBid() {
 		try {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
-				function: `${MARKET_ADDRESS}::auction::cancel_auction`,
+				function: `${MARKET_ADDRESS}::auction::cancel_bid`,
 				type_arguments: [coinType],
 				arguments: [],
 			};
@@ -140,7 +140,16 @@ function useAuctionModules(itemInfo: nftItem, auctionInfo: any) {
 			console.log(error);
 		}
 	}
-	return { createAuction, bidAuction };
+	return {
+		createAuction,
+		bidAuction,
+		cancelBid,
+		finalizeAuction,
+		increaseBid,
+		initializeAuction,
+		initializeAuctionFee,
+		withdrawCoinFromAuction,
+	};
 }
 
 export default useAuctionModules;
