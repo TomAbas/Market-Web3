@@ -31,6 +31,7 @@ const style = {
 	boxShadow: 24,
 	p: 4,
 };
+
 const ModalFaucetCoin: React.FC<Props> = ({ title, closeModal, open, subtitle, warning }) => {
 	const userInfo = useAppSelector(selectUser);
 	const { faucet, checkCoinStore, registerCoin } = useTransfer();

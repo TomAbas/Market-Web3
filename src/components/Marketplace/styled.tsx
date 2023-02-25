@@ -174,7 +174,7 @@ export const ExploreCollection = styled(Box)(({ theme }) => ({
 	color: '#131740',
 	// background: 'linear-gradient(180deg, #E0F4FF 0%, #FFFFFF 100%)',
 	[theme.breakpoints.down(480)]: {
-		padding: '70px 12px',
+		padding: '100px 12px',
 	},
 	// ...(theme.palette.mode === 'light'
 	// 	? {

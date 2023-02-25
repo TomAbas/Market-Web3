@@ -47,7 +47,7 @@ import {
 } from './styled';
 //image
 import LogoMSWhite from '../../assets/images/logo/LogoMetaDark.png';
-import LogoMSMobileWhite from '../../assets/images/logo/LogoMetaDark.png';
+import LogoMSMobileWhite from '../../assets/images/logo/HeaderLogoDarkMobo.png';
 import LogoMSGray from '../../assets/images/logo/logo-metaspacecy-gray.webp';
 import LogoMSGrayMoblie from '../../assets/images/logo/logo-metaspacecy-gray-moblie.webp';
 import aptos from '../../assets/images/logo/aptos.png';
