@@ -93,6 +93,7 @@ const FeaturedCollection = () => {
 		navigate(`/profile?address=${userAddress}`);
 	}
 	useEffect(() => {
+		console.log(window.innerWidth);
 		getListCategory('2')
 			.then((res: any) => res.data)
 			.then((res: any) => {
@@ -101,7 +102,12 @@ const FeaturedCollection = () => {
 				});
 				dispatch(getAllCollections(res.All));
 				setListFilter(listCategoy);
-				setCollections(res[selectedFilter].slice(0, 4));
+				if (window.innerWidth <= 768) {
+					setCollections(res[selectedFilter].slice(0, 3));
+				} else {
+					setCollections(res[selectedFilter].slice(0, 4));
+				}
+
 				setIsLoading(false);
 			});
 	}, [selectedFilter]);
@@ -152,7 +158,7 @@ const FeaturedCollection = () => {
 				) : (
 					<>
 						{collections.map((collection: any, index: any) => (
-							<Grid xs={6} sm={4} md={3} p={1} key={index}>
+							<Grid xs={6} sm={4} md={4} lg={3} p={1} key={index}>
 								<Link
 									// href={`https://explorer.aptoslabs.com/account/${
 									// 	collection[0].split('*/////*')[1]
