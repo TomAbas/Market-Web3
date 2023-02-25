@@ -292,7 +292,7 @@ export const LinkWrapper = styled('a')(({ theme }) => ({
 	color: '#131740',
 	[theme.breakpoints.down(500)]: {
 		button: {
-			fontSize: '14px !important',
+			fontSize: '16px !important',
 			padding: '10px !important',
 			width: '120px !important',
 		},
