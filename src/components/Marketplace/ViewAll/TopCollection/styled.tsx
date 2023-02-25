@@ -31,7 +31,7 @@ export const LinkWrapper = styled('a')(({ theme }) => ({
 
 export const HeaderSection = styled(Stack)(({ theme }) => ({
 	alignItems: 'center',
-	margin: '0 auto',
+	margin: '25px auto 0 auto',
 }));
 
 export const MainHeader = styled(Typography)(({ theme }) => ({

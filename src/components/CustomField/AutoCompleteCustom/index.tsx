@@ -21,6 +21,7 @@ export interface OptionSelectCustom<T> {
 	value: T;
 	image?: string;
 	chainId?: number;
+	disabled?: boolean;
 }
 
 export interface AutoCompleteCustomProps {
@@ -119,7 +120,14 @@ function AutoCompleteCustom({
 		return listItemFiltered.map((item: OptionSelectCustom<any>, idx: number) => {
 			return (
 				<Box key={idx}>
-					<OptionItem onClick={(e: any) => handleSetOption(e, item)}>
+					<OptionItem
+						sx={{
+							opacity: item?.disabled ? '0.8' : '1',
+							pointerEvents: item?.disabled ? 'none' : 'auto',
+							backgroundColor: item?.disabled ? '#f5f5f5' : 'inherit',
+						}}
+						onClick={(e: any) => handleSetOption(e, item)}
+					>
 						<ContentWrapper>
 							<Stack direction="row" alignItems="center">
 								{item.image && (

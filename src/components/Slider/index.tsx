@@ -101,7 +101,7 @@ const renderListImages = (ListImages: any) => {
 						>
 							<ItemImage>
 								<Box className="main-img">
-									<img src={item.itemMedia} alt="collection" />
+									<img src={item.itemMedia} alt="collection" height={'100%'} />
 								</Box>
 							</ItemImage>
 
