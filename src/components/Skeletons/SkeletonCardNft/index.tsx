@@ -4,7 +4,7 @@ import { ItemCardStyle, ItemContent, ItemImage } from '../../Marketplace/CardNFT
 const SkeletonCardNft = () => {
 	return (
 		<>
-			<Grid item xs={6} sm={4} md={3} p={1}>
+			<Grid item xs={12} sm={6} md={4} lg={3} p={1}>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
 						{/* Item image */}

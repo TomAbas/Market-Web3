@@ -50,7 +50,7 @@ export default function Marketplace() {
 					paddingTop: '100px',
 				}}
 			>
-				<Notification />
+				{/* <Notification /> */}
 				<Container maxWidth="xl">
 					<Box>
 						<HeaderSection sx={{ marginTop: '30px' }}>
@@ -138,21 +138,7 @@ export default function Marketplace() {
 					</Box>
 				</Container>
 				<Box px={3}>
-					<Box
-						maxWidth={1800}
-						mx="auto"
-						fontStyle="italic"
-						sx={
-							{
-								// [theme.breakpoints.down(829)]: {
-								// 	maxWidth: 500,
-								// },
-								// [theme.breakpoints.down(548)]: {
-								// 	maxWidth: 350,
-								// },
-							}
-						}
-					>
+					<Box maxWidth={1800} mx="auto" fontStyle="italic">
 						<Slider />
 					</Box>
 				</Box>

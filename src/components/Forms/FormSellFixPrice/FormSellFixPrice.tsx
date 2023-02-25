@@ -33,6 +33,7 @@ const FormSellFixPrice = () => {
 	const { checkCoinStore, registerCoin } = useTransfer();
 	const dispatch = useAppDispatch();
 	const [isErrorCoint, setIsErrorCoint] = useState(false);
+	const [listTokenPayment, setListTokenPayment] = useState<any[]>([]);
 	const { itemId } = useParams();
 	const userInfo = useAppSelector(selectUser);
 	const nftItem: nftItem = useAppSelector(selectAllNfts).filter(
@@ -140,6 +141,19 @@ const FormSellFixPrice = () => {
 	useEffect(() => {
 		if (userInfo?.userAddress && nftItem) {
 			getAmountOwn();
+			(async () => {
+				let newListTokenPayment = await Promise.all(
+					ListTokenPaymentTestNet.map(async (token, index) => {
+						let checkTokenCreater = await checkCoinStore(nftItem.creator, token.type);
+						if (checkTokenCreater) {
+							return token;
+						} else {
+							return { ...token, disabled: true };
+						}
+					})
+				);
+				setListTokenPayment(newListTokenPayment);
+			})();
 		}
 	}, [userInfo?.userAddress, nftItem]);
 	useEffect(() => {
@@ -197,7 +211,7 @@ const FormSellFixPrice = () => {
 								<AutoCompleteCustom
 									{...register('currentPaymentToken')}
 									currentItem={tokenPayment}
-									listItem={ListTokenPaymentTestNet}
+									listItem={listTokenPayment}
 									onChange={handleChangePaymentToken}
 									placeholder="Token name"
 									// disabled={!state.feeMethod}
@@ -330,19 +344,3 @@ const FormSellFixPrice = () => {
 };
 
 export default FormSellFixPrice;
-
-{
-	/*-------------------------------Fee method-------------------------------- */
-}
-{
-	/* <Stack direction="row" alignItems="center" justifyContent="space-between">
-				<Box>
-					<Typography variant="h6">Fee method</Typography>
-					<Typography variant="body2" sx={{ opacity: '0.5' }}>
-						({state.feeMethod ? 'Split Fee' : 'Protocol Fee'})
-					</Typography>
-				</Box>
-
-				<SwitchButton onChange={handleChangeFeeMethod} />
-			</Stack> */
-}

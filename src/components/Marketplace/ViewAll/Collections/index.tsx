@@ -49,7 +49,7 @@ export default function Items() {
 		<TabPanel value="2" sx={{ px: 0 }}>
 			<>
 				<FilterCollection />
-				<Grid container spacing={1}>
+				<Grid container spacing={1} px={1}>
 					{loading ? (
 						<>
 							{new Array(12).fill(null).map((item, idx) => (

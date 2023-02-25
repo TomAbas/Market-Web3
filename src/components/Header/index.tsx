@@ -47,7 +47,7 @@ import {
 } from './styled';
 //image
 import LogoMSWhite from '../../assets/images/logo/LogoMetaDark.png';
-import LogoMSMobileWhite from '../../assets/images/logo/LogoMetaDark.png';
+import LogoMSMobileWhite from '../../assets/images/logo/HeaderLogoDarkMobo.png';
 import LogoMSGray from '../../assets/images/logo/logo-metaspacecy-gray.webp';
 import LogoMSGrayMoblie from '../../assets/images/logo/logo-metaspacecy-gray-moblie.webp';
 import aptos from '../../assets/images/logo/aptos.png';
@@ -284,8 +284,6 @@ const Header: React.FC = () => {
 								href="https://metaspacecy.com/"
 								sx={{
 									img: {
-										height: 50,
-										minWidth: '211.65px',
 										width: 'auto',
 										[theme.breakpoints.down(451)]: {
 											minWidth: 'unset',

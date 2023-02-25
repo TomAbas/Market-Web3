@@ -143,7 +143,7 @@ const CollectionDetail = () => {
 							<img src={aptos} alt="aptos" />
 							<Box>{displayAddress(collectionInfo?.userAddress)}</Box>
 						</Stack>
-						<Box sx={{ width: '500px', mx: 'auto', mt: 2 }}>
+						<Box sx={{ maxWidth: '500px', mx: 'auto', mt: 2, px: 2 }}>
 							{collectionInfo && (
 								<DetailCollectionStatistic
 									numberItems={collectionInfo?.listItem?.length}

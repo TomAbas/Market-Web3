@@ -84,7 +84,13 @@ export default function Items() {
 		<>
 			{/* <FilterItem /> */}
 			<TabPanel value="1" sx={{ px: 0 }}>
-				<Stack mb={1} direction="row" justifyContent="space-between">
+				<Stack
+					mb={1}
+					px={1}
+					// direction="row"
+					justifyContent="space-between"
+					direction={{ xs: 'column', md: 'row' }}
+				>
 					<FilterItem />
 					<InputItem sx={{ marginTop: '0' }}>
 						<input
@@ -95,7 +101,7 @@ export default function Items() {
 						/>
 					</InputItem>
 				</Stack>
-				<Grid container maxWidth="1440px" mx="auto" spacing={1}>
+				<Grid container maxWidth="1440px" spacing={1} px={1}>
 					{loadingOffers ? (
 						<>
 							{arr.map((item, idx) => (
