@@ -5,6 +5,7 @@ export const DetailStatistic = styled(Stack)(({ theme }) => ({
 	border: '1px solid #E7E8EC',
 	borderRadius: '12px',
 	width: '100%',
+
 	background: 'rgb(255,255,255)',
 }));
 
@@ -15,7 +16,7 @@ export const StatisticBox = styled(Box)(({ theme }) => ({
 	justifyContent: 'center',
 	flexGrow: 1,
 	position: 'relative',
-	padding: 15,
+	padding: 10,
 	'&:not(:last-child)::after': {
 		content: '""',
 		position: 'absolute',

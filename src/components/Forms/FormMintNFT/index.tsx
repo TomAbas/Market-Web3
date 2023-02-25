@@ -316,6 +316,7 @@ const FormMintNft: React.FC<Props> = ({
 							transition: 'all 0.4s',
 							borderRadius: '12px',
 							fontWeight: 500,
+							color: 'black',
 							background:
 								errors.file ||
 								errors.amount ||
@@ -334,13 +335,6 @@ const FormMintNft: React.FC<Props> = ({
 								background: '#007aff',
 								borderColor: 'transparent',
 								color: '#fff',
-							},
-							a: {
-								textDecoration: 'none',
-								'&:hover': {
-									textDecoration: 'none',
-									color: '#fff',
-								},
 							},
 						},
 					}}
