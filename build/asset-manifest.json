@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.4cf926a5.css",
-    "main.js": "/static/js/main.86766deb.js",
+    "main.js": "/static/js/main.48c0b0a4.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.d69eb72d.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.fd7bcfd0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.a460d097.chunk.js",
@@ -18,6 +18,7 @@
     "static/media/Metaspacecy-blue.svg": "/static/media/Metaspacecy-blue.5af39b2d25a1f86f45affa2d6bcc9b63.svg",
     "static/media/LogoMetaDark.png": "/static/media/LogoMetaDark.0b370b529bc32ed6f4e8.png",
     "static/media/LogoMetaDarkMobo.png": "/static/media/LogoMetaDarkMobo.a59f95e530b006e9fa66.png",
+    "static/media/HeaderLogoDarkMobo.png": "/static/media/HeaderLogoDarkMobo.92c117998a7b487ab8b1.png",
     "static/media/Asset2.webp": "/static/media/Asset2.b1ce348ff08ee0bcdcc6.webp",
     "static/media/Asset1.webp": "/static/media/Asset1.431c3a85d8a801026a7c.webp",
     "static/media/logo-metaspacecy-gray.webp": "/static/media/logo-metaspacecy-gray.f30a4fc82aa9b0222131.webp",
@@ -99,6 +100,6 @@
   },
   "entrypoints": [
     "static/css/main.4cf926a5.css",
-    "static/js/main.86766deb.js"
+    "static/js/main.48c0b0a4.js"
   ]
 }
