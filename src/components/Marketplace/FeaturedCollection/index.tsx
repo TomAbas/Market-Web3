@@ -102,7 +102,7 @@ const FeaturedCollection = () => {
 				});
 				dispatch(getAllCollections(res.All));
 				setListFilter(listCategoy);
-				if (window.innerWidth <= 768) {
+				if (window.innerWidth > 900 && window.innerWidth < 1200) {
 					setCollections(res[selectedFilter].slice(0, 3));
 				} else {
 					setCollections(res[selectedFilter].slice(0, 4));
@@ -158,7 +158,7 @@ const FeaturedCollection = () => {
 				) : (
 					<>
 						{collections.map((collection: any, index: any) => (
-							<Grid xs={6} sm={4} md={4} lg={3} p={1} key={index}>
+							<Grid xs={12} sm={6} md={4} lg={3} p={1} key={index}>
 								<Link
 									// href={`https://explorer.aptoslabs.com/account/${
 									// 	collection[0].split('*/////*')[1]

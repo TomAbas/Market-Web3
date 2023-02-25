@@ -284,8 +284,6 @@ const Header: React.FC = () => {
 								href="https://metaspacecy.com/"
 								sx={{
 									img: {
-										height: 50,
-										minWidth: '211.65px',
 										width: 'auto',
 										[theme.breakpoints.down(451)]: {
 											minWidth: 'unset',
