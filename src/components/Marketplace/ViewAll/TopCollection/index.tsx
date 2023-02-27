@@ -103,7 +103,7 @@ const Index = () => {
 					container
 					spacing={4}
 					columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
-					sx={{ maxWidth: '1440px', margin: '0 auto' }}
+					sx={{ maxWidth: '1440px', width: '99%', margin: '0 auto' }}
 				>
 					<TopCollections filter={selectedFilter} />
 				</Grid>
