@@ -69,15 +69,20 @@ export const LogoLink = styled(Link)(({ theme }) => ({
 	// 	height: 50,
 	// 	width: '100%',
 	// },
-	'@media screen and (max-width: 450px)': {
+	'@media screen and (max-width: 600px)': {
 		'.logoMobile': {
 			display: 'block',
+			width: '50px',
 		},
 		'.logoPC': {
 			display: 'none',
 		},
 	},
-	'@media screen and (min-width: 451px)': {
+	'@media screen and (min-width: 601px)': {
+		'.logoPC': {
+			height: 50,
+			minWidth: '211.65px',
+		},
 		'.logoMobile': {
 			display: 'none',
 		},

@@ -24,7 +24,7 @@ export default function FilterCollection() {
 	];
 	return (
 		<>
-			<Stack direction="row" mb={3} gap="10px">
+			<Stack direction="row" mb={3} gap="10px" flexWrap="wrap" px={1}>
 				{listFilter.map((item) => {
 					return (
 						<Link

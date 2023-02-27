@@ -73,21 +73,7 @@ export default function OfferingsAndLisings({ item, userInfo }: Props) {
 	// functions
 
 	return (
-		<Wrapper sx={{ mt: 4, position: 'absolute', left: '0', right: '0' }}>
-			{/* <Box sx={{ mb: 1 }}>
-				<SelectCustom
-					currentItem={currentOption}
-					listItem={listOption}
-					onChange={handleChangeOption}
-					sx={{
-						padding: '8px',
-						width: 'fit-content',
-						minWidth: '140px',
-						background: 'rgb(0, 122, 255)',
-						color: '#fff',
-					}}
-				/>
-			</Box> */}
+		<Wrapper sx={{ mt: 4, position: 'absolute', left: '0', right: '0', bottom: '0' }}>
 			<OrderListWrapper>
 				<>
 					{isLoad ? (
@@ -113,57 +99,6 @@ export default function OfferingsAndLisings({ item, userInfo }: Props) {
 						<SkeletonOfferInItemDetailList />
 					)}
 				</>
-				{/* {currentOption.value === 0 ? (
-					<>
-						{!isLoad ? (
-							<OrderList>
-								{listOrderSell && listOrderSell.length > 0 ? (
-									listOrderSell.map((orderId: any, index: number) => (
-										<Box sx={{ mb: 1 }} key={index}>
-											<OrderInItemDetailCard
-												orderId={orderId}
-												isLoading={isLoad}
-											/>
-										</Box>
-									))
-								) : (
-									<Box sx={{ mt: 2, p: 1 }}>
-										<Typography variant="body1" sx={{ textAlign: 'center' }}>
-											No listing yet!
-										</Typography>
-									</Box>
-								)}
-							</OrderList>
-						) : (
-							<SkeletonOfferInItemDetailList />
-						)}
-					</>
-				) : (
-					<>
-						{!isLoad ? (
-							<OrderList>
-								{listOrderOffer && listOrderOffer.length > 0 ? (
-									listOrderOffer.map((orderId: any, index: number) => (
-										<Box sx={{ mb: 1, minWidth: '350px' }} key={index}>
-											<OrderInItemDetailCard
-												orderId={orderId}
-												isLoading={isLoad}
-											/>
-										</Box>
-									))
-								) : (
-									<Box sx={{ mt: 2, p: 1 }}>
-										<Typography variant="body1" sx={{ textAlign: 'center' }}>
-											No offering yet!
-										</Typography>
-									</Box>
-								)}
-							</OrderList>
-						) : (
-							<SkeletonOfferInItemDetailList />
-						)}
-					</>
-				)} */}
 			</OrderListWrapper>
 		</Wrapper>
 	);

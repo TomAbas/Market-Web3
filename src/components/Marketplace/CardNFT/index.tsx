@@ -154,8 +154,8 @@ export default function CardNFT({
 				xs={12}
 				sm={6}
 				md={4}
-				xl={3}
-				p={1}
+				lg={3}
+				spacing={1}
 				sx={{ transition: 'all 0.5s ease', animation: '' }}
 			>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
@@ -176,8 +176,13 @@ export default function CardNFT({
 									<TwitterShareButton
 										url={`${RELATED_URLS.MetaSpacecyHomePage}/#/item/${offer?._id}`}
 										title={`Look what I found! ${offer?.itemName} collectible`}
-										hashtags={['Music', 'Game']}
-										via="Metaspacecy"
+										hashtags={[
+											'Metaspacecy',
+											'AptosNFT',
+											'NFT',
+											'NFT_Marketplace',
+										]}
+										via="metaspacecy"
 										style={{ width: '100%', textAlign: 'left' }}
 									>
 										{' '}

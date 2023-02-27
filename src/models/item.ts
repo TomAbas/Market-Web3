@@ -30,13 +30,13 @@ export interface nftItem {
 }
 
 export const TYPE_TRANSACTION: { [key: number]: string } = {
-	1: 'Minted',
+	1: 'Mint',
 	2: 'Accept Offer',
 	3: 'Sale',
 	4: 'Transfer',
 	5: 'Cancel',
 	6: 'List',
-	7: 'Order',
+	7: 'Buy',
 	8: 'Auction Created',
 	9: 'Auction Settle',
 	10: 'Expired',

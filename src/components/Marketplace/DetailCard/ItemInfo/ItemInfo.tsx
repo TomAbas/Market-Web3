@@ -12,9 +12,11 @@ import {
 	Avatar,
 	Tooltip,
 	Link,
+	Container,
+	Grid,
 } from '@mui/material';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
-import { ItemImage, FeatureWrapper } from 'components/Marketplace/styled';
+import { ItemImage, FeatureWrapper } from './styled';
 import MediaDisplayCard from 'components/Marketplace/MediaDisplayCard/MediaDisplayCard';
 import { TwitterShareButton } from 'react-share';
 import Share from 'assets/icons/share-black.webp';
@@ -105,133 +107,153 @@ const ItemInfo: React.FC<Props> = ({
 					</Stack>
 				</>
 			) : (
-				<>
-					<ItemImage sx={{ width: '50%', paddingTop: '50%', maxWidth: '672px' }}>
-						<Box className="main-img">
-							<MediaDisplayCard
-								media={item!.itemMedia}
-								preview={defaultImg}
-								name={item!.itemName}
-							/>
-						</Box>
-					</ItemImage>
-					<Stack
-						gap="16px"
-						sx={{ width: '50%', height: '750px', position: 'relative' }}
-						direction="row"
-						spacing={{ xs: 1, sm: 2, md: 4 }}
-					>
-						<Stack gap="16px" sx={{ flex: '1', overflow: 'hidden' }}>
-							{' '}
-							<NoMaxWidthTooltip
-								title={displayUserFullName(item!.collectionInfo.collectionName)}
-							>
-								<Typography
-									variant="h6"
-									fontWeight={500}
-									sx={{ color: '#007aff', cursor: 'pointer' }}
-									onClick={navigateCollection}
-									noWrap
-								>
-									{item?.collectionInfo.collectionName}
-								</Typography>
-							</NoMaxWidthTooltip>
-							<NoMaxWidthTooltip title={displayUserFullName(item!.itemName)}>
-								<Typography variant="h4" fontWeight={500} noWrap>
-									{item?.itemName}
-								</Typography>
-							</NoMaxWidthTooltip>
-							<Typography
-								variant="body1"
-								ref={desRef}
-								sx={{
-									transition: 'max-height ease 0.5s',
-									whiteSpace: `${show ? 'unset' : 'nowrap'}`,
-									textAlign: ` ${show ? 'justify' : 'unset'}`,
-									overflow: 'hidden',
-									textOverflow: 'ellipsis',
-									maxHeight: `${show ? '500px' : '49px'}`,
-									height: `${show ? 'auto' : '49px'}`,
-								}}
-								onClick={() => {
-									if (desRef.current?.offsetHeight < 48) {
-										return;
-									}
-									console.log(desRef.current?.offsetHeight);
-									setShow(!show);
-								}}
-							>
-								{item?.description}
-							</Typography>
-							<Stack direction="row" gap="20px">
-								<Stack
-									// direction={'row'}
-									// alignItems={'center'}
-									spacing={2}
-									sx={{ width: '50%' }}
-								>
-									<Stack>
-										<Typography variant="body1" fontWeight={500}>
-											Creator
-										</Typography>
-									</Stack>
-									<Stack direction="row" alignItems={'center'} spacing={2}>
-										<Avatar src={item?.creatorInfo.avatar} variant="square" />
-										<Box sx={{ overflow: 'hidden' }}>
-											<Tooltip title={item?.creator}>
-												<Link
-													href={`/#/profile?address=${item?.creator}`}
-													underline="none"
-												>
-													<Typography
-														fontWeight="400"
-														variant="subtitle1"
-														noWrap
-													>
-														{item?.creatorInfo.username}
-													</Typography>
-												</Link>
-											</Tooltip>
-										</Box>
-									</Stack>
-								</Stack>
-								<Stack
-									alignItems="flex-start"
-									spacing={2}
-									sx={{ maxWidth: '300px' }}
-								>
-									<AutoCompleteCustom
-										onChange={handleChangeCategory}
-										currentItem={currentCategoryTransformed}
-										listItem={listOwner}
-										sx={{ width: '100%' }}
+				<Container maxWidth="xl" sx={{ mt: 2, fontStyle: 'italic' }}>
+					{/* Item image / Item info */}
+					<Grid container spacing={10}>
+						<Grid item xs={12} lg={5} md={6}>
+							<ItemImage sx={{ width: '100%' }}>
+								<Box className="main-img">
+									<MediaDisplayCard
+										media={item!.itemMedia}
+										preview={defaultImg}
+										name={item!.itemName}
 									/>
-								</Stack>
-							</Stack>
-							<Box
-								sx={{
-									button: {
-										position: 'relative',
-										padding: '10px 20px',
-										border: '1.5px solid #e7e8ec',
-										transition: 'all 0.4s',
-										borderRadius: '12px',
-										fontWeight: 500,
-										background: '#fff',
-										fontSize: '15px',
-										cursor: 'pointer',
-										fontFamily: 'Montserrat, sans-serif !important',
-										fontStyle: 'italic !important',
-										width: '150px',
-										'&:hover': {
-											background: '#007aff',
-											borderColor: 'transparent',
-											color: '#fff',
-										},
-									},
-								}}
+								</Box>
+							</ItemImage>
+						</Grid>
+						<Grid item xs={12} lg={7} md={6}>
+							<Stack
+								gap="16px"
+								sx={{ width: '100%', minHeight: '350px', position: 'relative' }}
+								direction="row"
+								spacing={{ xs: 1, sm: 2, md: 4 }}
 							>
-								{/* {itemResource !== undefined && (
+								<Stack gap="16px" sx={{ flex: '1', overflow: 'hidden' }}>
+									{' '}
+									<NoMaxWidthTooltip
+										title={displayUserFullName(
+											item!.collectionInfo.collectionName
+										)}
+									>
+										<Typography
+											variant="h6"
+											fontWeight={500}
+											sx={{ color: '#007aff', cursor: 'pointer' }}
+											onClick={navigateCollection}
+											noWrap
+										>
+											{item?.collectionInfo.collectionName}
+										</Typography>
+									</NoMaxWidthTooltip>
+									<NoMaxWidthTooltip title={displayUserFullName(item!.itemName)}>
+										<Typography variant="h4" fontWeight={500} noWrap>
+											{item?.itemName}
+										</Typography>
+									</NoMaxWidthTooltip>
+									<Typography
+										variant="body1"
+										ref={desRef}
+										sx={{
+											transition: 'max-height ease 0.5s',
+											whiteSpace: `${show ? 'unset' : 'nowrap'}`,
+											textAlign: ` ${show ? 'justify' : 'unset'}`,
+											overflow: 'hidden',
+											textOverflow: 'ellipsis',
+											maxHeight: `${show ? '500px' : '49px'}`,
+											height: `${show ? 'auto' : '49px'}`,
+										}}
+										onClick={() => {
+											if (desRef.current?.offsetHeight < 48) {
+												return;
+											}
+											console.log(desRef.current?.offsetHeight);
+											setShow(!show);
+										}}
+									>
+										{item?.description}
+									</Typography>
+									<Box>
+										<Stack
+											direction="row"
+											gap="20px"
+											sx={{ position: 'absolute', left: 0, right: 0 }}
+										>
+											<Stack
+												// direction={'row'}
+												// alignItems={'center'}
+												spacing={2}
+												sx={{ width: '50%' }}
+											>
+												<Stack>
+													<Typography variant="body1" fontWeight={500}>
+														Creator
+													</Typography>
+												</Stack>
+												<Stack
+													direction="row"
+													alignItems={'center'}
+													spacing={2}
+												>
+													<Avatar
+														src={item?.creatorInfo.avatar}
+														variant="square"
+													/>
+													<Box sx={{ overflow: 'hidden' }}>
+														<Tooltip title={item?.creator}>
+															<Link
+																href={`/#/profile?address=${item?.creator}`}
+																underline="none"
+															>
+																<Typography
+																	fontWeight="400"
+																	variant="subtitle1"
+																	noWrap
+																>
+																	{item?.creatorInfo.username}
+																</Typography>
+															</Link>
+														</Tooltip>
+													</Box>
+												</Stack>
+											</Stack>
+											<Stack
+												alignItems="flex-start"
+												spacing={2}
+												sx={{ maxWidth: '300px' }}
+											>
+												<AutoCompleteCustom
+													onChange={handleChangeCategory}
+													currentItem={currentCategoryTransformed}
+													listItem={listOwner}
+													sx={{ width: '100%' }}
+												/>
+											</Stack>
+										</Stack>
+									</Box>
+									<Box
+										sx={{
+											button: {
+												position: 'relative',
+												padding: '10px 20px',
+												border: '1.5px solid #e7e8ec',
+												transition: 'all 0.4s',
+												borderRadius: '12px',
+												fontWeight: 500,
+												background: '#fff',
+												fontSize: '15px',
+												cursor: 'pointer',
+												fontFamily: 'Montserrat, sans-serif !important',
+												fontStyle: 'italic !important',
+												width: '150px',
+												'&:hover': {
+													background: '#007aff',
+													borderColor: 'transparent',
+													color: '#fff',
+												},
+											},
+										}}
+									>
+										{/* {itemResource !== undefined && (
 									<>
 										{item?.status === 1 ? (
 											<>
@@ -256,71 +278,84 @@ const ItemInfo: React.FC<Props> = ({
 										)}
 									</>
 								)} */}
-								{item?.owner.includes(userInfo?.userAddress!) && (
-									<button
-										onClick={() => {
-											navigate(`/item/sell-item/${item!._id}`);
-										}}
-									>
-										List
-									</button>
-								)}
-								<OfferingsAndLisings item={item!} userInfo={userInfo!} />
-							</Box>
-						</Stack>
-						<Stack direction="row" alignItems="flex-start">
-							<FeatureWrapper>
-								<Stack
-									direction="row"
-									alignItems="center"
-									spacing={1}
-									sx={{ padding: '8px', cursor: 'pointer' }}
-									onClick={(e) => e.stopPropagation()}
-								>
-									<Box>
-										{checkIsLike(item!._id) ? (
-											<IconFavorite
-												src={HeartFullRed}
-												alt="icon favorite"
+										{item?.owner.includes(userInfo?.userAddress!) && (
+											<button
 												onClick={() => {
-													likeItem(item!._id, false);
+													navigate(`/item/sell-item/${item!._id}`);
 												}}
-											/>
-										) : (
-											<IconFavorite
-												src={HeartFullBlack}
-												alt="icon favorite"
-												onClick={() => {
-													likeItem(item!._id, true);
-												}}
-											/>
+											>
+												List
+											</button>
 										)}
+										<OfferingsAndLisings item={item!} userInfo={userInfo!} />
 									</Box>
-
-									<Typography variant="body1">{item?.countFav}</Typography>
 								</Stack>
-							</FeatureWrapper>
-							{userAmountOfItem > 0 && (
-								<FeatureWrapper
-									sx={{ cursor: 'pointer' }}
-									onClick={() => setOpenModalTransfer(true)}
-								>
-									<SendIcon sx={{ m: 1 }}></SendIcon>
-								</FeatureWrapper>
-							)}
+								<Stack direction="row" alignItems="flex-start">
+									<FeatureWrapper>
+										<Stack
+											direction="row"
+											alignItems="center"
+											spacing={1}
+											sx={{ padding: '8px', cursor: 'pointer' }}
+											onClick={(e) => e.stopPropagation()}
+										>
+											<Box>
+												{checkIsLike(item!._id) ? (
+													<IconFavorite
+														src={HeartFullRed}
+														alt="icon favorite"
+														onClick={() => {
+															likeItem(item!._id, false);
+														}}
+													/>
+												) : (
+													<IconFavorite
+														src={HeartFullBlack}
+														alt="icon favorite"
+														onClick={() => {
+															likeItem(item!._id, true);
+														}}
+													/>
+												)}
+											</Box>
 
-							<TwitterShareButton
-								url={`${RELATED_URLS.MetaSpacecyHomePage}/#/item/${item?._id}`}
-								title={`Look what I found! Item ${item?.itemName}`}
-								// hashtags={['Music', 'Game']}
-								via="Metaspacecy"
-								style={{ textAlign: 'left' }}
-							>
-								<FeatureWrapper sx={{ padding: '14px 15px', cursor: 'pointer' }}>
-									<img src={Share} alt="icon share" style={{ height: '13px' }} />
-								</FeatureWrapper>
-							</TwitterShareButton>
-							{/* <FeatureWrapper>
+											<Typography variant="body1">
+												{item?.countFav}
+											</Typography>
+										</Stack>
+									</FeatureWrapper>
+									{userAmountOfItem > 0 && (
+										<FeatureWrapper
+											sx={{ cursor: 'pointer' }}
+											onClick={() => setOpenModalTransfer(true)}
+										>
+											<SendIcon sx={{ m: 1 }}></SendIcon>
+										</FeatureWrapper>
+									)}
+
+									<TwitterShareButton
+										url={`${RELATED_URLS.MetaSpacecyHomePage}/#/item/${item?._id}`}
+										title={`Look what I found! Item ${item?.itemName}`}
+										hashtags={[
+											'Metaspacecy',
+											'AptosNFT',
+											'NFT',
+											'NFT_Marketplace',
+										]}
+										via="metaspacecy"
+										style={{ textAlign: 'left' }}
+									>
+										<FeatureWrapper
+											sx={{ padding: '14px 15px', cursor: 'pointer' }}
+										>
+											<img
+												src={Share}
+												alt="icon share"
+												style={{ height: '13px' }}
+											/>
+										</FeatureWrapper>
+									</TwitterShareButton>
+									{/* <FeatureWrapper>
 								<DropDown
 									activeDropDown={activeDropDown}
 									setActiveDropDown={setActiveDropDown}
@@ -329,9 +364,11 @@ const ItemInfo: React.FC<Props> = ({
 									sx={{ right: 0, left: 'unset' }}
 								/>
 							</FeatureWrapper> */}
-						</Stack>
-					</Stack>
-				</>
+								</Stack>
+							</Stack>
+						</Grid>
+					</Grid>
+				</Container>
 			)}
 			<ModalTransferNFT
 				quantity={userAmountOfItem}

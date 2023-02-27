@@ -284,8 +284,6 @@ const Header: React.FC = () => {
 								href="https://metaspacecy.com/"
 								sx={{
 									img: {
-										height: 50,
-										minWidth: '211.65px',
 										width: 'auto',
 										[theme.breakpoints.down(451)]: {
 											minWidth: 'unset',
@@ -808,9 +806,9 @@ const Header: React.FC = () => {
 				</Box>
 			</AppbarHeader>
 			<ModalFaucetCoin
-				title="Faucet Of Test Coins"
-				warning="We only support faucet once time only"
-				subtitle="Get 100 test coins for Aptos Marketplace testing, test coins will be sent to your wallet."
+				title="Faucet Test Coins"
+				warning="A user can faucet a test coin one time in life with 100 coins from Metaspacecy."
+				subtitle="Let's get 100 test coins from Metaspacecy Aptos Marketplace for testing."
 				open={open}
 				closeModal={handleClose}
 			/>

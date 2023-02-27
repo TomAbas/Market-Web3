@@ -102,7 +102,7 @@ const FeaturedCollection = () => {
 				});
 				dispatch(getAllCollections(res.All));
 				setListFilter(listCategoy);
-				if (window.innerWidth <= 768) {
+				if (window.innerWidth > 900 && window.innerWidth < 1200) {
 					setCollections(res[selectedFilter].slice(0, 3));
 				} else {
 					setCollections(res[selectedFilter].slice(0, 4));

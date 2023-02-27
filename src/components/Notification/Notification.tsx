@@ -23,7 +23,8 @@ const Notification = () => {
 					textAlign="center"
 					fontSize="16px"
 				>
-					Thank you all for your support for a while in our demo version.
+					We would like to announce that Metaspacecy Aptos Marketplace is in Testnet
+					campaign.
 				</Typography>
 				<Typography
 					variant="h6"
@@ -33,8 +34,8 @@ const Notification = () => {
 					textAlign="center"
 					fontSize="16px"
 				>
-					We would like to inform that we update to the testnet version and your
-					information is reset. Sorry for the inconvenience!
+					Please get yourself dive into Aptos Marketplace and get more privilegdes in the
+					ecosystem.
 				</Typography>
 			</Stack>
 			{/* <Button
