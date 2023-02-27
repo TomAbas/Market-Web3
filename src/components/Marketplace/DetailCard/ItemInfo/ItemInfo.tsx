@@ -122,174 +122,20 @@ const ItemInfo: React.FC<Props> = ({
 							</ItemImage>
 						</Grid>
 						<Grid item xs={12} lg={7} md={6}>
-							<Stack
-								gap="16px"
-								sx={{ width: '100%', minHeight: '350px', position: 'relative' }}
-								direction="row"
-								spacing={{ xs: 1, sm: 2, md: 4 }}
-							>
-								<Stack gap="16px" sx={{ flex: '1', overflow: 'hidden' }}>
-									{' '}
-									<NoMaxWidthTooltip
-										title={displayUserFullName(
-											item!.collectionInfo.collectionName
-										)}
-									>
-										<Typography
-											variant="h6"
-											fontWeight={500}
-											sx={{ color: '#007aff', cursor: 'pointer' }}
-											onClick={navigateCollection}
-											noWrap
-										>
-											{item?.collectionInfo.collectionName}
-										</Typography>
-									</NoMaxWidthTooltip>
-									<NoMaxWidthTooltip title={displayUserFullName(item!.itemName)}>
-										<Typography variant="h4" fontWeight={500} noWrap>
-											{item?.itemName}
-										</Typography>
-									</NoMaxWidthTooltip>
+							<Stack direction={'row'} justifyContent={'space-between'}>
+								<NoMaxWidthTooltip
+									title={displayUserFullName(item!.collectionInfo.collectionName)}
+								>
 									<Typography
-										variant="body1"
-										ref={desRef}
-										sx={{
-											transition: 'max-height ease 0.5s',
-											whiteSpace: `${show ? 'unset' : 'nowrap'}`,
-											textAlign: ` ${show ? 'justify' : 'unset'}`,
-											overflow: 'hidden',
-											textOverflow: 'ellipsis',
-											maxHeight: `${show ? '500px' : '49px'}`,
-											height: `${show ? 'auto' : '49px'}`,
-										}}
-										onClick={() => {
-											if (desRef.current?.offsetHeight < 48) {
-												return;
-											}
-											console.log(desRef.current?.offsetHeight);
-											setShow(!show);
-										}}
+										variant="h6"
+										fontWeight={500}
+										sx={{ color: '#007aff', cursor: 'pointer' }}
+										onClick={navigateCollection}
+										noWrap
 									>
-										{item?.description}
+										{item?.collectionInfo.collectionName}
 									</Typography>
-									<Box>
-										<Stack
-											direction="row"
-											gap="20px"
-											sx={{ position: 'absolute', left: 0, right: 0 }}
-										>
-											<Stack
-												// direction={'row'}
-												// alignItems={'center'}
-												spacing={2}
-												sx={{ width: '50%' }}
-											>
-												<Stack>
-													<Typography variant="body1" fontWeight={500}>
-														Creator
-													</Typography>
-												</Stack>
-												<Stack
-													direction="row"
-													alignItems={'center'}
-													spacing={2}
-												>
-													<Avatar
-														src={item?.creatorInfo.avatar}
-														variant="square"
-													/>
-													<Box sx={{ overflow: 'hidden' }}>
-														<Tooltip title={item?.creator}>
-															<Link
-																href={`/#/profile?address=${item?.creator}`}
-																underline="none"
-															>
-																<Typography
-																	fontWeight="400"
-																	variant="subtitle1"
-																	noWrap
-																>
-																	{item?.creatorInfo.username}
-																</Typography>
-															</Link>
-														</Tooltip>
-													</Box>
-												</Stack>
-											</Stack>
-											<Stack
-												alignItems="flex-start"
-												spacing={2}
-												sx={{ maxWidth: '300px' }}
-											>
-												<AutoCompleteCustom
-													onChange={handleChangeCategory}
-													currentItem={currentCategoryTransformed}
-													listItem={listOwner}
-													sx={{ width: '100%' }}
-												/>
-											</Stack>
-										</Stack>
-									</Box>
-									<Box
-										sx={{
-											button: {
-												position: 'relative',
-												padding: '10px 20px',
-												border: '1.5px solid #e7e8ec',
-												transition: 'all 0.4s',
-												borderRadius: '12px',
-												fontWeight: 500,
-												background: '#fff',
-												fontSize: '15px',
-												cursor: 'pointer',
-												fontFamily: 'Montserrat, sans-serif !important',
-												fontStyle: 'italic !important',
-												width: '150px',
-												'&:hover': {
-													background: '#007aff',
-													borderColor: 'transparent',
-													color: '#fff',
-												},
-											},
-										}}
-									>
-										{/* {itemResource !== undefined && (
-									<>
-										{item?.status === 1 ? (
-											<>
-												{itemResource?.owner != userInfo?.userAddress ? (
-													<button onClick={handleOpenModalBuy}>
-														Buy Now
-													</button>
-												) : (
-													<button onClick={handleWithdrawItem}>
-														{statusWithdraw}
-													</button>
-												)}
-											</>
-										) : (
-											<>
-												{item?.owner.includes(userInfo?.userAddress!) && (
-													<button onClick={handleOpenModalBuy}>
-														Sell Item
-													</button>
-												)}
-											</>
-										)}
-									</>
-								)} */}
-										{item?.owner.includes(userInfo?.userAddress!) && (
-											<button
-												onClick={() => {
-													navigate(`/item/sell-item/${item!._id}`);
-												}}
-											>
-												List
-											</button>
-										)}
-										<OfferingsAndLisings item={item!} userInfo={userInfo!} />
-									</Box>
-								</Stack>
+								</NoMaxWidthTooltip>
 								<Stack direction="row" alignItems="flex-start">
 									<FeatureWrapper>
 										<Stack
@@ -355,17 +201,121 @@ const ItemInfo: React.FC<Props> = ({
 											/>
 										</FeatureWrapper>
 									</TwitterShareButton>
-									{/* <FeatureWrapper>
-								<DropDown
-									activeDropDown={activeDropDown}
-									setActiveDropDown={setActiveDropDown}
-									buttonContent={<ButtonContent />}
-									dropdownContent={<DropdownContent item={item} />}
-									sx={{ right: 0, left: 'unset' }}
-								/>
-							</FeatureWrapper> */}
 								</Stack>
 							</Stack>
+							<Box sx={{ width: '100%', minHeight: '350px', position: 'relative' }}>
+								<Stack gap="16px" sx={{ flex: '1', overflow: 'hidden' }}>
+									{' '}
+									<NoMaxWidthTooltip title={displayUserFullName(item!.itemName)}>
+										<Typography variant="h4" fontWeight={500} noWrap>
+											{item?.itemName}
+										</Typography>
+									</NoMaxWidthTooltip>
+									<Typography
+										variant="body1"
+										ref={desRef}
+										sx={{
+											transition: 'max-height ease 0.5s',
+											whiteSpace: `${show ? 'unset' : 'nowrap'}`,
+											textAlign: ` ${show ? 'justify' : 'unset'}`,
+											overflow: 'hidden',
+											textOverflow: 'ellipsis',
+											maxHeight: `${show ? '500px' : '49px'}`,
+											height: `${show ? 'auto' : '49px'}`,
+										}}
+										onClick={() => {
+											if (desRef.current?.offsetHeight < 48) {
+												return;
+											}
+											setShow(!show);
+										}}
+									>
+										{item?.description}
+									</Typography>
+									<Box>
+										<Stack direction="row" gap="20px">
+											<Stack spacing={2} sx={{ width: '50%' }}>
+												<Stack>
+													<Typography variant="body1" fontWeight={500}>
+														Creator
+													</Typography>
+												</Stack>
+												<Stack
+													direction="row"
+													alignItems={'center'}
+													spacing={2}
+												>
+													<Avatar
+														src={item?.creatorInfo.avatar}
+														variant="square"
+													/>
+													<Box sx={{ overflow: 'hidden' }}>
+														<Tooltip title={item?.creator}>
+															<Link
+																href={`/#/profile?address=${item?.creator}`}
+																underline="none"
+															>
+																<Typography
+																	fontWeight="400"
+																	variant="subtitle1"
+																	noWrap
+																>
+																	{item?.creatorInfo.username}
+																</Typography>
+															</Link>
+														</Tooltip>
+													</Box>
+												</Stack>
+											</Stack>
+											<Stack
+												alignItems="flex-start"
+												spacing={2}
+												sx={{ width: '50%' }}
+											>
+												<AutoCompleteCustom
+													onChange={handleChangeCategory}
+													currentItem={currentCategoryTransformed}
+													listItem={listOwner}
+													sx={{ width: '100%' }}
+												/>
+											</Stack>
+										</Stack>
+									</Box>
+									<Box
+										sx={{
+											button: {
+												padding: '10px 20px',
+												border: '1.5px solid #e7e8ec',
+												transition: 'all 0.4s',
+												borderRadius: '12px',
+												fontWeight: 500,
+												background: '#fff',
+												fontSize: '15px',
+												cursor: 'pointer',
+												fontFamily: 'Montserrat, sans-serif !important',
+												fontStyle: 'italic !important',
+												width: '150px',
+												'&:hover': {
+													background: '#007aff',
+													borderColor: 'transparent',
+													color: '#fff',
+												},
+											},
+										}}
+									>
+										{item?.owner.includes(userInfo?.userAddress!) && (
+											<button
+												onClick={() => {
+													navigate(`/item/sell-item/${item!._id}`);
+												}}
+											>
+												List
+											</button>
+										)}
+									</Box>
+									<OfferingsAndLisings item={item!} userInfo={userInfo!} />
+								</Stack>
+							</Box>
 						</Grid>
 					</Grid>
 				</Container>

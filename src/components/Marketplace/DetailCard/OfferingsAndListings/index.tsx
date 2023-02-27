@@ -73,7 +73,7 @@ export default function OfferingsAndLisings({ item, userInfo }: Props) {
 	// functions
 
 	return (
-		<Wrapper sx={{ mt: 4, position: 'absolute', left: '0', right: '0', bottom: '0' }}>
+		<Wrapper sx={{ mt: 2, left: '0', right: '0', bottom: '0' }}>
 			<OrderListWrapper>
 				<>
 					{isLoad ? (
