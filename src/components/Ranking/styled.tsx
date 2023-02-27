@@ -43,6 +43,7 @@ export const TableScrollable = styled('table')(({ theme }) => ({
 	thead: {
 		borderSpacing: '0px',
 		th: {
+			position: 'sticky',
 			background: '#E7E8EC',
 			whiteSpace: 'nowrap',
 			// position: 'sticky',
@@ -52,7 +53,7 @@ export const TableScrollable = styled('table')(({ theme }) => ({
 			padding: '16px 5px',
 			':first-of-type': {
 				// position: 'sticky',
-				left: 0,
+				// left: 0,
 				zIndex: 3,
 				minWidth: '100px',
 			},
