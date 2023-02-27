@@ -10,7 +10,6 @@ export const AppbarHeader = styled((props: AppbarHeaderProps) => {
 	return <AppBar {...other} />;
 })(({ theme, background }) => ({
 	padding: '1.5rem 5%',
-
 	// ...(theme.palette.mode === 'light'
 	// 	? {
 	// 			backgroundImage: background
