@@ -241,7 +241,7 @@ const MyCollectionDetail = () => {
 						{collectionInfo?.description}
 					</Typography>
 					<Box py={4}>
-						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+						<Grid container maxWidth="1440px" mx="auto" spacing={1} px={1}>
 							{loadingItem ? (
 								<>
 									{arr.map((item, idx) => (

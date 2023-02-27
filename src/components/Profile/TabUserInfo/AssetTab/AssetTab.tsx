@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useRef, useState } from 'react';
 import { Grid, Box, Tooltip } from '@mui/material';
 import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
@@ -68,6 +69,7 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 					width: 'auto',
 					justifyContent: 'space-between',
 					padding: '0px 8px',
+					marginBottom: '15px',
 				}}
 			>
 				<FilterWrapper>
@@ -115,7 +117,7 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 							onClick={() => navigate(`/mint?query=2`)}
 						>
 							<Box>
-								<ButtonWhite
+								<FilterBox
 									sx={{
 										py: '10px',
 										minWidth: '46px',
@@ -126,14 +128,14 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 									}}
 									// onClick={() => navigate(`${PATH_ITEM.createItem}`)}
 								>
-									<AddIcon />
-								</ButtonWhite>
+									<AddIcon sx={{ width: '22px', height: '22px' }} />
+								</FilterBox>
 							</Box>
 						</Tooltip>
 					)}
 				</Box>
 			</Box>
-			<Grid container maxWidth="1440px" mx="auto" spacing={1} mt={3}>
+			<Grid container maxWidth="1440px" mx="auto" px={1}>
 				{isLoading ? (
 					<>
 						{new Array(4).fill(null).map((_, index) => (

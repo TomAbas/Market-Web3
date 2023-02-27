@@ -69,7 +69,7 @@ export default function MyCollection() {
 					</Stack>
 				</Box>
 
-				<Grid container spacing={1}>
+				<Grid container px={1}>
 					{' '}
 					{loading ? (
 						<>

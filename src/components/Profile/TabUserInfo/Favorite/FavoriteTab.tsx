@@ -14,7 +14,7 @@ const FavoriteTab: React.FC<Props> = ({ itemsF, isLoading }) => {
 	return (
 		<>
 			{' '}
-			<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+			<Grid container maxWidth="1440px" mx="auto" spacing={1} px={1}>
 				{isLoading ? (
 					<>
 						{new Array(4).fill(null).map((_, index) => (

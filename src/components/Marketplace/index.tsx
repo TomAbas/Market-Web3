@@ -162,7 +162,7 @@ export default function Marketplace() {
 						View All
 					</Link>
 				</Typography>
-				<Grid container maxWidth="1440px" mx="auto" spacing={1} px={2}>
+				<Grid container maxWidth="1440px" mx="auto" spacing={1} sx={{ width: '95%' }}>
 					{loadingOffers ? (
 						<>
 							{arr.map((item, idx) => (
@@ -186,7 +186,7 @@ export default function Marketplace() {
 					)}
 				</Grid>
 			</ExploreCollection>
-			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 4, pb: 4, px: 2 }}>
+			<Box sx={{ maxWidth: '1350px', mx: 'auto', pt: 4, pb: 4, px: 1 }}>
 				<FeaturedCollection />
 			</Box>
 			<ExploreCollection sx={{ py: 4 }}>
