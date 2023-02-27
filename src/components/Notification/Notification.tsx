@@ -34,7 +34,7 @@ const Notification = () => {
 					textAlign="center"
 					fontSize="16px"
 				>
-					Please get yourself dive into Aptos Marketplace and get more privilegdes in the
+					Please get yourself dive into Aptos Marketplace and get more privileges in the
 					ecosystem.
 				</Typography>
 			</Stack>

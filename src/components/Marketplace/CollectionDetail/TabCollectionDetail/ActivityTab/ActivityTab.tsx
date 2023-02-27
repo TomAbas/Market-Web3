@@ -43,7 +43,7 @@ const ActivityTab: React.FC<Props> = ({ collectionInfo }) => {
 	return (
 		<>
 			<GraphTab listActivityPriceChart={dataChart} />
-			<Stack direction="row" gap="80px">
+			<Stack direction={{ xs: 'column-reverse', lg: 'row' }} gap="50px" sx={{ px: 2 }}>
 				<ActivityTabComp
 					inputSearch={inputSearch}
 					getHistory={getHistoryFc}

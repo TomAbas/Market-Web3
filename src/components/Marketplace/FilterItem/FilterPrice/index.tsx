@@ -70,7 +70,7 @@ const FilterPrice = () => {
 	//end function
 	return (
 		<>
-			<Box sx={{ position: 'relative' }}>
+			<Box>
 				<ButtonWrapper onClick={openModal}>
 					{/* {buttonTitle !== defaultButtonTitle && (
 						<ButtonBadge>{defaultButtonTitle}</ButtonBadge>
@@ -87,7 +87,7 @@ const FilterPrice = () => {
 					<ClickAwayListener onClickAway={() => openModal()}>
 						<form
 							onSubmit={handleSubmit(handleApply)}
-							style={{ position: 'absolute', zIndex: 999, left: 0, top: '110%' }}
+							style={{ position: 'absolute', zIndex: 999, left: 0 }}
 						>
 							<DropdownWrapper sx={{ minWidth: '300px' }}>
 								<Stack

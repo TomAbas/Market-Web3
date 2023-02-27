@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useRef, useState } from 'react';
 import { Grid, Box, Tooltip } from '@mui/material';
 import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import CardNFT from 'components/Marketplace/CardNFT';
@@ -14,14 +15,22 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setFilter } from 'redux/slices/nftFilter';
 import FilterRoyal from 'components/Marketplace/FilterItem/FilterRoyal/FilterRoyal';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { FilterWrapper } from 'components/Marketplace/ViewAll/Items/styled';
+import {
+	DropdownContentStyled,
+	FilterBox,
+	FilterStack,
+	FilterWrapper,
+} from 'components/Marketplace/ViewAll/Items/styled';
 import NoItem from 'customComponents/NoItem/NoItem';
 import { selectListNftOrders } from 'redux/slices/orderResource';
+import DropDown from 'components/CustomUI/DropDown';
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 interface Props {
 	items: nftItem[];
 	isLoading: boolean;
 }
 const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
+	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
 	const [searchParams] = useSearchParams();
 	const address = searchParams.get('address');
 	const dispatch = useAppDispatch();
@@ -32,6 +41,25 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 	function filterNameItem() {
 		dispatch(setFilter({ itemName: inputRef.current.value.toLowerCase() }));
 	}
+	const renderButtonContent = () => {
+		return (
+			<FilterBox>
+				<FilterAltOutlinedIcon sx={{ width: '22px', height: '22px' }} />
+			</FilterBox>
+		);
+	};
+	const renderDropdownContent = () => {
+		return (
+			<DropdownContentStyled>
+				<FilterStack>
+					<FilterPrice />
+					<FilterStatus />
+					<FilterCollection />
+					<FilterRoyal />
+				</FilterStack>
+			</DropdownContentStyled>
+		);
+	};
 	return (
 		<>
 			{' '}
@@ -41,16 +69,38 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 					width: 'auto',
 					justifyContent: 'space-between',
 					padding: '0px 8px',
+					marginBottom: '15px',
 				}}
 			>
 				<FilterWrapper>
-					<FilterPrice />
-					<FilterStatus />
-					<FilterCollection />
-					<FilterRoyal />
+					<Box className="big-screen">
+						<FilterPrice />
+						<FilterStatus />
+						<FilterCollection />
+						<FilterRoyal />
+					</Box>
+					<DropDown
+						sx={{
+							position: 'absolute',
+							display: 'none',
+							left: 0,
+							top: '60%',
+							zIndex: 11,
+							'&.active': {
+								display: 'block',
+							},
+						}}
+						activeDropDown={activeDropDown}
+						setActiveDropDown={setActiveDropDown}
+						buttonContent={renderButtonContent()}
+						dropdownContent={renderDropdownContent()}
+						className="small-screen"
+					/>
 				</FilterWrapper>
 				<Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
-					<InputItem sx={{ marginTop: '0' }}>
+					<InputItem
+						sx={{ marginTop: '0', width: '50vw', maxWidth: '500px', minWidth: '223px' }}
+					>
 						<input
 							type="text"
 							placeholder="Search name ..."
@@ -67,7 +117,7 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 							onClick={() => navigate(`/mint?query=2`)}
 						>
 							<Box>
-								<ButtonWhite
+								<FilterBox
 									sx={{
 										py: '10px',
 										minWidth: '46px',
@@ -78,14 +128,14 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 									}}
 									// onClick={() => navigate(`${PATH_ITEM.createItem}`)}
 								>
-									<AddIcon />
-								</ButtonWhite>
+									<AddIcon sx={{ width: '22px', height: '22px' }} />
+								</FilterBox>
 							</Box>
 						</Tooltip>
 					)}
 				</Box>
 			</Box>
-			<Grid container maxWidth="1440px" mx="auto" spacing={1} mt={3}>
+			<Grid container maxWidth="1440px" mx="auto" px={1}>
 				{isLoading ? (
 					<>
 						{new Array(4).fill(null).map((_, index) => (

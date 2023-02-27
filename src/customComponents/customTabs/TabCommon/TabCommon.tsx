@@ -50,8 +50,6 @@ const TabCommon = ({ tabItems, tabSections, tabAlignment = 'center' }: TabCommon
 						sx={{
 							margin: '12px 0',
 							mb: 6,
-							// borderBottom: '1px solid grey',
-
 							'& .MuiTabs-flexContainer': {
 								...(tabAlignment === 'center'
 									? {

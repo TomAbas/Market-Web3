@@ -101,7 +101,13 @@ export default function Items() {
 						/>
 					</InputItem>
 				</Stack>
-				<Grid container maxWidth="1440px" spacing={1} px={1}>
+				<Grid
+					container
+					maxWidth="1440px"
+					spacing={1}
+					px={1}
+					sx={{ margin: '0 auto', width: '100%' }}
+				>
 					{loadingOffers ? (
 						<>
 							{arr.map((item, idx) => (

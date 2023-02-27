@@ -1,4 +1,4 @@
-import { Tooltip, Box, Grid } from '@mui/material';
+import { Tooltip, Box, Grid, Stack } from '@mui/material';
 import FilterPrice from 'components/Marketplace/FilterItem/FilterPrice';
 import FilterStatus from 'components/Marketplace/FilterItem/FilterStatus/FilterStatus';
 import { FilterWrapper } from 'components/Marketplace/ViewAll/Items/styled';
@@ -33,7 +33,12 @@ const ItemsTab: React.FC<Props> = ({ collectionInfo }) => {
 	}
 	return (
 		<>
-			<Box sx={{ display: 'flex', width: 'auto', justifyContent: 'space-between' }} px={1}>
+			<Stack
+				direction={{ xs: 'column', sm: 'row' }}
+				spacing={{ xs: 1, sm: 2, md: 4 }}
+				justifyContent={{ xs: 'center', sm: 'space-between' }}
+				px={{ xs: 1, sm: 2, md: 4 }}
+			>
 				<FilterWrapper>
 					<FilterPrice />
 					<FilterStatus />
@@ -41,6 +46,7 @@ const ItemsTab: React.FC<Props> = ({ collectionInfo }) => {
 				<Box sx={{ display: 'flex', width: 'auto', gap: '20px' }}>
 					<InputItem sx={{ marginTop: '0' }}>
 						<input
+							style={{ padding: '12px' }}
 							type="text"
 							placeholder="Search name ..."
 							onChange={filterNameItem}
@@ -72,9 +78,9 @@ const ItemsTab: React.FC<Props> = ({ collectionInfo }) => {
 						</Tooltip>
 					)}
 				</Box>
-			</Box>
+			</Stack>
 			<Box py={4}>
-				<Grid container maxWidth="1440px" mx="auto" spacing={1}>
+				<Grid container maxWidth="1440px" mx="auto" px={1}>
 					{loadingOffers ? (
 						<>
 							{new Array(12).fill(null).map((item: any, idx: any) => (

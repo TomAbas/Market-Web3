@@ -56,16 +56,12 @@ const HistoryFilter: React.FC<Props> = ({
 					}}
 				/>
 			</Box>
-
 			<Typography variant="h6" fontWeight="600">
 				FilterNft
 			</Typography>
-
 			<Stack direction="row" alignItems="center" gap={1} sx={{ mt: 2, flexWrap: 'wrap' }}>
 				{Object.keys(currentHistoryType).map((historyType: string, index: number) => {
-					// just show 6 activity when !isShowMore
 					if (!isShowMore && index > 6) return null;
-
 					const { active, icon, iconActive } = currentHistoryType[historyType];
 
 					return (

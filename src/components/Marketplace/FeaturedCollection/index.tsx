@@ -148,7 +148,7 @@ const FeaturedCollection = () => {
 					}
 				/> */}
 			</Box>
-			<Grid container spacing={1}>
+			<Grid container>
 				{isLoading ? (
 					<>
 						{arr.map((item, idx) => (
@@ -158,7 +158,7 @@ const FeaturedCollection = () => {
 				) : (
 					<>
 						{collections.map((collection: any, index: any) => (
-							<Grid xs={12} sm={6} md={4} lg={3} p={1} key={index}>
+							<Grid item xs={12} sm={6} md={4} lg={3} p={1} key={index}>
 								<Link
 									// href={`https://explorer.aptoslabs.com/account/${
 									// 	collection[0].split('*/////*')[1]

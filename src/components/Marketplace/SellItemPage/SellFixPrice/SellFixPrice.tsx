@@ -1,6 +1,5 @@
 import { Grid, Stack, Typography, Box } from '@mui/material';
 import FormSellFixPrice from 'components/Forms/FormSellFixPrice/FormSellFixPrice';
-import React from 'react';
 import ReviewItem from '../ReviewItem/ReviewItem';
 
 const SellFixPrice = () => {

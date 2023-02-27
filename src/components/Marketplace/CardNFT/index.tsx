@@ -156,7 +156,8 @@ export default function CardNFT({
 				md={4}
 				lg={3}
 				spacing={1}
-				sx={{ transition: 'all 0.5s ease', animation: '' }}
+				px={1}
+				sx={{ transition: 'all 0.5s ease', animation: '', mb: '10px' }}
 			>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
 					<Box sx={{ p: 1.5, fontStyle: 'italic' }}>
