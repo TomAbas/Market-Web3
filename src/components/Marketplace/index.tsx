@@ -50,7 +50,7 @@ export default function Marketplace() {
 					paddingTop: '100px',
 				}}
 			>
-				{/* <Notification /> */}
+				<Notification />
 				<Container maxWidth="xl">
 					<Box>
 						<HeaderSection sx={{ marginTop: '30px' }}>
