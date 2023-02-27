@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Container, Grid, Link, Stack, Typography, Skeleton } from '@mui/material';
 import Slider from 'components/Slider';
+import Notification from 'components/Notification/Notification';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CardNFT from './CardNFT';
@@ -35,11 +36,7 @@ import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import { useOutletContext } from 'react-router-dom';
 import TopCollection from './ViewAll/TopCollection';
 import FeaturedCollection from './FeaturedCollection';
-import { getUserInfo } from 'api/userApi';
-import { getAllItems } from 'api/items/itemsApi';
-import { getAllCollections } from '../../api/collectionApi';
 import useInteraction from 'hooks/useInteraction';
-import Notification from 'components/Notification/Notification';
 
 export default function Marketplace() {
 	let arr = new Array(12).fill(null);
@@ -53,7 +50,7 @@ export default function Marketplace() {
 					paddingTop: '100px',
 				}}
 			>
-				{/* <Notification /> */}
+				<Notification />
 				<Container maxWidth="xl">
 					<Box>
 						<HeaderSection sx={{ marginTop: '30px' }}>
@@ -141,21 +138,7 @@ export default function Marketplace() {
 					</Box>
 				</Container>
 				<Box px={3}>
-					<Box
-						maxWidth={1800}
-						mx="auto"
-						fontStyle="italic"
-						sx={
-							{
-								// [theme.breakpoints.down(829)]: {
-								// 	maxWidth: 500,
-								// },
-								// [theme.breakpoints.down(548)]: {
-								// 	maxWidth: 350,
-								// },
-							}
-						}
-					>
+					<Box maxWidth={1800} mx="auto" fontStyle="italic">
 						<Slider />
 					</Box>
 				</Box>

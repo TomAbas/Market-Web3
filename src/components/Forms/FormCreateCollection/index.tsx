@@ -58,11 +58,9 @@ const FormMint: React.FC<Props> = ({
 		}
 	});
 
-	const listCategoryTransformed: OptionSelectCustom<string>[] = listCategory
-		.map((item: Category) => ({ name: item.name, value: item.value.toString() }))
-		.filter((item: OptionSelectCustom<string>, idx: number) => {
-			return item.name !== 'Box';
-		});
+	const listCategoryTransformed: OptionSelectCustom<string>[] = listCategory.map(
+		(item: Category) => ({ name: item.name, value: item.value.toString() })
+	);
 	const checkCollectionNameValid = (e: any) => {
 		let value = e.target.value;
 		value = value.slice(0, 128);
@@ -253,6 +251,7 @@ const FormMint: React.FC<Props> = ({
 							transition: 'all 0.4s',
 							borderRadius: '12px',
 							fontWeight: 500,
+							color: 'black',
 							background:
 								errors.file || errors.description || errors.name
 									? '#e7e8ec'
@@ -266,13 +265,6 @@ const FormMint: React.FC<Props> = ({
 								background: '#007aff',
 								borderColor: 'transparent',
 								color: '#fff',
-							},
-							a: {
-								textDecoration: 'none',
-								'&:hover': {
-									textDecoration: 'none',
-									color: '#fff',
-								},
 							},
 						},
 					}}

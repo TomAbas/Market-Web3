@@ -17,10 +17,11 @@ import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import SkeletonCardNft from 'components/Skeletons/SkeletonCardNft';
 import DropDown from 'components/CustomUI/DropDown';
-import { getCategoryCollections, getAllCollections } from 'api/collectionApi';
 import { displayAddress, displayUserFullName } from 'utils/formatDisplay';
 import { getListCategory } from 'api/collectionApi';
 import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
+import { useAppDispatch } from 'redux/hooks';
+import { getAllCollections } from 'redux/slices/nftFilter';
 
 interface Props0 {
 	selectedFilter: any;
@@ -74,6 +75,7 @@ const DropdownContent: React.FC<Props0> = ({ selectedFilter, handleClickOption, 
 
 const FeaturedCollection = () => {
 	let arr = new Array(4).fill(null);
+	const dispatch = useAppDispatch();
 	const [activeDropDown, setActiveDropDown] = useState<boolean>(false);
 	const [selectedFilter, setSelectedFilter] = useState<string>('All');
 	const [listFilter, setListFilter] = useState<any[]>([]);
@@ -91,14 +93,21 @@ const FeaturedCollection = () => {
 		navigate(`/profile?address=${userAddress}`);
 	}
 	useEffect(() => {
+		console.log(window.innerWidth);
 		getListCategory('2')
 			.then((res: any) => res.data)
 			.then((res: any) => {
 				let listCategoy: any = Object.keys(res).map((key, index) => {
 					return { id: index, name: key, value: key };
 				});
+				dispatch(getAllCollections(res.All));
 				setListFilter(listCategoy);
-				setCollections(res[selectedFilter].slice(0, 4));
+				if (window.innerWidth > 900 && window.innerWidth < 1200) {
+					setCollections(res[selectedFilter].slice(0, 3));
+				} else {
+					setCollections(res[selectedFilter].slice(0, 4));
+				}
+
 				setIsLoading(false);
 			});
 	}, [selectedFilter]);
@@ -149,7 +158,7 @@ const FeaturedCollection = () => {
 				) : (
 					<>
 						{collections.map((collection: any, index: any) => (
-							<Grid xs={6} sm={4} md={3} p={1} key={index}>
+							<Grid xs={12} sm={6} md={4} lg={3} p={1} key={index}>
 								<Link
 									// href={`https://explorer.aptoslabs.com/account/${
 									// 	collection[0].split('*/////*')[1]

@@ -54,6 +54,9 @@ export const ButtonTitle = styled(Typography)(({ theme }) => ({
 	textOverflow: 'ellipsis',
 	overflow: 'hidden',
 	fontWeight: '500',
+	[theme.breakpoints.down('sm')]: {
+		fontSize: '0.6rem',
+	},
 }));
 
 export const DropdownWrapper = styled(Box)(({ theme }) => ({

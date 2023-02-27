@@ -1,6 +1,6 @@
 import { Box, styled } from '@mui/material';
 
-export const InputItem = styled(Box)({
+export const InputItem = styled(Box)(({ theme }) => ({
 	marginTop: 16,
 	input: {
 		display: 'block',
@@ -30,7 +30,10 @@ export const InputItem = styled(Box)({
 		marginTop: '4px',
 		color: 'red',
 	},
-});
+	[theme.breakpoints.down('md')]: {
+		margin: '16px 5px',
+	},
+}));
 
 export const InputTitle = styled('h6')({
 	fontSize: '18px',

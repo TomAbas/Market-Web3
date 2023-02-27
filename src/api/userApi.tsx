@@ -13,7 +13,7 @@ function updateUser(data: User): Promise<Response<User>> {
 function loginUser(data: UserLoginModel) {
 	let info: any = axiosClient.post('/users/login', data);
 	info.then((res: any) => {
-		if (res.data.token) {
+		if (res.data?.token) {
 			localStorage.setItem('token', res.data.token);
 			// window.location.reload();
 		}
@@ -39,7 +39,7 @@ function putLikesToItem(
 	return axiosClient.post(url, { itemId, state });
 }
 function getTopTradeUsers(chainId: string, numberDay: string): Promise<Response<any>> {
-	const url = baseURL + `/top-trader/chainId/${chainId}/?request=${numberDay}`;
+	const url = baseURL + `/get-top-trader`;
 	return axiosClient.get(url).then((res) => res.data);
 }
 function getListItemF(userAddress: string): Promise<Response<any>> {

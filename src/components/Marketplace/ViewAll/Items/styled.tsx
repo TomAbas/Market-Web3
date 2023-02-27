@@ -4,6 +4,9 @@ export const FilterWrapper = styled(Box)(({ theme }) => ({
 	display: 'flex',
 	width: '300px',
 	gap: '10px',
+	[theme.breakpoints.down('md')]: {
+		margin: '0px 5px',
+	},
 }));
 
 export const FilterBox = styled(Box)(({ theme }) => ({

@@ -13,7 +13,7 @@ export const displayUserName = (userName: any) => {
 };
 
 export const displayUserFullName = (userName: string) => {
-	if (userName.length > 20) return userName;
+	if (userName?.length > 20) return userName;
 	else return null;
 };
 

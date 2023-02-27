@@ -174,7 +174,7 @@ export const ExploreCollection = styled(Box)(({ theme }) => ({
 	color: '#131740',
 	// background: 'linear-gradient(180deg, #E0F4FF 0%, #FFFFFF 100%)',
 	[theme.breakpoints.down(480)]: {
-		padding: '8px 12px',
+		padding: '100px 12px',
 	},
 	// ...(theme.palette.mode === 'light'
 	// 	? {
@@ -290,6 +290,13 @@ export const SubTitle = styled(Typography)(({ theme }) => ({
 
 export const LinkWrapper = styled('a')(({ theme }) => ({
 	color: '#131740',
+	[theme.breakpoints.down(500)]: {
+		button: {
+			fontSize: '16px !important',
+			padding: '10px !important',
+			width: '120px !important',
+		},
+	},
 }));
 
 export const ItemImage = styled(Box)(({ theme }) => ({

@@ -16,7 +16,7 @@ import {
 } from '../styled';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import iconPriceBlack from '../../../../assets/icons/icon-filter-collection.svg';
-import { setFilter } from 'redux/slices/nftFilter';
+import { getAllCollections, setFilter } from 'redux/slices/nftFilter';
 import { useAppDispatch } from 'redux/hooks';
 import { getAllCollections as getAllCollectionsAPI } from 'api/collectionApi';
 import { Collection } from 'models/collection';

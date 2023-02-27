@@ -15,9 +15,10 @@ import { getCollectionData } from 'service/aptos.service';
 import { useAppSelector } from 'redux/hooks';
 import { selectUser } from 'redux/slices/userInfo';
 import { createCollection } from 'api/collections/collectionApi';
-import { selectTrigger } from 'redux/slices/nftFilter';
 import { toast } from 'react-toastify';
-
+import AutoCompleteCustom from 'components/CustomField/AutoCompleteCustom';
+import { OptionSelectCustom } from 'models/common';
+import { listCategory, Category } from 'constants/category.constant';
 interface Props {
 	open: boolean;
 	onClose: () => void;
@@ -27,12 +28,15 @@ interface Props {
 const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collections }) => {
 	const userInfo = useAppSelector(selectUser);
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
+	const [error, setError] = useState<any>({});
 	const [success, setSuccess] = useState(false);
 	const [activeStep, setActiveStep] = useState(0);
 	const [buttonText, setButtonText] = useState('Check' as string);
 	const [collectionName, setCollectionName] = useState('');
-	const [collectionData, setCollectionData] = useState<any>(null);
+	const [collectionData, setCollectionData] = useState<any>({ category: 0 });
+	const [currentCategoryTransformed, setCurrentCategoryTransformed] = useState<
+		OptionSelectCustom<string> | null | undefined
+	>();
 	const steps = [
 		{
 			label: 'Check Collection Name',
@@ -59,27 +63,54 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 		boxShadow: 24,
 		p: 4,
 	};
+	const listCategoryTransformed: OptionSelectCustom<string>[] = listCategory.map(
+		(item: Category) => ({ name: item.name, value: item.value.toString() })
+	);
+	const handleChangeCategory = (
+		categoryTransformed: OptionSelectCustom<string> | null | undefined
+	) => {
+		if (categoryTransformed) {
+			setCollectionData({ ...collectionData, category: categoryTransformed.value });
+			setCurrentCategoryTransformed(categoryTransformed);
+		} else {
+			setCollectionData({ ...collectionData, category: 0 });
+			setCurrentCategoryTransformed(undefined);
+		}
+	};
 
 	const handleImport = async () => {
 		try {
 			if (activeStep === 0) {
+				setError({});
 				setLoading(true);
-				if (collectionName === '') {
-					setError('Collection name is required');
-					setLoading(false);
-					return;
-				}
+				let errorName = '';
+				let errorCategory = '';
 				let isExist = collections
 					.map((item) => item.collectionName)
 					.includes(collectionName);
-				if (isExist) {
-					setError('Collection name already exist');
+				if (collectionName === '') {
+					errorName = 'Collection name is required';
 					setLoading(false);
+				} else if (isExist) {
+					errorName = 'Collection name is already exist';
+					setLoading(false);
+				} else {
+					errorName = '';
+				}
+				if (collectionData?.category === 0) {
+					console.log(collectionData?.category);
+					errorCategory = 'Category is required';
+					setLoading(false);
+				} else {
+					errorCategory = '';
+				}
+				if (errorName !== '' || errorCategory !== '') {
+					setLoading(false);
+					setError({ collectionName: errorName, category: errorCategory });
 					return;
 				}
 				getCollectionData(userInfo?.userAddress!, collectionName)
 					.then((res) => {
-						console.log(res);
 						setCollectionData({
 							userAddress: userInfo?.userAddress!,
 							chainId: '2',
@@ -92,15 +123,15 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 						setButtonText('Import');
 					})
 					.catch((err) => {
+						console.log(err);
 						setLoading(false);
 						if (err.status === 404) {
-							setError('Cannot find collection');
+							setError({ ...error, collectionName: 'Collection not found' });
 						} else {
-							setError('Something went wrong');
+							setError({ ...error, collectionName: 'Something went wrong' });
 						}
 						return;
 					});
-				setError(null);
 			} else if (activeStep === 1) {
 				setLoading(true);
 				createCollection(collectionData)
@@ -112,7 +143,8 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 					})
 					.catch((err) => {
 						setLoading(false);
-						setError('Something went wrong');
+						toast.error('Something went wrong');
+						// setError('Something went wrong');
 						return;
 					});
 			} else {
@@ -124,9 +156,7 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 				onClose();
 				toast.success('Successfully imported collection');
 			}
-		} catch (err: any) {
-			setError(err);
-		}
+		} catch (err: any) {}
 	};
 
 	return (
@@ -157,38 +187,60 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 							<StepContent>
 								{/* "Input collection name" */}
 								{index === 0 && (
-									<Box
-										sx={{
-											border: '1.5px solid #e7e8ec',
-											borderRadius: '10px',
-											input: {
+									<>
+										<Box
+											sx={{
+												border: '1.5px solid #e7e8ec',
 												borderRadius: '10px',
-												border: '0px solid white',
-												padding: '10px 24px',
-												outline: 'none',
-												fontSize: '18px',
-												fontStyle: 'italic',
-												width: '100%',
-											},
-										}}
-									>
-										<input
-											type="text"
-											value={collectionName}
-											onChange={(e) => {
-												setCollectionName(e.target.value);
+												height: '48px',
+												input: {
+													borderRadius: '10px',
+													border: '0px solid white',
+													padding: '10px 24px',
+													outline: 'none',
+													fontSize: '18px',
+													fontStyle: 'italic',
+													width: '100%',
+												},
 											}}
-											placeholder="Collection Name"
+										>
+											<input
+												type="text"
+												value={collectionName}
+												onChange={(e) => {
+													setCollectionName(e.target.value);
+												}}
+												placeholder="Collection Name"
+											/>
+										</Box>
+										{error?.collectionName && (
+											<Typography variant="caption" color="error">
+												{error?.collectionName}
+											</Typography>
+										)}
+										<AutoCompleteCustom
+											currentItem={currentCategoryTransformed}
+											listItem={listCategoryTransformed}
+											// {...register('category', {
+											// 	required: 'Category is required.',
+											// })}
+											onChange={handleChangeCategory}
+											placeholder="Category name..."
+											sx={{
+												border: '1px solid #E7E8EC',
+												borderRadius: '12px',
+												marginTop: '10px',
+											}}
 										/>
-									</Box>
+										{error?.category && (
+											<Typography variant="caption" color="error">
+												{error?.category}
+											</Typography>
+										)}
+									</>
 								)}
 
 								<Box sx={{ my: 2 }}>
-									{error && (
-										<Typography variant="caption" color="error">
-											{error}
-										</Typography>
-									)}
 									<div>
 										{loading ? (
 											<CircularProgress />

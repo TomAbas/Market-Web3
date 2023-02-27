@@ -4,7 +4,7 @@ import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generat
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
 import { openFirstModal } from '../../../redux/slices/modalWallet';
-import { useAppDispatch } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import {
 	AvatarIcon,
 	BoxCountDown,
@@ -40,6 +40,12 @@ import { TwitterShareButton } from 'react-share';
 import { RELATED_URLS } from 'constants/index';
 import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';
 import { displayUserFullName, displayUserName } from 'utils/formatDisplay';
+import { getItemFromOrder } from 'utils/dataResource';
+import ModelSell from 'components/ModelSell/ModelSell';
+import ModalListOrder from 'components/ModalListOrder/ModalListOrder';
+import { nftItem } from 'models/item';
+import { getBalanceToken } from 'service/aptos.service';
+import { selectUser } from 'redux/slices/userInfo';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 // const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
@@ -52,6 +58,8 @@ export default function CardNFT({
 	offers,
 	index,
 	loadingOffers,
+	isProfile = false,
+	listNftOrders,
 }: {
 	itemLiked: (itemId: string) => boolean;
 	likeItem: any;
@@ -59,6 +67,8 @@ export default function CardNFT({
 	offers: any;
 	index: any;
 	loadingOffers: any;
+	isProfile?: boolean;
+	listNftOrders?: any;
 }) {
 	const {
 		handleNext,
@@ -71,8 +81,20 @@ export default function CardNFT({
 		activeStep,
 		statusBuyNft,
 	} = useControlModal();
-	const { buyItemAptos } = useBuyItemAptos(offer);
+	const {
+		buyItemAptos,
+		handleWithdrawItem,
+		statusWithdraw,
+		sellItemAptos,
+		setPrice,
+		price,
+		supply,
+		statusList,
+		handleValidateAmount,
+	} = useBuyItemAptos(offer);
+	const [userAmountOfItem, setUserAmountOfItem] = useState('');
 	const [itemPrice, setItemPrice] = useState<number>();
+	const userInfo = useAppSelector(selectUser);
 	function changePrice() {
 		setItemPrice(changePriceToToken(offer.price));
 	}
@@ -113,17 +135,27 @@ export default function CardNFT({
 	const handleClickItem = () => {
 		navigate(`/item/${offer._id}`);
 	};
+
+	const checkSellable = () => {
+		if (isProfile && offer?.owner?.includes(userInfo?.userAddress!)) {
+			return true;
+		}
+		return false;
+	};
+
 	useEffect(() => {
 		changePrice();
 	}, [offer]);
+
 	return (
 		<>
 			<Grid
 				item
-				xs={6}
-				sm={4}
-				md={3}
-				p={1}
+				xs={12}
+				sm={6}
+				md={4}
+				lg={3}
+				spacing={1}
 				sx={{ transition: 'all 0.5s ease', animation: '' }}
 			>
 				<ItemCardStyle sx={{ boxShadow: 0 }}>
@@ -144,8 +176,13 @@ export default function CardNFT({
 									<TwitterShareButton
 										url={`${RELATED_URLS.MetaSpacecyHomePage}/#/item/${offer?._id}`}
 										title={`Look what I found! ${offer?.itemName} collectible`}
-										hashtags={['Music', 'Game']}
-										via="Metaspacecy"
+										hashtags={[
+											'Metaspacecy',
+											'AptosNFT',
+											'NFT',
+											'NFT_Marketplace',
+										]}
+										via="metaspacecy"
 										style={{ width: '100%', textAlign: 'left' }}
 									>
 										{' '}
@@ -232,39 +269,85 @@ export default function CardNFT({
 									sx={{ paddingTop: '15px' }}
 								>
 									{offer.status === 0 ? (
-										<Box sx={{ display: 'flex', gap: '5px' }}>
+										<>
+											{!isProfile ? (
+												<Box sx={{ display: 'flex', gap: '5px' }}>
+													<Typography
+														variant="subtitle2"
+														sx={{
+															fontWeight: '300',
+														}}
+													>
+														Unlisted
+													</Typography>
+												</Box>
+											) : (
+												<Box></Box>
+											)}
+										</>
+									) : (
+										<Box sx={{ display: 'flex', gap: '5px' }}></Box>
+									)}
+									{checkSellable() ? (
+										offer.status === 0 ? (
 											<Typography
+												onClick={(e) => {
+													e.stopPropagation();
+													navigate(`/item/sell-item/${offer._id}`);
+												}}
 												variant="subtitle2"
 												sx={{
-													fontWeight: '300',
+													color: 'rgb(0, 122, 255)',
+													fontWeight: '600',
+													'&:hover': {
+														opacity: '1',
+													},
 												}}
 											>
-												Unlisted
+												List
 											</Typography>
-										</Box>
+										) : (
+											<Typography
+												onClick={(e) => {
+													e.stopPropagation();
+													navigate(`/item/sell-item/${offer._id}`);
+												}}
+												variant="subtitle2"
+												sx={{
+													color: 'rgb(0, 122, 255)',
+													fontWeight: '600',
+													'&:hover': {
+														opacity: '1',
+													},
+												}}
+											>
+												List
+											</Typography>
+										)
 									) : (
-										<Box sx={{ display: 'flex', gap: '5px' }}>
-											{itemPrice} APT
-										</Box>
+										<>
+											{!isProfile && (
+												<Typography
+													onClick={(e) => {
+														e.stopPropagation();
+														handleOpenModalBuy();
+													}}
+													variant="subtitle2"
+													sx={{
+														color: 'rgb(0, 122, 255)',
+														fontWeight: '600',
+														'&:hover': {
+															opacity: '1',
+														},
+														display:
+															offer.status === 0 ? 'none' : 'block',
+													}}
+												>
+													Buy Now
+												</Typography>
+											)}
+										</>
 									)}
-
-									<Typography
-										onClick={(e) => {
-											e.stopPropagation();
-											handleOpenModalBuy();
-										}}
-										variant="subtitle2"
-										sx={{
-											color: 'rgb(0, 122, 255)',
-											fontWeight: '600',
-											'&:hover': {
-												opacity: '1',
-											},
-											display: offer.status === 0 ? 'none' : 'block',
-										}}
-									>
-										Buy Now
-									</Typography>
 								</Stack>
 							</Box>
 						</ItemContent>
@@ -272,16 +355,44 @@ export default function CardNFT({
 				</ItemCardStyle>
 			</Grid>
 
-			<ModalBuy
-				title="Buy Item"
-				itemPrice={itemPrice}
-				openState={openModalBuy}
-				closeModal={() => handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))}
-				funcBuyNft={claimOffer}
-				activeStep={activeStep}
-				statusBuyNft={statusBuyNft}
-				steps={steps}
-			/>
+			{offer.status === 0 && isProfile ? (
+				<ModelSell
+					open={openModalBuy}
+					handleClose={handleCloseModalBuy}
+					handleListItem={sellItemAptos}
+					setPrice={setPrice}
+					price={price}
+					supply={supply}
+					statusList={statusList}
+					userAmountOfItem={userAmountOfItem}
+					handleValidateAmount={handleValidateAmount}
+					royaltyFee={offer?.royalties.toString()!}
+				/>
+			) : (
+				<>
+					{/* <ModalBuy
+						title="Buy Item"
+						itemPrice={itemPrice}
+						openState={openModalBuy}
+						closeModal={() =>
+							handleCloseModalBuy(handleNavigate(statusBuyNft.isSuccess))
+						}
+						funcBuyNft={claimOffer}
+						activeStep={activeStep}
+						statusBuyNft={statusBuyNft}
+						steps={steps}
+					/> */}
+					{openModalBuy && (
+						<ModalListOrder
+							itemId={offer._id}
+							isOpenModal={openModalBuy}
+							setIsOpenModal={() => {
+								handleCloseModalBuy();
+							}}
+						/>
+					)}
+				</>
+			)}
 		</>
 	);
 }

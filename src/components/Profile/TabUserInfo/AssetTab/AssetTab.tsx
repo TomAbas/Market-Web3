@@ -10,12 +10,13 @@ import FilterCollection from 'components/Marketplace/FilterItem/FilterCollection
 import { InputItem } from 'components/Mint/styled';
 import AddIcon from '@mui/icons-material/Add';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
-import { useAppDispatch } from 'redux/hooks';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setFilter } from 'redux/slices/nftFilter';
 import FilterRoyal from 'components/Marketplace/FilterItem/FilterRoyal/FilterRoyal';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { FilterWrapper } from 'components/Marketplace/ViewAll/Items/styled';
 import NoItem from 'customComponents/NoItem/NoItem';
+import { selectListNftOrders } from 'redux/slices/orderResource';
 interface Props {
 	items: nftItem[];
 	isLoading: boolean;
@@ -27,6 +28,7 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 	const { likeItem, checkIsLike } = useInteraction();
 	const navigate = useNavigate();
 	const inputRef: any = useRef();
+	const listNftOrders = useAppSelector(selectListNftOrders);
 	function filterNameItem() {
 		dispatch(setFilter({ itemName: inputRef.current.value.toLowerCase() }));
 	}
@@ -102,6 +104,8 @@ const AssetTab: React.FC<Props> = ({ items, isLoading }) => {
 									index={index}
 									key={index}
 									loadingOffers={false}
+									listNftOrders={listNftOrders}
+									isProfile={address ? false : true}
 								/>
 							))
 						) : (

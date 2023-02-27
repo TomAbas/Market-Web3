@@ -81,6 +81,8 @@ const renderListImages = (ListImages: any) => {
 					}}
 				>
 					<Link
+						href={item._id.length > 0 ? `/#/item/${item._id}` : '/#'}
+						target="_self"
 						sx={{
 							textDecoration: 'none',
 							color: '#131740',
@@ -99,7 +101,7 @@ const renderListImages = (ListImages: any) => {
 						>
 							<ItemImage>
 								<Box className="main-img">
-									<img src={item.itemMedia} alt="collection" />
+									<img src={item.itemMedia} alt="collection" height={'100%'} />
 								</Box>
 							</ItemImage>
 
@@ -162,10 +164,8 @@ export default function Slider() {
 	let [listItem, setListItem] = useState([]);
 	useEffect(() => {
 		getItemSelected().then((res: any) => {
-			console.log(res.data);
 			setListItem(res.data);
 		});
-		// install Swiper modules
 	}, []);
 	return (
 		<Box

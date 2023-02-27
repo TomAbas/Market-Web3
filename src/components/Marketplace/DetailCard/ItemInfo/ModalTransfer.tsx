@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import Modal from '@mui/material/Modal';
+import { transferItem } from 'api/items/itemsApi';
 import { nftItem } from 'models/item';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { useEffect, useState } from 'react';
+import { selectUser } from 'redux/slices/userInfo';
+import { toast } from 'react-toastify';
 import useTransfer from 'utils/transfer';
+import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 interface Props {
 	itemInfo: nftItem | undefined;
 	open: boolean;
@@ -22,55 +27,78 @@ const style = {
 	p: 4,
 };
 const ModalTransferNFT: React.FC<Props> = ({ itemInfo, setOpen, open, quantity }) => {
+	const userInfo = useAppSelector(selectUser);
 	const [receiver, setReceiver] = useState('');
 	const [amount, setAmount] = useState<any>();
-	const [error, setError] = useState('');
+	const [error, setError] = useState<any>({});
+	const [loading, setLoading] = useState(false);
 	const { directTransferToken, checkEnableReceivingNFT } = useTransfer();
 	const handleClose = () => {
 		setOpen(false);
 	};
 	const handleChangeAmount = (e: any) => {
 		let value = e.target.value;
-		if (value > quantity) {
-			e.target.value = quantity;
-			setAmount(quantity);
-			return;
-		} else if (value < 1) {
+		if (value < 0) {
 			e.target.value = 1;
 			setAmount(1);
 			return;
+		} else if (value > quantity) {
+			e.target.value = quantity;
+			setAmount(quantity);
+			return;
 		}
-		setAmount(value);
+		setAmount(e.target.value);
 	};
-	const checkReceiver = async () => {
+	const checkInput = async () => {
+		let error = {};
 		if (receiver === '') {
-			setError('Receiver is required');
-			return;
+			error = { ...error, receiver: 'Receiver is required' };
+		} else if (!/^(0x[0-9a-fA-F]{64})$/.test(receiver)) {
+			error = { ...error, receiver: 'Receiver is invalid' };
+		} else {
+			let isEnable = await checkEnableReceivingNFT(receiver);
+			if (!isEnable) {
+				error = { ...error, receiver: 'Receiver is not enable to receive NFT' };
+			}
 		}
-		if (!/^(0x[0-9a-fA-F]{64})$/.test(receiver)) {
-			setError('Receiver is invalid');
-			return;
+		if (!amount) {
+			error = { ...error, amount: 'Amount is required' };
+		} else if (amount > quantity) {
+			error = { ...error, amount: 'Amount is invalid' };
 		}
-		let isEnable = await checkEnableReceivingNFT(receiver);
-		if (!isEnable) {
-			setError('Receiver is not enable to receive NFT');
-			return;
-		}
-		setError('');
+		setError(error);
+		return error;
 	};
 	const handleSend = async () => {
 		if (itemInfo) {
-			if (receiver === '') {
-				setError('Receiver is required');
+			let error = await checkInput();
+			if (Object.keys(error).length > 0) {
 				return;
 			}
+			setLoading(true);
 			await directTransferToken(
 				receiver,
 				itemInfo.creator,
 				itemInfo.collectionInfo.collectionName,
 				itemInfo.itemName,
 				amount
-			);
+			)
+				.then((res) => {
+					let data = {
+						itemId: itemInfo._id,
+						quantity: amount,
+						receive: receiver,
+						send: userInfo?.userAddress!,
+						txHash: res.hash,
+					};
+					transferItem(data);
+
+					toast.success('Successfully transfer');
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+			setLoading(false);
 			setOpen(false);
 		}
 	};
@@ -110,18 +138,19 @@ const ModalTransferNFT: React.FC<Props> = ({ itemInfo, setOpen, open, quantity }
 						value={receiver}
 						onChange={(e) => setReceiver(e.target.value)}
 						placeholder="Receiver"
-						onBlur={checkReceiver}
+						onBlur={checkInput}
 					/>
 				</Box>
 				{error && (
 					<Typography variant="body1" sx={{ fontWeight: '500', color: 'red' }}>
-						{error}
+						{error?.receiver}
 					</Typography>
 				)}
 
 				<Typography variant="body1" sx={{ fontWeight: '500' }}>
 					Amount:
 				</Typography>
+
 				<Box
 					sx={{
 						border: '1.5px solid #e7e8ec',
@@ -145,6 +174,11 @@ const ModalTransferNFT: React.FC<Props> = ({ itemInfo, setOpen, open, quantity }
 						max={quantity}
 					/>
 				</Box>
+				{error && (
+					<Typography variant="body1" sx={{ fontWeight: '500', color: 'red' }}>
+						{error?.amount}
+					</Typography>
+				)}
 
 				{/* button center */}
 				<Box sx={{ textAlign: 'center', marginTop: '15px' }}>
@@ -170,7 +204,16 @@ const ModalTransferNFT: React.FC<Props> = ({ itemInfo, setOpen, open, quantity }
 							},
 						}}
 					>
-						<button onClick={handleSend}>Transfer</button>
+						{loading ? (
+							<>
+								{' '}
+								<ButtonWhite sx={{ margin: '0 auto', maxWidth: '100px' }}>
+									<CircularProgress sx={{ color: 'black' }} size={25} />
+								</ButtonWhite>
+							</>
+						) : (
+							<button onClick={handleSend}>Transfer</button>
+						)}
 					</Box>
 				</Box>
 			</Box>

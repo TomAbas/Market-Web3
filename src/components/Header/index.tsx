@@ -20,6 +20,7 @@ import IconEvent from 'assets/icons/NavBar/icon-event.svg';
 import IconDrops from 'assets/icons/NavBar/icon-drops.svg';
 import IconXmas from 'assets/icons/NavBar/icon-xmas.svg';
 import IconAution from 'assets/icons/NavBar/auction.svg';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 //redux
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import {
@@ -45,8 +46,8 @@ import {
 	NavigationItemBigScreen,
 } from './styled';
 //image
-import LogoMSWhite from '../../assets/images/logo/logoMetaBlue.png';
-import LogoMSMobileWhite from '../../assets/images/logo/logoMetaBlue.png';
+import LogoMSWhite from '../../assets/images/logo/LogoMetaDark.png';
+import LogoMSMobileWhite from '../../assets/images/logo/HeaderLogoDarkMobo.png';
 import LogoMSGray from '../../assets/images/logo/logo-metaspacecy-gray.webp';
 import LogoMSGrayMoblie from '../../assets/images/logo/logo-metaspacecy-gray-moblie.webp';
 import aptos from '../../assets/images/logo/aptos.png';
@@ -64,6 +65,8 @@ import NavBar from 'components/NavBar';
 import NavBarMobile from 'components/NavBarMobile';
 import { userInfo } from 'os';
 import { selectUser } from 'redux/slices/userInfo';
+import GlobalSearch from './SearchBar/GlobalSearch';
+import ModalFaucetCoin from 'components/ModelFaucetCoin';
 
 const listCategoryMarketplace = [
 	// {
@@ -208,6 +211,9 @@ const listCreate = [
 	},
 ];
 const Header: React.FC = () => {
+	const [open, setOpen] = React.useState(false);
+	const handleClose = () => setOpen(false);
+	const handleOpen = () => setOpen(true);
 	const modalWalletSteps = useAppSelector(sellectStepsModalWallet);
 	const dispatch = useAppDispatch();
 	let ref: any = useRef();
@@ -278,8 +284,6 @@ const Header: React.FC = () => {
 								href="https://metaspacecy.com/"
 								sx={{
 									img: {
-										height: 50,
-										minWidth: '211.65px',
 										width: 'auto',
 										[theme.breakpoints.down(451)]: {
 											minWidth: 'unset',
@@ -290,7 +294,7 @@ const Header: React.FC = () => {
 								{isLightTheme ? (
 									<img
 										className="logoMobile"
-										src={LogoMSGrayMoblie}
+										// src={LogoMSGrayMoblie}
 										alt="page logo"
 									/>
 								) : (
@@ -318,53 +322,20 @@ const Header: React.FC = () => {
 								)}
 							</LogoLink>
 						</PageLogo>
-						<Stack
-							direction="row"
-							justifyContent="space-between"
-							alignItems="center"
-							gap={3}
-							sx={{
-								width: '60%',
-								'@media (max-width: 1024px)': {
-									width: '90%',
-								},
-							}}
-						>
+						<GlobalSearch />
+						{innerWidth > 1500 ? (
 							<Stack
 								direction="row"
+								justifyContent="space-between"
 								alignItems="center"
-								gap={1}
+								gap={3}
 								sx={{
-									width: '40%',
-									boxShadow: 'rgb(0 0 0 / 20%) 2px 3px 2px 0px',
-									borderRadius: '10px',
-									px: 2,
-									py: 1,
-									background: '#fff',
+									width: '50%',
 									'@media (max-width: 1024px)': {
-										width: '100%',
-									},
-									input: {
-										width: '100%',
-										border: '0',
-										outline: 'none',
-										fontStyle: 'italic',
-										fontWeight: '500',
-									},
-									'input::placeholder': {
-										fontStyle: 'italic',
-										fontWeight: '500',
+										width: '90%',
 									},
 								}}
 							>
-								<img src={searchIcon} alt="search" />
-								<input
-									type="text"
-									placeholder="Search"
-									style={{ minWidth: '200px' }}
-								/>
-							</Stack>
-							{innerWidth > 1500 ? (
 								<NavigationBarBigScreen>
 									<NavigationItemBigScreen sx={{ width: '165px' }}>
 										<NavLinkBigScreen
@@ -420,7 +391,9 @@ const Header: React.FC = () => {
 																</Box>
 																<Typography
 																	variant="body2"
-																	sx={{ padding: '0 0 0 8px' }}
+																	sx={{
+																		padding: '0 0 0 8px',
+																	}}
 																	textAlign="center"
 																	noWrap
 																	fontStyle="italic"
@@ -439,9 +412,6 @@ const Header: React.FC = () => {
 											className="navLink"
 											href={`#/rank?query=1`}
 											target="_self"
-											// onClick={(e: any) => {
-											// 	e.preventDefault();
-											// }}
 										>
 											<Typography
 												variant="body1"
@@ -517,27 +487,27 @@ const Header: React.FC = () => {
 											</Stack>
 										</DropdownMenu>
 									</NavigationItemBigScreen>
-									<NavigationItemBigScreen
-										sx={{ width: '165px' }}
-										title="Coming Soon"
-									>
-										<NavLinkBigScreen
-											className="navLink"
-											// href={`/#${PATH_MARKETPLACE.root}`}
-											// target="_self"
-											// onClick={(e: any) => {
-											// 	e.preventDefault();
-											// }}
-										>
-											<Typography
-												variant="body1"
-												fontStyle="italic"
-												fontWeight="500"
+									<Tooltip title="Coming Soon" arrow placement="bottom">
+										<NavigationItemBigScreen sx={{ width: '165px' }}>
+											<NavLinkBigScreen
+												className="navLink"
+												// href={`/#${PATH_MARKETPLACE.root}`}
+												// target="_self"
+												// onClick={(e: any) => {
+												// 	e.preventDefault();
+												// }}
 											>
-												Drops
-											</Typography>
-										</NavLinkBigScreen>
-									</NavigationItemBigScreen>
+												<Typography
+													variant="body1"
+													fontStyle="italic"
+													fontWeight="500"
+												>
+													Drops
+												</Typography>
+											</NavLinkBigScreen>
+										</NavigationItemBigScreen>
+									</Tooltip>
+
 									<NavigationItemBigScreen sx={{ width: '165px' }}>
 										<NavLinkBigScreen
 											className="navLink"
@@ -582,7 +552,9 @@ const Header: React.FC = () => {
 															</Box>
 															<Typography
 																variant="body2"
-																sx={{ padding: '0 0 0 8px' }}
+																sx={{
+																	padding: '0 0 0 8px',
+																}}
 																textAlign="center"
 																noWrap
 																fontStyle="italic"
@@ -596,8 +568,9 @@ const Header: React.FC = () => {
 										</DropdownMenu>
 									</NavigationItemBigScreen>
 								</NavigationBarBigScreen>
-							) : null}
-						</Stack>
+							</Stack>
+						) : null}
+
 						<Stack direction="row" alignItems="center" gap="8px">
 							<IconItem onClick={openModal}>
 								<img src={connectIcon} alt="connect icon" />
@@ -759,30 +732,37 @@ const Header: React.FC = () => {
 								)}
 							</IconItem>
 							{userInfo && (
-								<IconItem onClick={openModalInfoUser}>
-									<img src={userIcon} alt="model info" />
-									{modalWalletSteps.steps.thirdModal && userAddress && (
-										<ClickAwayListener
-											onClickAway={() => {
-												openModalInfoUser();
-											}}
-										>
-											<DropDownContent ref={ref}>
-												<Box
-													sx={{
-														width: '330px',
-														boxShadow:
-															'rgb(0 0 0 / 40%) 0px 0px 5px 0px',
-														borderRadius: '12px',
-													}}
-													p={4}
-												>
-													<ModalInfo userAddress={userAddress} />
-												</Box>
-											</DropDownContent>
-										</ClickAwayListener>
-									)}
-								</IconItem>
+								<>
+									<Tooltip title="Faucet" placement="bottom" arrow>
+										<IconItem onClick={handleOpen}>
+											<MonetizationOnIcon />
+										</IconItem>
+									</Tooltip>
+									<IconItem onClick={openModalInfoUser}>
+										<img src={userIcon} alt="model info" />
+										{modalWalletSteps.steps.thirdModal && userAddress && (
+											<ClickAwayListener
+												onClickAway={() => {
+													openModalInfoUser();
+												}}
+											>
+												<DropDownContent ref={ref}>
+													<Box
+														sx={{
+															width: '330px',
+															boxShadow:
+																'rgb(0 0 0 / 40%) 0px 0px 5px 0px',
+															borderRadius: '12px',
+														}}
+														p={4}
+													>
+														<ModalInfo userAddress={userAddress} />
+													</Box>
+												</DropDownContent>
+											</ClickAwayListener>
+										)}
+									</IconItem>
+								</>
 							)}
 							<Stack direction="row" gap="10px">
 								{innerWidth < 1500 ? (
@@ -825,6 +805,13 @@ const Header: React.FC = () => {
 					</Stack>
 				</Box>
 			</AppbarHeader>
+			<ModalFaucetCoin
+				title="Faucet Test Coins"
+				warning="A user can faucet a test coin one time in life with 100 coins from Metaspacecy."
+				subtitle="Let's get 100 test coins from Metaspacecy Aptos Marketplace for testing."
+				open={open}
+				closeModal={handleClose}
+			/>
 		</>
 	);
 };

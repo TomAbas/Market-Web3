@@ -123,27 +123,26 @@ const ProfileUser = () => {
 									}}
 								/>
 							</ClickAwayListener>
-
-							<Box
-								sx={{
-									position: 'absolute',
-									left: '50%',
-									bottom: '-60px',
-									transform: 'translateX(-50%)',
-									border: '2px solid #fff',
-									borderRadius: '10px',
-									img: {
-										width: '120px',
-										height: '120px',
-										objectFit: 'cover',
-										objectPosition: 'center',
+							<ClickAwayListener onClickAway={handleClickAvatar}>
+								<Box
+									sx={{
+										position: 'absolute',
+										left: '50%',
+										bottom: '-60px',
+										transform: 'translateX(-50%)',
+										border: '2px solid #fff',
 										borderRadius: '10px',
-										display: 'block',
-										cursor: 'pointer',
-									},
-								}}
-							>
-								<ClickAwayListener onClickAway={handleClickAvatar}>
+										img: {
+											width: '120px',
+											height: '120px',
+											objectFit: 'cover',
+											objectPosition: 'center',
+											borderRadius: '10px',
+											display: 'block',
+											cursor: 'pointer',
+										},
+									}}
+								>
 									<>
 										<Box sx={{ position: 'relative' }}>
 											<img
@@ -153,7 +152,7 @@ const ProfileUser = () => {
 													setViewAvatar(true);
 												}}
 											/>
-											{infoUser?.confirmEmail && (
+											{isEnableReceivingNFT && (
 												<Box
 													sx={{
 														position: 'absolute',
@@ -172,8 +171,8 @@ const ProfileUser = () => {
 											)}
 										</Box>
 									</>
-								</ClickAwayListener>
-							</Box>
+								</Box>
+							</ClickAwayListener>
 							<Box
 								sx={{
 									position: 'absolute',
