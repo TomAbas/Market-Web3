@@ -231,7 +231,7 @@ export default function Marketplace() {
 									cursor: 'pointer',
 									fontFamily: 'Montserrat, sans-serif !important',
 									fontStyle: 'italic !important',
-									width: '180px',
+									minWidth: '50px',
 									'&:hover': {
 										background: '#007aff',
 										borderColor: 'transparent',

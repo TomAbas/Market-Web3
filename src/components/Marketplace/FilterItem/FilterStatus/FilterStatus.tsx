@@ -52,7 +52,7 @@ const FilterStatus = () => {
 	}
 	return (
 		<>
-			<Box sx={{ position: 'relative' }}>
+			<Box>
 				<ButtonWrapper onClick={openModal}>
 					{/* {buttonTitle !== defaultButtonTitle && (
             <ButtonBadge>{defaultButtonTitle}</ButtonBadge>
@@ -66,7 +66,7 @@ const FilterStatus = () => {
 				</ButtonWrapper>
 				{open && (
 					<ClickAwayListener onClickAway={() => openModal()}>
-						<Box sx={{ position: 'absolute', zIndex: 999, left: 0, top: '110%' }}>
+						<Box sx={{ position: 'absolute', zIndex: 999, left: 0 }}>
 							<DropdownWrapper sx={{ minWidth: '300px' }}>
 								<Stack
 									direction="row"

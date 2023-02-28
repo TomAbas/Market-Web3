@@ -25,13 +25,16 @@ export const InputItem = styled(Box)(({ theme }) => ({
 			fontStyle: 'italic',
 			fontFamily: 'Montserrat,sans-serif',
 		},
+		[theme.breakpoints.down('sm')]: {
+			fontSize: '0.6rem',
+		},
 	},
 	'& p': {
 		marginTop: '4px',
 		color: 'red',
 	},
 	[theme.breakpoints.down('md')]: {
-		margin: '16px 5px',
+		// margin: '16px 5px',
 	},
 }));
 

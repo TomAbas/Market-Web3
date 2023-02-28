@@ -7,8 +7,6 @@ const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const MARKET_RESOURCE_ADDRESS =
 	process.env.REACT_APP_MARKET_RESOURCE_ADDRESS || '0x1::aptos_coin::AptosCoin';
 
-// axios.defaults.headers.common.Origin = '*';
-
 export const getListItemResource = async () => {
 	try {
 		const response: any = await axios.get(
@@ -20,7 +18,6 @@ export const getListItemResource = async () => {
 			if (item.collection !== 'Metaspacecy ticket' && item.creator !== MARKET_ADDRESS)
 				mapItems.set(`${item.collection}&${item.name}&${item.creator}`, [item.description]);
 		});
-		// console.log(mapItems);
 		const newListItem = response.data.data?.token_list;
 		newListItem.map((item: any, index: any, newListItem: any) => {
 			const foundItem = mapItems.get(
@@ -30,7 +27,6 @@ export const getListItemResource = async () => {
 				newListItem[index].description = foundItem[0];
 			}
 		});
-		// console.log(newListItem);
 		return newListItem.reverse();
 	} catch (error) {
 		return [];

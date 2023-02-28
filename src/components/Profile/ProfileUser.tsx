@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, ClickAwayListener, Grid, Stack, Typography } from '@mui/material';
+import { Box, ClickAwayListener, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -23,6 +23,7 @@ import SkeletonTopProfile from 'components/Skeletons/SkeletonTopProfile/Skeleton
 import checkicon from 'assets/icons/icon-check.svg';
 import useTransfer from 'utils/transfer';
 const ProfileUser = () => {
+	const theme = useTheme();
 	const bioRef: any = useRef();
 	const { checkEnableReceivingNFT, enableReceivingNFT } = useTransfer();
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -34,6 +35,7 @@ const ProfileUser = () => {
 	const [viewFull, setViewFull] = useState(false);
 	const [viewAvatar, setViewAvatar] = useState(false);
 	const innerHeight = innerWidth / 4.5;
+	const innerHeightMobi = innerWidth / 2;
 	let myInfo = useAppSelector(selectUser);
 	const [infoUser, setInfoUser] = useState<any>();
 	const [items, setItems] = useState<nftItem[]>([]);
@@ -111,6 +113,9 @@ const ProfileUser = () => {
 									objectPosition: 'center',
 									height: innerHeight,
 									cursor: 'pointer',
+									[theme.breakpoints.down('md')]: {
+										height: innerHeightMobi,
+									},
 								},
 							}}
 						>
@@ -189,7 +194,8 @@ const ProfileUser = () => {
 										cursor: 'pointer',
 										fontFamily: 'Montserrat, sans-serif !important',
 										fontStyle: 'italic !important',
-										width: '180px',
+										// width: '100px',
+										// maxWidth: '180px',
 										color: '#fff',
 										'&:hover': {
 											background: '#9DC3E6',
@@ -202,20 +208,58 @@ const ProfileUser = () => {
 										alignItems: 'center',
 										gap: '6px',
 									},
+									[theme.breakpoints.down(1200)]: {
+										left: 0,
+										right: 0,
+										padding: ' 5px 10px',
+										button: {
+											padding: '5px 10px',
+											minWidth: '150px',
+										},
+									},
+									[theme.breakpoints.down(600)]: {
+										left: 0,
+										right: 0,
+										padding: ' 5px 10px',
+										button: {
+											padding: '5px 10px',
+											minWidth: '100px',
+										},
+									},
 								}}
 							>
 								{/* <img src={infoUser?.avatar} alt="avatar" /> */}
 								{!address && (
-									<Stack spacing={2} direction={'row'}>
+									<Stack
+										spacing={2}
+										direction={'row'}
+										justifyContent={{ xs: 'space-between', lg: 'unset' }}
+									>
 										{!isEnableReceivingNFT && (
 											<button onClick={handleClickEnable}>
 												{/* <img src={editIcon} alt="edit" /> */}
-												<Box>Enable Receiving NFT</Box>
+												<Typography
+													sx={{
+														[theme.breakpoints.down('sm')]: {
+															fontSize: '0.5rem',
+														},
+													}}
+												>
+													Enable Receiving NFT
+												</Typography>
 											</button>
 										)}
 										<button onClick={openEditModal}>
 											<img src={editIcon} alt="edit" />
-											<Box>Edit Profile</Box>
+											<Typography
+												sx={{
+													[theme.breakpoints.down('sm')]: {
+														fontSize: '0.5rem',
+													},
+												}}
+											>
+												Edit Profile
+											</Typography>
 										</button>
 									</Stack>
 								)}

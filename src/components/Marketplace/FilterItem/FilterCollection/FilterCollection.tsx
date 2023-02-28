@@ -55,7 +55,7 @@ const FilterCollection = () => {
 	}, []);
 	return (
 		<>
-			<Box sx={{ position: 'relative' }}>
+			<Box>
 				<ButtonWrapper onClick={openModal}>
 					{/* {buttonTitle !== defaultButtonTitle && (
             <ButtonBadge>{defaultButtonTitle}</ButtonBadge>
@@ -69,8 +69,8 @@ const FilterCollection = () => {
 				</ButtonWrapper>
 				{open && (
 					<ClickAwayListener onClickAway={() => openModal()}>
-						<Box sx={{ position: 'absolute', zIndex: 999, left: 0, top: '110%' }}>
-							<DropdownWrapper sx={{ minWidth: '300px', maxWidth: '400px' }}>
+						<Box sx={{ position: 'absolute', zIndex: 999, left: 0 }}>
+							<DropdownWrapper sx={{ minWidth: '250px', maxWidth: '400px' }}>
 								<Stack
 									direction="row"
 									alignItems="center"

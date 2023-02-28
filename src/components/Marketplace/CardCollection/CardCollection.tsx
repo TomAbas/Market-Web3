@@ -21,7 +21,7 @@ const CardCollection: React.FC<Props> = ({ collection }) => {
 	}
 	return (
 		<>
-			<Grid item xs={12} sm={6} md={4} lg={3} p={1}>
+			<Grid item xs={12} sm={6} md={4} lg={3} spacing={1}>
 				<Link
 					// href={`https://explorer.aptoslabs.com/account/${
 					// 	collection[0].split('*/////*')[1]

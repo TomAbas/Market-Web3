@@ -7,14 +7,6 @@ const MARKET_ADDRESS =
 	'0x5501332ea130b2bc65a0f2531d62c26cb2c7086f856632a6a579e99ed0f186c5';
 
 const chainId = '2';
-// const tokenId = {
-// 	token_data_id: {
-// 		creator: address,
-// 		collection: collectName,
-// 		name: tokenName,
-// 	},
-// 	property_version: 0,
-// };
 
 export const getBalanceToken = async (
 	address: string,
