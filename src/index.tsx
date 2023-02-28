@@ -31,8 +31,7 @@ import Collections from 'components/Marketplace/ViewAll/Collections';
 import Items from 'components/Marketplace/ViewAll/Items';
 import Error from 'components/Error/Error';
 import SellItemPage from 'components/Marketplace/SellItemPage/SellItemPage';
-import { getBidAuction } from './utils/auctionResources';
-getBidAuction('f');
+
 const router = createHashRouter([
 	{
 		element: <App />,
@@ -83,7 +82,6 @@ const router = createHashRouter([
 			{
 				path: 'view-all',
 				element: <ViewAll />,
-
 				children: [
 					{
 						path: 'collections',
