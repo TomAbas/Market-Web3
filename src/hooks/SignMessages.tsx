@@ -96,8 +96,6 @@ const SignMessagesFc = () => {
 					? result.signature.slice(2)
 					: result.signature,
 			};
-			console.log('Result', result);
-			console.log('Obj sent', objSent);
 			loginUser(objSent);
 		});
 	}

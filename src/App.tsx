@@ -29,6 +29,7 @@ import useGetNftOrder from 'hooks/useGetNftOrder';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { getAllNfts, selectTrigger } from 'redux/slices/nftFilter';
 import AccountSign from 'components/AccountSign/AccountSign';
+import { getBidUser } from 'utils/auctionResources';
 function App() {
 	const [loadingOffers, setLoadingOffers] = useState(true);
 	const [trigger, setTrigger] = useState(false);
