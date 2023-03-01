@@ -77,7 +77,10 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 	const userAddress = useAppSelector(selectUser);
 	const [startValue, setStartValue] = useState<number>(0);
 	const [nextLowestBid, setNextLowestBid] = useState(0);
-	const { bidAuction, setPriceBid } = useAuctionModules(auctionDetail?.itemInfo, auctionDetail);
+	const { bidAuction, setPriceBid, increaseBid } = useAuctionModules(
+		auctionDetail?.itemInfo,
+		auctionDetail
+	);
 	// Waiting
 	const [claimExecuting, setClaimExecuting] = useState<boolean>(false);
 	function checkDidUserBid() {
@@ -87,13 +90,16 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 			let result = data.find((item: any) => {
 				return item.value.bidder === userAddress?.userAddress;
 			});
-			console.log(result);
-			return result;
+			if (result) {
+				increaseBid();
+			} else {
+				bidAuction();
+			}
 		}
 	}
-	useEffect(() => {
-		checkDidUserBid();
-	}, []);
+	// useEffect(() => {
+	// 	checkDidUserBid();
+	// }, []);
 	// REACT HOOK FORM
 	const schema = yup
 		.object({
@@ -523,11 +529,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 									<ButtonWhite
 										disabled={step1.isCompleted || step1.isExecuting}
 										onClick={() => {
-											if (checkDidUserBid()) {
-											} else {
-												bidAuction();
-											}
-
+											checkDidUserBid();
 											handleStep1(false);
 										}}
 										sx={{ width: '180px', height: '40px', mt: 1 }}

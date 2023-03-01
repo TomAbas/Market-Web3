@@ -128,20 +128,12 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 
 	async function increaseBid() {
 		try {
+			let newPrice = changeTokenToWeiByCoinType(priceBid, orderInfo?.coinType);
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::auction::increase_bid`,
-				type_arguments: [coinType],
-				arguments: [
-					itemInfo.creator,
-					itemInfo.collectionInfo.collectionName,
-					itemInfo.itemName,
-					0,
-					orderInfo?.amount!,
-					// deltaPrice,
-					orderInfo?.auctionId,
-					orderInfo?.expirationTime!,
-				],
+				type_arguments: [orderInfo?.coinType!],
+				arguments: [newPrice, orderInfo?.auctionId],
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				console.log(res);
