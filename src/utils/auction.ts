@@ -198,7 +198,6 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 			console.log(error);
 		}
 	}
-	//function helpers
 	function handleValidateAmount(e: any, userTokenAmount: string) {
 		console.log(userTokenAmount);
 		if (e.target.value.includes('.')) {

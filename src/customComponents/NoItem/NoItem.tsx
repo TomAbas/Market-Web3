@@ -1,17 +1,11 @@
 import { Box } from '@mui/material';
 import { CardContent, CardImage, CardText, NoItemCard, NoItemWrapper, Point } from './styled';
 import NoData from 'assets/icons/Nodata.svg';
-// const spinTransition = {
-// 	repeat: Infinity,
-// 	ease: 'linear',
-// 	duration: 10,
-// };
 
 export interface NoItemProps {
 	title: string;
 	image?: string;
 }
-
 function NoItem({ title, image = NoData }: NoItemProps) {
 	return (
 		<NoItemWrapper className="b">
@@ -24,8 +18,6 @@ function NoItem({ title, image = NoData }: NoItemProps) {
 						borderRadius: '50%',
 						animation: 'spin 10s linear infinite',
 					}}
-					// animate={{ rotate: 360 }}
-					// transition={spinTransition}
 				>
 					<Point
 						sx={{

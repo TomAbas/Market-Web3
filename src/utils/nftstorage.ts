@@ -14,7 +14,6 @@ export class NFTStorageClient {
 
 	private async fileFromPath(file: string | File) {
 		if (file instanceof File) return file;
-		// const content = await fs.readFile(file);
 		const type = mime.getType(file)!;
 		return new File([file], path.basename(file), { type });
 	}

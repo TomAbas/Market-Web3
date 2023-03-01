@@ -103,7 +103,7 @@ function useBuyItemAptos(item: nftItem, orderInfo?: orderSell) {
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				let listItem: any = {
 					maker: orderInfo?.maker,
-					txHash: 'hjasjkhabdskjsd',
+					txHash: res.hash,
 					orderId: orderInfo?._id,
 					chainId: '2',
 				};
@@ -181,7 +181,6 @@ function useBuyItemAptos(item: nftItem, orderInfo?: orderSell) {
 			});
 			setStatusList('Sell Item');
 			navigate('/view-all/items');
-			// handleItems(index);
 		} catch (error) {
 			setStatusList('Sell Item');
 		}

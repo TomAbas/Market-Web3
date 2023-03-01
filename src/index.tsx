@@ -83,7 +83,6 @@ const router = createHashRouter([
 			{
 				path: 'view-all',
 				element: <ViewAll />,
-
 				children: [
 					{
 						path: 'collections',

@@ -177,7 +177,6 @@ function useBuyItemAptos(offer: nftItem) {
 			});
 			setStatusList('Sell Item');
 			navigate('/view-all/items');
-			// handleItems(index);
 		} catch (error) {
 			setStatusList('Sell Item');
 		}

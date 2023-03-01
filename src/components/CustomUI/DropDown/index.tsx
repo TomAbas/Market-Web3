@@ -1,10 +1,5 @@
-// import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
-// styled
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ButtonContent, DropDownContent, DropDownWrapper, DropDownOverlay } from './styled';
-// components
-// import FadeInWhenVisible from 'components/Animation/FadeInWhenVisible';
 
 export interface IDropDownProps {
 	activeDropDown: boolean;
