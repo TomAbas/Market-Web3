@@ -39,6 +39,13 @@ export const changePriceToToken = (
 	return Number(wei) / 10 ** decimal;
 };
 
+export const changeTokenToWeiByCoinType = (
+	price: string,
+	tokenType: string = '0x1::aptos_coin::AptosCoin'
+) => {
+	let decimal = ListTokenPaymentTestNet.find((item) => item.type === tokenType)?.decimals || 8;
+	return Number(price) * 10 ** decimal;
+};
 export const changeTokenToWei = (token: string, decimal: number = 8) => {
 	return (Number(token) * 10 ** decimal).toString();
 };
@@ -88,4 +95,8 @@ export const compareDate = (date1: Date, date2: Date): number => {
 
 export const formatTimestamp = (timestamp: number, format: string = 'MMMM Do, YYYY, h:mm A') => {
 	return moment(new Date(timestamp * 1000)).format(format);
+};
+
+export const formatDate = (date: string | Date, format: string = 'MMMM Do, YYYY, h:mm A') => {
+	return moment(new Date(date)).format(format);
 };

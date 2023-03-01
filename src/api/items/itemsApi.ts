@@ -42,6 +42,11 @@ function getOrderOfItem(itemId: string): Promise<any[]> {
 	const url = `/order/get-order-by-itemId/${itemId}`;
 	return ClientAxios.get(url).then((res) => res.data.data);
 }
+function getAuctionDetail(orderId: string): Promise<any> {
+	const url = `/order/get-order-by-id/${orderId}`;
+	return ClientAxios.get(url).then((res) => res.data.data);
+}
+
 export {
 	getAllItems,
 	getOfferOfItem,
@@ -53,4 +58,5 @@ export {
 	getItemSelected,
 	transferItem,
 	getOrderOfItem,
+	getAuctionDetail,
 };

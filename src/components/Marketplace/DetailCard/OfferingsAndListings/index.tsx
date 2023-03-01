@@ -46,20 +46,20 @@ export default function OfferingsAndLisings({ item, userInfo }: Props) {
 		// call api get order of item
 		try {
 			let arrayListOrder = await getOrderOfItem(item._id);
-			let result = await Promise.all(
-				arrayListOrder.map(async (order, idx) => {
-					if (order.maker === userInfo?.userAddress) return true;
-					let amountMaker = await getBalanceToken(
-						order.maker,
-						item.creator,
-						item.collectionInfo.collectionName,
-						item.itemName,
-						item.chainId
-					);
-					return amountMaker >= order.amount;
-				})
-			);
-			arrayListOrder = arrayListOrder.filter((order, index) => result[index]);
+			// let result = await Promise.all(
+			// 	arrayListOrder.map(async (order, idx) => {
+			// 		if (order.maker === userInfo?.userAddress) return true;
+			// 		let amountMaker = await getBalanceToken(
+			// 			order.maker,
+			// 			item.creator,
+			// 			item.collectionInfo.collectionName,
+			// 			item.itemName,
+			// 			item.chainId
+			// 		);
+			// 		return amountMaker >= order.amount;
+			// 	})
+			// );
+			// arrayListOrder = arrayListOrder.filter((order, index) => result[index]);
 			setIsLoading(true);
 			setListOrderSell(arrayListOrder);
 		} catch (error) {

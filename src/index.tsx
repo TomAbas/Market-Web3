@@ -31,6 +31,7 @@ import Collections from 'components/Marketplace/ViewAll/Collections';
 import Items from 'components/Marketplace/ViewAll/Items';
 import Error from 'components/Error/Error';
 import SellItemPage from 'components/Marketplace/SellItemPage/SellItemPage';
+import AuctionDetail from 'components/Marketplace/Auction/AuctionDetail';
 
 const router = createHashRouter([
 	{
@@ -106,6 +107,7 @@ const router = createHashRouter([
 				path: 'myCollection/detail',
 				element: <MyCollectionDetail />,
 			},
+			{ path: 'auction/:id', element: <AuctionDetail /> },
 		],
 	},
 ]);

@@ -1,3 +1,4 @@
+import { orderSell } from './../models/transaction';
 import { selectUser } from 'redux/slices/userInfo';
 import { handleTrigger } from 'redux/slices/nftFilter';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
@@ -8,8 +9,9 @@ import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generat
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { changeTokenToWei, changePriceToToken, changeTokenToWeiByCoinType } from './function';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-function useAuctionModules(itemInfo: nftItem) {
+function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 	const userInfo = useAppSelector(selectUser);
 	const dispatch = useAppDispatch();
 	const [supply, setSupply] = useState('');
@@ -19,9 +21,11 @@ function useAuctionModules(itemInfo: nftItem) {
 	const [startTime, setStartTime] = useState('');
 	const [endTime, setEndTime] = useState('');
 	const [withdrawTime, setWithdrawTime] = useState('');
+	const [priceBid, setPriceBid] = useState('');
 	async function createAuction() {
 		if (!supply || !startPrice || !coinType || !startTime || !endTime || !withdrawTime) return;
 		try {
+			let newPrice = changeTokenToWei(startPrice, coinType!.decimals);
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::auction::auction_token`,
@@ -32,10 +36,10 @@ function useAuctionModules(itemInfo: nftItem) {
 					itemInfo.itemName,
 					0,
 					supply,
-					startPrice,
-					startTime,
-					endTime,
-					withdrawTime,
+					newPrice,
+					Math.floor(Number(startTime) / 1000),
+					Math.floor(Number(endTime) / 1000),
+					Math.floor(Number(withdrawTime) / 1000),
 				],
 			};
 			console.log(payload);
@@ -48,7 +52,7 @@ function useAuctionModules(itemInfo: nftItem) {
 					itemId: itemInfo._id,
 					maker: userInfo?.userAddress,
 					chainId: '2',
-					price: startPrice,
+					price: newPrice,
 					quantity: supply,
 					to: MARKET_ADDRESS,
 					txHash: res.hash,
@@ -66,12 +70,23 @@ function useAuctionModules(itemInfo: nftItem) {
 	}
 	async function bidAuction() {
 		try {
+			let newPrice = changeTokenToWeiByCoinType(priceBid, orderInfo?.coinType);
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::auction::bid`,
-				type_arguments: [coinType],
-				arguments: [],
+				type_arguments: [orderInfo?.coinType!],
+				arguments: [
+					itemInfo.creator,
+					itemInfo.collectionInfo.collectionName,
+					itemInfo.itemName,
+					0,
+					orderInfo?.amount!,
+					newPrice,
+					orderInfo?.auctionId,
+					orderInfo?.expirationTime!,
+				],
 			};
+			console.log(payload);
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				console.log(res);
 			});
@@ -117,7 +132,16 @@ function useAuctionModules(itemInfo: nftItem) {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::auction::increase_bid`,
 				type_arguments: [coinType],
-				arguments: [],
+				arguments: [
+					itemInfo.creator,
+					itemInfo.collectionInfo.collectionName,
+					itemInfo.itemName,
+					0,
+					orderInfo?.amount!,
+					deltaPrice,
+					orderInfo?.auctionId,
+					orderInfo?.expirationTime!,
+				],
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				console.log(res);
@@ -196,6 +220,7 @@ function useAuctionModules(itemInfo: nftItem) {
 		startPrice,
 		setStartPrice,
 		setCoinType,
+		setPriceBid,
 		setStartTime,
 		setEndTime,
 		setWithdrawTime,

@@ -50,6 +50,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "ethers": "^5.7.2",
     "firebase": "^9.15.0",
+    "framer-motion": "^10.0.1",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.21",
     "material-ui-popup-state": "^5.0.4",
@@ -62,6 +63,7 @@
     "prettier": "^2.8.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.41.5",
@@ -110,6 +112,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.191",
     "@types/numeral": "^2.0.2",
+    "@types/react-copy-to-clipboard": "^5.0.4",
     "@types/sha256": "^0.2.0"
   }
 }

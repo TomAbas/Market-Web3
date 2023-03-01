@@ -14,6 +14,7 @@ import { orderSell } from 'models/transaction';
 import { useAppSelector } from 'redux/hooks';
 import { selectUser } from 'redux/slices/userInfo';
 import { tokenPaymentSymbol } from 'constants/sellItem';
+import { useNavigate } from 'react-router-dom';
 
 export interface IOrderInItemDetailCardProps {
 	orderId: orderSell;
@@ -21,6 +22,7 @@ export interface IOrderInItemDetailCardProps {
 }
 
 export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInItemDetailCardProps) {
+	const navigate = useNavigate();
 	const { buyItemAptos, statusWithdraw, handleWithdrawItem } = useBuyItemAptos(
 		orderId.itemInfo,
 		orderId
@@ -73,17 +75,28 @@ export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInIt
 							</ButtonWhite>
 						) : (
 							<>
-								{new Date().getTime() <
-								new Date(orderId.expirationTime).getTime() ? (
-									<ButtonWhite
-										sx={{ padding: '5px 32px' }}
-										onClick={() => {
-											console.log('buy now');
-											buyItemAptos();
-										}}
-									>
-										Buy Now
-									</ButtonWhite>
+								{new Date().getTime() < Number(orderId.expirationTime) ? (
+									orderId.instantSale ? (
+										<ButtonWhite
+											sx={{ padding: '5px 32px' }}
+											onClick={() => {
+												console.log('buy now');
+												buyItemAptos();
+											}}
+										>
+											Buy Now
+										</ButtonWhite>
+									) : (
+										<ButtonWhite
+											sx={{ padding: '5px 32px' }}
+											onClick={() => {
+												console.log('buy now');
+												navigate(`/auction/${orderId._id}`);
+											}}
+										>
+											Bid Now
+										</ButtonWhite>
+									)
 								) : (
 									<>
 										<ButtonWhite disabled={true} sx={{ padding: '5px 32px' }}>
