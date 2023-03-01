@@ -6,7 +6,7 @@ const getBidAuction = async (auctionId: string, coinType: string, chainId: strin
 	const client = new AptosClient(APTOS_NODE_URL[chainId]);
 	let { data }: any = await client.getAccountResource(
 		MARKET_ADDRESS,
-		`${MARKET_ADDRESS}::auction::Auctions<0x1::aptos_coin::AptosCoin>`
+		`${MARKET_ADDRESS}::auction::Auctions<${coinType}>`
 	);
 	let handle = data.all_active_auctions.handle;
 	let dataAuction = await client.getTableItem(handle, {
@@ -15,5 +15,7 @@ const getBidAuction = async (auctionId: string, coinType: string, chainId: strin
 		key: auctionId,
 	});
 	console.log(dataAuction);
+	return dataAuction;
 };
+
 export { getBidAuction };
