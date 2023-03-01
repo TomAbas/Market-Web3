@@ -55,9 +55,10 @@ export interface IFormModalPlaceBid {
 }
 interface Props {
 	auctionDetail: orderSell;
+	bidderInfo: any;
 }
 
-export default function CountDownAndPlaceBid({ auctionDetail }: Props) {
+export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Props) {
 	const [isCheckingBalance, setIsCheckingBalance] = useState<boolean>(false);
 	const [modalOrderExpired, setModalOrderExpired] = useState<boolean>(false);
 	const [modal, setModal] = useState(false);
@@ -78,12 +79,21 @@ export default function CountDownAndPlaceBid({ auctionDetail }: Props) {
 	const [nextLowestBid, setNextLowestBid] = useState(0);
 	const { bidAuction, setPriceBid } = useAuctionModules(auctionDetail?.itemInfo, auctionDetail);
 	// Waiting
-
 	const [claimExecuting, setClaimExecuting] = useState<boolean>(false);
-
-	// ABIS
-
-	//
+	function checkDidUserBid() {
+		if (bidderInfo) {
+			const { bids } = bidderInfo;
+			const { data } = bids;
+			let result = data.find((item: any) => {
+				return item.value.bidder === userAddress?.userAddress;
+			});
+			console.log(result);
+			return result;
+		}
+	}
+	useEffect(() => {
+		checkDidUserBid();
+	}, []);
 	// REACT HOOK FORM
 	const schema = yup
 		.object({
@@ -346,14 +356,17 @@ export default function CountDownAndPlaceBid({ auctionDetail }: Props) {
 						<Stack>
 							<GridBoxBackGround>
 								<Typography variant="body1">
-									{/* {auctionDetail?.highestBid === 0 ? 'Min Price' : 'Current Bid'}: */}
-									&nbsp;
+									{bidderInfo?.offer_numbers.length === 0
+										? 'Min Price'
+										: 'Current Bid'}
+									: &nbsp;
 								</Typography>
 								<Typography variant="body1" sx={{ fontWeight: '500' }}>
-									{/* {auctionDetail?.highestBid === 0
-										? auctionDetail.minPrice
-										: auctionDetail?.highestBid}{' '}
-									{''} {auctionDetail?.priceType.toUpperCase()} */}
+									{Math.max(
+										...bidderInfo?.offer_numbers,
+										bidderInfo?.listing.min_price
+									)}
+									{/* {''} {auctionDetail?.priceType.toUpperCase()} */}
 								</Typography>
 							</GridBoxBackGround>
 						</Stack>
@@ -510,7 +523,11 @@ export default function CountDownAndPlaceBid({ auctionDetail }: Props) {
 									<ButtonWhite
 										disabled={step1.isCompleted || step1.isExecuting}
 										onClick={() => {
-											bidAuction();
+											if (checkDidUserBid()) {
+											} else {
+												bidAuction();
+											}
+
 											handleStep1(false);
 										}}
 										sx={{ width: '180px', height: '40px', mt: 1 }}

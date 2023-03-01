@@ -23,14 +23,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ContainerAuctionDetail } from './styled';
 import { getAuctionDetail } from '../../../../api/items/itemsApi';
 import { orderSell } from 'models/transaction';
+import { getBidAuction } from 'utils/auctionResources';
 
 export default function AuctionDetail() {
 	const [auctionDetail, setAuctionDetail] = useState<orderSell>();
+	const [bidderInfo, setBiddderInfo] = useState<any>();
 	const { id } = useParams();
 	const { innerWidth } = useContext(SizeContext);
 	async function getAuctionDetailFunc() {
 		console.log('id', await getAuctionDetail(id!));
-		setAuctionDetail(await getAuctionDetail(id!));
+		let auctionDetail = await getAuctionDetail(id!);
+		await getBidAuction(auctionDetail!.auctionId, auctionDetail.coinType, '2').then((res) => {
+			return setBiddderInfo(res);
+		});
+		setAuctionDetail(auctionDetail);
 	}
 	useEffect(() => {
 		console.log('id', id);
@@ -78,6 +84,7 @@ export default function AuctionDetail() {
 							<Box sx={{ marginTop: '8px' }}>
 								<CountDownAndPlaceBid
 									auctionDetail={auctionDetail!}
+									bidderInfo={bidderInfo}
 								></CountDownAndPlaceBid>
 							</Box>
 
@@ -105,7 +112,10 @@ export default function AuctionDetail() {
 						<ItemNameAndOwner auctionDetail={auctionDetail!}></ItemNameAndOwner>
 					</Box>
 					<Box sx={{ marginTop: '40px' }}>
-						<CountDownAndPlaceBid auctionDetail={auctionDetail!}></CountDownAndPlaceBid>
+						<CountDownAndPlaceBid
+							auctionDetail={auctionDetail!}
+							bidderInfo={bidderInfo}
+						></CountDownAndPlaceBid>
 					</Box>
 					<Box sx={{ marginTop: '40px' }}>
 						<ExpandCard

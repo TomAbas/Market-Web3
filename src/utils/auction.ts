@@ -138,7 +138,7 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 					itemInfo.itemName,
 					0,
 					orderInfo?.amount!,
-					deltaPrice,
+					// deltaPrice,
 					orderInfo?.auctionId,
 					orderInfo?.expirationTime!,
 				],
