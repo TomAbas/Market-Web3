@@ -28,6 +28,7 @@ import { getBidAuction } from 'utils/auctionResources';
 export default function AuctionDetail() {
 	const [auctionDetail, setAuctionDetail] = useState<orderSell>();
 	const [bidderInfo, setBiddderInfo] = useState<any>();
+	const [isFinalize, setIsFinalize] = useState<boolean>(false);
 	const { id } = useParams();
 	const { innerWidth } = useContext(SizeContext);
 	async function getAuctionDetailFunc() {
@@ -45,6 +46,7 @@ export default function AuctionDetail() {
 				offer_numbers: [],
 				listing: { min_price: '0' },
 			});
+			setIsFinalize(true);
 			console.log(error);
 		}
 	}
@@ -95,6 +97,7 @@ export default function AuctionDetail() {
 								<CountDownAndPlaceBid
 									auctionDetail={auctionDetail!}
 									bidderInfo={bidderInfo}
+									isFinalize={isFinalize}
 								></CountDownAndPlaceBid>
 							</Box>
 
@@ -125,6 +128,7 @@ export default function AuctionDetail() {
 						<CountDownAndPlaceBid
 							auctionDetail={auctionDetail!}
 							bidderInfo={bidderInfo}
+							isFinalize={isFinalize}
 						></CountDownAndPlaceBid>
 					</Box>
 					<Box sx={{ marginTop: '40px' }}>
