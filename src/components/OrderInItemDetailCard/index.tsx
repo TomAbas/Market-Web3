@@ -63,20 +63,23 @@ export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInIt
 				</Stack>
 				{userInfo?.userAddress && (
 					<Box sx={{ flexShrink: 1, height: '82%' }}>
-						{orderId.maker === userInfo?.userAddress ? (
-							<ButtonWhite
-								sx={{ padding: '5px 32px' }}
-								onClick={() => {
-									console.log('cancel now');
-									handleWithdrawItem();
-								}}
-							>
-								{statusWithdraw}
-							</ButtonWhite>
-						) : (
+						{orderId.instantSale ? (
 							<>
-								{new Date().getTime() < Number(orderId.expirationTime) ? (
-									orderId.instantSale ? (
+								{orderId.maker === userInfo?.userAddress ? (
+									<>
+										<ButtonWhite
+											sx={{ padding: '5px 32px' }}
+											onClick={() => {
+												console.log('cancel now');
+												handleWithdrawItem();
+											}}
+										>
+											{statusWithdraw}
+										</ButtonWhite>
+									</>
+								) : (
+									<>
+										{' '}
 										<ButtonWhite
 											sx={{ padding: '5px 32px' }}
 											onClick={() => {
@@ -85,28 +88,19 @@ export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInIt
 										>
 											Buy Now
 										</ButtonWhite>
-									) : (
-										<ButtonWhite
-											sx={{ padding: '5px 32px' }}
-											onClick={() => {
-												navigate(`/auction/${orderId._id}`);
-											}}
-										>
-											Bid Now
-										</ButtonWhite>
-									)
-								) : (
-									<>
-										<ButtonWhite
-											onClick={() => {
-												navigate(`/auction/${orderId._id}`);
-											}}
-											sx={{ padding: '5px 32px' }}
-										>
-											Expired
-										</ButtonWhite>
 									</>
 								)}
+							</>
+						) : (
+							<>
+								<ButtonWhite
+									sx={{ padding: '5px 32px' }}
+									onClick={() => {
+										navigate(`/auction/${orderId._id}`);
+									}}
+								>
+									Bid Now
+								</ButtonWhite>
 							</>
 						)}
 					</Box>
