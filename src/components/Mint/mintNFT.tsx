@@ -8,7 +8,6 @@ import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import FormMintNft from 'components/Forms/FormMintNFT';
-import { getListCollectionUserResource } from '../../utils/dataResource';
 import { getCollectionByUserAddress } from '../../api/collections/collectionApi';
 export default function LayoutMintNFT() {
 	const navigate = useNavigate();
@@ -55,9 +54,6 @@ export default function LayoutMintNFT() {
 	const fetchCollection = async () => {
 		if (account?.address) {
 			try {
-				const newCollections = await getListCollectionUserResource(
-					account?.address?.toString()
-				);
 				const listCollection = await getCollectionByUserAddress(
 					account?.address?.toString()
 				).then((res) => res.data);

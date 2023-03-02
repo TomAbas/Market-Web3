@@ -15,32 +15,4 @@ export function createCollectionPayload(name: string, description: string, uri: 
 	};
 }
 
-export function createTokenPayload(
-	collection: string,
-	name: string,
-	description: string,
-	uri: string,
-	payeeAddress: string,
-	amount: number,
-	royaltyFee: number
-) {
-	const royaltyFeeNumerator = royaltyFee * 100;
-	const royaltyFeeDenominator = 10000;
-	return {
-		type: 'entry_function_payload',
-		function: `${MARKET_ADDRESS}::nft::mint_nft`,
-		type_arguments: [MARKET_COINT_TYPE],
-		arguments: [
-			name,
-			description,
-			uri,
-			collection,
-			amount,
-			payeeAddress,
-			royaltyFeeNumerator,
-			royaltyFeeDenominator,
-		],
-	};
-}
-
 export const walletClient = new WalletClient(APTOS_NODE_URL, APTOS_FAUCET_URL);

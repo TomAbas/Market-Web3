@@ -20,7 +20,7 @@ const getBidAuction = async (auctionId: string, coinType: string, chainId: strin
 
 const getBidUser = async (address: string, coinType: string, chainId: string) => {
 	const client = new AptosClient(APTOS_NODE_URL[chainId]);
-	let { data }: any = await client.getAccountResource(
+	let data: any = await client.getAccountResource(
 		address,
 		`${MARKET_ADDRESS}::bid_utils::BidStore<${coinType}>`
 	);
@@ -35,4 +35,29 @@ const getBidUser = async (address: string, coinType: string, chainId: string) =>
 	// return dataAuction;
 };
 
-export { getBidAuction, getBidUser };
+getBidUser(
+	'0x7ea7456bd8e6bab493761d81136e42c018f90c5a522688a951d86e6b98a0a900',
+	'0x1::aptos_coin::AptosCoin',
+	'2'
+);
+
+const getEventsByCreationNumber = async (
+	address: string,
+	crestionNumber: string,
+	coinType: string
+) => {
+	const client = new AptosClient(APTOS_NODE_URL[2]);
+	let data: any = await client.getEventsByEventHandle(
+		address,
+		`${MARKET_ADDRESS}::bid_utils::BidStore<${coinType}>`,
+		'bid_event'
+	);
+	console.log(data);
+};
+
+getEventsByCreationNumber(
+	'0x7ea7456bd8e6bab493761d81136e42c018f90c5a522688a951d86e6b98a0a900',
+	'2',
+	'0x1::aptos_coin::AptosCoin'
+);
+export { getBidAuction, getBidUser, getEventsByCreationNumber };

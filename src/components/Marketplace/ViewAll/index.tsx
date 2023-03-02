@@ -10,7 +10,6 @@ import Items from './Items';
 import Collections from './Collections';
 import { Typography } from '@mui/material';
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
-import { getListCollectionMarketplace } from 'utils/dataResource';
 import { useAppDispatch } from 'redux/hooks';
 import { handleReset } from 'redux/slices/nftFilter';
 // import LayoutMintNFT from './mintNFT';
