@@ -38,11 +38,14 @@ const getBidUser = async (address: string, coinType: string, chainId: string) =>
 
 const getEventsByCreationNumber = async (address: string, coinType: string, chainId: string) => {
 	const client = new AptosClient(APTOS_NODE_URL[chainId]);
-	let data: any = await client.getEventsByEventHandle(
-		address,
-		`${MARKET_ADDRESS}::bid_utils::BidStore<${coinType}>`,
-		'bid_event'
-	);
+	let data: any = await client
+		.getEventsByEventHandle(
+			address,
+			`${MARKET_ADDRESS}::bid_utils::BidStore<${coinType}>`,
+			'bid_event'
+		)
+		.then((res: any) => res);
+	return data;
 };
 
 export { getBidAuction, getBidUser, getEventsByCreationNumber };

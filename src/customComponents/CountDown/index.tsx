@@ -25,7 +25,6 @@ export default function CountDown({
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const today = new Date().getTime();
-			// console.log(today);
 			const seconds = 1000;
 			const minutes = seconds * 60;
 			const hours = minutes * 60;
@@ -65,6 +64,11 @@ export default function CountDown({
 				) {
 					executeOne();
 				}
+			} else if (today > timeEnd) {
+				setDays('00');
+				setHours('00');
+				setMinutes('00');
+				setSeconds('00');
 			} else if (today > timeStart && executeZero) {
 				const timeDiff = timeEnd - today;
 				let timeObj = convertTime(timeDiff);
@@ -81,11 +85,6 @@ export default function CountDown({
 				) {
 					executeZero();
 				}
-			} else if (today > timeEnd) {
-				setDays('00');
-				setHours('00');
-				setMinutes('00');
-				setSeconds('00');
 			}
 		}, 1000);
 

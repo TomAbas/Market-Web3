@@ -37,6 +37,7 @@ import useAuctionModules from 'utils/auction';
 import { selectUser } from 'redux/slices/userInfo';
 import { orderSell } from 'models/transaction';
 import { userInfo } from 'os';
+import { getEventsByCreationNumber } from 'utils/auctionResources';
 
 export interface StepStatus {
 	isChecking: boolean;
@@ -56,9 +57,10 @@ export interface IFormModalPlaceBid {
 interface Props {
 	auctionDetail: orderSell;
 	bidderInfo: any;
+	isFinalize: boolean;
 }
 
-export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Props) {
+export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFinalize }: Props) {
 	const [isCheckingBalance, setIsCheckingBalance] = useState<boolean>(false);
 	const [modalOrderExpired, setModalOrderExpired] = useState<boolean>(false);
 	const [modal, setModal] = useState(false);
@@ -74,6 +76,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 	const [openStep, setOpenStep] = useState<boolean>(false);
 	const [nativeToken, setNativeToken] = useState(false);
 	const [didUserBid, setDidUserBid] = useState(false);
+	const [checkIsClaim, setCheckIsClaim] = useState(false);
 	//
 	const userAddress = useAppSelector(selectUser);
 	const [startValue, setStartValue] = useState<number>(0);
@@ -109,14 +112,13 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 				auctionDetail.coinType,
 				'2'
 			).then((res) => res.map((item: any) => item.data.bid_id.listing_id));
-			console.log(listBid);
 			let isBid = listBid.find((listid: any) => {
 				return (
 					listid.creation_num == auctionDetail.creationNumber &&
 					listid.addr == auctionDetail.maker
 				);
 			});
-			if (isBid) {
+			if (isBid && (isFinalize || Number(auctionDetail.expirationTime) < Date.now())) {
 				setCheckIsClaim(true);
 			}
 		} catch (err) {
@@ -127,6 +129,9 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 	useEffect(() => {
 		if (bidderInfo && userAddress) {
 			setDidUserBid(checkDidUserBid());
+			checkCanClaim();
+		}
+		if (userAddress) {
 			checkCanClaim();
 		}
 	}, [bidderInfo, userAddress]);
@@ -370,10 +375,9 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 							</ButtonWhite>
 						);
 					}
-				} else if (Number(auctionDetail.expirationTime) < new Date().getTime()) {
+				} else if (checkIsClaim) {
 					return (
 						<ButtonWhite
-							disabled={true}
 							onClick={() => {
 								withdrawCoinFromAuction();
 							}}
@@ -391,166 +395,6 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 						</ButtonWhite>
 					);
 				}
-			}
-		}
-		if (auctionDetail) {
-			if (
-				Number(auctionDetail.startTime) < new Date().getTime() &&
-				Number(auctionDetail.expirationTime) > new Date().getTime() &&
-				userAddress?.userAddress !== auctionDetail.maker
-			) {
-				if (didUserBid) {
-					return (
-						<Stack direction={'row'} gap="50">
-							<ButtonWhite
-								disabled={
-									userAddress?.userAddress === auctionDetail?.maker ||
-									!userAddress?.userAddress ||
-									disableButtonPlaceBid
-								}
-								onClick={() => {
-									setModal(true);
-								}}
-								sx={{
-									fontWeight: '600',
-									width: 'fit-content',
-									mx: 'auto',
-								}}
-							>
-								<Stack direction="row" alignItems="center">
-									<Typography variant="body1" sx={{ fontWeight: '600' }}>
-										Place Bid
-									</Typography>
-								</Stack>
-							</ButtonWhite>
-							<ButtonWhite
-								disabled={
-									userAddress?.userAddress === auctionDetail?.maker ||
-									!userAddress?.userAddress ||
-									disableButtonPlaceBid
-								}
-								onClick={() => {
-									// setModal(true);
-									cancelBid();
-								}}
-								sx={{
-									fontWeight: '600',
-									width: 'fit-content',
-									mx: 'auto',
-								}}
-							>
-								<Stack direction="row" alignItems="center">
-									<Typography variant="body1" sx={{ fontWeight: '600' }}>
-										Cancel bid
-									</Typography>
-								</Stack>
-							</ButtonWhite>
-						</Stack>
-					);
-				} else {
-					return (
-						<ButtonWhite
-							disabled={
-								userAddress?.userAddress === auctionDetail?.maker ||
-								!userAddress?.userAddress ||
-								disableButtonPlaceBid
-							}
-							onClick={() => {
-								setModal(true);
-							}}
-							sx={{
-								fontWeight: '600',
-								width: 'fit-content',
-								mx: 'auto',
-							}}
-						>
-							<Stack direction="row" alignItems="center">
-								<Typography variant="body1" sx={{ fontWeight: '600' }}>
-									Place Bid
-								</Typography>
-							</Stack>
-						</ButtonWhite>
-					);
-				}
-			}
-			// if (
-			// 	userAddress?.userAddress === auctionDetail.maker &&
-			// 	new Date(auctionDetail.expirationTime).getTime() < new Date().getTime() &&
-			// 	new Date(auctionDetail.startTime).getTime() > new Date().getTime() &&
-			// ) {
-			// 	return (
-			// 		<ButtonWhite
-			// 			disabled={
-			// 				userAddress.userAddress !== auctionDetail.maker || !userAddress || claimExecuting
-			// 			}
-			// 			onClick={() => {
-			// 				handleTakeHighestBid();
-			// 			}}
-			// 			sx={{
-			// 				fontWeight: '600',
-			// 				width: 'fit-content',
-			// 				mx: 'auto',
-			// 			}}
-			// 		>
-			// 			<Stack direction="row" alignItems="center">
-			// 				{claimExecuting && (
-			// 					<CircularProgress sx={{ color: 'white', mr: 1 }} size={16} />
-			// 				)}
-			// 				<Typography variant="body1" sx={{ fontWeight: '600' }}>
-			// 					TAKE HIGHEST BID
-			// 				</Typography>
-			// 			</Stack>
-			// 		</ButtonWhite>
-			// 	);
-			// }
-
-			if (
-				userAddress?.userAddress === auctionDetail.maker &&
-				Number(auctionDetail.expirationTime) < new Date().getTime()
-			) {
-				return (
-					<ButtonWhite
-						disabled={!userAddress || claimExecuting}
-						onClick={() => {
-							finalizeAuction();
-						}}
-						sx={{
-							fontWeight: '600',
-							width: 'fit-content',
-							mx: 'auto',
-						}}
-					>
-						<Stack direction="row" alignItems="center">
-							{claimExecuting && (
-								<CircularProgress sx={{ color: 'white', mr: 1 }} size={16} />
-							)}
-							<Typography variant="body1" sx={{ fontWeight: '600' }}>
-								Finalize
-							</Typography>
-						</Stack>
-					</ButtonWhite>
-				);
-			} else {
-				return (
-					<ButtonWhite
-						onClick={() => {
-							withdrawCoinFromAuction();
-							// handlePlacebid1();
-						}}
-						sx={{
-							fontWeight: '600',
-							width: 'fit-content',
-							mx: 'auto',
-						}}
-					>
-						<Stack direction="row" alignItems="center">
-							<Typography variant="body1" sx={{ fontWeight: '600' }}>
-								Claim
-								{/* claim tien */}
-							</Typography>
-						</Stack>
-					</ButtonWhite>
-				);
 			}
 		}
 	};
