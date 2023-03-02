@@ -102,9 +102,32 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 		}
 	}
 
+	async function checkCanClaim() {
+		try {
+			let listBid = await getEventsByCreationNumber(
+				userAddress?.userAddress!,
+				auctionDetail.coinType,
+				'2'
+			).then((res) => res.map((item: any) => item.data.bid_id.listing_id));
+			console.log(listBid);
+			let isBid = listBid.find((listid: any) => {
+				return (
+					listid.creation_num == auctionDetail.creationNumber &&
+					listid.addr == auctionDetail.maker
+				);
+			});
+			if (isBid) {
+				setCheckIsClaim(true);
+			}
+		} catch (err) {
+			setCheckIsClaim(false);
+		}
+	}
+
 	useEffect(() => {
 		if (bidderInfo && userAddress) {
 			setDidUserBid(checkDidUserBid());
+			checkCanClaim();
 		}
 	}, [bidderInfo, userAddress]);
 
