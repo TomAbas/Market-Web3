@@ -94,7 +94,7 @@ export default function AuctionDetail() {
 									icon={''}
 									alt="list-bider-expand"
 								>
-									{/* <OfferTab></OfferTab> */}
+									<OfferTab bidderInfo={bidderInfo}></OfferTab>
 									{/* list of bidder */}
 								</ExpandCard>
 							</Box>

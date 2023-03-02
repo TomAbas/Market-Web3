@@ -100,11 +100,12 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 			return false;
 		}
 	}
+
 	useEffect(() => {
-		if (bidderInfo) {
+		if (bidderInfo && userAddress) {
 			setDidUserBid(checkDidUserBid());
 		}
-	}, [bidderInfo]);
+	}, [bidderInfo, userAddress]);
 
 	// REACT HOOK FORM
 	const schema = yup
@@ -587,9 +588,9 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 										disabled={step1.isCompleted || step1.isExecuting}
 										onClick={() => {
 											if (didUserBid) {
-												bidAuction();
-											} else {
 												increaseBid();
+											} else {
+												bidAuction();
 											}
 											handleStep1(false);
 										}}
