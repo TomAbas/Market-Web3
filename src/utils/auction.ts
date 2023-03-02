@@ -99,24 +99,8 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::auction::cancel_bid`,
-				type_arguments: [coinType],
-				arguments: [],
-			};
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
-				console.log(res);
-			});
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
-	async function finalizeAuction() {
-		try {
-			const payload: TransactionPayload = {
-				type: 'entry_function_payload',
-				function: `${MARKET_ADDRESS}::auction::finalize_auction`,
-				type_arguments: [coinType],
-				arguments: [],
+				type_arguments: [orderInfo?.coinType!],
+				arguments: [orderInfo?.auctionId],
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				console.log(res);
@@ -159,13 +143,13 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 		}
 	}
 
-	async function initializeAuctionFee() {
+	async function finalizeAuction() {
 		try {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
-				function: `${MARKET_ADDRESS}::auction::initialize_auction_fee`,
-				type_arguments: [coinType],
-				arguments: [],
+				function: `${MARKET_ADDRESS}::auction::finalize_auction`,
+				type_arguments: [orderInfo?.coinType!],
+				arguments: [orderInfo?.auctionId],
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				console.log(res);
@@ -174,14 +158,13 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 			console.log(error);
 		}
 	}
-
 	async function withdrawCoinFromAuction() {
 		try {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::auction::withdraw_coin_from_auction`,
-				type_arguments: [coinType],
-				arguments: [],
+				type_arguments: [orderInfo?.coinType!],
+				arguments: [orderInfo?.maker!, orderInfo?.creationNumber],
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				console.log(res);
@@ -221,7 +204,6 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 		finalizeAuction,
 		increaseBid,
 		initializeAuction,
-		initializeAuctionFee,
 		withdrawCoinFromAuction,
 	};
 }

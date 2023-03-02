@@ -5,22 +5,23 @@ export const BoxTrick = styled(Box)(({ theme }) => ({
 	borderRadius: 20,
 	paddingTop: '100%',
 	overflow: 'hidden',
-	// ...(theme.palette.mode === 'light'
-	// 	? {
-	// 			border: '2px solid #aebcc9',
-	// 	  }
-	// 	: {
-	// 			border: '2px solid #004078',
-	// 	  }),
+	[theme.breakpoints.down(1200)]: {
+		paddingTop: '82%',
+	},
 }));
 
-export const BoxImage = styled(Box)({
+export const BoxImage = styled(Box)(({ theme }) => ({
 	position: 'absolute',
 	top: 0,
 	left: 0,
 	width: '100%',
-	height: '100%',
-});
+	height: 'auto',
+	[theme.breakpoints.down(1200)]: {
+		width: '80%',
+		left: '50%',
+		transform: 'translateX(-50%)',
+	},
+}));
 
 export const SkeletonImage = styled(Skeleton)({
 	width: 'auto',

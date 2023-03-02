@@ -52,11 +52,8 @@ export default function ItemImage({ auctionDetail }: auctionDetail) {
 							style={{
 								borderRadius: '12px',
 								position: 'absolute',
-								top: '50%',
-								left: '50%',
-								transform: 'translate(-50%, -50%)',
-								maxHeight: '100%',
-								maxWidth: '100%',
+								top: '0%',
+								minWidth: '100%',
 								opacity: 1,
 							}}
 						/>

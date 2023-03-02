@@ -73,33 +73,39 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 	const [disableButtonPlaceBid, setDisableButtonPlaceBid] = useState<boolean>(false);
 	const [openStep, setOpenStep] = useState<boolean>(false);
 	const [nativeToken, setNativeToken] = useState(false);
+	const [didUserBid, setDidUserBid] = useState(false);
 	//
 	const userAddress = useAppSelector(selectUser);
 	const [startValue, setStartValue] = useState<number>(0);
 	const [nextLowestBid, setNextLowestBid] = useState(0);
-	const { bidAuction, setPriceBid, increaseBid } = useAuctionModules(
-		auctionDetail?.itemInfo,
-		auctionDetail
-	);
+	const {
+		bidAuction,
+		setPriceBid,
+		increaseBid,
+		cancelBid,
+		withdrawCoinFromAuction,
+		finalizeAuction,
+	} = useAuctionModules(auctionDetail?.itemInfo, auctionDetail);
 	// Waiting
 	const [claimExecuting, setClaimExecuting] = useState<boolean>(false);
 	function checkDidUserBid() {
-		if (bidderInfo) {
-			const { bids } = bidderInfo;
-			const { data } = bids;
-			let result = data.find((item: any) => {
-				return item.value.bidder === userAddress?.userAddress;
-			});
-			if (result) {
-				increaseBid();
-			} else {
-				bidAuction();
-			}
+		const { bids } = bidderInfo;
+		const { data } = bids;
+		let result = data.find((item: any) => {
+			return item.value.bidder === userAddress?.userAddress;
+		});
+		if (result) {
+			return true;
+		} else {
+			return false;
 		}
 	}
-	// useEffect(() => {
-	// 	checkDidUserBid();
-	// }, []);
+	useEffect(() => {
+		if (bidderInfo) {
+			setDidUserBid(checkDidUserBid());
+		}
+	}, [bidderInfo]);
+
 	// REACT HOOK FORM
 	const schema = yup
 		.object({
@@ -238,6 +244,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 	};
 
 	// Starting Auction
+
 	const handleRenderButtonBid = () => {
 		if (auctionDetail) {
 			if (
@@ -245,29 +252,79 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 				Number(auctionDetail.expirationTime) > new Date().getTime() &&
 				userAddress?.userAddress !== auctionDetail.maker
 			) {
-				return (
-					<ButtonWhite
-						disabled={
-							userAddress?.userAddress === auctionDetail?.maker ||
-							!userAddress?.userAddress ||
-							disableButtonPlaceBid
-						}
-						onClick={() => {
-							setModal(true);
-						}}
-						sx={{
-							fontWeight: '600',
-							width: 'fit-content',
-							mx: 'auto',
-						}}
-					>
-						<Stack direction="row" alignItems="center">
-							<Typography variant="body1" sx={{ fontWeight: '600' }}>
-								Place Bid
-							</Typography>
+				if (didUserBid) {
+					return (
+						<Stack direction={'row'} gap="50">
+							<ButtonWhite
+								disabled={
+									userAddress?.userAddress === auctionDetail?.maker ||
+									!userAddress?.userAddress ||
+									disableButtonPlaceBid
+								}
+								onClick={() => {
+									setModal(true);
+								}}
+								sx={{
+									fontWeight: '600',
+									width: 'fit-content',
+									mx: 'auto',
+								}}
+							>
+								<Stack direction="row" alignItems="center">
+									<Typography variant="body1" sx={{ fontWeight: '600' }}>
+										Place Bid
+									</Typography>
+								</Stack>
+							</ButtonWhite>
+							<ButtonWhite
+								disabled={
+									userAddress?.userAddress === auctionDetail?.maker ||
+									!userAddress?.userAddress ||
+									disableButtonPlaceBid
+								}
+								onClick={() => {
+									// setModal(true);
+									cancelBid();
+								}}
+								sx={{
+									fontWeight: '600',
+									width: 'fit-content',
+									mx: 'auto',
+								}}
+							>
+								<Stack direction="row" alignItems="center">
+									<Typography variant="body1" sx={{ fontWeight: '600' }}>
+										Cancel bid
+									</Typography>
+								</Stack>
+							</ButtonWhite>
 						</Stack>
-					</ButtonWhite>
-				);
+					);
+				} else {
+					return (
+						<ButtonWhite
+							disabled={
+								userAddress?.userAddress === auctionDetail?.maker ||
+								!userAddress?.userAddress ||
+								disableButtonPlaceBid
+							}
+							onClick={() => {
+								setModal(true);
+							}}
+							sx={{
+								fontWeight: '600',
+								width: 'fit-content',
+								mx: 'auto',
+							}}
+						>
+							<Stack direction="row" alignItems="center">
+								<Typography variant="body1" sx={{ fontWeight: '600' }}>
+									Place Bid
+								</Typography>
+							</Stack>
+						</ButtonWhite>
+					);
+				}
 			}
 			// if (
 			// 	userAddress?.userAddress === auctionDetail.maker &&
@@ -311,7 +368,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 							claimExecuting
 						}
 						onClick={() => {
-							handleClaimBid();
+							finalizeAuction();
 						}}
 						sx={{
 							fontWeight: '600',
@@ -529,7 +586,11 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 									<ButtonWhite
 										disabled={step1.isCompleted || step1.isExecuting}
 										onClick={() => {
-											checkDidUserBid();
+											if (didUserBid) {
+												bidAuction();
+											} else {
+												increaseBid();
+											}
 											handleStep1(false);
 										}}
 										sx={{ width: '180px', height: '40px', mt: 1 }}

@@ -165,7 +165,7 @@ export default function AuctionDetail() {
 					<LoadingPage />{' '}
 				</Box>
 			) : (
-				<Box mt={14}>{renderAuctionDetail()}</Box>
+				<Box pt={14}>{renderAuctionDetail()}</Box>
 				// <h1>48y723</h1>
 			)}
 		</>
