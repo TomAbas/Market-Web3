@@ -91,6 +91,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 	function checkDidUserBid() {
 		const { bids } = bidderInfo;
 		const { data } = bids;
+		console.log('data', data);
 		let result = data.find((item: any) => {
 			return item.value.bidder === userAddress?.userAddress;
 		});
@@ -387,8 +388,8 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 			} else {
 				return (
 					<ButtonWhite
-						disabled={true}
 						onClick={() => {
+							withdrawCoinFromAuction();
 							// handlePlacebid1();
 						}}
 						sx={{
@@ -423,10 +424,15 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 									: &nbsp;
 								</Typography>
 								<Typography variant="body1" sx={{ fontWeight: '500' }}>
-									{Math.max(
-										...bidderInfo?.offer_numbers,
-										bidderInfo?.listing.min_price
+									{bidderInfo && (
+										<>
+											{Math.max(
+												...bidderInfo?.offer_numbers,
+												bidderInfo?.listing?.min_price
+											)}
+										</>
 									)}
+
 									{/* {''} {auctionDetail?.priceType.toUpperCase()} */}
 								</Typography>
 							</GridBoxBackGround>
