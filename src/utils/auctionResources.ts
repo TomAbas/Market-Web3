@@ -55,9 +55,4 @@ const getEventsByCreationNumber = async (
 	console.log(data);
 };
 
-getEventsByCreationNumber(
-	'0x7ea7456bd8e6bab493761d81136e42c018f90c5a522688a951d86e6b98a0a900',
-	'2',
-	'0x1::aptos_coin::AptosCoin'
-);
 export { getBidAuction, getBidUser, getEventsByCreationNumber };
