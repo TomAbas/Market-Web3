@@ -109,22 +109,6 @@ export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInIt
 					</Box>
 				)}
 			</Stack>
-
-			{/* {orderType === 'offer' && (
-					<ButtonBox className="ButtonDisplay">
-						<ButtonAcceptOffer orderBuy={orderResponse} />
-					</ButtonBox>
-				)} */}
-
-			{/* {orderType === 'sell' && (
-					<ButtonBox className="ButtonDisplay">
-						<ButtonBuy
-							item={item}
-							currentOrderPrice={currentOrderPrice}
-							orderSell={orderResponse}
-						/>
-					</ButtonBox>
-				)} */}
 		</OrderCard>
 	) : (
 		<SkeletonOrderInItemDetailCard />

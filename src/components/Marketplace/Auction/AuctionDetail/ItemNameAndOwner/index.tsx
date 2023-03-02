@@ -3,6 +3,7 @@
 import { Box, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { orderSell } from 'models/transaction';
 import React, { Fragment, useEffect, useState } from 'react';
+import { displayAddress } from 'utils/formatDisplay';
 
 export interface IAppProps {
 	auctionDetail: orderSell;
@@ -80,7 +81,7 @@ export default function ItemNameAndOwner({ auctionDetail }: IAppProps) {
 				<Stack direction="row">
 					<Typography variant="body1">Seller: &nbsp;</Typography>
 					<Typography variant="body1" fontWeight={500}>
-						{auctionDetail.maker}
+						{displayAddress(auctionDetail.maker)}
 					</Typography>
 				</Stack>
 				<Stack direction="row">

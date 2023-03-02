@@ -16,7 +16,7 @@ export default function DetailTab({ auctionDetail }: IAppProps) {
 			<Stack direction="row" justifyContent="space-between" mt={1}>
 				<Typography>Seller</Typography>
 				<Stack direction="row">
-					<Typography>{auctionDetail.maker} </Typography>
+					<Typography>{displayAddress(auctionDetail.maker)} </Typography>
 					<CopyToClipboardButton text={auctionDetail.maker} placementTooltip="top" />
 				</Stack>
 			</Stack>
