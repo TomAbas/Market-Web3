@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { AptosClient } from 'aptos';
 import { APTOS_NODE_URL } from '../constants/aptos.constant';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS || '';
@@ -14,7 +15,7 @@ const getBidAuction = async (auctionId: string, coinType: string, chainId: strin
 		value_type: `${MARKET_ADDRESS}::auction::Auction<${coinType}>`,
 		key: auctionId,
 	});
-	console.log(dataAuction);
+
 	return dataAuction;
 };
 
@@ -25,7 +26,7 @@ const getBidUser = async (address: string, coinType: string, chainId: string) =>
 		`${MARKET_ADDRESS}::bid_utils::BidStore<${coinType}>`
 	);
 	// let handle = data.store.handle;
-	console.log(data);
+
 	// let dataAuction = await client.getTableItem(handle, {
 	// 	key_type: 'u64',
 	// 	value_type: `${MARKET_ADDRESS}::auction::Auction<${coinType}>`,
@@ -41,18 +42,14 @@ getBidUser(
 	'2'
 );
 
-const getEventsByCreationNumber = async (
-	address: string,
-	crestionNumber: string,
-	coinType: string
-) => {
-	const client = new AptosClient(APTOS_NODE_URL[2]);
+const getEventsByCreationNumber = async (address: string, coinType: string, chainId: string) => {
+	const client = new AptosClient(APTOS_NODE_URL[chainId]);
 	let data: any = await client.getEventsByEventHandle(
 		address,
 		`${MARKET_ADDRESS}::bid_utils::BidStore<${coinType}>`,
 		'bid_event'
 	);
-	console.log(data);
+	return data;
 };
 
 export { getBidAuction, getBidUser, getEventsByCreationNumber };

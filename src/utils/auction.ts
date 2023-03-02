@@ -83,7 +83,7 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 					orderInfo?.amount!,
 					newPrice,
 					orderInfo?.auctionId,
-					orderInfo?.expirationTime!,
+					Number(orderInfo?.expirationTime!) / 1000,
 				],
 			};
 			console.log(payload);

@@ -37,6 +37,7 @@ import useAuctionModules from 'utils/auction';
 import { selectUser } from 'redux/slices/userInfo';
 import { orderSell } from 'models/transaction';
 import { userInfo } from 'os';
+import { getEventsByCreationNumber } from 'utils/auctionResources';
 
 export interface StepStatus {
 	isChecking: boolean;
@@ -91,6 +92,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 	function checkDidUserBid() {
 		const { bids } = bidderInfo;
 		const { data } = bids;
+		console.log('data', data);
 		let result = data.find((item: any) => {
 			return item.value.bidder === userAddress?.userAddress;
 		});
@@ -100,11 +102,12 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 			return false;
 		}
 	}
+
 	useEffect(() => {
-		if (bidderInfo) {
+		if (bidderInfo && userAddress) {
 			setDidUserBid(checkDidUserBid());
 		}
-	}, [bidderInfo]);
+	}, [bidderInfo, userAddress]);
 
 	// REACT HOOK FORM
 	const schema = yup
@@ -386,8 +389,8 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 			} else {
 				return (
 					<ButtonWhite
-						disabled={true}
 						onClick={() => {
+							withdrawCoinFromAuction();
 							// handlePlacebid1();
 						}}
 						sx={{
@@ -422,10 +425,15 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 									: &nbsp;
 								</Typography>
 								<Typography variant="body1" sx={{ fontWeight: '500' }}>
-									{Math.max(
-										...bidderInfo?.offer_numbers,
-										bidderInfo?.listing.min_price
+									{bidderInfo && (
+										<>
+											{Math.max(
+												...bidderInfo?.offer_numbers,
+												bidderInfo?.listing?.min_price
+											)}
+										</>
 									)}
+
 									{/* {''} {auctionDetail?.priceType.toUpperCase()} */}
 								</Typography>
 							</GridBoxBackGround>
@@ -584,9 +592,9 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 										disabled={step1.isCompleted || step1.isExecuting}
 										onClick={() => {
 											if (didUserBid) {
-												bidAuction();
-											} else {
 												increaseBid();
+											} else {
+												bidAuction();
 											}
 											handleStep1(false);
 										}}

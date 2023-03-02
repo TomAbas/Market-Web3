@@ -80,7 +80,6 @@ export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInIt
 										<ButtonWhite
 											sx={{ padding: '5px 32px' }}
 											onClick={() => {
-												console.log('buy now');
 												buyItemAptos();
 											}}
 										>
@@ -90,7 +89,6 @@ export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInIt
 										<ButtonWhite
 											sx={{ padding: '5px 32px' }}
 											onClick={() => {
-												console.log('buy now');
 												navigate(`/auction/${orderId._id}`);
 											}}
 										>
@@ -99,7 +97,12 @@ export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInIt
 									)
 								) : (
 									<>
-										<ButtonWhite disabled={true} sx={{ padding: '5px 32px' }}>
+										<ButtonWhite
+											onClick={() => {
+												navigate(`/auction/${orderId._id}`);
+											}}
+											sx={{ padding: '5px 32px' }}
+										>
 											Expired
 										</ButtonWhite>
 									</>

@@ -5,47 +5,54 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { BiderBoxStack, CoverOfferTab, ItemOfferAuctionDetail } from './styled';
 import { displayAddress, formatDate } from 'utils/function';
 import { PriceStyle } from 'components/Marketplace/CardNFT/styled';
+import { getUserInfo } from 'api/userApi';
+export interface IAppProps {
+	bidderInfo: any;
+}
 
-export interface IAppProps {}
-
-export default function OfferTab(props: IAppProps) {
-	// const auctionDetail = useSelector(selectAuctionDetail);
-	// const [listBider, setListBider] = useState<listBider[]>();
+export default function OfferTab({ bidderInfo }: IAppProps) {
+	const [listBider, setListBider] = useState<any>();
 	// const theme = useTheme();
-	// useEffect(() => {
-	// 	if (auctionDetail) {
-	// 		(async () => {
-	// 			try {
-	// 				const res: Response<any> = await auctionApi.getListBiderByInoId(
-	// 					auctionDetail._id
-	// 				);
-	// 				setListBider(res.data);
-	// 			} catch (error) {
-	// 				console.log('some error when get list bider', error);
-	// 			}
-	// 		})();
-	// 	}
-	// }, [auctionDetail]);
+	async function getInfoOfListBidder() {
+		const { bids } = bidderInfo;
+		const { data } = bids;
+		try {
+			let result = await Promise.all(
+				data.reverse().map(async (item: any) => {
+					let a = await getUserInfo(item.value.bidder).then((res) => res.data.data);
+					return {
+						userName: a.username,
+						avatar: a.avatar,
+						userAddress: item.value.bidder,
+						amount: item.key,
+					};
+				})
+			);
+			setListBider(result);
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
+	useEffect(() => {
+		if (bidderInfo) {
+			getInfoOfListBidder();
+		}
+	}, [bidderInfo]);
 	return (
 		<>
-			{/* {auctionDetail && listBider ? (
+			{listBider ? (
 				<Fragment>
 					<CoverOfferTab>
 						<Stack direction="column">
-							{listBider?.map((bider: listBider, index: number) => (
+							{listBider?.map((bider: any, index: number) => (
 								<Link
 									key={index}
 									href={`/`}
 									target="_blank"
 									sx={{
-										...(theme.palette.mode === 'light'
-											? { color: 'black' }
-											: { color: 'white' }),
-
-										'&:hover': {
-											textDecoration: 'none !important',
-										},
+										textDecoration: 'none !important',
+										color: 'black',
 									}}
 								>
 									<ItemOfferAuctionDetail mt={1}>
@@ -57,33 +64,33 @@ export default function OfferTab(props: IAppProps) {
 													borderRadius: '50%',
 													border: '1px solid #fff',
 												}}
-												src={bider.userInfo.avatar}
+												src={bider.avatar}
 												alt=""
 											/>
 										</Box>
 
 										<Stack direction="column">
 											<BiderBoxStack>
-												{sliceAddress(bider.userAddress, 8, 5)} by{' '}
+												{displayAddress(bider.userAddress)} by{' '}
 												<PriceStyle>
-													{bider.userInfo.username === 'Anonymous'
-														? displayAddress(bider.userAddress, 8, 5)
-														: bider.userInfo.username}
+													{bider.userName === 'Anonymous'
+														? displayAddress(bider.userAddress)
+														: bider.userName}
 												</PriceStyle>
 												<Stack direction="row" columnGap={1}>
 													<Typography noWrap>bid for</Typography>
 													<PriceStyle noWrap>
-														{bider.tokenAmount} {''}
-														{bider.priceType.toUpperCase()}
+														{bider.amount} {''}
+														{/* {bider.priceType.toUpperCase()} */}
 													</PriceStyle>
 												</Stack>
 											</BiderBoxStack>
-											<Typography sx={{ opacity: '0.6' }}>
+											{/* <Typography sx={{ opacity: '0.6' }}>
 												{formatDate(
 													bider.updatedAt,
 													'MMMM Do, YYYY, h:mm A'
 												)}
-											</Typography>
+											</Typography> */}
 										</Stack>
 									</ItemOfferAuctionDetail>
 								</Link>
@@ -95,7 +102,7 @@ export default function OfferTab(props: IAppProps) {
 				<Box textAlign="center" mt={3}>
 					<CircularProgress sx={{ color: 'white' }} />
 				</Box>
-			)} */}
+			)}
 		</>
 	);
 }
