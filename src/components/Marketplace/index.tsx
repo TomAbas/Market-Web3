@@ -5,7 +5,6 @@ import Notification from 'components/Notification/Notification';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CardNFT from './CardNFT';
-import { getListItemResource, getListCollectionMarketplace } from '../../utils/dataResource';
 import { getCollectionData } from '../../service/aptos.service';
 import item from '../../assets/avatar_default.png';
 import {

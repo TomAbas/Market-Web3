@@ -357,17 +357,14 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 			// 		</ButtonWhite>
 			// 	);
 			// }
+			console.log(userAddress?.userAddress === auctionDetail.maker);
 			if (
 				userAddress?.userAddress === auctionDetail.maker &&
-				new Date(auctionDetail.expirationTime).getTime() < new Date().getTime()
+				Number(auctionDetail.expirationTime) < new Date().getTime()
 			) {
 				return (
 					<ButtonWhite
-						disabled={
-							userAddress.userAddress !== auctionDetail.maker ||
-							!userAddress ||
-							claimExecuting
-						}
+						disabled={!userAddress || claimExecuting}
 						onClick={() => {
 							finalizeAuction();
 						}}

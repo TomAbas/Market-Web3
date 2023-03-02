@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { openFirstModal } from '../../../redux/slices/modalWallet';
 import ModalBuy from 'components/ModalBuy/ModalBuy';
 import ModalSell from 'components/ModelSell/ModelSell';
-// import { getListItemResource } from '../../../utils/dataResource';
 import { ItemImage } from '../styled';
 import { toast } from 'react-toastify';
 import { buyItem, cancelOrder } from '../../../api/collections/collectionApi';

@@ -20,7 +20,6 @@ import AccountGuard from 'components/AccountGuard/AccountGuard';
 import ModalGuard from 'components/ModalGuard/ModalGuard';
 import FooterComp from 'components/FooterComp';
 import Header from 'components/Header';
-import { getListItemResource } from 'utils/dataResource';
 import ScrollToTop from 'hooks/useScrollToTop';
 //context
 import AudioProvider from './contexts/AudioContext';

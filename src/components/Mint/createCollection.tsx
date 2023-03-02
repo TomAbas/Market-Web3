@@ -6,7 +6,6 @@ import useControlModal from 'hooks/useControlModal';
 import useCreateMintSell from 'hooks/useCreateMint';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import React, { useState, useEffect } from 'react';
-import { getListCollectionUserResource } from '../../utils/dataResource';
 import FormMint from 'components/Forms/FormCreateCollection';
 import { getCollectionByUserAddress } from 'api/collections/collectionApi';
 function RedBar() {
