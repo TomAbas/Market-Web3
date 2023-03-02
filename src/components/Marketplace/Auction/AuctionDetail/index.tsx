@@ -34,38 +34,25 @@ export default function AuctionDetail() {
 		let auctionDetail = await getAuctionDetail(id!);
 		setAuctionDetail(auctionDetail);
 		try {
-			// await getBidAuction(auctionDetail!.auctionId, auctionDetail.coinType, '2').then(
-			// 	(res) => {
-			// 		return setBiddderInfo(res);
-			// 	}
-			// );
-			setBiddderInfo({
-				bids: { data: [] },
-				offer_numbers: [1, 2, 3],
-				listing: { min_price: '0' },
-			});
+			await getBidAuction(auctionDetail!.auctionId, auctionDetail.coinType, '2').then(
+				(res) => {
+					return setBiddderInfo(res);
+				}
+			);
 		} catch (error) {
 			setBiddderInfo({
 				bids: { data: [] },
-				offer_numbers: [1, 2, 3],
+				offer_numbers: [],
 				listing: { min_price: '0' },
 			});
 			console.log(error);
 		}
-		setBiddderInfo({
-			bids: { data: [] },
-			offer_numbers: [1, 2, 3],
-			listing: { min_price: '0' },
-		});
 	}
 	useEffect(() => {
-		console.log('id', id);
 		if (!id) return;
 		getAuctionDetailFunc();
 	}, [id]);
-	useEffect(() => {
-		console.log(bidderInfo);
-	}, [bidderInfo]);
+
 	const renderAuctionDetail = () => {
 		if (innerWidth > 1000) {
 			return (

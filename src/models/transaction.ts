@@ -25,7 +25,7 @@ export interface orderSell {
 	amount: string;
 	startTime: string;
 	expirationTime: string;
-	instantSale: string;
+	instantSale: boolean;
 	auctionId: string;
 	itemInfo: nftItem;
 	createdAt: string;

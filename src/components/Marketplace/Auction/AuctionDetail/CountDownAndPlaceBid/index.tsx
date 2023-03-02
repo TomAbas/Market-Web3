@@ -75,6 +75,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 	const [openStep, setOpenStep] = useState<boolean>(false);
 	const [nativeToken, setNativeToken] = useState(false);
 	const [didUserBid, setDidUserBid] = useState(false);
+	const [checkIsClaim, setCheckIsClaim] = useState(false);
 	//
 	const userAddress = useAppSelector(selectUser);
 	const [startValue, setStartValue] = useState<number>(0);
@@ -92,7 +93,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 	function checkDidUserBid() {
 		const { bids } = bidderInfo;
 		const { data } = bids;
-		console.log('data', data);
+
 		let result = data.find((item: any) => {
 			return item.value.bidder === userAddress?.userAddress;
 		});
@@ -103,9 +104,32 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 		}
 	}
 
+	async function checkCanClaim() {
+		try {
+			let listBid = await getEventsByCreationNumber(
+				userAddress?.userAddress!,
+				auctionDetail.coinType,
+				'2'
+			).then((res) => res.map((item: any) => item.data.bid_id.listing_id));
+			console.log(listBid);
+			let isBid = listBid.find((listid: any) => {
+				return (
+					listid.creation_num == auctionDetail.creationNumber &&
+					listid.addr == auctionDetail.maker
+				);
+			});
+			if (isBid) {
+				setCheckIsClaim(true);
+			}
+		} catch (err) {
+			setCheckIsClaim(false);
+		}
+	}
+
 	useEffect(() => {
 		if (bidderInfo && userAddress) {
 			setDidUserBid(checkDidUserBid());
+			checkCanClaim();
 		}
 	}, [bidderInfo, userAddress]);
 
@@ -173,8 +197,6 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 
 	// Handle Step 1 approve token
 	const handleStep1 = async (isCheck: boolean) => {
-		console.log(bidValue);
-		console.log(decimalTokenPayment);
 		if (!userAddress || !auctionDetail || !bidValue || !decimalTokenPayment) {
 			setDisableInputBid(false);
 
@@ -249,6 +271,130 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 	// Starting Auction
 
 	const handleRenderButtonBid = () => {
+		if (auctionDetail) {
+			if (userAddress?.userAddress === auctionDetail.maker) {
+				if (Number(auctionDetail.startTime) > new Date().getTime()) {
+					return (
+						<ButtonWhite
+							sx={{
+								fontWeight: '600',
+								width: 'fit-content',
+								mx: 'auto',
+							}}
+						>
+							<Stack direction="row" alignItems="center">
+								<Typography variant="body1" sx={{ fontWeight: '600' }}>
+									Cancel
+								</Typography>
+							</Stack>
+						</ButtonWhite>
+					);
+				} else if (Number(auctionDetail.expirationTime) < new Date().getTime()) {
+					return (
+						<ButtonWhite
+							sx={{
+								fontWeight: '600',
+								width: 'fit-content',
+								mx: 'auto',
+							}}
+							onClick={() => {
+								finalizeAuction();
+							}}
+						>
+							<Stack direction="row" alignItems="center">
+								<Typography variant="body1" sx={{ fontWeight: '600' }}>
+									Finalize
+								</Typography>
+							</Stack>
+						</ButtonWhite>
+					);
+				}
+			} else {
+				if (
+					Number(auctionDetail.startTime) < new Date().getTime() &&
+					Number(auctionDetail.expirationTime) > new Date().getTime()
+				) {
+					if (didUserBid) {
+						return (
+							<Stack direction={'row'} gap="50">
+								<ButtonWhite
+									onClick={() => {
+										setModal(true);
+									}}
+									sx={{
+										fontWeight: '600',
+										width: 'fit-content',
+										mx: 'auto',
+									}}
+								>
+									<Stack direction="row" alignItems="center">
+										<Typography variant="body1" sx={{ fontWeight: '600' }}>
+											Place Bid
+										</Typography>
+									</Stack>
+								</ButtonWhite>
+								<ButtonWhite
+									onClick={() => {
+										// setModal(true);
+										cancelBid();
+									}}
+									sx={{
+										fontWeight: '600',
+										width: 'fit-content',
+										mx: 'auto',
+									}}
+								>
+									<Stack direction="row" alignItems="center">
+										<Typography variant="body1" sx={{ fontWeight: '600' }}>
+											Cancel bid
+										</Typography>
+									</Stack>
+								</ButtonWhite>
+							</Stack>
+						);
+					} else {
+						return (
+							<ButtonWhite
+								onClick={() => {
+									setModal(true);
+								}}
+								sx={{
+									fontWeight: '600',
+									width: 'fit-content',
+									mx: 'auto',
+								}}
+							>
+								<Stack direction="row" alignItems="center">
+									<Typography variant="body1" sx={{ fontWeight: '600' }}>
+										Place Bid
+									</Typography>
+								</Stack>
+							</ButtonWhite>
+						);
+					}
+				} else if (Number(auctionDetail.expirationTime) < new Date().getTime()) {
+					return (
+						<ButtonWhite
+							disabled={true}
+							onClick={() => {
+								withdrawCoinFromAuction();
+							}}
+							sx={{
+								fontWeight: '600',
+								width: 'fit-content',
+								mx: 'auto',
+							}}
+						>
+							<Stack direction="row" alignItems="center">
+								<Typography variant="body1" sx={{ fontWeight: '600' }}>
+									Claim
+								</Typography>
+							</Stack>
+						</ButtonWhite>
+					);
+				}
+			}
+		}
 		if (auctionDetail) {
 			if (
 				Number(auctionDetail.startTime) < new Date().getTime() &&
@@ -359,7 +505,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 			// 		</ButtonWhite>
 			// 	);
 			// }
-			console.log(userAddress?.userAddress === auctionDetail.maker);
+
 			if (
 				userAddress?.userAddress === auctionDetail.maker &&
 				Number(auctionDetail.expirationTime) < new Date().getTime()
@@ -433,7 +579,6 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo }: Prop
 											)}
 										</>
 									)}
-
 									{/* {''} {auctionDetail?.priceType.toUpperCase()} */}
 								</Typography>
 							</GridBoxBackGround>
