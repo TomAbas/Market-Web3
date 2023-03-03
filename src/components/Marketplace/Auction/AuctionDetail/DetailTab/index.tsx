@@ -15,14 +15,14 @@ export default function DetailTab({ auctionDetail }: IAppProps) {
 		<Fragment>
 			<Stack direction="row" justifyContent="space-between" mt={1}>
 				<Typography>Seller</Typography>
-				<Stack direction="row">
+				<Stack direction="row" spacing={1}>
 					<Typography>{displayAddress(auctionDetail.maker)} </Typography>
 					<CopyToClipboardButton text={auctionDetail.maker} placementTooltip="top" />
 				</Stack>
 			</Stack>
 			<Stack direction="row" justifyContent="space-between" mt={1}>
 				<Typography>Collection Name</Typography>
-				<Stack direction="row">
+				<Stack direction="row" spacing={1}>
 					<Typography>
 						{displayAddress(auctionDetail.itemInfo.collectionInfo.collectionName)}
 					</Typography>

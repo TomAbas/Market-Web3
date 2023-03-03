@@ -10,11 +10,10 @@ import CountDownAndPlaceBid from './CountDownAndPlaceBid';
 import OfferTab from './Bider Tab';
 import LoadingPage from 'customComponents/LoadingPage';
 import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { SizeContext } from 'contexts/SizeObserver';
+// import IconDescription from '/assets/icons/description-black.webp';
 //IMG
 import DescriptionBlack from 'assets/icons/description-black.webp';
-import DescriptionWhite from 'assets/icons/description-white.webp';
 import ItemWhite from 'assets/icons/icon-filter-collection-white.webp';
 import ItemBlack from 'assets/icons/icon-filter-collection-black.webp';
 // import TagWhite from 'assets/icons/tag-white.svg';
@@ -82,7 +81,11 @@ export default function AuctionDetail() {
 								</ExpandCard>
 							</Box> */}
 							<Box sx={{ marginTop: '40px' }}>
-								<ExpandCard title="Detail" icon={''} alt="Detail-expand">
+								<ExpandCard
+									title="Detail"
+									icon={DescriptionBlack}
+									alt="Detail-expand"
+								>
 									<DetailTab auctionDetail={auctionDetail!}></DetailTab>
 								</ExpandCard>
 							</Box>
@@ -101,7 +104,7 @@ export default function AuctionDetail() {
 							<Box sx={{ marginTop: '40px' }}>
 								<ExpandCard
 									title="List of Bidder"
-									icon={''}
+									icon={DescriptionBlack}
 									alt="list-bider-expand"
 								>
 									<OfferTab bidderInfo={bidderInfo}></OfferTab>
