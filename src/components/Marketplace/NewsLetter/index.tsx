@@ -34,7 +34,7 @@ const listTutorial = [
 		description:
 			'Once you have installed your wallet of choice, connect it to Metaspacecy and click the Marketplace in the top right corner.',
 		image: Wallet,
-		link: '',
+		link: 'https://docs.metaspacecy.com/doc/getting-started/installing-a-wallet/move',
 	},
 	{
 		id: 2,
@@ -42,7 +42,7 @@ const listTutorial = [
 		description:
 			'Click "Create" to set up your collection. Add a banner image, name, and description.',
 		image: Collection,
-		link: '',
+		link: 'https://docs.metaspacecy.com/doc/marketplace/move/mint/collection',
 	},
 	{
 		id: 3,
@@ -50,14 +50,14 @@ const listTutorial = [
 		description:
 			'Upload your image, video, audio, or 3D art; add a name and description; and set a royalty fee and supply for your NFTs.',
 		image: NFTs,
-		link: '',
+		link: 'https://docs.metaspacecy.com/doc/marketplace/move/mint/nft-item',
 	},
 	{
 		id: 4,
 		title: '4. List Them For Sale',
 		description: 'Choose the listing price and supply for the NFTs you want to sell.',
 		image: Tag,
-		link: '',
+		link: 'https://docs.metaspacecy.com/doc/marketplace/move/list',
 	},
 ];
 const Newsletter: React.FC = () => {

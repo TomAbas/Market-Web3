@@ -197,6 +197,7 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 		increaseBid,
 		initializeAuction,
 		withdrawCoinFromAuction,
+		priceBid,
 	};
 }
 

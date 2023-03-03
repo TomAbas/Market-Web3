@@ -1,11 +1,11 @@
 import { Typography } from '@mui/material';
-import { itemHistory, TYPE_TRANSACTION } from 'models/item';
+import { TYPE_TRANSACTION } from 'models/item';
 import React from 'react';
 import { changePriceToToken, formatAddressHistory } from 'utils/function';
 import { StyledSpan } from './styled';
 
 interface Props {
-	itemHistory: itemHistory;
+	itemHistory: any;
 	userAddress: string | undefined;
 }
 function getTransactionType(type: number) {
@@ -74,7 +74,27 @@ const TypeEvent: React.FC<Props> = ({ itemHistory, userAddress }) => {
 			</Typography>
 		);
 	} else {
-		return <></>;
+		return (
+			<>
+				<Typography variant="body1" sx={{ fontWeight: '500' }}>
+					<StyledSpan>
+						{formatAddressHistory(itemHistory!.bid_id.bidder, userAddress)}
+					</StyledSpan>{' '}
+					Bid
+					<StyledSpan>
+						{' '}
+						{itemHistory.auctionInfo.amount} {itemHistory.auctionInfo.itemInfo.itemName}{' '}
+						with{' '}
+						{changePriceToToken(
+							itemHistory.offer_price,
+							itemHistory.auctionInfo.coinType
+						)}{' '}
+						{itemHistory.auctionInfo.coinType.split('::').slice(-1)[0].toUpperCase()}{' '}
+						{/* {formatAddressHistory(itemHistory.to, userAddress)} */}
+					</StyledSpan>
+				</Typography>
+			</>
+		);
 	}
 };
 

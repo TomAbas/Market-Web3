@@ -80,7 +80,7 @@ const TabUserInfo: React.FC<Props> = ({ items, itemsF, isLoading, infoUser }) =>
 			// 	isShow: isMyAccount,
 			// },
 			{ Section: <FavoriteTab itemsF={itemsF} isLoading={isLoading} />, isShow: true },
-			{ Section: <AuctionTab />, isShow: true },
+			{ Section: <AuctionTab infoUser={infoUser} />, isShow: true },
 		],
 	};
 	return <TabCommon tabItems={tabsDetail.items} tabSections={tabsDetail.sections} />;

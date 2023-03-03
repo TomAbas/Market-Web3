@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import ClientAxios from '../axiosClient';
 import { Response } from '../../models/common';
 
@@ -46,7 +47,10 @@ function getAuctionDetail(orderId: string): Promise<any> {
 	const url = `/order/get-order-by-id/${orderId}`;
 	return ClientAxios.get(url).then((res) => res.data.data);
 }
-
+function getAuctionHis(userAddress: string, creationNumber: object): Promise<any> {
+	const url = `/order/get-order-by-creationNumber/userAddress/${userAddress}`;
+	return ClientAxios.post(url, creationNumber).then((res) => res.data);
+}
 export {
 	getAllItems,
 	getOfferOfItem,
@@ -59,4 +63,5 @@ export {
 	transferItem,
 	getOrderOfItem,
 	getAuctionDetail,
+	getAuctionHis,
 };
