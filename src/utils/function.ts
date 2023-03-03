@@ -40,7 +40,7 @@ export const changePriceToToken = (
 };
 
 export const changeTokenToWeiByCoinType = (
-	price: string,
+	price: string | number,
 	tokenType: string = '0x1::aptos_coin::AptosCoin'
 ) => {
 	let decimal = ListTokenPaymentTestNet.find((item) => item.type === tokenType)?.decimals || 8;

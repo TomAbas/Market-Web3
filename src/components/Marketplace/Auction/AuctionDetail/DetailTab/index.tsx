@@ -24,8 +24,8 @@ export default function DetailTab({ auctionDetail }: IAppProps) {
 			</Stack>
 			<Stack direction="row" justifyContent="space-between" mt={1}>
 				<Typography>Collection Name</Typography>
-				<Stack direction="row" spacing={1}>
-					<Typography variant="subtitle1" noWrap justifyContent={'flex-end'}>
+				<Stack direction="row" width={'50%'} spacing={1} justifyContent={'flex-end'}>
+					<Typography variant="subtitle1" noWrap>
 						{auctionDetail.itemInfo.collectionInfo.collectionName}
 					</Typography>
 					<CopyToClipboardButton

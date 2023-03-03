@@ -26,6 +26,7 @@ export const ErrorMessage = styled(Typography)(({ theme }) => ({
 	},
 }));
 export const NoticeMessage = styled(Typography)(({ theme }) => ({
+	color: 'red',
 	fontStyle: 'italic',
 	fontSize: 12,
 	marginTop: 3,

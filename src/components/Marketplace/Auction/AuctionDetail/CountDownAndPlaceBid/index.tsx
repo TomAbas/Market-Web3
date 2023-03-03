@@ -88,6 +88,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 		cancelBid,
 		withdrawCoinFromAuction,
 		finalizeAuction,
+		priceBid,
 	} = useAuctionModules(auctionDetail?.itemInfo, auctionDetail);
 	// Waiting
 	const [claimExecuting, setClaimExecuting] = useState<boolean>(false);
@@ -111,7 +112,12 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 				userAddress?.userAddress!,
 				auctionDetail.coinType,
 				'2'
-			).then((res) => res.map((item: any) => item.data.bid_id.listing_id));
+			).then((res) =>
+				res.map((item: any) => {
+					console.log(item);
+					return item.data.bid_id.listing_id;
+				})
+			);
 			let isBid = listBid.find((listid: any) => {
 				return (
 					listid.creation_num == auctionDetail.creationNumber &&
@@ -492,23 +498,37 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 									setPriceBid(e.target.value);
 								}}
 							/>
-							<NoticeMessage>
-								Bid price have to more than{' '}
-								{bidderInfo && (
-									<>
-										{changePriceToToken(
+							{priceBid && (
+								<>
+									{Number(priceBid) <
+										changePriceToToken(
 											Math.max(
 												...bidderInfo?.offer_numbers,
 												bidderInfo?.listing?.min_price
 											),
 											auctionDetail.coinType
-										)}
-									</>
-								)}{' '}
-								{tokenPaymentSymbol[
-									auctionDetail.coinType?.split('::').slice(-1)[0]
-								].toUpperCase()}{' '}
-							</NoticeMessage>
+										) && (
+										<ErrorMessage>
+											Bid price have to more than{' '}
+											{bidderInfo && (
+												<>
+													{changePriceToToken(
+														Math.max(
+															...bidderInfo?.offer_numbers,
+															bidderInfo?.listing?.min_price
+														),
+														auctionDetail.coinType
+													)}
+												</>
+											)}{' '}
+											{tokenPaymentSymbol[
+												auctionDetail.coinType?.split('::').slice(-1)[0]
+											].toUpperCase()}{' '}
+										</ErrorMessage>
+									)}
+								</>
+							)}
+
 							{errors.amount?.message && (
 								<ErrorMessage>{errors.amount?.message}</ErrorMessage>
 							)}
@@ -554,6 +574,19 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 								) : (
 									<ButtonWhite
 										type="submit"
+										disabled={
+											priceBid &&
+											Number(priceBid) <
+												changePriceToToken(
+													Math.max(
+														...bidderInfo?.offer_numbers,
+														bidderInfo?.listing?.min_price
+													),
+													auctionDetail.coinType
+												)
+												? true
+												: false
+										}
 										// disabled={
 										// 	disableButton ||
 										// 	step1.isExecuting ||
