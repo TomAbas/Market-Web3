@@ -40,6 +40,7 @@ import { userInfo } from 'os';
 import { getEventsByCreationNumber } from 'utils/auctionResources';
 import { changePriceToToken } from 'utils/function';
 import { tokenPaymentSymbol } from 'constants/sellItem';
+import { selectTrigger } from 'redux/slices/nftFilter';
 
 export interface StepStatus {
 	isChecking: boolean;
@@ -77,7 +78,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 	const [nativeToken, setNativeToken] = useState(false);
 	const [didUserBid, setDidUserBid] = useState(false);
 	const [checkIsClaim, setCheckIsClaim] = useState(false);
-	//
+	const trigger = useAppSelector(selectTrigger);
 	const userAddress = useAppSelector(selectUser);
 	const [startValue, setStartValue] = useState<number>(0);
 	const [nextLowestBid, setNextLowestBid] = useState(0);
@@ -264,14 +265,10 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 			}
 		}
 	};
-	const handleTakeHighestBid = async () => {
-		if (auctionDetail) {
-			try {
-			} catch (error) {
-				console.log(error);
-			}
-		}
-	};
+
+	useEffect(() => {
+		setModal(false);
+	}, [trigger]);
 
 	// Starting Auction
 
