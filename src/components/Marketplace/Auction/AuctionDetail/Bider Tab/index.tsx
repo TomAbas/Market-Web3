@@ -73,7 +73,6 @@ export default function OfferTab({ bidderInfo, auctionDetail }: IAppProps) {
 
 										<Stack direction="column">
 											<BiderBoxStack>
-												{displayAddress(bider.userAddress)} by{' '}
 												<PriceStyle>
 													{bider.userName === 'Anonymous'
 														? displayAddress(bider.userAddress)

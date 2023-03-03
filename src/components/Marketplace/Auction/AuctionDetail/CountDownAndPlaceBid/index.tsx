@@ -41,6 +41,7 @@ import { getEventsByCreationNumber } from 'utils/auctionResources';
 import { changePriceToToken } from 'utils/function';
 import { tokenPaymentSymbol } from 'constants/sellItem';
 import { selectTrigger } from 'redux/slices/nftFilter';
+import { formatTimeHistory } from '../../../../../utils/function';
 
 export interface StepStatus {
 	isChecking: boolean;
@@ -303,7 +304,10 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 							</Stack>
 						</ButtonWhite>
 					);
-				} else if (Number(auctionDetail.expirationTime) < new Date().getTime()) {
+				} else if (
+					Number(auctionDetail.expirationTime) < new Date().getTime() &&
+					!isFinalize
+				) {
 					return (
 						<ButtonWhite
 							sx={{
@@ -445,9 +449,28 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 						<Stack>
 							<GridBoxBackGround>
 								<Typography variant="body1">
-									{!disableButtonPlaceBid ? 'Count  Down' : 'Up Coming'}: &nbsp;
+									{Number(auctionDetail.expirationTime) < new Date().getTime() ? (
+										<>End at : &nbsp;</>
+									) : (
+										<>
+											{' '}
+											{!disableButtonPlaceBid ? 'Count  Down' : 'Up Coming'}:
+											&nbsp;
+										</>
+									)}
 								</Typography>
-								{renderCountdown()}
+								{Number(auctionDetail.expirationTime) < new Date().getTime() ? (
+									<>
+										{formatTimeHistory(
+											new Date(
+												Number(auctionDetail.expirationTime)
+											).toString()
+										)}
+									</>
+								) : (
+									<>{renderCountdown()}</>
+								)}
+								{/* // {renderCountdown()} */}
 							</GridBoxBackGround>
 						</Stack>
 						<Stack>

@@ -83,7 +83,7 @@ export default function AuctionDetail() {
 							</Box> */}
 							<Box sx={{ marginTop: '40px' }}>
 								<ExpandCard
-									title="Details"
+									title="Auction Detail"
 									icon={DescriptionBlack}
 									alt="Detail-expand"
 								>
