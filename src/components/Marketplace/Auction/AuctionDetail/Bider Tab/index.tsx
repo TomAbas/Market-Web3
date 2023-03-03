@@ -33,9 +33,7 @@ export default function OfferTab({ bidderInfo, auctionDetail }: IAppProps) {
 				})
 			);
 			setListBider(result);
-		} catch (error) {
-			console.log(error);
-		}
+		} catch (error) {}
 	}
 
 	useEffect(() => {

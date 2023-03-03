@@ -26,7 +26,7 @@ export function useTokens(account: AccountKeys | null) {
 			const data = await walletClient.getTokenIds(account!.address!.toString(), 100, 0, 0);
 			const tokens = await Promise.all(
 				data.tokenIds
-					.filter((i) => i.difference != 0)
+					.filter((i) => i.difference !== 0)
 					.map(async (i) => {
 						const token = await walletClient.getToken(i.data);
 						return {

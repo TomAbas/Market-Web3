@@ -82,6 +82,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 	const userAddress = useAppSelector(selectUser);
 	const [startValue, setStartValue] = useState<number>(0);
 	const [nextLowestBid, setNextLowestBid] = useState(0);
+	const [yourBid, setYourBid] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const {
 		bidAuction,
@@ -116,16 +117,19 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 				'2'
 			).then((res) =>
 				res.map((item: any) => {
-					console.log(item);
-					return item.data.bid_id.listing_id;
+					return item.data;
 				})
 			);
+
 			let isBid = listBid.find((listid: any) => {
 				return (
-					listid.creation_num == auctionDetail.creationNumber &&
-					listid.addr == auctionDetail.maker
+					listid.bid_id.listing_id.creation_num == auctionDetail.creationNumber &&
+					listid.bid_id.listing_id.addr == auctionDetail.maker
 				);
 			});
+			if (isBid) {
+				setYourBid(Number(isBid.offer_price));
+			}
 			if (isBid && (isFinalize || Number(auctionDetail.expirationTime) < Date.now())) {
 				setCheckIsClaim(true);
 			}
@@ -446,9 +450,21 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 								{renderCountdown()}
 							</GridBoxBackGround>
 						</Stack>
+						<Stack>
+							<GridBoxBackGround>
+								<Typography variant="body1">Your Bid Price: &nbsp;</Typography>
+								<Typography variant="body1" sx={{ fontWeight: '500' }}>
+									{changePriceToToken(yourBid, auctionDetail.coinType)}{' '}
+									{tokenPaymentSymbol[
+										auctionDetail.coinType?.split('::').slice(-1)[0]
+									].toUpperCase()}{' '}
+								</Typography>
+							</GridBoxBackGround>
+						</Stack>
 					</Stack>
 					<Box marginTop={4}>{handleRenderButtonBid()}</Box>
 				</BoxContainCountDown>
+
 				{/* <Box marginTop={5}>
 					<Box>
 						<Stack direction="row" justifyContent="space-between">

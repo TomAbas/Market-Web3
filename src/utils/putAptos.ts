@@ -129,7 +129,6 @@ function useBuyItemAptos(offer: nftItem) {
 			e.target.value = userTokenAmount;
 			setSupply(e.target.value);
 		} else if (Number(e.target.value) < 0) {
-			console.log('12');
 			e.target.value = -Number(e.target.value);
 			setSupply(e.target.value);
 		}
@@ -169,7 +168,6 @@ function useBuyItemAptos(offer: nftItem) {
 					owner: userInfo?.userAddress,
 					creator: offer.creator,
 				};
-				console.log(listItem);
 				toast.success('Successful list an item');
 				sellItem(listItem).then((res) => {
 					dispatch(handleTrigger());

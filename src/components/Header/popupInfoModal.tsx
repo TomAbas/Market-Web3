@@ -51,7 +51,6 @@ const ModalInfo: React.FC<Props> = ({ userAddress }) => {
 				setError(false);
 			} catch (error) {
 				setError(true);
-				console.log(error);
 			}
 		}
 	};

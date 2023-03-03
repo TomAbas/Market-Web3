@@ -64,9 +64,7 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 					dispatch(handleTrigger());
 				});
 			});
-		} catch (error) {
-			console.log(error);
-		}
+		} catch (error) {}
 	}
 	async function bidAuction() {
 		try {
@@ -91,9 +89,7 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 				console.log(res);
 				dispatch(handleTrigger());
 			});
-		} catch (error) {
-			console.log(error);
-		}
+		} catch (error) {}
 	}
 	async function cancelBid() {
 		try {
@@ -106,9 +102,7 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				console.log(res);
 			});
-		} catch (error) {
-			console.log(error);
-		}
+		} catch (error) {}
 	}
 
 	async function increaseBid() {
@@ -123,9 +117,7 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				console.log(res);
 			});
-		} catch (error) {
-			console.log(error);
-		}
+		} catch (error) {}
 	}
 
 	async function initializeAuction() {
@@ -139,9 +131,7 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				console.log(res);
 			});
-		} catch (error) {
-			console.log(error);
-		}
+		} catch (error) {}
 	}
 
 	async function finalizeAuction() {

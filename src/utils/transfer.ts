@@ -25,7 +25,6 @@ function useTransfer() {
 				.then((res: any) => res.data);
 			return res.direct_transfer;
 		} catch (error) {
-			console.log(error);
 			return false;
 		}
 	}
@@ -69,11 +68,9 @@ function useTransfer() {
 			let res = await client
 				.getAccountResource(address, `0x1::coin::CoinStore<${coinType}>`)
 				.then((res: any) => res.data);
-			console.log(res);
 			if (res) return true;
 			return false;
 		} catch (error) {
-			console.log(error);
 			return false;
 		}
 	}
