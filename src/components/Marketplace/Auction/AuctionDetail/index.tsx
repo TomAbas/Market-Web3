@@ -41,7 +41,7 @@ export default function AuctionDetail() {
 			setBiddderInfo({
 				bids: { data: [] },
 				offer_numbers: [],
-				listing: { min_price: '0' },
+				listing: { min_price: [auctionDetail.minPrice] },
 			});
 			setIsFinalize(true);
 			console.log(error);
@@ -56,8 +56,8 @@ export default function AuctionDetail() {
 		if (innerWidth > 1000) {
 			return (
 				<ContainerAuctionDetail>
-					<Grid container spacing={10} mt={3}>
-						<Grid item xs={12} lg={6}>
+					<Grid container mt={3} maxWidth={'99%'} mx={'auto'}>
+						<Grid item xs={12} lg={6} px={5}>
 							<Box>
 								<ItemImage auctionDetail={auctionDetail!}></ItemImage>
 							</Box>
@@ -121,14 +121,14 @@ export default function AuctionDetail() {
 					<Box>
 						<ItemNameAndOwner auctionDetail={auctionDetail!}></ItemNameAndOwner>
 					</Box>
-					<Box sx={{ marginTop: '40px' }}>
+					<Box sx={{ marginTop: '20px' }}>
 						<CountDownAndPlaceBid
 							auctionDetail={auctionDetail!}
 							bidderInfo={bidderInfo}
 							isFinalize={isFinalize}
 						></CountDownAndPlaceBid>
 					</Box>
-					<Box sx={{ marginTop: '40px' }}>
+					<Box sx={{ marginTop: '20px' }}>
 						<ExpandCard
 							title="Description"
 							icon={DescriptionBlack}
@@ -138,10 +138,10 @@ export default function AuctionDetail() {
 							<DescriptionTab auctionDetail={auctionDetail!}></DescriptionTab>
 						</ExpandCard>
 					</Box>
-					<Box sx={{ marginTop: '40px' }}>
+					<Box sx={{ marginTop: '20px' }}>
 						<ListAllItem></ListAllItem>
 					</Box>
-					{/* <Box sx={{ marginTop: '40px' }}>
+					{/* <Box sx={{ marginTop: '20px' }}>
 						<ExpandCard
 							title="Properties"
 							icon={ DescriptionBlack : DescriptionWhite}
@@ -151,7 +151,7 @@ export default function AuctionDetail() {
 							<PropertiesTab></PropertiesTab>
 						</ExpandCard>
 					</Box> */}
-					<Box sx={{ marginTop: '40px' }}>
+					<Box sx={{ marginTop: '20px' }}>
 						<ExpandCard
 							title="Detail"
 							icon={DescriptionBlack}
@@ -161,9 +161,9 @@ export default function AuctionDetail() {
 							<DetailTab auctionDetail={auctionDetail!}></DetailTab>
 						</ExpandCard>
 					</Box>
-					{/* <Box sx={{ marginTop: '40px' }}>
-						<OfferTab auctionDetail={auctionDetail!}></OfferTab>
-					</Box> */}
+					<Box sx={{ marginTop: '20px' }}>
+						<OfferTab bidderInfo={bidderInfo}></OfferTab>
+					</Box>
 				</ContainerAuctionDetail>
 			);
 		}

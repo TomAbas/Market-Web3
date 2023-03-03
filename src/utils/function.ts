@@ -32,7 +32,7 @@ export const sliceString = (string: string, limit = 0) => {
 };
 
 export const changePriceToToken = (
-	wei: string,
+	wei: string | number,
 	tokenType: string = '0x1::aptos_coin::AptosCoin'
 ) => {
 	let decimal = ListTokenPaymentTestNet.find((item) => item.type === tokenType)?.decimals || 8;

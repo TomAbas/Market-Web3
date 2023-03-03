@@ -15,16 +15,18 @@ export default function DetailTab({ auctionDetail }: IAppProps) {
 		<Fragment>
 			<Stack direction="row" justifyContent="space-between" mt={1}>
 				<Typography>Seller</Typography>
-				<Stack direction="row">
-					<Typography>{displayAddress(auctionDetail.maker)} </Typography>
+				<Stack direction="row" width={'50%'} justifyContent={'flex-end'}>
+					<Typography variant="subtitle1" noWrap>
+						{auctionDetail.maker}{' '}
+					</Typography>
 					<CopyToClipboardButton text={auctionDetail.maker} placementTooltip="top" />
 				</Stack>
 			</Stack>
 			<Stack direction="row" justifyContent="space-between" mt={1}>
 				<Typography>Collection Name</Typography>
 				<Stack direction="row">
-					<Typography>
-						{displayAddress(auctionDetail.itemInfo.collectionInfo.collectionName)}
+					<Typography variant="subtitle1" noWrap justifyContent={'flex-end'}>
+						{auctionDetail.itemInfo.collectionInfo.collectionName}
 					</Typography>
 					<CopyToClipboardButton
 						text={auctionDetail.itemInfo.collectionInfo.collectionName}
@@ -36,18 +38,21 @@ export default function DetailTab({ auctionDetail }: IAppProps) {
 				<Typography>auctionId</Typography>
 				<Typography>{auctionDetail.auctionId}</Typography>
 			</Stack>
-			<Stack direction="row" justifyContent="space-between" mt={1}>
+			{/* <Stack direction="row" justifyContent="space-between" mt={1}>
 				<Typography>Highest Bid</Typography>
 				<Typography>{'gia cao nhat'}</Typography>
-			</Stack>
-
+			</Stack> */}
 			<Stack direction="row" justifyContent="space-between" mt={1}>
 				<Typography>Start Time</Typography>
-				<Typography>{formatTimeHistory(auctionDetail.startTime)}</Typography>
+				<Typography>
+					{formatTimeHistory(new Date(Number(auctionDetail.startTime)).toString())}
+				</Typography>
 			</Stack>
 			<Stack direction="row" justifyContent="space-between" mt={1}>
 				<Typography>End Time</Typography>
-				<Typography>{formatTimeHistory(auctionDetail.expirationTime)}</Typography>
+				<Typography>
+					{formatTimeHistory(new Date(Number(auctionDetail.expirationTime)).toString())}
+				</Typography>
 			</Stack>
 		</Fragment>
 	);

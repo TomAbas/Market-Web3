@@ -38,6 +38,8 @@ import { selectUser } from 'redux/slices/userInfo';
 import { orderSell } from 'models/transaction';
 import { userInfo } from 'os';
 import { getEventsByCreationNumber } from 'utils/auctionResources';
+import { changePriceToToken } from 'utils/function';
+import { tokenPaymentSymbol } from 'constants/sellItem';
 
 export interface StepStatus {
 	isChecking: boolean;
@@ -61,8 +63,6 @@ interface Props {
 }
 
 export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFinalize }: Props) {
-	const [isCheckingBalance, setIsCheckingBalance] = useState<boolean>(false);
-	const [modalOrderExpired, setModalOrderExpired] = useState<boolean>(false);
 	const [modal, setModal] = useState(false);
 	const [step1, setStep1] = useState<StepStatus>(initialStepStatus);
 	const [step2, setStep2] = useState<StepStatus>(initialStepStatus);
@@ -415,13 +415,19 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 								<Typography variant="body1" sx={{ fontWeight: '500' }}>
 									{bidderInfo && (
 										<>
-											{Math.max(
-												...bidderInfo?.offer_numbers,
-												bidderInfo?.listing?.min_price
+											{changePriceToToken(
+												Math.max(
+													...bidderInfo?.offer_numbers,
+													bidderInfo?.listing?.min_price
+												),
+												auctionDetail.coinType
 											)}
 										</>
 									)}
-									{/* {''} {auctionDetail?.priceType.toUpperCase()} */}
+									{''}{' '}
+									{tokenPaymentSymbol[
+										auctionDetail.coinType?.split('::').slice(-1)[0]
+									].toUpperCase()}{' '}
 								</Typography>
 							</GridBoxBackGround>
 						</Stack>

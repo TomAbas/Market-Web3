@@ -17,7 +17,7 @@ export const BoxImage = styled(Box)(({ theme }) => ({
 	width: '100%',
 	height: 'auto',
 	[theme.breakpoints.down(1200)]: {
-		width: '80%',
+		width: '100%',
 		left: '50%',
 		transform: 'translateX(-50%)',
 	},
