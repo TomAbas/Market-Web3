@@ -15,7 +15,7 @@ export default function DetailTab({ auctionDetail }: IAppProps) {
 		<Fragment>
 			<Stack direction="row" justifyContent="space-between" mt={1}>
 				<Typography>Seller</Typography>
-				<Stack direction="row" width={'50%'} justifyContent={'flex-end'}>
+				<Stack direction="row" width={'50%'} justifyContent={'flex-end'} spacing={1}>
 					<Typography variant="subtitle1" noWrap>
 						{auctionDetail.maker}{' '}
 					</Typography>
@@ -24,7 +24,7 @@ export default function DetailTab({ auctionDetail }: IAppProps) {
 			</Stack>
 			<Stack direction="row" justifyContent="space-between" mt={1}>
 				<Typography>Collection Name</Typography>
-				<Stack direction="row">
+				<Stack direction="row" spacing={1}>
 					<Typography variant="subtitle1" noWrap justifyContent={'flex-end'}>
 						{auctionDetail.itemInfo.collectionInfo.collectionName}
 					</Typography>

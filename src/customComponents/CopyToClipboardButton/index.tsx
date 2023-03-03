@@ -4,7 +4,7 @@ import { Box, Stack, Tooltip } from '@mui/material';
 // libs
 import CopyToClipboard from 'react-copy-to-clipboard';
 //images
-// import CopyIcon from 'assets/icons/copy-icon.svg';
+import IconCopy from 'assets/icons/icon-copy.svg';
 
 export interface ICopyToClipboardButtonProps {
 	text: string | null | undefined;
@@ -61,7 +61,12 @@ export default function CopyToClipboardButton({
 			>
 				<Stack direction="row" width="fit-content">
 					<Box sx={{ width: '20px' }}>
-						<img src={''} alt="icon copy" width="100%" style={{ display: 'block' }} />
+						<img
+							src={IconCopy}
+							alt="icon copy"
+							width="100%"
+							style={{ display: 'block' }}
+						/>
 					</Box>
 				</Stack>
 			</Tooltip>
