@@ -85,7 +85,7 @@ export default function ItemNameAndOwner({ auctionDetail }: IAppProps) {
 					</Typography>
 				</Stack>
 				<Stack direction="row">
-					<Typography variant="body1">Colection: &nbsp;</Typography>
+					<Typography variant="body1">Collection: &nbsp;</Typography>
 					<Typography variant="body1" fontWeight={500}>
 						{auctionDetail.itemInfo.collectionInfo.collectionName}
 					</Typography>
