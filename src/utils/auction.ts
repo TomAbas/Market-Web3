@@ -10,9 +10,11 @@ import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { changeTokenToWei, changePriceToToken, changeTokenToWeiByCoinType } from './function';
+import { useNavigate } from 'react-router-dom';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 	const userInfo = useAppSelector(selectUser);
+	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [supply, setSupply] = useState('');
 	const [startPrice, setStartPrice] = useState('');
@@ -61,6 +63,10 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 				console.log(listItem);
 				toast.success('Successful list an item');
 				sellItem(listItem).then((res) => {
+					console.log(res);
+					if (res.data.data._id) {
+						navigate(`/auction/${res.data.data._id}`);
+					}
 					dispatch(handleTrigger());
 				});
 			});
