@@ -14,9 +14,6 @@ import { toast } from 'react-toastify';
 import { SizeContext } from 'contexts/SizeObserver';
 //IMG
 import DescriptionBlack from 'assets/icons/description-black.webp';
-import DescriptionWhite from 'assets/icons/description-white.webp';
-import ItemWhite from 'assets/icons/icon-filter-collection-white.webp';
-import ItemBlack from 'assets/icons/icon-filter-collection-black.webp';
 // import TagWhite from 'assets/icons/tag-white.svg';
 // import TagBlack from 'assets/icons/tag-black.svg';
 import React, { useContext, useEffect, useState } from 'react';
