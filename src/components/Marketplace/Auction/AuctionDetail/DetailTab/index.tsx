@@ -35,7 +35,7 @@ export default function DetailTab({ auctionDetail }: IAppProps) {
 				</Stack>
 			</Stack>
 			<Stack direction="row" justifyContent="space-between" mt={1}>
-				<Typography>auctionId</Typography>
+				<Typography>AuctionId</Typography>
 				<Typography>{auctionDetail.auctionId}</Typography>
 			</Stack>
 			{/* <Stack direction="row" justifyContent="space-between" mt={1}>

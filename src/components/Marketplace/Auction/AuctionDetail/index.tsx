@@ -110,7 +110,10 @@ export default function AuctionDetail() {
 									icon={DescriptionBlack}
 									alt="list-bider-expand"
 								>
-									<OfferTab bidderInfo={bidderInfo}></OfferTab>
+									<OfferTab
+										bidderInfo={bidderInfo}
+										auctionDetail={auctionDetail!}
+									></OfferTab>
 									{/* list of bidder */}
 								</ExpandCard>
 							</Box>
@@ -168,7 +171,7 @@ export default function AuctionDetail() {
 						</ExpandCard>
 					</Box>
 					<Box sx={{ marginTop: '20px' }}>
-						<OfferTab bidderInfo={bidderInfo}></OfferTab>
+						<OfferTab bidderInfo={bidderInfo} auctionDetail={auctionDetail!}></OfferTab>
 					</Box>
 				</ContainerAuctionDetail>
 			);

@@ -3,16 +3,20 @@
 import { Box, CircularProgress, Link, Stack, Typography, useTheme } from '@mui/material';
 import React, { Fragment, useEffect, useState } from 'react';
 import { BiderBoxStack, CoverOfferTab, ItemOfferAuctionDetail } from './styled';
-import { displayAddress, formatDate } from 'utils/function';
+import { changePriceToToken, displayAddress, formatDate } from 'utils/function';
 import { PriceStyle } from 'components/Marketplace/CardNFT/styled';
 import { getUserInfo } from 'api/userApi';
+import { tokenPaymentSymbol } from 'constants/sellItem';
+import { useAppSelector } from 'redux/hooks';
+import { selectTrigger } from 'redux/slices/nftFilter';
 export interface IAppProps {
 	bidderInfo: any;
+	auctionDetail: any;
 }
 
-export default function OfferTab({ bidderInfo }: IAppProps) {
+export default function OfferTab({ bidderInfo, auctionDetail }: IAppProps) {
 	const [listBider, setListBider] = useState<any>();
-	// const theme = useTheme();
+	const trigger = useAppSelector(selectTrigger);
 	async function getInfoOfListBidder() {
 		const { bids } = bidderInfo;
 		const { data } = bids;
@@ -38,7 +42,7 @@ export default function OfferTab({ bidderInfo }: IAppProps) {
 		if (bidderInfo) {
 			getInfoOfListBidder();
 		}
-	}, [bidderInfo]);
+	}, [bidderInfo, trigger]);
 	return (
 		<>
 			{listBider ? (
@@ -80,8 +84,15 @@ export default function OfferTab({ bidderInfo }: IAppProps) {
 												<Stack direction="row" columnGap={1}>
 													<Typography noWrap>bid for</Typography>
 													<PriceStyle noWrap>
-														{bider.amount} {''}
-														{/* {bider.priceType.toUpperCase()} */}
+														{changePriceToToken(
+															bider.amount,
+															auctionDetail.coinType
+														)}
+														{tokenPaymentSymbol[
+															auctionDetail.coinType
+																?.split('::')
+																.slice(-1)[0]
+														].toUpperCase()}{' '}
 													</PriceStyle>
 												</Stack>
 											</BiderBoxStack>

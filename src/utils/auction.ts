@@ -83,12 +83,13 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 					orderInfo?.amount!,
 					newPrice,
 					orderInfo?.auctionId,
-					Number(orderInfo?.expirationTime!) / 1000,
+					Math.floor(Number(orderInfo?.expirationTime!) / 1000),
 				],
 			};
 			console.log(payload);
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				console.log(res);
+				dispatch(handleTrigger());
 			});
 		} catch (error) {
 			console.log(error);

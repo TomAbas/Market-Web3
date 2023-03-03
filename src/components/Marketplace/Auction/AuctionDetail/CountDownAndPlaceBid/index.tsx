@@ -125,7 +125,9 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 			setCheckIsClaim(false);
 		}
 	}
-
+	useEffect(() => {
+		console.log(didUserBid, 'firstBidder');
+	}, [didUserBid]);
 	useEffect(() => {
 		if (bidderInfo && userAddress) {
 			setDidUserBid(checkDidUserBid());
@@ -480,12 +482,6 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 								{auctionDetail?.priceType.toUpperCase()} */}
 							</Typography>
 						</Stack>
-						<Stack direction="row" justifyContent="space-between">
-							<Typography>Bid Increase Percent</Typography>
-							<Typography>
-								{/* {auctionDetail ? auctionDetail.bidIncreasePercent : 0}% */}
-							</Typography>
-						</Stack>
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<FieldInput
 								readOnly={disableInputBid}
@@ -494,17 +490,24 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 								placeholder="Amount Token"
 								onChange={(e: any) => {
 									setPriceBid(e.target.value);
-									// handleCheckBalance(e);
 								}}
-								// value={startValue}
-								// registerHookForm={{ ...register('amount') }}
 							/>
 							<NoticeMessage>
 								Bid price have to more than{' '}
-								{/* {auctionDetail?.highestBid === 0
-									? auctionDetail?.minPrice
-									: nextLowestBid}
-								{auctionDetail?.priceType.toUpperCase()} */}
+								{bidderInfo && (
+									<>
+										{changePriceToToken(
+											Math.max(
+												...bidderInfo?.offer_numbers,
+												bidderInfo?.listing?.min_price
+											),
+											auctionDetail.coinType
+										)}
+									</>
+								)}{' '}
+								{tokenPaymentSymbol[
+									auctionDetail.coinType?.split('::').slice(-1)[0]
+								].toUpperCase()}{' '}
 							</NoticeMessage>
 							{errors.amount?.message && (
 								<ErrorMessage>{errors.amount?.message}</ErrorMessage>
@@ -577,12 +580,11 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 										<Typography variant="caption">Recurring fees.</Typography>
 									}
 								>
-									Approve Token.
+									Completing Accept Bid.
 								</StepLabel>
 
 								<StepContent>
 									<ButtonWhite
-										disabled={step1.isCompleted || step1.isExecuting}
 										onClick={() => {
 											if (didUserBid) {
 												increaseBid();
@@ -611,7 +613,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 									</ButtonWhite>
 								</StepContent>
 							</Step>
-							<Step>
+							{/* <Step>
 								<StepLabel
 									optional={
 										<Typography variant="caption">Recurring fees.</Typography>
@@ -657,7 +659,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 										<Typography>View Item</Typography>
 									</ButtonWhite>
 								</StepContent>
-							</Step>
+							</Step> */}
 						</Stepper>
 					)}
 				</Modal>
