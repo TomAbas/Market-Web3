@@ -1,21 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { nftItem } from 'models/item';
 import SendIcon from '@mui/icons-material/Send';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
 	Box,
 	Stack,
 	Typography,
 	Skeleton,
-	List,
-	ListItem,
 	Avatar,
 	Tooltip,
 	Link,
 	Container,
 	Grid,
 } from '@mui/material';
-import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { ItemImage, FeatureWrapper } from './styled';
 import MediaDisplayCard from 'components/Marketplace/MediaDisplayCard/MediaDisplayCard';
 import { TwitterShareButton } from 'react-share';
@@ -28,11 +24,9 @@ import HeartFullBlack from '../../../../assets/icons/heart-black.svg';
 import defaultImg from '../../../../assets/icons/default-img-input2.png';
 import { User } from 'models/user';
 import { useNavigate } from 'react-router-dom';
-import DropDown from 'components/CustomUI/DropDown';
 import { IconFavorite } from 'components/Marketplace/CardNFT/styled';
 import useInteraction from 'hooks/useInteraction';
 import { OptionSelectCustom, RELATED_URLS } from 'constants/index';
-import { displayAddress } from 'utils/function';
 import ModalTransferNFT from './ModalTransfer';
 import AutoCompleteCustom from 'components/CustomField/DropdownOwner';
 import NoMaxWidthTooltip from 'customComponents/LongToolTip/LongToolTip';

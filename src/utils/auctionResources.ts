@@ -32,7 +32,6 @@ const getBidUser = async (address: string, coinType: string, chainId: string) =>
 	// 	value_type: `${MARKET_ADDRESS}::auction::Auction<${coinType}>`,
 	// 	key: auctionId,
 	// });
-	// console.log(dataAuction);
 	// return dataAuction;
 };
 
@@ -51,9 +50,7 @@ const getEventsByCreationNumber = async (address: string, coinType: string, chai
 const getTokenData = async (address: string, chainId: string) => {
 	const client = new AptosClient(APTOS_NODE_URL[chainId]);
 	let { data }: any = await client.getAccountResource(MARKET_ADDRESS, `0x3::token::TokenStore`);
-	console.log('data', data);
 	let handle = data.tokens.handle;
-	console.log(handle);
 	let dataAuction = await client.getTableItem(handle, {
 		key_type: '0x3::token::TokenId',
 		value_type: '0x3::token::Token',
@@ -66,7 +63,6 @@ const getTokenData = async (address: string, chainId: string) => {
 			},
 		},
 	});
-	console.log(dataAuction);
 	return data;
 };
 // getTokenData('0x7ea7456bd8e6bab493761d81136e42c018f90c5a522688a951d86e6b98a0a900', '2');

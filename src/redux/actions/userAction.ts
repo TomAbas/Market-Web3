@@ -1,14 +1,10 @@
-import { startLoadingA, hasErrorA, getUserSuccessA, logOutUserSuccessA } from '../slices/userInfo';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { startLoadingA, hasErrorA, logOutUserSuccessA } from '../slices/userInfo';
+import { useAppDispatch } from '../hooks';
 
-import { selectUser } from '../slices/userInfo';
 //modalWallet
 
 export const useUserInfo = () => {
 	const dispatch = useAppDispatch();
-	const userInfo = useAppSelector(selectUser);
-	const userAddress = userInfo?.userAddress;
-
 	const logOutUserSuccess = () => {
 		dispatch(logOutUserSuccessA);
 	};

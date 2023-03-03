@@ -4,7 +4,6 @@ export const displayAddress = (address: string | undefined) => {
 };
 
 export const displayUserName = (userName: any) => {
-	console.log(userName);
 	const length = Number(userName.length);
 	if (length > 20) {
 		return `${userName.slice(0, 5)}...${userName.slice(-4)}`;

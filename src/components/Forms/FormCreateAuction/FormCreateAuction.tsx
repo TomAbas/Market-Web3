@@ -119,7 +119,6 @@ const FormSellFixPrice = () => {
 			);
 		} catch (error) {
 			setAmountOwned('0');
-			console.log(error);
 		}
 	}
 	function onSubmit(data: IFormSellItemInputs) {

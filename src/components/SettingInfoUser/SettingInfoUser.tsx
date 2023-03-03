@@ -131,7 +131,6 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 			openEditModal();
 			toast.success('Successful update info');
 		} catch (error: any) {
-			console.log(error);
 			toast.error(error.message);
 		}
 	};

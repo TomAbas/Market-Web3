@@ -46,7 +46,6 @@ export default function AuctionDetail() {
 				listing: { min_price: [auctionDetail.minPrice] },
 			});
 			setIsFinalize(true);
-			console.log(error);
 		}
 	}
 	useEffect(() => {

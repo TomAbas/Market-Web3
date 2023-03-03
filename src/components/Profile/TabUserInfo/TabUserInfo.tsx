@@ -11,6 +11,7 @@ import iconFavoriteBlue from '../../../assets/icons/favorite-blue.webp';
 import AssetTab from './AssetTab/AssetTab';
 import FavoriteTab from './Favorite/FavoriteTab';
 import TabCommon from 'customComponents/customTabs/TabCommon/TabCommon';
+import AuctionTab from './AuctionTab';
 import { nftItem } from 'models/item';
 import ActivityTab from './ActivityTab/ActivityTab';
 
@@ -53,6 +54,14 @@ const TabUserInfo: React.FC<Props> = ({ items, itemsF, isLoading, infoUser }) =>
 				),
 				isShow: true,
 			},
+			{
+				title: 'Auction History',
+				icon: <img src={iconHistoryBlack} alt="history icon" width={20} height={20} />,
+				iconSelected: (
+					<img src={iconHistoryBlue} alt="history icon" width={20} height={20} />
+				),
+				isShow: true,
+			},
 		],
 		sections: [
 			{
@@ -71,6 +80,7 @@ const TabUserInfo: React.FC<Props> = ({ items, itemsF, isLoading, infoUser }) =>
 			// 	isShow: isMyAccount,
 			// },
 			{ Section: <FavoriteTab itemsF={itemsF} isLoading={isLoading} />, isShow: true },
+			{ Section: <AuctionTab />, isShow: true },
 		],
 	};
 	return <TabCommon tabItems={tabsDetail.items} tabSections={tabsDetail.sections} />;

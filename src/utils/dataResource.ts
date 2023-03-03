@@ -16,7 +16,6 @@ export function getItemFromOrder(listNftOrders: any[], offer: nftItem) {
 		}
 		return false;
 	});
-	console.log(itemOrder);
 	return itemOrder ? itemOrder : null;
 }
 
