@@ -19,10 +19,11 @@ export default function OfferTab({ bidderInfo, auctionDetail }: IAppProps) {
 	const trigger = useAppSelector(selectTrigger);
 	async function getInfoOfListBidder() {
 		const { bids } = bidderInfo;
-		const { data } = bids;
+		let { data } = bids;
+		let data2 = new Array(...data);
 		try {
 			let result = await Promise.all(
-				data.reverse().map(async (item: any) => {
+				data2.reverse().map(async (item: any) => {
 					let a = await getUserInfo(item.value.bidder).then((res) => res.data.data);
 					return {
 						userName: a.username,

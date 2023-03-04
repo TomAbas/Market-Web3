@@ -84,7 +84,6 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 	const trigger = useAppSelector(selectTrigger);
 	const dispath = useAppDispatch();
 	const userAddress = useAppSelector(selectUser);
-	const [startValue, setStartValue] = useState<number>(0);
 	const [nextLowestBid, setNextLowestBid] = useState(0);
 	const [yourBid, setYourBid] = useState(0);
 	const [loading, setLoading] = useState(false);
@@ -99,15 +98,14 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 		priceBid,
 	} = useAuctionModules(auctionDetail?.itemInfo, auctionDetail);
 	// Waiting
-	const [claimExecuting, setClaimExecuting] = useState<boolean>(false);
 	function checkDidUserBid() {
 		const { bids } = bidderInfo;
 		const { data } = bids;
-		let result = data.find((item: any) => {
+		console.log(bidderInfo);
+		let result = data.findLast((item: any) => {
 			return item.value.bidder === userAddress?.userAddress;
 		});
 		if (result) {
-			console.log(result);
 			setYourBid(Number(result.key));
 			return true;
 		} else {
