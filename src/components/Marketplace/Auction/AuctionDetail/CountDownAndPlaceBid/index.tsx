@@ -504,6 +504,8 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 					onOpen={modal}
 					onClose={() => {
 						setModal(false);
+						setOpenStep(false);
+						setLoading(false);
 					}}
 					allowClose={
 						!step1.isExecuting &&
