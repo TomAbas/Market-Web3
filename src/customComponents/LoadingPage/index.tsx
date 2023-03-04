@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import LogoMSMobileBlue from '../../assets/images/logo/logo-metaspacecy-gray-moblie.webp';
 // styled
 import { Point, LoadingContent, LoadingPageStyled, ImgLoading } from './styled';
 // images
@@ -29,7 +30,7 @@ export default function LoadingPage() {
 					<Point sx={{ left: '10%', bottom: '20%', backgroundColor: '#46FE96' }} />
 					<Point sx={{ right: '10%', bottom: '20%', backgroundColor: '#C2EAFF' }} />
 				</motion.div>
-				<ImgLoading src={''} alt="loading space" />
+				<ImgLoading src={LogoMSMobileBlue} alt="loading space" />
 			</LoadingContent>
 		</LoadingPageStyled>
 	);

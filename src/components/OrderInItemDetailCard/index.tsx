@@ -79,15 +79,27 @@ export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInIt
 									</>
 								) : (
 									<>
-										{' '}
-										<ButtonWhite
-											sx={{ padding: '5px 32px' }}
-											onClick={() => {
-												buyItemAptos();
-											}}
-										>
-											Buy Now
-										</ButtonWhite>
+										{Number(orderId.expirationTime) < new Date().getTime() ? (
+											<>
+												<ButtonWhite
+													disabled={true}
+													sx={{ padding: '5px 32px' }}
+												>
+													Expired
+												</ButtonWhite>
+											</>
+										) : (
+											<>
+												<ButtonWhite
+													sx={{ padding: '5px 32px' }}
+													onClick={() => {
+														buyItemAptos();
+													}}
+												>
+													Buy Now
+												</ButtonWhite>
+											</>
+										)}
 									</>
 								)}
 							</>

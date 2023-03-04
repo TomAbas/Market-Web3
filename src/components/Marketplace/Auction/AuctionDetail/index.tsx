@@ -9,7 +9,7 @@ import DescriptionTab from './DescriptionTab';
 import CountDownAndPlaceBid from './CountDownAndPlaceBid';
 import OfferTab from './Bider Tab';
 import LoadingPage from 'customComponents/LoadingPage';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SizeContext } from 'contexts/SizeObserver';
 // import IconDescription from '/assets/icons/description-black.webp';
 //IMG
@@ -20,16 +20,30 @@ import ItemBlack from 'assets/icons/icon-filter-collection-black.webp';
 // import TagBlack from 'assets/icons/tag-black.svg';
 import React, { useContext, useEffect, useState } from 'react';
 import { ContainerAuctionDetail } from './styled';
-import { getAuctionDetail } from '../../../../api/items/itemsApi';
+import { getAuctionDetail, getItemDetail } from '../../../../api/items/itemsApi';
 import { orderSell } from 'models/transaction';
 import { getBidAuction } from 'utils/auctionResources';
+import { nftItem } from '../../../../models/item';
+import { useAppSelector } from 'redux/hooks';
+import { selectTrigger } from 'redux/slices/nftFilter';
 
 export default function AuctionDetail() {
+	const navigate = useNavigate();
 	const [auctionDetail, setAuctionDetail] = useState<orderSell>();
+	const [item, setItem] = useState<nftItem>();
 	const [bidderInfo, setBiddderInfo] = useState<any>();
 	const [isFinalize, setIsFinalize] = useState<boolean>(false);
 	const { id } = useParams();
 	const { innerWidth } = useContext(SizeContext);
+	const trigger = useAppSelector(selectTrigger);
+	const fetchOffers = async () => {
+		try {
+			let item = await getItemDetail(auctionDetail!.itemInfo._id!).then((res) => res.data);
+			setItem(item);
+		} catch (error) {
+			navigate('/');
+		}
+	};
 	async function getAuctionDetailFunc() {
 		let auctionDetail = await getAuctionDetail(id!);
 		setAuctionDetail(auctionDetail);
@@ -48,11 +62,15 @@ export default function AuctionDetail() {
 			setIsFinalize(true);
 		}
 	}
+
 	useEffect(() => {
 		if (!id) return;
 		getAuctionDetailFunc();
-	}, [id]);
-
+	}, [id, trigger]);
+	useEffect(() => {
+		if (!auctionDetail) return;
+		fetchOffers();
+	}, [auctionDetail]);
 	const renderAuctionDetail = () => {
 		if (innerWidth > 1000) {
 			return (
@@ -87,13 +105,19 @@ export default function AuctionDetail() {
 									icon={DescriptionBlack}
 									alt="Detail-expand"
 								>
-									<DetailTab auctionDetail={auctionDetail!}></DetailTab>
+									<DetailTab
+										auctionDetail={auctionDetail!}
+										item={item!}
+									></DetailTab>
 								</ExpandCard>
 							</Box>
 						</Grid>
 						<Grid item xs={12} lg={6}>
 							<Box>
-								<ItemNameAndOwner auctionDetail={auctionDetail!}></ItemNameAndOwner>
+								<ItemNameAndOwner
+									auctionDetail={auctionDetail!}
+									item={item!}
+								></ItemNameAndOwner>
 							</Box>
 							<Box sx={{ marginTop: '8px' }}>
 								<CountDownAndPlaceBid
@@ -127,7 +151,10 @@ export default function AuctionDetail() {
 						<ItemImage auctionDetail={auctionDetail!}></ItemImage>
 					</Box>
 					<Box>
-						<ItemNameAndOwner auctionDetail={auctionDetail!}></ItemNameAndOwner>
+						<ItemNameAndOwner
+							auctionDetail={auctionDetail!}
+							item={item!}
+						></ItemNameAndOwner>
 					</Box>
 					<Box sx={{ marginTop: '20px' }}>
 						<CountDownAndPlaceBid
@@ -161,12 +188,12 @@ export default function AuctionDetail() {
 					</Box> */}
 					<Box sx={{ marginTop: '20px' }}>
 						<ExpandCard
-							title="Detail"
+							title="Details"
 							icon={DescriptionBlack}
 							alt="Detail-expand"
 							initialExpandState={false}
 						>
-							<DetailTab auctionDetail={auctionDetail!}></DetailTab>
+							<DetailTab auctionDetail={auctionDetail!} item={item!}></DetailTab>
 						</ExpandCard>
 					</Box>
 					<Box sx={{ marginTop: '20px' }}>

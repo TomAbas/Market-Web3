@@ -31,17 +31,18 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
-import { useAppSelector } from 'redux/hooks';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import useAuctionModules from 'utils/auction';
 
 import { selectUser } from 'redux/slices/userInfo';
 import { orderSell } from 'models/transaction';
 import { userInfo } from 'os';
-import { getEventsByCreationNumber } from 'utils/auctionResources';
+import { getBidUser, getEventsByCreationNumber } from 'utils/auctionResources';
 import { changePriceToToken } from 'utils/function';
 import { tokenPaymentSymbol } from 'constants/sellItem';
-import { selectTrigger } from 'redux/slices/nftFilter';
+import { handleTrigger, selectTrigger } from 'redux/slices/nftFilter';
 import { formatTimeHistory } from '../../../../../utils/function';
+import { dispatch } from 'redux/store';
 
 export interface StepStatus {
 	isChecking: boolean;
@@ -80,6 +81,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 	const [didUserBid, setDidUserBid] = useState(false);
 	const [checkIsClaim, setCheckIsClaim] = useState(false);
 	const trigger = useAppSelector(selectTrigger);
+	const dispath = useAppDispatch();
 	const userAddress = useAppSelector(selectUser);
 	const [startValue, setStartValue] = useState<number>(0);
 	const [nextLowestBid, setNextLowestBid] = useState(0);
@@ -131,16 +133,32 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 			if (isBid) {
 				setYourBid(Number(isBid.offer_price));
 			}
-			if (isBid && (isFinalize || Number(auctionDetail.expirationTime) < Date.now())) {
-				setCheckIsClaim(true);
-			}
 		} catch (err) {
 			setCheckIsClaim(false);
 		}
 	}
-	useEffect(() => {
-		console.log(didUserBid, 'firstBidder');
-	}, [didUserBid]);
+	async function checkIsClaimFc() {
+		try {
+			await getBidUser(
+				userAddress?.userAddress!,
+				auctionDetail.coinType,
+				'2',
+				auctionDetail.maker,
+				auctionDetail.creationNumber
+			).then((res) => {
+				if (
+					isFinalize ||
+					Number(auctionDetail.expirationTime) + 7 * 24 * 60 * 60000 + 5 * 60000 <
+						Date.now()
+				) {
+					setCheckIsClaim(true);
+				}
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	useEffect(() => {
 		if (bidderInfo && userAddress) {
 			setDidUserBid(checkDidUserBid());
@@ -150,7 +168,11 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 			checkCanClaim();
 		}
 	}, [bidderInfo, userAddress]);
-
+	useEffect(() => {
+		if (auctionDetail && userAddress) {
+			checkIsClaimFc();
+		}
+	}, [auctionDetail, userAddress]);
 	// REACT HOOK FORM
 	const schema = yup
 		.object({
@@ -262,21 +284,6 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 		setChecked(event.target.checked);
 	};
 	// Handle claim Bid
-	const handleClaimBid = async () => {
-		if (auctionDetail) {
-			// const AuctionContract = getWeb3Contract(
-			// 	NftAuction.abi,
-			// 	auctionDetail.infoINO.addressINO
-			// );
-			setClaimExecuting(true);
-			try {
-				setClaimExecuting(false);
-			} catch (error) {
-				console.log('some error when claim reward', error);
-				setClaimExecuting(false);
-			}
-		}
-	};
 
 	useEffect(() => {
 		setModal(false);
@@ -316,7 +323,9 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 								mx: 'auto',
 							}}
 							onClick={() => {
-								finalizeAuction();
+								finalizeAuction().then((res) => {
+									dispatch(handleTrigger());
+								});
 							}}
 						>
 							<Stack direction="row" alignItems="center">
@@ -394,7 +403,9 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 					return (
 						<ButtonWhite
 							onClick={() => {
-								withdrawCoinFromAuction();
+								withdrawCoinFromAuction().then((res) => {
+									setCheckIsClaim(false);
+								});
 							}}
 							sx={{
 								fontWeight: '600',
@@ -488,24 +499,14 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 					<Box marginTop={4}>{handleRenderButtonBid()}</Box>
 				</BoxContainCountDown>
 
-				{/* <Box marginTop={5}>
-					<Box>
-						<Stack direction="row" justifyContent="space-between">
-							<Typography>Favortites:</Typography>
-							<Typography>12</Typography>
-						</Stack>
-						<Stack direction="row" justifyContent="space-between">
-							<Typography>Blockchain:</Typography>
-							{renderBlockchain()}
-						</Stack>
-					</Box>
-				</Box> */}
 				<Modal
 					onOpen={modal}
 					onClose={() => {
-						setModal(false);
-						setOpenStep(false);
 						setLoading(false);
+						setOpenStep(false);
+						setModal(false);
+						setPriceBid('');
+						setDisableInputBid(false);
 					}}
 					allowClose={
 						!step1.isExecuting &&
@@ -628,13 +629,6 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 												? true
 												: false
 										}
-										// disabled={
-										// 	disableButton ||
-										// 	step1.isExecuting ||
-										// 	step1.isCompleted ||
-										// 	!checked ||
-										// 	openStep
-										// }
 									>
 										<Typography>Confirm</Typography>
 									</ButtonWhite>
@@ -739,22 +733,6 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 						</Stepper>
 					)}
 				</Modal>
-				{/* <Modal
-					onOpen={true}
-					onClose={() => {
-						setModal(false);
-					}}
-					allowClose={
-						!step1.isExecuting &&
-						!step1.isChecking &&
-						!step2.isExecuting &&
-						!step2.isChecking
-					}
-					mainHeader={'Take Highest Bid'}
-					style={{ maxWidth: '450px', overflowY: 'auto' }}
-				>
-					<ButtonWhite onClick={handleTakeHighestBid}>TAKE IT</ButtonWhite>
-				</Modal> */}
 			</Fragment>
 		</>
 	);
