@@ -45,7 +45,11 @@ const AuctionHistory: React.FC<Props> = ({ infoUser }) => {
 	}, [infoUser]);
 	return (
 		<TabWrapperContainer>
-			<InfiniteListActivity listItemHistory={listUserHistory} loading={loading} />
+			<InfiniteListActivity
+				listItemHistory={listUserHistory}
+				loading={loading}
+				isAuction={true}
+			/>
 		</TabWrapperContainer>
 	);
 };

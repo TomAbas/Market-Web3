@@ -83,13 +83,13 @@ const TypeEvent: React.FC<Props> = ({ itemHistory, userAddress }) => {
 					Bid
 					<StyledSpan>
 						{' '}
-						{itemHistory.auctionInfo.amount} {itemHistory.auctionInfo.itemInfo.itemName}{' '}
-						with{' '}
+						{itemHistory?.auctionInfo?.amount}{' '}
+						{itemHistory?.auctionInfo?.itemInfo.itemName} with{' '}
 						{changePriceToToken(
-							itemHistory.offer_price,
-							itemHistory.auctionInfo.coinType
+							itemHistory?.offer_price,
+							itemHistory?.auctionInfo?.coinType
 						)}{' '}
-						{itemHistory.auctionInfo.coinType.split('::').slice(-1)[0].toUpperCase()}{' '}
+						{itemHistory?.auctionInfo?.coinType.split('::').slice(-1)[0].toUpperCase()}{' '}
 						{/* {formatAddressHistory(itemHistory.to, userAddress)} */}
 					</StyledSpan>
 				</Typography>

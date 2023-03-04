@@ -10,8 +10,9 @@ import NoItem from 'customComponents/NoItem/NoItem';
 interface Props {
 	listItemHistory: any;
 	loading: boolean;
+	isAuction?: boolean;
 }
-const InfiniteListActivity: React.FC<Props> = ({ listItemHistory, loading }) => {
+const InfiniteListActivity: React.FC<Props> = ({ listItemHistory, loading, isAuction }) => {
 	return (
 		<Box sx={{ width: '100%' }}>
 			<TabWrapper>
@@ -21,9 +22,8 @@ const InfiniteListActivity: React.FC<Props> = ({ listItemHistory, loading }) => 
 					<>
 						{listItemHistory.length > 0 ? (
 							<>
-								{listItemHistory.offer_price ? (
+								{isAuction ? (
 									<>
-										{' '}
 										{listItemHistory.map(
 											(itemHistory: itemHistory, index: number) => {
 												return (
