@@ -21,7 +21,7 @@ const InfiniteListActivity: React.FC<Props> = ({ listItemHistory, loading }) => 
 					<>
 						{listItemHistory.length > 0 ? (
 							<>
-								{listItemHistory.offer_price !== '' ? (
+								{listItemHistory.offer_price ? (
 									<>
 										{' '}
 										{listItemHistory.map(

@@ -126,7 +126,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 				})
 			);
 
-			let isBid = listBid.find((listid: any) => {
+			let isBid = listBid.findLast((listid: any) => {
 				return (
 					listid.bid_id.listing_id.creation_num == auctionDetail.creationNumber &&
 					listid.bid_id.listing_id.addr == auctionDetail.maker
