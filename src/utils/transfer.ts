@@ -108,10 +108,14 @@ function useTransfer() {
 			let coinInfo = ListTokenPaymentTestNet.find((coin) => coin.type === coinType);
 			const NODE_URL = APTOS_NODE_URL[chainId];
 			const client = new AptosClient(NODE_URL);
-			await client
+			value = await client
 				.getAccountResource(address, `0x1::coin::CoinStore<${coinType}>`)
 				.then((res: any) => {
-					value = res.data.value / coinInfo?.decimals!;
+					console.log(res.data.coin.value);
+					console.log(coinInfo?.decimals);
+					value = res.data.coin.value / 10 ** coinInfo?.decimals!;
+					console.log(value);
+					return value;
 				});
 			return value;
 		} catch (error) {

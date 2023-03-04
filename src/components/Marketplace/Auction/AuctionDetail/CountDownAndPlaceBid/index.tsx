@@ -43,7 +43,7 @@ import { tokenPaymentSymbol } from 'constants/sellItem';
 import { handleTrigger, selectTrigger } from 'redux/slices/nftFilter';
 import { formatTimeHistory } from '../../../../../utils/function';
 import { dispatch } from 'redux/store';
-
+import useTransfer from 'utils/transfer';
 export interface StepStatus {
 	isChecking: boolean;
 	isExecuting: boolean;
@@ -66,6 +66,7 @@ interface Props {
 }
 
 export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFinalize }: Props) {
+	const { getBalanceCoin } = useTransfer();
 	const [modal, setModal] = useState(false);
 	const [step1, setStep1] = useState<StepStatus>(initialStepStatus);
 	const [step2, setStep2] = useState<StepStatus>(initialStepStatus);
@@ -87,6 +88,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 	const [nextLowestBid, setNextLowestBid] = useState(0);
 	const [yourBid, setYourBid] = useState(0);
 	const [loading, setLoading] = useState(false);
+	const [isEnough, setIsEnough] = useState(true);
 	const {
 		bidAuction,
 		setPriceBid,
@@ -198,9 +200,17 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 	});
 	//
 
-	const onSubmit = () => {
+	const onSubmit = async () => {
+		await getBalanceCoin(auctionDetail.coinType, userAddress?.userAddress!).then((res) => {
+			console.log(res);
+			if (Number(res) >= Number(priceBid)) {
+				setIsEnough(true);
+				setOpenStep(true);
+			} else {
+				setIsEnough(false);
+			}
+		});
 		setDisableInputBid(true);
-		setOpenStep(true);
 	};
 
 	const renderCountdown = () => {
@@ -569,7 +579,16 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 									)}
 								</>
 							)}
-
+							{priceBid && !isEnough && (
+								<>
+									<ErrorMessage>
+										You don't have enough {priceBid}{' '}
+										{tokenPaymentSymbol[
+											auctionDetail.coinType?.split('::').slice(-1)[0]
+										].toUpperCase()}{' '}
+									</ErrorMessage>
+								</>
+							)}
 							{errors.amount?.message && (
 								<ErrorMessage>{errors.amount?.message}</ErrorMessage>
 							)}
@@ -654,6 +673,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 
 								<StepContent>
 									<ButtonWhite
+										disabled={!isEnough}
 										onClick={() => {
 											if (didUserBid) {
 												increaseBid();
@@ -671,15 +691,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 												size={16}
 											/>
 										) : (
-											<Typography variant="button">
-												{step1.isChecking
-													? 'Checking...'
-													: step1.isExecuting
-													? 'Executing...'
-													: step1.isCompleted
-													? 'Done'
-													: 'Confirm'}
-											</Typography>
+											<Typography variant="button">Confirm</Typography>
 										)}
 									</ButtonWhite>
 								</StepContent>
