@@ -153,7 +153,7 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 			console.log(payload);
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				console.log(res);
-				finalAuction(res.hash, orderInfo?.itemId, orderInfo?._id);
+				finalAuction(res.hash, orderInfo!.itemId, orderInfo!._id);
 			});
 		} catch (error) {
 			console.log(error);
