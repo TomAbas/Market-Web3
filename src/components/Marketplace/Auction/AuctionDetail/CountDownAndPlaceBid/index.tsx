@@ -539,7 +539,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 									setPriceBid(e.target.value);
 								}}
 							/>
-							{priceBid && (
+							{priceBid && yourBid === 0 && (
 								<>
 									{Number(priceBid) <
 										changePriceToToken(
@@ -617,6 +617,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 										type="submit"
 										disabled={
 											(priceBid &&
+												yourBid === 0 &&
 												Number(priceBid) <
 													changePriceToToken(
 														Math.max(
