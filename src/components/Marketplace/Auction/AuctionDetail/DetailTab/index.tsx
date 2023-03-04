@@ -5,12 +5,14 @@ import CopyToClipboardButton from 'customComponents/CopyToClipboardButton';
 import { orderSell } from 'models/transaction';
 import React, { Fragment } from 'react';
 import { formatTimeHistory, displayAddress } from 'utils/function';
+import { nftItem } from '../../../../../models/item';
 
 export interface IAppProps {
 	auctionDetail: orderSell;
+	item: nftItem;
 }
 
-export default function DetailTab({ auctionDetail }: IAppProps) {
+export default function DetailTab({ auctionDetail, item }: IAppProps) {
 	return (
 		<Fragment>
 			<Stack direction="row" justifyContent="space-between" mt={1}>

@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { changeTokenToWei, changePriceToToken, changeTokenToWeiByCoinType } from './function';
 import { useNavigate } from 'react-router-dom';
+import { finalAuction } from 'api/items/itemsApi';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 	const userInfo = useAppSelector(selectUser);
@@ -91,8 +92,9 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 				],
 			};
 			console.log(payload);
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
+			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(async (res) => {
 				console.log(res);
+				await new Promise((resolve) => setTimeout(resolve, 1000));
 				dispatch(handleTrigger());
 			});
 		} catch (error) {}
@@ -151,6 +153,7 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 			console.log(payload);
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				console.log(res);
+				finalAuction(res.hash, orderInfo!.itemId, orderInfo!._id);
 			});
 		} catch (error) {
 			console.log(error);
