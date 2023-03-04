@@ -107,8 +107,10 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 				type_arguments: [orderInfo?.coinType!],
 				arguments: [orderInfo?.auctionId],
 			};
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
+			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(async (res) => {
 				console.log(res);
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+				dispatch(handleTrigger());
 			});
 		} catch (error) {}
 	}
@@ -122,8 +124,9 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 				type_arguments: [orderInfo?.coinType!],
 				arguments: [newPrice, orderInfo?.auctionId],
 			};
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
-				console.log(res);
+			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(async (res) => {
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+				dispatch(handleTrigger());
 			});
 		} catch (error) {}
 	}

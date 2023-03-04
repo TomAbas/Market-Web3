@@ -103,11 +103,12 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 	function checkDidUserBid() {
 		const { bids } = bidderInfo;
 		const { data } = bids;
-
 		let result = data.find((item: any) => {
 			return item.value.bidder === userAddress?.userAddress;
 		});
 		if (result) {
+			console.log(result);
+			setYourBid(Number(result.key));
 			return true;
 		} else {
 			return false;
@@ -125,15 +126,14 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 					return item.data;
 				})
 			);
-
-			let isBid = listBid.find((listid: any) => {
+			let isBid = listBid.findLast((listid: any) => {
 				return (
 					listid.bid_id.listing_id.creation_num == auctionDetail.creationNumber &&
 					listid.bid_id.listing_id.addr == auctionDetail.maker
 				);
 			});
 			if (isBid) {
-				setYourBid(Number(isBid.offer_price));
+				// setYourBid(Number(isBid.offer_price));
 			}
 		} catch (err) {
 			setCheckIsClaim(false);
@@ -383,7 +383,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 								>
 									<Stack direction="row" alignItems="center">
 										<Typography variant="body1" sx={{ fontWeight: '600' }}>
-											Cancel bid
+											Cancel Bid
 										</Typography>
 									</Stack>
 								</ButtonWhite>
