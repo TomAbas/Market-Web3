@@ -683,53 +683,6 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 									</ButtonWhite>
 								</StepContent>
 							</Step>
-							{/* <Step>
-								<StepLabel
-									optional={
-										<Typography variant="caption">Recurring fees.</Typography>
-									}
-								>
-									Completing Accept Bid.
-								</StepLabel>
-								<StepContent>
-									<ButtonWhite
-										disabled={!step1.isCompleted || step2.isExecuting}
-										onClick={() => {
-											handleStep2();
-											bidAuction();
-										}}
-										sx={{ width: '180px', height: '40px', mt: 1 }}
-									>
-										{(step2.isChecking || step2.isExecuting) && (
-											<CircularProgress
-												sx={{ color: 'white', mr: 1 }}
-												size={16}
-											/>
-										)}
-										<Typography variant="button">
-											{step2.isChecking
-												? 'Checking...'
-												: step2.isExecuting
-												? 'Executing...'
-												: 'Place Bid'}
-										</Typography>
-									</ButtonWhite>
-								</StepContent>
-							</Step>
-							<Step>
-								<StepLabel>Accept Bid Successfully</StepLabel>
-								<StepContent>
-									<ButtonWhite
-										disabled={!step2.isCompleted}
-										onClick={() => {
-											window.location.reload();
-										}}
-										sx={{ width: '180px', height: '40px', mt: 1 }}
-									>
-										<Typography>View Item</Typography>
-									</ButtonWhite>
-								</StepContent>
-							</Step> */}
 						</Stepper>
 					)}
 				</Modal>

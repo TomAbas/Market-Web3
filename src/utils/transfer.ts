@@ -10,6 +10,7 @@ import {
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { APTOS_NODE_URL, APTOS_FAUCET_URL } from 'constants/aptos.constant';
+import { ListTokenPaymentTestNet } from 'constants/sellItem';
 const REACT_APP_MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 const chainId = '2';
 const COIN_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE || '0x1::aptos_coin::AptosCoin';
@@ -67,7 +68,10 @@ function useTransfer() {
 			const client = new AptosClient(NODE_URL);
 			let res = await client
 				.getAccountResource(address, `0x1::coin::CoinStore<${coinType}>`)
-				.then((res: any) => res.data);
+				.then((res: any) => {
+					console.log('coin store', res);
+					return res.data;
+				});
 			if (res) return true;
 			return false;
 		} catch (error) {
@@ -98,6 +102,23 @@ function useTransfer() {
 		return signAndSubmitTransaction(payload);
 	}
 
+	async function getBalanceCoin(coinType: any, address: string) {
+		try {
+			let value = 0;
+			let coinInfo = ListTokenPaymentTestNet.find((coin) => coin.type === coinType);
+			const NODE_URL = APTOS_NODE_URL[chainId];
+			const client = new AptosClient(NODE_URL);
+			await client
+				.getAccountResource(address, `0x1::coin::CoinStore<${coinType}>`)
+				.then((res: any) => {
+					value = res.data.value / coinInfo?.decimals!;
+				});
+			return value;
+		} catch (error) {
+			return 0;
+		}
+	}
+
 	return {
 		checkEnableReceivingNFT,
 		enableReceivingNFT,
@@ -105,6 +126,7 @@ function useTransfer() {
 		checkCoinStore,
 		registerCoin,
 		faucet,
+		getBalanceCoin,
 	};
 }
 
