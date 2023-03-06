@@ -129,7 +129,7 @@ const FormSellFixPrice = () => {
 			return;
 		}
 		setStartTime(data.startTime.toString());
-		setWithdrawTime((data.endTime + 5 * 60000).toString());
+		setWithdrawTime((data.endTime + 7 * 24 * 60 * 60000).toString());
 		setEndTime(data.endTime.toString());
 		setInit(true);
 		setLoading(true);

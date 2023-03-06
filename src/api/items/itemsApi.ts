@@ -51,6 +51,11 @@ function getAuctionHis(userAddress: string, creationNumber: object): Promise<any
 	const url = `/order/get-order-by-creationNumber/userAddress/${userAddress}`;
 	return ClientAxios.post(url, creationNumber).then((res) => res.data);
 }
+function finalAuction(txHash: string, itemId: string, orderId: string): Promise<any> {
+	const url = `/order/final-auction`;
+	const data = { txHash, itemId, orderId };
+	return ClientAxios.post(url, data).then((res) => res.data);
+}
 export {
 	getAllItems,
 	getOfferOfItem,
@@ -64,4 +69,5 @@ export {
 	getOrderOfItem,
 	getAuctionDetail,
 	getAuctionHis,
+	finalAuction,
 };
