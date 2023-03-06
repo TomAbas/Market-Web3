@@ -33,4 +33,17 @@ async function cancelOrder(listItemInfo: Order) {
 	return axiosClient.post(url, listItemInfo);
 }
 
-export { createCollection, getCollectionByUserAddress, createItem, sellItem, buyItem, cancelOrder };
+async function cancelAuction(userAddress: string, txHash: string, orderId: string) {
+	const url = `order/cancel-auction/userAddress/${userAddress}`;
+	return axiosClient.post(url, { txHash, orderId });
+}
+
+export {
+	createCollection,
+	getCollectionByUserAddress,
+	createItem,
+	sellItem,
+	buyItem,
+	cancelOrder,
+	cancelAuction,
+};

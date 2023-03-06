@@ -91,6 +91,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 	const {
 		bidAuction,
 		setPriceBid,
+		cancelAuction,
 		increaseBid,
 		cancelBid,
 		withdrawCoinFromAuction,
@@ -311,6 +312,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 								width: 'fit-content',
 								mx: 'auto',
 							}}
+							onClick={cancelAuction}
 						>
 							<Stack direction="row" alignItems="center">
 								<Typography variant="body1" sx={{ fontWeight: '600' }}>

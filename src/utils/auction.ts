@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { changeTokenToWei, changePriceToToken, changeTokenToWeiByCoinType } from './function';
 import { useNavigate } from 'react-router-dom';
 import { finalAuction } from 'api/items/itemsApi';
+import { cancelAuction as cancelAuctionApi } from 'api/collections/collectionApi';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 	const userInfo = useAppSelector(selectUser);
@@ -70,6 +71,22 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 					}
 					dispatch(handleTrigger());
 				});
+			});
+		} catch (error) {}
+	}
+
+	async function cancelAuction() {
+		try {
+			const payload: TransactionPayload = {
+				type: 'entry_function_payload',
+				function: `${MARKET_ADDRESS}::auction::cancel_auction`,
+				type_arguments: [orderInfo?.coinType!],
+				arguments: [orderInfo?.auctionId],
+			};
+			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(async (res) => {
+				await cancelAuctionApi(userInfo?.userAddress!, res.hash, orderInfo?._id!);
+				navigate(`/item/${orderInfo?.itemId}`);
+				toast.success('Successful list an item');
 			});
 		} catch (error) {}
 	}
@@ -203,6 +220,7 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 		setEndTime,
 		setWithdrawTime,
 		createAuction,
+		cancelAuction,
 		bidAuction,
 		cancelBid,
 		finalizeAuction,
