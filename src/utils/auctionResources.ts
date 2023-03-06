@@ -46,14 +46,6 @@ const getBidUser = async (
 	return dataAuction;
 };
 
-getBidUser(
-	'0xed08f5856d2e5a1ab7282964922b7ec8c18b85c911d99b3f23eb25af5965d270',
-	'0x5501332ea130b2bc65a0f2531d62c26cb2c7086f856632a6a579e99ed0f186c5::metaspacecy_coin_test::DaiCoin',
-	'2',
-	'0x98d807bee3b8a28feb99c87712787ad1608c5e31cd6770669e39dcb8a3ae6b0d',
-	'33'
-);
-
 const getEventsByCreationNumber = async (address: string, coinType: string, chainId: string) => {
 	const client = new AptosClient(APTOS_NODE_URL[chainId]);
 	let data: any = await client
