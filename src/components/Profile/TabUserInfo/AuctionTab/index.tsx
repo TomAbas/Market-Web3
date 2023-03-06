@@ -36,7 +36,6 @@ const AuctionHistory: React.FC<Props> = ({ infoUser }) => {
 		);
 		setListUserHistory(listBidHistory);
 		setLoading(false);
-		console.log(listBidHistory);
 	}
 	useEffect(() => {
 		if (infoUser) {

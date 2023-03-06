@@ -111,7 +111,6 @@ export default function CardNFTCollection({
 			let hash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
 				(res) => res.hash
 			);
-			console.log(offer);
 			let listItem: any = {
 				maker: account?.address?.toString(),
 				chainId: '2',

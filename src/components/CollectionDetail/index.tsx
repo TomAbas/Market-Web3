@@ -40,7 +40,6 @@ const MyCollectionDetail = () => {
 		setItems(newItems);
 	};
 	useEffect(() => {
-		console.log('userAddress', userInfo?.userAddress);
 		let newCollection = new Map();
 		tokens.map((item: any) => {
 			let collection = newCollection.get(item?.collection + '*/////*' + item?.creator);
@@ -60,7 +59,6 @@ const MyCollectionDetail = () => {
 		}
 		const fetchData = async () => {
 			let coll = await getCollectionData(creator, collection);
-			console.log('collection', coll);
 			setCollectionInfo(coll);
 			setLoadingCollectionImg(false);
 		};
@@ -234,7 +232,6 @@ const MyCollectionDetail = () => {
 							if (desRef.current?.offsetHeight < 50) {
 								return;
 							}
-							console.log(desRef.current?.offsetHeight);
 							setShow(!show);
 						}}
 					>

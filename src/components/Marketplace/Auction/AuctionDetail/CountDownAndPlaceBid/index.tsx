@@ -102,7 +102,6 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 	function checkDidUserBid() {
 		const { bids } = bidderInfo;
 		const { data } = bids;
-		console.log(bidderInfo);
 		let result = data.findLast((item: any) => {
 			return item.value.bidder === userAddress?.userAddress;
 		});
@@ -201,7 +200,6 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 
 	const onSubmit = async () => {
 		await getBalanceCoin(auctionDetail.coinType, userAddress?.userAddress!).then((res) => {
-			console.log(res);
 			if (Number(res) >= Number(priceBid)) {
 				setIsEnough(true);
 				setOpenStep(true);

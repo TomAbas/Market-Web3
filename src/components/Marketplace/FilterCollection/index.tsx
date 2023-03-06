@@ -6,7 +6,6 @@ import { listCategory } from 'constants/category.constant';
 export default function FilterCollection() {
 	let [searchParams, setSearchParams] = useSearchParams();
 	const category = searchParams.get('category');
-	console.log(category);
 	const listFilter = [
 		{
 			id: null,

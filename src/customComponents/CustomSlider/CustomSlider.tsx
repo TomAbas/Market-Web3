@@ -43,7 +43,6 @@ const CustomSlider = ({
 	slidesToShowPoint0,
 	renderItem,
 }: CustomSliderProps) => {
-	console.log('renderItem', renderItem);
 	const renderListItem = () =>
 		renderItem.map((item: any, index: number) => (
 			<SwiperSlide key={index}>

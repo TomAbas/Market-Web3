@@ -69,7 +69,6 @@ function useTransfer() {
 			let res = await client
 				.getAccountResource(address, `0x1::coin::CoinStore<${coinType}>`)
 				.then((res: any) => {
-					console.log('coin store', res);
 					return res.data;
 				});
 			if (res) return true;
@@ -111,10 +110,7 @@ function useTransfer() {
 			value = await client
 				.getAccountResource(address, `0x1::coin::CoinStore<${coinType}>`)
 				.then((res: any) => {
-					console.log(res.data.coin.value);
-					console.log(coinInfo?.decimals);
 					value = res.data.coin.value / 10 ** coinInfo?.decimals!;
-					console.log(value);
 					return value;
 				});
 			return value;

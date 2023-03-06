@@ -93,7 +93,6 @@ const FeaturedCollection = () => {
 		navigate(`/profile?address=${userAddress}`);
 	}
 	useEffect(() => {
-		console.log(window.innerWidth);
 		getListCategory('2')
 			.then((res: any) => res.data)
 			.then((res: any) => {

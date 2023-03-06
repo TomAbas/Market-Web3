@@ -71,7 +71,6 @@ const FormMintNft: React.FC<Props> = ({
 		setValue('name', value);
 		longName.current = value.length;
 		let collectionInfo = collections.find((item: any) => item.collectionName === collection);
-		console.log('collectionInfo', collectionInfo);
 		if (collectionInfo) {
 			let listItem = collectionInfo.listItem.find((item: any) => item.itemName === value);
 			if (listItem) {

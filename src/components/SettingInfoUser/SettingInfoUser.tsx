@@ -103,7 +103,6 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 				avatarForm.append('file', avatar.raw);
 				const res: Response<any> = await uploadUserMedia(avatarForm, infoUser.userAddress);
 				avatarURL = res.data.data.result;
-				console.log('res', res);
 			}
 
 			if (typeof background === 'string') {
@@ -125,7 +124,6 @@ const SettingInfoUser: React.FC<Props> = ({ infoUser, openEdit, openEditModal })
 				background: backgroundURL,
 				userAddress: infoUser.userAddress,
 			};
-			console.log(newData);
 			dispatch(updateInfoUserA(newData));
 			updateUser(newData);
 			openEditModal();

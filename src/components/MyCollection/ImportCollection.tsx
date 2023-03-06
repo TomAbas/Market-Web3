@@ -98,7 +98,6 @@ const ImportCollection: React.FC<Props> = ({ open, onClose, setTrigger, collecti
 					errorName = '';
 				}
 				if (collectionData?.category === 0) {
-					console.log(collectionData?.category);
 					errorCategory = 'Category is required';
 					setLoading(false);
 				} else {

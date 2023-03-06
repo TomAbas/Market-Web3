@@ -32,7 +32,6 @@ const getBidUser = async (
 		`${MARKET_ADDRESS}::bid_utils::BidStore<${coinType}>`
 	);
 	let handle = data.store.handle;
-	console.log('handle', handle);
 	let dataAuction = await client.getTableItem(handle, {
 		key_type: `${MARKET_ADDRESS}::bid_utils::BidId`,
 		value_type: `${MARKET_ADDRESS}::bid_utils::Bid<${coinType}>`,

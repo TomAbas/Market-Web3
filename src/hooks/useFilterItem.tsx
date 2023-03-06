@@ -18,7 +18,6 @@ const useFilterItem = (items: nftItem[], infoUser?: User) => {
 		setItemCollected(await getItemCollected(infoUser.userAddress).then((res: any) => res.data));
 	}
 	useEffect(() => {
-		console.log('items ', items);
 		// console.log('itemCollected ', itemCollected);
 	}, [itemCollected]);
 	useEffect(() => {

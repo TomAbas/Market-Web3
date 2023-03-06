@@ -12,9 +12,7 @@ const useInteraction = () => {
 	const userInfo = useAppSelector(selectUser);
 	const [itemLiked, setItemLiked] = useState<string[]>([]);
 
-	useEffect(() => {
-		console.log(itemLiked);
-	}, []);
+	useEffect(() => {}, []);
 	async function getLikesStatusOfItem() {
 		if (userInfo?.userAddress) {
 			try {

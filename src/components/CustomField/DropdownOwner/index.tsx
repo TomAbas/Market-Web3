@@ -115,7 +115,6 @@ function AutoCompleteCustom({
 		  );
 
 	const renderListOption = () => {
-		console.log(listItemFiltered);
 		return listItemFiltered.map((item: OptionSelectCustom<any>, idx: number) => {
 			if (idx === 0) {
 				return <></>;
