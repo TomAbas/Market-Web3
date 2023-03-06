@@ -92,7 +92,6 @@ const TypeEvent: React.FC<Props> = ({ itemHistory, userAddress }) => {
 			<>
 				<Typography variant="body1" sx={{ fontWeight: '500' }}>
 					<StyledSpan>
-						{JSON.stringify(itemHistory)}
 						{formatAddressHistory(itemHistory?.bid_id?.bidder, userAddress)}
 					</StyledSpan>{' '}
 					Bid

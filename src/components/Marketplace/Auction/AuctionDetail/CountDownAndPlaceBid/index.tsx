@@ -87,6 +87,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 	const [nextLowestBid, setNextLowestBid] = useState(0);
 	const [yourBid, setYourBid] = useState(0);
 	const [loading, setLoading] = useState(false);
+	const [isBided, setIsBided] = useState(false);
 	const [isEnough, setIsEnough] = useState(true);
 	const {
 		bidAuction,
@@ -99,6 +100,35 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 		priceBid,
 	} = useAuctionModules(auctionDetail?.itemInfo, auctionDetail);
 	// Waiting
+	async function checkBidStore() {
+		let listBid = await getEventsByCreationNumber(
+			userAddress?.userAddress!,
+			auctionDetail.coinType,
+			'2'
+		).then((res) =>
+			res.map((item: any) => {
+				return item.data;
+			})
+		);
+		console.log(listBid);
+		let isBid = listBid.findLast((listid: any) => {
+			return (
+				listid.bid_id.listing_id.creation_num == auctionDetail.creationNumber &&
+				listid.bid_id.listing_id.addr == auctionDetail.maker
+			);
+		});
+		if (isBid) {
+			setYourBid(isBid.offer_price);
+			if (
+				isFinalize ||
+				Number(auctionDetail.expirationTime) + 7 * 24 * 60 * 60000 + 5 * 60000 < Date.now()
+			) {
+				setCheckIsClaim(true);
+			}
+			setIsBided(true);
+		}
+	}
+
 	function checkDidUserBid() {
 		const { bids } = bidderInfo;
 		const { data } = bids;
@@ -110,68 +140,43 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 			setYourBid(Number(result.key));
 			return true;
 		} else {
+			checkBidStore();
 			return false;
 		}
 	}
 
-	async function checkCanClaim() {
-		try {
-			let listBid = await getEventsByCreationNumber(
-				userAddress?.userAddress!,
-				auctionDetail.coinType,
-				'2'
-			).then((res) =>
-				res.map((item: any) => {
-					return item.data;
-				})
-			);
-			let isBid = listBid.findLast((listid: any) => {
-				return (
-					listid.bid_id.listing_id.creation_num == auctionDetail.creationNumber &&
-					listid.bid_id.listing_id.addr == auctionDetail.maker
-				);
-			});
-			if (isBid) {
-				// setYourBid(Number(isBid.offer_price));
-			}
-		} catch (err) {
-			setCheckIsClaim(false);
-		}
-	}
-	async function checkIsClaimFc() {
-		try {
-			await getBidUser(
-				userAddress?.userAddress!,
-				auctionDetail.coinType,
-				'2',
-				auctionDetail.maker,
-				auctionDetail.creationNumber
-			).then((res) => {
-				if (
-					isFinalize ||
-					Number(auctionDetail.expirationTime) + 7 * 24 * 60 * 60000 + 5 * 60000 <
-						Date.now()
-				) {
-					setCheckIsClaim(true);
-				}
-			});
-		} catch (error) {
-			console.log(error);
-		}
-	}
+	// async function checkIsClaimFc() {
+	// 	try {
+	// 		await getBidUser(
+	// 			userAddress?.userAddress!,
+	// 			auctionDetail.coinType,
+	// 			'2',
+	// 			auctionDetail.maker,
+	// 			auctionDetail.creationNumber
+	// 		).then((res) => {
+	// 			console.log(res);
+	// 			if (
+	// 				isFinalize ||
+	// 				Number(auctionDetail.expirationTime) + 7 * 24 * 60 * 60000 + 5 * 60000 <
+	// 					Date.now()
+	// 			) {
+	// 				setCheckIsClaim(true);
+	// 			}
+	// 		});
+	// 	} catch (error) {
+	// 		console.log('final', error);
+	// 		console.log(error);
+	// 	}
+	// }
 
 	useEffect(() => {
 		if (bidderInfo && userAddress) {
 			setDidUserBid(checkDidUserBid());
-			checkCanClaim();
-		}
-		if (userAddress) {
-			checkCanClaim();
 		}
 	}, [bidderInfo, userAddress]);
 	useEffect(() => {
 		if (auctionDetail && userAddress) {
-			checkIsClaimFc();
+			// checkIsClaimFc();
 		}
 	}, [auctionDetail, userAddress]);
 	// REACT HOOK FORM
@@ -389,7 +394,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 								</ButtonWhite>
 							</Stack>
 						);
-					} else {
+					} else if (!isBided) {
 						return (
 							<ButtonWhite
 								onClick={() => {
