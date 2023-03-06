@@ -31,11 +31,13 @@ import Collections from 'components/Marketplace/ViewAll/Collections';
 import Items from 'components/Marketplace/ViewAll/Items';
 import Error from 'components/Error/Error';
 import SellItemPage from 'components/Marketplace/SellItemPage/SellItemPage';
+import Prediction from 'components/Prediction/CardPrediction';
+import Predict from 'components/Prediction/Predict';
 
 const router = createHashRouter([
 	{
 		element: <App />,
-		errorElement: <Error />,
+		// errorElement: <Error />,
 		children: [
 			{
 				path: '/',
@@ -105,6 +107,14 @@ const router = createHashRouter([
 			{
 				path: 'myCollection/detail',
 				element: <MyCollectionDetail />,
+			},
+			{
+				path: 'prediction',
+				element: <Prediction />,
+			},
+			{
+				path: 'predict',
+				element: <Predict />,
 			},
 		],
 	},

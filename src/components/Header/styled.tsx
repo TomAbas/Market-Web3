@@ -169,6 +169,7 @@ export const IconItem = styled(Box)(({ theme }) => ({
 	color: '#000',
 	border: '1.5px solid #e7e8ec',
 	cursor: 'pointer',
+	marginLeft: 2,
 }));
 
 export const DropDownContent = styled(Stack)(() => ({
@@ -253,6 +254,7 @@ export const NavigationBarBigScreen = styled('ul')({
 	gap: '2px',
 	padding: '0 5px',
 	width: '80%',
+	marginLeft: -50,
 	'@media screen and (max-width: 2450px)': {
 		width: '90%',
 	},
