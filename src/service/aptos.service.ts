@@ -42,17 +42,3 @@ export const getItemData = async (creator: string, collectionName: string, itemN
 
 	return tokenClient.getTokenData(creator, collectionName, itemName);
 };
-
-export const getTokenFromResource = async () => {
-	const client = new AptosClient(APTOS_NODE_URL[chainId]);
-	let data = await client.getAccountResources(
-		'0x2709ce0b27f0b4ff85ab2b28dceaf546c76c6b8365072935d9aa65406eebbc04'
-	);
-	data = data
-		.filter((item: any) => {
-			return item.type.includes('market::TokenInfo');
-		})
-		.map((item: any) => item.data.token_list)
-		.reduce((a: any, b: any) => a.concat(b), []);
-	return data;
-};

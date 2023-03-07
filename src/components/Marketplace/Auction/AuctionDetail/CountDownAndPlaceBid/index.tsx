@@ -44,6 +44,7 @@ import { handleTrigger, selectTrigger } from 'redux/slices/nftFilter';
 import { formatTimeHistory } from '../../../../../utils/function';
 import { dispatch } from 'redux/store';
 import useTransfer from 'utils/transfer';
+import { checkIsClaim as checkIsClaimResource } from 'utils/auctionResources';
 export interface StepStatus {
 	isChecking: boolean;
 	isExecuting: boolean;
@@ -110,7 +111,6 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 				return item.data;
 			})
 		);
-		console.log('bidStore', listBid);
 		let isBid = listBid.findLast((listid: any) => {
 			return (
 				listid.bid_id.listing_id.creation_num == auctionDetail.creationNumber &&
@@ -123,7 +123,14 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 				isFinalize ||
 				Number(auctionDetail.expirationTime) + 7 * 24 * 60 * 60000 + 5 * 60000 < Date.now()
 			) {
-				setCheckIsClaim(true);
+				let isClaim = await checkIsClaimResource(
+					userAddress?.userAddress!,
+					auctionDetail.coinType,
+					'2',
+					auctionDetail.maker,
+					auctionDetail.creationNumber
+				);
+				setCheckIsClaim(isClaim);
 			}
 			setIsBided(true);
 		}
