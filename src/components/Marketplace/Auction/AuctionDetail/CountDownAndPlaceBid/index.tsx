@@ -37,7 +37,7 @@ import useAuctionModules from 'utils/auction';
 import { selectUser } from 'redux/slices/userInfo';
 import { orderSell } from 'models/transaction';
 import { userInfo } from 'os';
-import { getBidUser, getEventsByCreationNumber } from 'utils/auctionResources';
+import { getEventsByEvent } from 'utils/auctionResources';
 import { changePriceToToken } from 'utils/function';
 import { tokenPaymentSymbol } from 'constants/sellItem';
 import { handleTrigger, selectTrigger } from 'redux/slices/nftFilter';
@@ -101,7 +101,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 	} = useAuctionModules(auctionDetail?.itemInfo, auctionDetail);
 	// Waiting
 	async function checkBidStore() {
-		let listBid = await getEventsByCreationNumber(
+		let listBid = await getEventsByEvent(
 			userAddress?.userAddress!,
 			auctionDetail.coinType,
 			'2'
@@ -110,7 +110,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 				return item.data;
 			})
 		);
-		console.log(listBid);
+		console.log('bidStore', listBid);
 		let isBid = listBid.findLast((listid: any) => {
 			return (
 				listid.bid_id.listing_id.creation_num == auctionDetail.creationNumber &&
@@ -138,36 +138,13 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 		});
 		if (result) {
 			setYourBid(Number(result.key));
+			checkBidStore();
 			return true;
 		} else {
 			checkBidStore();
 			return false;
 		}
 	}
-
-	// async function checkIsClaimFc() {
-	// 	try {
-	// 		await getBidUser(
-	// 			userAddress?.userAddress!,
-	// 			auctionDetail.coinType,
-	// 			'2',
-	// 			auctionDetail.maker,
-	// 			auctionDetail.creationNumber
-	// 		).then((res) => {
-	// 			console.log(res);
-	// 			if (
-	// 				isFinalize ||
-	// 				Number(auctionDetail.expirationTime) + 7 * 24 * 60 * 60000 + 5 * 60000 <
-	// 					Date.now()
-	// 			) {
-	// 				setCheckIsClaim(true);
-	// 			}
-	// 		});
-	// 	} catch (error) {
-	// 		console.log('final', error);
-	// 		console.log(error);
-	// 	}
-	// }
 
 	useEffect(() => {
 		if (bidderInfo && userAddress) {
