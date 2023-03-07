@@ -24,7 +24,6 @@ import ScrollToTop from 'hooks/useScrollToTop';
 //context
 import AudioProvider from './contexts/AudioContext';
 import { getAllItems } from 'api/items/itemsApi';
-import useGetNftOrder from 'hooks/useGetNftOrder';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { getAllNfts, selectTrigger } from 'redux/slices/nftFilter';
 import AccountSign from 'components/AccountSign/AccountSign';
@@ -32,12 +31,8 @@ function App() {
 	const [loadingOffers, setLoadingOffers] = useState(true);
 	const [trigger, setTrigger] = useState(false);
 	const [offers, setOffers] = useState<any[]>([]);
-	const { getListNFTOrders } = useGetNftOrder();
 	const triggerFetchNft = useAppSelector(selectTrigger);
 	const dispatch = useAppDispatch();
-	useEffect(() => {
-		getListNFTOrders();
-	}, []);
 	useEffect(() => {
 		const fetchOffers = async () => {
 			const newOffers: any[] = await getAllItems('2').then((res) => {

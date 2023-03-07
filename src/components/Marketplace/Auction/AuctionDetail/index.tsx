@@ -16,8 +16,6 @@ import { SizeContext } from 'contexts/SizeObserver';
 import DescriptionBlack from 'assets/icons/description-black.webp';
 import ItemWhite from 'assets/icons/icon-filter-collection-white.webp';
 import ItemBlack from 'assets/icons/icon-filter-collection-black.webp';
-// import TagWhite from 'assets/icons/tag-white.svg';
-// import TagBlack from 'assets/icons/tag-black.svg';
 import React, { useContext, useEffect, useState } from 'react';
 import { ContainerAuctionDetail } from './styled';
 import { getAuctionDetail, getItemDetail } from '../../../../api/items/itemsApi';

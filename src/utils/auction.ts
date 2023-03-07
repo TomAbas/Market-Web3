@@ -161,7 +161,8 @@ function useAuctionModules(itemInfo: nftItem, orderInfo?: orderSell) {
 				type_arguments: [orderInfo?.coinType!],
 				arguments: [orderInfo?.auctionId],
 			};
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
+			// console.log(payload);
+			return await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				finalAuction(res.hash, orderInfo!.itemId, orderInfo!._id);
 			});
 		} catch (error) {

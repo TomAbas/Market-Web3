@@ -4,7 +4,7 @@ import { TabWrapperContainer } from 'components/Marketplace/DetailCard/TabItemDe
 import { itemHistory } from 'models/item';
 import React, { useEffect, useState } from 'react';
 import { getAuctionHis } from '../../../../api/items/itemsApi';
-import { getEventsByCreationNumber } from '../../../../utils/auctionResources';
+import { getEventsByEvent } from '../../../../utils/auctionResources';
 interface Props {
 	infoUser: any;
 }
@@ -16,7 +16,7 @@ const AuctionHistory: React.FC<Props> = ({ infoUser }) => {
 	// 	setLoading(false);
 	// }
 	async function getHisBid() {
-		let listBid = await getEventsByCreationNumber(
+		let listBid = await getEventsByEvent(
 			infoUser?.userAddress!,
 			'0x1::aptos_coin::AptosCoin',
 			'2'
