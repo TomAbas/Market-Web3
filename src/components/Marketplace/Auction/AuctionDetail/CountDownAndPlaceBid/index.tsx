@@ -432,7 +432,7 @@ export default function CountDownAndPlaceBid({ auctionDetail, bidderInfo, isFina
 								<Typography variant="body1">
 									{bidderInfo?.offer_numbers.length === 0
 										? 'Min Price'
-										: 'Current Bid'}
+										: 'Highest Bid'}
 									: &nbsp;
 								</Typography>
 								<Typography variant="body1" sx={{ fontWeight: '500' }}>
