@@ -26,7 +26,7 @@ function usePredict() {
 			console.log(payload);
 			// createEventApi({ ...eventData, txHash: '12312321312' });
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(async (res) => {
-				let id = await getPredictionResource(
+				let { id } = await getPredictionResource(
 					eventData.userAddress,
 					eventData.description,
 					eventData.options,
@@ -34,7 +34,7 @@ function usePredict() {
 					eventData.coinType
 				);
 				console.log(id);
-				createEventApi({ ...eventData, txHash: res.hash });
+				createEventApi({ ...eventData, txHash: res.hash, id });
 				toast.success(res.hash);
 			});
 		} catch (error: any) {

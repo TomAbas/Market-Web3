@@ -14,20 +14,18 @@ const getPredictionResource = async (
 		MARKET_ADDRESS,
 		`${MARKET_ADDRESS}::prediction::Prediction<${coinType}>`
 	);
-	console.log(data);
 	let { handle } = data.all_events;
+	await new Promise((resolve) => setTimeout(resolve, 500));
 	let dataPredict = await client.getTableItem(handle, {
 		key_type: `${MARKET_ADDRESS}::prediction::EventID`,
 		value_type: `${MARKET_ADDRESS}::prediction::Event<${coinType}>`,
 		key: {
 			creator: creator,
-			description: description,
+			description: description + ':?:' + coinType,
 			options: option,
 		},
 	});
-	console.log(data);
-	console.log(dataPredict);
-	return handle;
+	return dataPredict;
 };
 
 export { getPredictionResource };
