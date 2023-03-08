@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
-
+import { createEvent as createEventApi } from '../api/eventApi';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 function usePredict() {
 	const { signAndSubmitTransaction } = useWallet();
@@ -21,10 +21,10 @@ function usePredict() {
 					eventData.endTime,
 				],
 			};
-			let txHash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
-				(res) => res.hash
-			);
-			toast.success(txHash);
+			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
+				createEventApi({ ...eventData, txHash: res.hash });
+				toast.success(res.hash);
+			});
 		} catch (error: any) {
 			console.error(console.error());
 		}

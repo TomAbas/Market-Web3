@@ -1,6 +1,6 @@
 import ClientAxios from './axiosClient';
 import { Response } from '../models/common';
-const baseURL = '/users/';
+const baseURL = '/event/';
 
 const createEvent = async (data: any): Promise<Response<any>> => {
 	const url = `${baseURL}create`;
