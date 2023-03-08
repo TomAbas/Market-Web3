@@ -32,11 +32,15 @@ import Items from 'components/Marketplace/ViewAll/Items';
 import Error from 'components/Error/Error';
 import SellItemPage from 'components/Marketplace/SellItemPage/SellItemPage';
 import AuctionDetail from 'components/Marketplace/Auction/AuctionDetail';
-
+import Prediction from 'components/Prediction/CardPrediction';
+import Predict from 'components/Prediction/Predict';
+import CreatePredict from 'components/Prediction/CreatePredict';
+import { getPredictionResource } from './utils/predictionResource';
+getPredictionResource();
 const router = createHashRouter([
 	{
 		element: <App />,
-		errorElement: <Error />,
+		// errorElement: <Error />,
 		children: [
 			{
 				path: '/',
@@ -107,6 +111,18 @@ const router = createHashRouter([
 				element: <MyCollectionDetail />,
 			},
 			{ path: 'auction/:id', element: <AuctionDetail /> },
+			{
+				path: 'prediction',
+				element: <Prediction />,
+			},
+			{
+				path: 'predict',
+				element: <Predict />,
+			},
+			{
+				path: 'create-predict',
+				element: <CreatePredict />,
+			},
 		],
 	},
 ]);
