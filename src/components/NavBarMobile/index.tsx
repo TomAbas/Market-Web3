@@ -250,6 +250,35 @@ const NavBarMobile: React.FC<Props> = ({
 				</Box>
 			</>
 		);
+	} else if (item.name === 'Predict') {
+		return (
+			<>
+				{' '}
+				<Box px={2} py={1}>
+					<Tooltip title="Coming Soon" placement="right" arrow>
+						<Box>
+							<Link
+								onClick={() => navigate(item.link)}
+								href={'#/prediction'}
+								sx={{
+									textDecoration: 'none',
+									color: '#131740',
+									fontWeight: '500',
+									transition: 'all 0.4s ',
+									// pointerEvents: 'none',
+									// cursor: 'pointer',
+									// '&:hover': {
+									// 	color: '#007aff',
+									// },
+								}}
+							>
+								{item.name}
+							</Link>
+						</Box>
+					</Tooltip>
+				</Box>
+			</>
+		);
 	} else {
 		return (
 			<>

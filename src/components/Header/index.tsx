@@ -69,56 +69,7 @@ import GlobalSearch from './SearchBar/GlobalSearch';
 import ModalFaucetCoin from 'components/ModelFaucetCoin';
 import { IconFavorite } from 'components/Marketplace/CardNFT/styled';
 
-const ListPrediction = [
-	{
-		id: 0,
-		title: 'All',
-		target: '_self',
-		link: `/#/prediction/`,
-		isFilter: false,
-		icon: IconColectibles,
-	},
-	{
-		id: 1,
-		title: 'Crypto',
-		target: '_self',
-		link: `/#/prediction/`,
-		isFilter: false,
-		icon: IconCreateCollection,
-	},
-	{
-		id: 2,
-		title: 'Sports',
-		target: '_self',
-		link: `/#/prediction/`,
-		isFilter: false,
-		icon: IconEsports,
-	},
-	{
-		id: 3,
-		title: 'Economics',
-		target: '_self',
-		link: `/#/prediction/`,
-		isFilter: false,
-		icon: IconCreateItem,
-	},
-	{
-		id: 4,
-		title: 'Esport',
-		target: '_self',
-		link: `/#/prediction/`,
-		isFilter: false,
-		icon: IconSports,
-	},
-	{
-		id: 5,
-		title: 'Polictics',
-		target: '_self',
-		link: `/#/prediction/`,
-		isFilter: false,
-		icon: IconDrops,
-	},
-];
+const ListPrediction: any = [];
 
 const listCategoryMarketplace = [
 	// {
@@ -222,6 +173,11 @@ const listRanking = [
 	},
 ];
 const listNav = [
+	{
+		id: -1,
+		name: 'Predict',
+		link: '/',
+	},
 	{
 		id: 0,
 		name: 'Explore',
@@ -375,13 +331,13 @@ const Header: React.FC = () => {
 							</LogoLink>
 						</PageLogo>
 						<GlobalSearch />
-						{innerWidth > 1500 ? (
+						{innerWidth > 2000 ? (
 							<Stack
 								direction="row"
 								justifyContent="space-between"
 								alignItems="center"
 								sx={{
-									width: '34%',
+									width: '45%',
 									'@media (max-width: 1024px)': {
 										width: '90%',
 									},
@@ -391,7 +347,7 @@ const Header: React.FC = () => {
 									<NavigationItemBigScreen sx={{ width: '165px' }}>
 										<NavLinkBigScreen
 											className="navLink"
-											href={`/#/`}
+											href={`/#/prediction?query=1`}
 											target="_self"
 											// onClick={(e: any) => {
 											// 	e.preventDefault();
@@ -458,7 +414,7 @@ const Header: React.FC = () => {
 											</Stack>
 										</DropdownMenu>
 									</NavigationItemBigScreen>
-									<NavigationItemBigScreen sx={{ width: '165px' }}>
+									<NavigationItemBigScreen sx={{ width: '200px' }}>
 										<NavLinkBigScreen
 											className="navLink"
 											href={`/#/`}
@@ -478,7 +434,7 @@ const Header: React.FC = () => {
 
 										<DropdownMenu
 											className="dropdownMenu"
-											sx={{ minWidth: '165px' }}
+											sx={{ minWidth: '100px' }}
 										>
 											<Stack>
 												{listCategoryMarketplace.map(
@@ -528,7 +484,7 @@ const Header: React.FC = () => {
 											</Stack>
 										</DropdownMenu>
 									</NavigationItemBigScreen>
-									<NavigationItemBigScreen sx={{ width: '165px' }}>
+									<NavigationItemBigScreen sx={{ width: '180px' }}>
 										<NavLinkBigScreen
 											className="navLink"
 											href={`#/rank?query=1`}
@@ -545,7 +501,7 @@ const Header: React.FC = () => {
 
 										<DropdownMenu
 											className="dropdownMenu"
-											sx={{ minWidth: '165px' }}
+											sx={{ minWidth: '150px' }}
 										>
 											<Stack>
 												<DropdownMenuLink href={'#/rank?query=1'}>
@@ -629,7 +585,7 @@ const Header: React.FC = () => {
 										</NavigationItemBigScreen>
 									</Tooltip>
 
-									<NavigationItemBigScreen sx={{ width: '165px' }}>
+									<NavigationItemBigScreen sx={{ width: '180px' }}>
 										<NavLinkBigScreen
 											className="navLink"
 											href={`/#/mint`}
@@ -649,7 +605,7 @@ const Header: React.FC = () => {
 
 										<DropdownMenu
 											className="dropdownMenu"
-											sx={{ minWidth: '165px' }}
+											sx={{ minWidth: '140px' }}
 										>
 											<Stack>
 												{listCreate.map((category: any, index: number) => (
@@ -886,7 +842,7 @@ const Header: React.FC = () => {
 								</>
 							)}
 							<Stack direction="row" gap="10px">
-								{innerWidth < 1500 ? (
+								{innerWidth < 2000 ? (
 									<IconItem>
 										<MoreHorizOutlinedIcon
 											sx={{
