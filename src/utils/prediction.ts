@@ -1,18 +1,25 @@
 import { toast } from 'react-toastify';
+import { useState } from 'react';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 function usePredict() {
 	const { signAndSubmitTransaction } = useWallet();
-
+	const [eventData, setEventData] = useState<any>(null);
 	async function createEvent() {
 		try {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::prediction::create_event`,
 				type_arguments: ['0x1::aptos_coin::AptosCoin'],
-				arguments: [],
+				arguments: [
+					eventData.description,
+					eventData.uri,
+					eventData.options,
+					eventData.startTime,
+					eventData.endTime,
+				],
 			};
 			let txHash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
 				(res) => res.hash
@@ -27,8 +34,8 @@ function usePredict() {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::prediction::cancel_event`,
-				type_arguments: [],
-				arguments: [],
+				type_arguments: ['0x1::aptos_coin::AptosCoin'],
+				arguments: [eventData.description, eventData.options],
 			};
 			let txHash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
 				(res) => res.hash
@@ -76,7 +83,13 @@ function usePredict() {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::prediction::predict_event`,
 				type_arguments: [],
-				arguments: [],
+				arguments: [
+					'option',
+					'amount',
+					'event_creator',
+					'event_description',
+					'event_options',
+				],
 			};
 			let txHash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
 				(res) => res.hash
@@ -87,7 +100,14 @@ function usePredict() {
 		}
 	}
 
-	return { createEvent, cancelEvent, finalizeEvent, initializePrediction, predictEvent };
+	return {
+		createEvent,
+		cancelEvent,
+		finalizeEvent,
+		initializePrediction,
+		predictEvent,
+		setEventData,
+	};
 }
 
 export default usePredict;

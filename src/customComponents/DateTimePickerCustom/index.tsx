@@ -27,7 +27,7 @@ export interface IDateTimeCustomPickerProps {
 	// setStartTime: any;
 	// setExpirationTime: any;
 	// setWithdrawExpirationTime: any;
-	setInit: any;
+	setInit?: any;
 }
 
 const dateRanges: any[] = [

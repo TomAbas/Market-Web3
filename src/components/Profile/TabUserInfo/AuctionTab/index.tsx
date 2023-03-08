@@ -20,11 +20,15 @@ const AuctionHistory: React.FC<Props> = ({ infoUser }) => {
 			infoUser?.userAddress!,
 			'0x1::aptos_coin::AptosCoin',
 			'2'
-		).then((res) =>
-			res.map((item: any) => {
-				return item.data;
-			})
-		);
+		)
+			.then((res) =>
+				res.map((item: any) => {
+					return item.data;
+				})
+			)
+			.catch((error) => {
+				return [];
+			});
 		let listBidHistory = await Promise.all(
 			listBid.map(async (item: any) => {
 				let body = { creationNumber: item.bid_id.listing_id.creation_number };

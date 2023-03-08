@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
 // mui
-import { Box, Stack, Tooltip, Typography, useTheme } from '@mui/material';
+import { Box, iconButtonClasses, Stack, Tooltip, Typography, useTheme } from '@mui/material';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import IconColectibles from 'assets/icons/NavBar/icon-colectibles.svg';
@@ -67,6 +67,58 @@ import { userInfo } from 'os';
 import { selectUser } from 'redux/slices/userInfo';
 import GlobalSearch from './SearchBar/GlobalSearch';
 import ModalFaucetCoin from 'components/ModelFaucetCoin';
+import { IconFavorite } from 'components/Marketplace/CardNFT/styled';
+
+const ListPrediction = [
+	{
+		id: 0,
+		title: 'All',
+		target: '_self',
+		link: `/#/prediction/`,
+		isFilter: false,
+		icon: IconColectibles,
+	},
+	{
+		id: 1,
+		title: 'Crypto',
+		target: '_self',
+		link: `/#/prediction/`,
+		isFilter: false,
+		icon: IconCreateCollection,
+	},
+	{
+		id: 2,
+		title: 'Sports',
+		target: '_self',
+		link: `/#/prediction/`,
+		isFilter: false,
+		icon: IconEsports,
+	},
+	{
+		id: 3,
+		title: 'Economics',
+		target: '_self',
+		link: `/#/prediction/`,
+		isFilter: false,
+		icon: IconCreateItem,
+	},
+	{
+		id: 4,
+		title: 'Esport',
+		target: '_self',
+		link: `/#/prediction/`,
+		isFilter: false,
+		icon: IconSports,
+	},
+	{
+		id: 5,
+		title: 'Polictics',
+		target: '_self',
+		link: `/#/prediction/`,
+		isFilter: false,
+		icon: IconDrops,
+	},
+];
 
 const listCategoryMarketplace = [
 	// {
@@ -328,15 +380,84 @@ const Header: React.FC = () => {
 								direction="row"
 								justifyContent="space-between"
 								alignItems="center"
-								gap={3}
 								sx={{
-									width: '50%',
+									width: '34%',
 									'@media (max-width: 1024px)': {
 										width: '90%',
 									},
 								}}
 							>
 								<NavigationBarBigScreen>
+									<NavigationItemBigScreen sx={{ width: '165px' }}>
+										<NavLinkBigScreen
+											className="navLink"
+											href={`/#/`}
+											target="_self"
+											// onClick={(e: any) => {
+											// 	e.preventDefault();
+											// }}
+										>
+											<Typography
+												variant="body1"
+												fontStyle="italic"
+												fontWeight="500"
+											>
+												Prediction
+											</Typography>
+										</NavLinkBigScreen>
+
+										<DropdownMenu
+											className="dropdownMenu"
+											sx={{ minWidth: '165px' }}
+										>
+											<Stack>
+												{ListPrediction.map(
+													(category: any, index: number) => (
+														<DropdownMenuLink
+															href={
+																category.isFilter
+																	? category.link +
+																	  '?category=' +
+																	  category.id
+																	: category.link
+															}
+															key={index}
+														>
+															<Stack
+																direction="row"
+																alignItems="center"
+															>
+																<Box width="30px">
+																	<img
+																		style={{
+																			width: '100%',
+																			height: '100%',
+																			boxShadow:
+																				'2px 2px 2px 0 rgba(0,0,0,0.2)',
+																			borderRadius: '50%',
+																		}}
+																		src={category.icon}
+																		alt={category.title}
+																	/>
+																</Box>
+																<Typography
+																	variant="body2"
+																	sx={{
+																		padding: '0 0 0 8px',
+																	}}
+																	textAlign="center"
+																	noWrap
+																	fontStyle="italic"
+																>
+																	{category.title}
+																</Typography>
+															</Stack>
+														</DropdownMenuLink>
+													)
+												)}
+											</Stack>
+										</DropdownMenu>
+									</NavigationItemBigScreen>
 									<NavigationItemBigScreen sx={{ width: '165px' }}>
 										<NavLinkBigScreen
 											className="navLink"
@@ -690,7 +811,7 @@ const Header: React.FC = () => {
 															sx={{
 																cursor: 'pointer',
 																background:
-																	'rgba(157, 195, 230, 0.537)',
+																	'rgba(15e7, 195, 230, 0.537)',
 																padding: '4px 12px',
 																borderRadius: '10px',
 																marginBottom: '15px',
