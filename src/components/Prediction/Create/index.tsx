@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { InputImage, InputItem, InputTitle } from 'components/Mint/styled';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { storage1 } from 'config/firebase1';
-import { Box } from '@mui/material';
+import { storage } from 'config/firebase';
+import { Box, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import UploadMediaCustom from 'components/Forms/UploadMediaCustom';
 import { Asterisk, ErrorMessage } from 'components/Forms/Common/styled';
@@ -16,18 +16,26 @@ import AutoCompleteCustom from '../../CustomField/AutoCompleteCustom';
 import { OptionSelectCustom } from 'models/common';
 import { listCategoryPrediction, Category } from '../../../constants/category.constant';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
+import usePredict from 'utils/prediction';
+import { useAppSelector } from 'redux/hooks';
+import { selectUser } from 'redux/slices/userInfo';
 export interface InputCreatePrediction {
 	file: any;
 	startTime: number;
 	endTime: number;
-	question: string;
+	description: string;
 	options: string[];
 	category: string;
+
+	chainId: string;
+	coinType: string;
+	userAddress: string;
 }
 
 const CreatPrediction = () => {
+	const { createEvent } = usePredict();
+	const userInfo = useAppSelector(selectUser);
 	const [image, setImage] = useState<any>(null);
-	const [amountOwned, setAmountOwned] = useState<string>('0');
 	const [amountOptions, setAmountOptions] = useState<number>(2);
 	const [currentCategoryTransformed, setCurrentCategoryTransformed] = useState<
 		OptionSelectCustom<string> | null | undefined
@@ -44,6 +52,7 @@ const CreatPrediction = () => {
 			setImage({ ...file, preview: URL.createObjectURL(file) });
 		}
 		setValue('file', e[0]);
+
 		clearErrors('file');
 	};
 	const handleChangeCategory = (
@@ -71,10 +80,13 @@ const CreatPrediction = () => {
 				.min(new Date().getTime(), 'Must be in future')
 				.typeError('Must be in future'),
 			endTime: yup.number().required('Required'),
-			question: yup.string().required('Required'),
+			description: yup.string().required('Required'),
 			file: yup.mixed().required('Required'),
 			options: yup.array().of(yup.string()).required('Required'),
 			category: yup.string().required('Required'),
+
+			chainId: yup.string(),
+			coinType: yup.string(),
 		})
 		.required();
 	const {
@@ -87,11 +99,15 @@ const CreatPrediction = () => {
 		formState: { errors, isSubmitting },
 	} = useForm<InputCreatePrediction>({
 		resolver: yupResolver(schema),
-		defaultValues: { options: ['yes', 'no'] },
+		defaultValues: {
+			options: ['yes', 'no'],
+			chainId: '2',
+			coinType: '0x1::aptos_coin::AptosCoin',
+		},
 	});
+
 	function onHandleSubmit(data: any) {
-		console.log(data);
-		const sotrageRef = ref(storage1, `item/${data.file.name}`);
+		const sotrageRef = ref(storage, `item/${data.file.name}`);
 		const uploadTask = uploadBytesResumable(sotrageRef, data.file);
 		uploadTask.on(
 			'state_changed',
@@ -99,11 +115,7 @@ const CreatPrediction = () => {
 			(error) => console.log('err ', error),
 			async () => {
 				let downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-				try {
-					console.log('downloadURL', downloadURL);
-				} catch (error: any) {
-					console.log('Error creating item NFT: ', error);
-				}
+				createEvent({ ...data, userAddress: userInfo?.userAddress, image: downloadURL });
 			}
 		);
 	}
@@ -114,9 +126,7 @@ const CreatPrediction = () => {
 			new Date(new Date().getTime() + 7 * 24 * 60 * 60000 + 5 * 60000).getTime()
 		);
 	}, []);
-	useEffect(() => {
-		console.log(errors);
-	}, [errors]);
+	useEffect(() => {}, [errors]);
 	return (
 		<Box sx={{ maxWidth: '940px', mx: 'auto', paddingTop: '150px' }}>
 			<Box
@@ -128,12 +138,12 @@ const CreatPrediction = () => {
 				<form onSubmit={handleSubmit(onHandleSubmit)}>
 					<InputItem>
 						<InputTitle sx={{ display: 'flex' }}>
-							Set Market Question <Asterisk />
+							Set Market description <Asterisk />
 						</InputTitle>
 						<input
 							type="text"
 							placeholder="Will GPT-4 have 500b+ parameters?"
-							{...register('question')}
+							{...register('description')}
 						/>
 					</InputItem>
 					<InputItem>
@@ -193,7 +203,7 @@ const CreatPrediction = () => {
 										const options = getValues('options');
 										options[index] = e.target.value;
 										setValue('options', options);
-										console.log(options);
+
 										clearErrors('options');
 									}}
 								/>
@@ -206,11 +216,28 @@ const CreatPrediction = () => {
 						}}
 					/>
 					<DateTimeCustomPicker setValue={setValue} />
+					<Box sx={{ width: '100%' }}>
+						{errors.startTime?.message && (
+							<Typography
+								variant="body1"
+								sx={{ color: 'red', pt: 1, float: 'right' }}
+							>
+								<>{errors.startTime?.message}</>
+							</Typography>
+						)}
+						{errors.endTime?.message && (
+							<Typography
+								variant="body1"
+								sx={{ color: 'red', pt: 1, float: 'right' }}
+							>
+								<>{errors.endTime?.message}</>
+							</Typography>
+						)}
+					</Box>
 					<InputTitle sx={{ mt: 2 }}>
 						Category
 						<Asterisk />
 					</InputTitle>
-
 					<FieldSubTitle>
 						A type of characteristics that the collection belongs to. Typically,
 						artwork, sport, music, etc. In alpha release only artwork and its relative
@@ -219,9 +246,7 @@ const CreatPrediction = () => {
 					<AutoCompleteCustom
 						currentItem={currentCategoryTransformed}
 						listItem={listCategoryTransformed}
-						{...register('category', {
-							required: 'Category is required.',
-						})}
+						registerHookForm={{ ...register('category') }}
 						onChange={handleChangeCategory}
 						placeholder="Category name..."
 						sx={{
@@ -232,29 +257,7 @@ const CreatPrediction = () => {
 					{errors.category?.message && (
 						<ErrorMessage>{errors.category?.message}</ErrorMessage>
 					)}
-					<ButtonWhite
-						sx={{
-							marginLeft: '760px',
-							textAlign: 'center',
-							padding: '10px 30px',
-							border: '1.5px solid #e7e8ec',
-							transition: 'all 0.4s',
-							borderRadius: '12px',
-							fontWeight: 500,
-							color: 'black',
-							fontSize: '20px',
-							cursor: 'pointer',
-							fontFamily: 'Montserrat, sans-serif !important',
-							fontStyle: 'italic !important',
-							width: '180px',
-							'&:hover': {
-								background: '#007aff',
-								borderColor: 'transparent',
-								color: '#fff',
-							},
-						}}
-						type="submit"
-					>
+					<ButtonWhite type="submit" sx={{ margin: '20px auto' }}>
 						Create
 					</ButtonWhite>
 				</form>

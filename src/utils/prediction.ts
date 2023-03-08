@@ -1,27 +1,39 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { toast } from 'react-toastify';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { createEvent as createEventApi } from '../api/eventApi';
+import { getPredictionResource } from './predictionResource';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 function usePredict() {
 	const { signAndSubmitTransaction } = useWallet();
-	const [eventData, setEventData] = useState<any>(null);
-	async function createEvent() {
+	// const [eventData, setEventData] = useState<any>(null);
+	async function createEvent(eventData: any) {
 		try {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::prediction::create_event`,
 				type_arguments: ['0x1::aptos_coin::AptosCoin'],
 				arguments: [
-					eventData.description,
-					eventData.uri,
+					eventData.description + ':?:' + eventData.coinType,
+					eventData.image,
 					eventData.options,
-					eventData.startTime,
-					eventData.endTime,
+					Math.floor(Number(eventData.startTime) / 1000),
+					Math.floor(Number(eventData.endTime) / 1000),
 				],
 			};
-			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
+			console.log(payload);
+			// createEventApi({ ...eventData, txHash: '12312321312' });
+			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(async (res) => {
+				let id = await getPredictionResource(
+					eventData.userAddress,
+					eventData.description,
+					eventData.options,
+					eventData.chainId,
+					eventData.coinType
+				);
+				console.log(id);
 				createEventApi({ ...eventData, txHash: res.hash });
 				toast.success(res.hash);
 			});
@@ -29,7 +41,7 @@ function usePredict() {
 			console.error(console.error());
 		}
 	}
-	async function cancelEvent() {
+	async function cancelEvent(eventData: any) {
 		try {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
@@ -106,7 +118,7 @@ function usePredict() {
 		finalizeEvent,
 		initializePrediction,
 		predictEvent,
-		setEventData,
+		// setEventData,
 	};
 }
 
