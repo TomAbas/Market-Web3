@@ -34,9 +34,10 @@ import SellItemPage from 'components/Marketplace/SellItemPage/SellItemPage';
 import AuctionDetail from 'components/Marketplace/Auction/AuctionDetail';
 import Prediction from 'components/Prediction/CardPrediction';
 import Predict from 'components/Prediction/Predict';
-import CreatePredict from 'components/Prediction/CreatePredict';
+import CreatePredict from 'components/Prediction/Create';
 import { getPredictionResource } from './utils/predictionResource';
-getPredictionResource();
+// getPredictionResource();
+
 const router = createHashRouter([
 	{
 		element: <App />,
@@ -120,7 +121,7 @@ const router = createHashRouter([
 				element: <Predict />,
 			},
 			{
-				path: 'create-predict',
+				path: 'createPredict',
 				element: <CreatePredict />,
 			},
 		],

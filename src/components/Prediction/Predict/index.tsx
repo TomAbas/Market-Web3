@@ -1,4 +1,5 @@
-import { Container, Box, Grid, Typography, Radio, Stack } from '@mui/material';
+import { Container, Box, Typography, Stack } from '@mui/material';
+import ModalChart from '../chartCard';
 
 const predict = () => {
 	return (
@@ -15,54 +16,56 @@ const predict = () => {
 					alt=""
 					style={{ width: 100 }}
 				/>
-				<Stack
-					sx={{
-						backgroundColor: 'rgba(255, 201, 63, 0.3)',
-						position: 'absolute',
-						top: '165px',
-						right: '1120px',
-						width: 110,
-						textAlign: 'center',
-						p: 1,
-					}}
-				>
-					Politics
-				</Stack>
-				<Stack
-					sx={{
-						position: 'absolute',
-						top: '165px',
-						right: '1000px',
-						width: 110,
-						textAlign: 'center',
-						p: 1,
-					}}
-				>
-					$ 2 000.00 Vol
-				</Stack>
-				<Stack
-					sx={{
-						position: 'absolute',
-						top: '165px',
-						right: '850px',
-						width: 110,
-						textAlign: 'center',
-						p: 1,
-					}}
-				>
-					$ 52 000.00 Liq
-				</Stack>
-				<Stack
-					sx={{
-						position: 'absolute',
-						top: '165px',
-						right: '700px',
-						width: 110,
-						textAlign: 'center',
-						p: 1,
-					}}
-				>
-					Expires 20/02/2023
+				<Stack direction={'row'}>
+					<Stack
+						sx={{
+							backgroundColor: 'rgba(255, 201, 63, 0.3)',
+							position: 'absolute',
+							top: '165px',
+							right: '1120px',
+							width: 110,
+							textAlign: 'center',
+							p: 1,
+						}}
+					>
+						Politics
+					</Stack>
+					<Stack
+						sx={{
+							position: 'absolute',
+							top: '165px',
+							right: '1000px',
+							width: 110,
+							textAlign: 'center',
+							p: 1,
+						}}
+					>
+						$ 2 000.00 Vol
+					</Stack>
+					<Stack
+						sx={{
+							position: 'absolute',
+							top: '165px',
+							right: '850px',
+							width: 110,
+							textAlign: 'center',
+							p: 1,
+						}}
+					>
+						$ 52 000.00 Liq
+					</Stack>
+					<Stack
+						sx={{
+							position: 'absolute',
+							top: '165px',
+							right: '700px',
+							width: 110,
+							textAlign: 'center',
+							p: 1,
+						}}
+					>
+						Expires 20/02/2023
+					</Stack>
 				</Stack>
 				<Stack
 					sx={{
@@ -77,124 +80,16 @@ const predict = () => {
 					Will Trump be president of USA at 30-03
 				</Stack>
 			</Box>
-			<Grid xs={2} lg={2} xl={6}>
-				<Box
-					sx={{
-						m: 1,
-						p: 2,
-						border: '1.5px solid #e7e8ec',
-						borderRadius: 2,
-						marginTop: 5,
-					}}
-				>
-					{' '}
-					<Box
-						sx={{
-							padding: 1,
-							width: '45%',
-						}}
-					>
-						Buy
-					</Box>
-					<Box
-						sx={{
-							marginLeft: '600px',
-							marginTop: '-36',
-							padding: 1,
-							width: '45%',
-						}}
-					>
-						Sell
-					</Box>
-					<Box></Box>
-					<Typography sx={{ fontSize: 14 }} fontWeight={700}></Typography>
-					<Box sx={{ width: '100%', marginTop: '10px' }}></Box>
-					<Typography
-						sx={{
-							background: 'rgba(0, 255, 133, 0.1)',
-							width: '45%',
-							marginTop: '10px',
-							fontSize: 14,
-						}}
-					>
-						<Radio
-							value="check"
-							name="radio-buttons"
-							sx={{
-								width: '1px',
-								height: '1px',
-								'.css-1hbvpl3-MuiSvgIcon-root': {
-									height: '10px',
-								},
-								'.css-11zohuh-MuiSvgIcon-root': {
-									color: '#01FF57',
-									marginTop: '-7px',
-								},
-							}}
-						/>
-						Yes 77.77%
-						<Typography
-							sx={{
-								background: 'rgba(255, 1, 1, 0.1)',
-								width: '100%',
-								marginLeft: '131px',
-								fontSize: 14,
-								marginTop: '-22px',
-							}}
-						>
-							<Radio
-								value="check"
-								name="radio-buttons"
-								sx={{
-									width: '1px',
-									height: '1px',
-									'.css-1hbvpl3-MuiSvgIcon-root': {
-										height: '10px',
-									},
-									'.css-11zohuh-MuiSvgIcon-root': {
-										color: '#FF4E4E',
-										marginTop: '-7px',
-									},
-								}}
-							/>
-							No 22.23%
-						</Typography>
-					</Typography>
-					<Typography sx={{ fontSize: 14, marginTop: '10px' }}>Total Volume</Typography>
-					<Typography
-						sx={{
-							width: '45%',
-							marginLeft: '131px',
-							marginTop: '-22px',
-							fontSize: 14,
-						}}
-					>
-						9.999 BTC
-					</Typography>
-					<Typography sx={{ fontSize: 14, marginTop: '10px' }}>Liquidity</Typography>
-					<Typography
-						sx={{
-							width: '45%',
-							marginLeft: '131px',
-							marginTop: '-22px',
-							fontSize: 14,
-						}}
-					>
-						999.001 BTC
-					</Typography>
-					<Box
-						sx={{
-							marginTop: '10px',
-							border: '1px solid gainsboro',
-							borderRadius: 2,
-							textAlign: 'center',
-							padding: 1,
-						}}
-					>
-						Predict
-					</Box>
-				</Box>
-			</Grid>
+			<hr />
+			<Typography>
+				Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+				euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad
+				minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut
+				aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in
+				vulputate velit esse molestie consequat, vel illum dolore eu feugiat{' '}
+			</Typography>
+			<Typography sx={{ fontWeight: 700 }}>Show More</Typography>
+			<ModalChart />
 		</Container>
 	);
 };
