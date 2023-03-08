@@ -78,7 +78,6 @@ export default function DateTimeCustomPicker({ setValue, setInit }: IDateTimeCus
 				dispatch(setEndTime(newEndDate.toString()));
 			} else {
 				setValue('endTime', new Date(newValue.toString()).getTime());
-				console.log(new Date(newValue.toString()).getTime());
 				dispatch(setEndTime(newValue.toString()));
 			}
 		}

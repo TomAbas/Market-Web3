@@ -120,7 +120,6 @@ function useBuyItemAptos(offer: nftItem) {
 		}
 	}
 	function handleValidateAmount(e: any, userTokenAmount: string) {
-		console.log(userTokenAmount);
 		if (e.target.value.includes('.')) {
 			e.target.value = e.target.value.split('.')[0];
 			setSupply(e.target.value);

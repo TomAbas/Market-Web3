@@ -86,7 +86,6 @@ const FormSellFixPrice = () => {
 	//function
 	async function handleChangePaymentToken(tokenPayment: any) {
 		if (tokenPayment) {
-			console.log(tokenPayment);
 			setValue('currentPaymentToken', tokenPayment);
 			dispatch(setCurrentPaymentToken(tokenPayment));
 			setTokenPayment(tokenPayment);
@@ -94,7 +93,6 @@ const FormSellFixPrice = () => {
 			clearErrors('currentPaymentToken');
 			if (!(await checkCoinStore(userInfo!.userAddress, tokenPayment.type))) {
 				setIsErrorCoint(true);
-				console.log('k co');
 				setError('currentPaymentToken', {
 					message: 'This coin type is not registered in the coin store',
 				});

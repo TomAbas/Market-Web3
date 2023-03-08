@@ -38,11 +38,7 @@ function useBuyItemAptos(item: nftItem, orderInfo?: orderSell) {
 	const { account, signAndSubmitTransaction } = useWallet();
 	const { userTokenAmount } = useGetAcountTokenAmount(userInfo?.userAddress!, item);
 	const navigate = useNavigate();
-	useEffect(() => {
-		console.log(startTime);
-		console.log(expirationTime);
-		console.log(withdrawExpirationTime);
-	}, [startTime, expirationTime, withdrawExpirationTime]);
+	useEffect(() => {}, [startTime, expirationTime, withdrawExpirationTime]);
 	async function buyItemAptos(
 		handleNext: () => void = () => {},
 		startLoading: () => void = () => {},
@@ -98,7 +94,6 @@ function useBuyItemAptos(item: nftItem, orderInfo?: orderSell) {
 				type_arguments: [orderInfo!.coinType],
 				arguments: [orderInfo?.creationNumber.toString()],
 			};
-			console.log(payload);
 
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
 				let listItem: any = {
@@ -118,7 +113,6 @@ function useBuyItemAptos(item: nftItem, orderInfo?: orderSell) {
 		}
 	}
 	function handleValidateAmount(e: any, userTokenAmount: string) {
-		console.log(userTokenAmount);
 		if (e.target.value.includes('.')) {
 			e.target.value = e.target.value.split('.')[0];
 			setSupply(e.target.value);
@@ -127,7 +121,6 @@ function useBuyItemAptos(item: nftItem, orderInfo?: orderSell) {
 			e.target.value = userTokenAmount;
 			setSupply(e.target.value);
 		} else if (Number(e.target.value) < 0) {
-			console.log('12');
 			e.target.value = -Number(e.target.value);
 			setSupply(e.target.value);
 		}
@@ -157,9 +150,7 @@ function useBuyItemAptos(item: nftItem, orderInfo?: orderSell) {
 					Math.floor(Number(withdrawExpirationTime) / 1000).toString(),
 				],
 			};
-			console.log(payload);
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
-				console.log('res', res);
 				let listItem: any = {
 					startTime,
 					endTime: expirationTime,
@@ -173,7 +164,6 @@ function useBuyItemAptos(item: nftItem, orderInfo?: orderSell) {
 					txHash: res.hash,
 					instantSale: true,
 				};
-				console.log(listItem);
 				toast.success('Successful list an item');
 				sellItem(listItem).then((res) => {
 					dispatch(handleTrigger());

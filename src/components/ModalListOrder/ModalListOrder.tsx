@@ -26,9 +26,7 @@ export default function ModalListOrder({ itemId, isOpenModal, setIsOpenModal }: 
 		setListOrderSell(await getOrderOfItem(itemId));
 		setIsLoadingListOrderSell(true);
 	}
-	useEffect(() => {
-		console.log(listOrderSell);
-	}, [listOrderSell]);
+	useEffect(() => {}, [listOrderSell]);
 	useEffect(() => {
 		getOrderOfItemFc();
 	}, [itemId]);

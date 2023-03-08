@@ -99,7 +99,6 @@ const CardNFTUser = ({
 				owner: userInfo?.userAddress,
 				creator: item.creator,
 			};
-			console.log(listItem);
 			sellItem(listItem);
 			navigate('/view-all/items');
 			handleItems(index);

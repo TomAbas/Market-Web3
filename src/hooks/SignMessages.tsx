@@ -61,7 +61,6 @@ const SignMessagesFc = () => {
 	}
 	async function spacecySign() {
 		await window.spacecy.connect().then((result: any) => {
-			console.log('Spacecy sign', result);
 			publicKey = result.data.publicKey.startsWith('0x')
 				? result.data.publicKey.slice(2)
 				: result.data.publicKey;
@@ -75,7 +74,6 @@ const SignMessagesFc = () => {
 				nonce: nonce,
 				signature: result.data.signature,
 			};
-			console.log('Obj sent', objSent);
 			loginUser(objSent);
 		});
 	}
@@ -101,7 +99,6 @@ const SignMessagesFc = () => {
 	}
 	async function petraSign() {
 		await window.aptos.connect().then((result: any) => {
-			console.log('Result', result);
 			publicKey = result.publicKey.startsWith('0x')
 				? result.publicKey.slice(2)
 				: result.publicKey;
@@ -114,8 +111,6 @@ const SignMessagesFc = () => {
 				nonce: nonce,
 				signature: result.signature,
 			};
-			console.log('Full message', result.fullMessage);
-			console.log('Obj sent', objSent);
 			loginUser(objSent);
 		});
 	}

@@ -16,6 +16,14 @@ export const listCategory: Category[] = [
 	{ id: 8, name: 'Domain Names', value: 8 },
 ];
 
+export const listCategoryPrediction: Category[] = [
+	// { id: 0, name: 'Other', value: 0 },
+	{ id: 1, name: 'Crypto', value: 1 },
+	{ id: 2, name: 'Economics', value: 2 },
+	{ id: 3, name: 'Esports', value: 3 },
+	{ id: 4, name: 'Sports', value: 4 },
+	{ id: 5, name: 'Polictics', value: 5 },
+];
 export interface OptionSelectCustom<T> {
 	name: string;
 	value: T;

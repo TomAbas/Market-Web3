@@ -9,7 +9,6 @@ const useGetData = (axios: any) => {
 		getData();
 	}, []);
 	useEffect(() => {
-		console.log(data);
 	}, [data]);
 	return [data, setData];
 };

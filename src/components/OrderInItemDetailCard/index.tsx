@@ -70,7 +70,6 @@ export default function OrderInItemDetailCard({ orderId, isLoading }: IOrderInIt
 										<ButtonWhite
 											sx={{ padding: '5px 32px' }}
 											onClick={() => {
-												console.log('cancel now');
 												handleWithdrawItem();
 											}}
 										>

@@ -25,13 +25,10 @@ const ActivityTab: React.FC<Props> = ({ getHistory, currentHistoryType, inputSea
 		let result: any = listItemHistory;
 		Object.keys(currentHistoryType).forEach((key) => {
 			if (currentHistoryType[key].active) {
-				console.log(currentHistoryType[key]);
 				arr.push(currentHistoryType[key].type);
 			}
 		});
-		console.log(arr);
 		if (arr.length === 0) {
-			console.log(listItemHistory);
 			setListHistoryDis(result);
 		} else {
 			result = listItemHistory.filter((item) => arr.includes(item.type));
