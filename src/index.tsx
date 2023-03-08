@@ -33,6 +33,7 @@ import Error from 'components/Error/Error';
 import SellItemPage from 'components/Marketplace/SellItemPage/SellItemPage';
 import Prediction from 'components/Prediction/CardPrediction';
 import Predict from 'components/Prediction/Predict';
+import CreatePredict from 'components/Prediction/Create';
 
 const router = createHashRouter([
 	{
@@ -115,6 +116,10 @@ const router = createHashRouter([
 			{
 				path: 'predict',
 				element: <Predict />,
+			},
+			{
+				path: 'createPredict',
+				element: <CreatePredict />,
 			},
 		],
 	},
