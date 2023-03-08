@@ -1,14 +1,17 @@
 import { Box } from '@mui/material';
 import { Grid, Typography, Stack } from '@mui/material';
+import { formatTimeHistory } from 'utils/function';
 import ModalChart from '../chart';
 // import LinearProgress from '@mui/material/LinearProgress';
 interface Props {
 	data: {
 		value: string;
-		name: string;
+		category: string;
+		question: string;
 		endTime: string;
-		URL: string;
+		image: string;
 		decription: string;
+		options: Array<any>;
 	};
 }
 const Product = ({ data }: Props) => {
@@ -65,15 +68,15 @@ const Product = ({ data }: Props) => {
 						borderRadius: 4.38,
 					}}
 				>
-					{data.value}
+					{data.category}
 				</Typography>
 				<Typography variant="body1" sx={{ minHeight: 50 }} fontWeight={700}>
-					{data.name}
+					{data.question}
 				</Typography>
 				<Stack direction={'row'}>
 					<Box sx={{ width: '40%' }}>
 						<img
-							src={data.URL}
+							src={data.image}
 							style={{
 								height: 180,
 								width: '100%',
@@ -82,10 +85,12 @@ const Product = ({ data }: Props) => {
 							}}
 							alt={''}
 						/>
-						<Typography style={{ fontSize: 10 }}>{data.endTime}</Typography>
+						<Typography style={{ fontSize: 10 }}>
+							{formatTimeHistory(new Date(Number(data.endTime)))}
+						</Typography>
 					</Box>
 					<Box sx={{ width: '60%', position: 'relative' }}>
-						<ModalChart></ModalChart>
+						<ModalChart options={data.options}></ModalChart>
 						<Typography align={'right'} sx={{ marginLeft: '32px', fontWeight: 700 }}>
 							Total Pool: 9.999 BTC
 						</Typography>
