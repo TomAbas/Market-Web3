@@ -19,7 +19,8 @@ const data = [
 	{ year: 'OP6', population: 6 },
 	{ year: 'OP7', population: 7 },
 ];
-const Chart2 = () => {
+const Chart2 = ({ event }: any) => {
+	console.log(event);
 	const [tokenPayment] = React.useState<any>(null);
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
@@ -73,44 +74,24 @@ const Chart2 = () => {
 										<Typography sx={{ marginLeft: '330px' }}>Pool</Typography>
 									</Stack>
 									<hr />
-									<Stack direction={'row'}>
-										<Avatar
-											alt="Remy Sharp"
-											src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
-										/>
+									{event.options.map((item: any, index: number) => {
+										return (
+											<>
+												<Stack direction={'row'}>
+													<Avatar
+														alt="Remy Sharp"
+														src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
+													/>
 
-										<Typography>Option1</Typography>
-										<Typography sx={{ marginLeft: '300px' }}>$ 9.9M</Typography>
-									</Stack>
-									<hr />
-									<Stack direction={'row'}>
-										<Avatar
-											alt="Remy Sharp"
-											src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
-										/>
-										<Typography>Option2</Typography>
-										<Typography sx={{ marginLeft: '300px' }}>$ 9.7M</Typography>
-									</Stack>
-									<hr />
-									<Stack direction={'row'}>
-										<Avatar
-											alt="Remy Sharp"
-											src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
-										/>
-										<Typography>Option3</Typography>
-										<Typography sx={{ marginLeft: '300px' }}>
-											$ 9.95M
-										</Typography>
-									</Stack>
-									<hr />
-									<Stack direction={'row'}>
-										<Avatar
-											alt="Remy Sharp"
-											src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
-										/>
-										<Typography>Option4</Typography>
-										<Typography sx={{ marginLeft: '300px' }}>$ 8.9M</Typography>
-									</Stack>
+													<Typography>{item.name}</Typography>
+													<Typography sx={{ marginLeft: '300px' }}>
+														$ {item.value}
+													</Typography>
+												</Stack>
+												<hr />
+											</>
+										);
+									})}
 								</Box>
 							</Stack>
 						</form>
@@ -133,7 +114,7 @@ const Chart2 = () => {
 						<Typography>Option</Typography>
 						<AutoCompleteCustom
 							currentItem={tokenPayment}
-							listItem={Option}
+							listItem={event.options}
 							placeholder="Option 1"
 							// disabled={!state.feeMethod}
 							sx={{

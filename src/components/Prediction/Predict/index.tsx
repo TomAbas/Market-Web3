@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 const Predict = () => {
 	const { eventId } = useParams();
-	const [event, setEvent] = useState<any>({});
+	const [event, setEvent] = useState<any>(null);
 	useEffect(() => {
 		if (eventId) {
 			getEventById(eventId).then((data) => {
@@ -24,69 +24,61 @@ const Predict = () => {
 			}}
 		>
 			<Box sx={{}}>
-				<img src={event.image} alt="" style={{ width: 100 }} />
-				<Stack direction={'row'}>
-					<Stack
-						sx={{
-							backgroundColor: 'rgba(255, 201, 63, 0.3)',
-							position: 'absolute',
-							top: '165px',
-							right: '1120px',
-							width: 110,
-							textAlign: 'center',
-							p: 1,
-						}}
-					>
-						Politics
+				<Stack direction={'column'}>
+					<Stack direction={'row'} spacing={2}>
+						<img src={event?.image} alt="" style={{ width: 100 }} />
+						<Stack direction={'column'}>
+							<Stack
+								sx={{
+									backgroundColor: 'rgba(255, 201, 63, 0.3)',
+									height: '30px',
+									width: 110,
+									textAlign: 'center',
+								}}
+							>
+								Politics
+							</Stack>
+						</Stack>
+						<Stack direction={'row'}>
+							<Stack
+								sx={{
+									width: 110,
+									textAlign: 'center',
+									p: 1,
+								}}
+							>
+								$ 2 000.00 Vol
+							</Stack>
+							<Stack
+								sx={{
+									width: 110,
+									textAlign: 'center',
+									p: 1,
+								}}
+							>
+								$ 52 000.00 Liq
+							</Stack>
+							<Stack
+								sx={{
+									width: 110,
+									textAlign: 'center',
+									p: 1,
+								}}
+							>
+								Expires 20/02/2023
+							</Stack>
+						</Stack>
 					</Stack>
 					<Stack
 						sx={{
-							position: 'absolute',
-							top: '165px',
-							right: '1000px',
-							width: 110,
-							textAlign: 'center',
-							p: 1,
+							marginTop: '-25px',
+							marginLeft: '115px',
+							fontWeight: 700,
+							fontSize: '26px',
 						}}
 					>
-						$ 2 000.00 Vol
+						Will Trump be president of USA at 30-03
 					</Stack>
-					<Stack
-						sx={{
-							position: 'absolute',
-							top: '165px',
-							right: '850px',
-							width: 110,
-							textAlign: 'center',
-							p: 1,
-						}}
-					>
-						$ 52 000.00 Liq
-					</Stack>
-					<Stack
-						sx={{
-							position: 'absolute',
-							top: '165px',
-							right: '700px',
-							width: 110,
-							textAlign: 'center',
-							p: 1,
-						}}
-					>
-						Expires 20/02/2023
-					</Stack>
-				</Stack>
-				<Stack
-					sx={{
-						position: 'absolute',
-						top: '235px',
-						right: '682px',
-						textAlign: 'center',
-						fontWeight: 700,
-						fontSize: '26px',
-					}}
-				>
-					{event.description}
 				</Stack>
 			</Box>
 			<hr />
@@ -99,7 +91,7 @@ const Predict = () => {
 			</Typography> */}
 			<Typography sx={{ fontWeight: 700 }}>Show More</Typography>
 
-			<ModalChart />
+			{event && <ModalChart event={event} />}
 		</Container>
 	);
 };
