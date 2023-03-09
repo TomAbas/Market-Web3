@@ -48,11 +48,9 @@ const CreatPrediction = () => {
 	const handleDropFile = (e: any) => {
 		const file = e[0];
 		if (file) {
-			// const file = e[0];
 			setImage({ ...file, preview: URL.createObjectURL(file) });
 		}
 		setValue('file', e[0]);
-
 		clearErrors('file');
 	};
 	const handleChangeCategory = (
