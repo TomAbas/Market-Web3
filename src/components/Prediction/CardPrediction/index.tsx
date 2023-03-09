@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import CardPredict from '../Card';
 import { Typography, Stack, Container, Grid } from '@mui/material';
 import { getAllEvent } from 'api/eventApi';
 const Index = () => {
 	const [listEvent, setListEvent] = useState([]);
-
+	const navigate = useNavigate();
 	useEffect(() => {
 		getAllEvent().then((data) => {
 			setListEvent(data);
@@ -84,6 +85,9 @@ const Index = () => {
 					gap={'8px'}
 					direction={'row'}
 					alignItems={'center'}
+					onClick={() => {
+						navigate('/createPredict');
+					}}
 					sx={{
 						width: 'fit content',
 						background: '#FFFFFF',

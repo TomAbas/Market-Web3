@@ -23,7 +23,6 @@ function usePredict() {
 					Math.floor(Number(eventData.endTime) / 1000),
 				],
 			};
-			// createEventApi({ ...eventData, txHash: '123', id: '2' });
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(async (res) => {
 				let { id } = await getPredictionResource(
 					eventData.userAddress,
