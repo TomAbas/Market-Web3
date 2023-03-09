@@ -89,6 +89,7 @@ const predict = () => {
 				vulputate velit esse molestie consequat, vel illum dolore eu feugiat{' '}
 			</Typography>
 			<Typography sx={{ fontWeight: 700 }}>Show More</Typography>
+
 			<ModalChart />
 		</Container>
 	);
