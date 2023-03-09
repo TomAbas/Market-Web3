@@ -52,9 +52,9 @@ const Chart2 = ({ event }: any) => {
 					</Box>
 					<TabPanel value="1">
 						<Stack sx={{ width: '100%', height: 220 }}>
-							<Chart data={chartData}>
+							<Chart data={event.options}>
 								<ArgumentAxis />
-								<BarSeries valueField="population" argumentField="year" />
+								<BarSeries valueField="value" argumentField="name" />
 								<Animation />
 							</Chart>
 						</Stack>
