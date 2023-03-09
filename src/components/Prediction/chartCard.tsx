@@ -8,7 +8,6 @@ import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
 import TabList from '@mui/lab/TabList';
 import AutoCompleteCustom from 'components/CustomField/AutoCompleteCustom';
-import { Option } from 'constants/predict';
 
 const data = [
 	{ year: 'OP1', population: 2 },

@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { tokenPaymentSymbol } from 'constants/sellItem';
 import { changePriceToToken, formatTimeHistory } from 'utils/function';
 import ModalChart from '../chart';
-// import LinearProgress from '@mui/material/LinearProgress';
 interface Props {
 	data: {
 		_id: string;

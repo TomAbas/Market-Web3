@@ -115,7 +115,6 @@ function usePredict() {
 		finalizeEvent,
 		initializePrediction,
 		predictEvent,
-		// setEventData,
 	};
 }
 
