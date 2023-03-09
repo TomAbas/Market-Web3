@@ -199,3 +199,5 @@ export const ListTokenPaymentTestNet = [
 		},
 	},
 ];
+
+export const COLLECTION_DEFAULT = 'Metapsacecy Prediction Protocol Test';

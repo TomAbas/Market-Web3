@@ -8,7 +8,6 @@ const Index = () => {
 
 	useEffect(() => {
 		getAllEvent().then((data) => {
-			console.log(data);
 			setListEvent(data);
 		});
 	}, []);

@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import { Grid, Typography, Stack } from '@mui/material';
-import { formatTimeHistory } from 'utils/function';
+import { tokenPaymentSymbol } from 'constants/sellItem';
+import { changePriceToToken, formatTimeHistory } from 'utils/function';
 import ModalChart from '../chart';
 // import LinearProgress from '@mui/material/LinearProgress';
 interface Props {
@@ -10,8 +11,9 @@ interface Props {
 		question: string;
 		endTime: string;
 		image: string;
-		decription: string;
+		description: string;
 		options: Array<any>;
+		coinType: string;
 	};
 }
 const Product = ({ data }: Props) => {
@@ -71,7 +73,7 @@ const Product = ({ data }: Props) => {
 					{data.category}
 				</Typography>
 				<Typography variant="body1" sx={{ minHeight: 50 }} fontWeight={700}>
-					{data.question}
+					{data.description}
 				</Typography>
 				<Stack direction={'row'}>
 					<Box sx={{ width: '40%' }}>
@@ -92,7 +94,12 @@ const Product = ({ data }: Props) => {
 					<Box sx={{ width: '60%', position: 'relative' }}>
 						<ModalChart options={data.options}></ModalChart>
 						<Typography align={'right'} sx={{ marginLeft: '32px', fontWeight: 700 }}>
-							Total Pool: 9.999 BTC
+							Total Pool:{' '}
+							{changePriceToToken(
+								data.options.reduce((a, b) => Number(a) + Number(b.value), 0),
+								data.coinType
+							)}{' '}
+							{tokenPaymentSymbol[data.coinType?.split('::').slice(-1)[0]]}{' '}
 						</Typography>
 						<Box
 							sx={{
