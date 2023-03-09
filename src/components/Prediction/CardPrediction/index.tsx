@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import CardPredict from '../Card';
 import { Typography, Stack, Container, Grid } from '@mui/material';
@@ -13,7 +14,6 @@ const Index = () => {
 	const userInfo = useAppSelector(selectUser);
 	useEffect(() => {
 		getAllEvent().then((data) => {
-			console.log(data);
 			setListEvent(data);
 		});
 	}, []);

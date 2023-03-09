@@ -23,14 +23,15 @@ function usePredict() {
 				],
 			};
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(async (res) => {
-				let id = await getPredictionResource(
+				let { id } = await getPredictionResource(
 					eventData.userAddress,
 					eventData.description,
 					eventData.options,
 					eventData.chainId,
 					eventData.coinType
 				);
-				createEventApi({ ...eventData, txHash: res.hash });
+				console.log(id);
+				createEventApi({ ...eventData, txHash: res.hash, id });
 				toast.success(res.hash);
 			});
 		} catch (error: any) {

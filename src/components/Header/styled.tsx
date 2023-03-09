@@ -280,10 +280,13 @@ export const NavigationItemBigScreen = styled('li')(({ theme }) => ({
 	},
 
 	'&:nth-child(3):hover': {
-		borderRadius: '12px',
+		// borderRadius: '12px',
 	},
 
 	'&:nth-child(4):hover': {
+		borderRadius: '12px',
+	},
+	'&:nth-child(5):hover': {
 		// borderRadius: '12px',
 	},
 

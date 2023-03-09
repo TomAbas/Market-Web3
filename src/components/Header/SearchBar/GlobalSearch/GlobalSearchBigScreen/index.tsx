@@ -57,7 +57,7 @@ export default function GlobalSearchBigScreen({
 			}}
 		>
 			<ClickAwayListener onClickAway={deactivateDropdown}>
-				<Box ref={ref} onClick={showDropDown} sx={{ maxWidth: '500px', margin: '0 auto' }}>
+				<Box ref={ref} onClick={showDropDown} sx={{ maxWidth: '400px', margin: '0 auto' }}>
 					<SearchGroup
 						direction="row"
 						alignItems="center"
@@ -78,7 +78,7 @@ export default function GlobalSearchBigScreen({
 								padding: '0px 10px 0px 0px',
 								my: 1,
 								height: '28px',
-								maxWidth: '400px',
+								maxWidth: '300px',
 								// backgroundColor: 'hsla(0,0%,100%,.15)',
 								backgroundColor: 'initial',
 								borderRadius: 'unset',
