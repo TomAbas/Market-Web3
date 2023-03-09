@@ -1,11 +1,13 @@
 import { Box } from '@mui/material';
 import { Grid, Typography, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { tokenPaymentSymbol } from 'constants/sellItem';
 import { changePriceToToken, formatTimeHistory } from 'utils/function';
 import ModalChart from '../chart';
 // import LinearProgress from '@mui/material/LinearProgress';
 interface Props {
 	data: {
+		_id: string;
 		value: string;
 		category: string;
 		question: string;
@@ -17,6 +19,7 @@ interface Props {
 	};
 }
 const Product = ({ data }: Props) => {
+	const navigate = useNavigate();
 	return (
 		<Grid xs={12} lg={6} xl={4}>
 			<Box
@@ -31,6 +34,9 @@ const Product = ({ data }: Props) => {
 					},
 					cursor: 'pointer',
 					marginTop: 5,
+				}}
+				onClick={() => {
+					navigate(`/predict-detail/${data._id}`);
 				}}
 			>
 				{' '}

@@ -10,4 +10,9 @@ const getAllEvent = async (chainId: string = '2') => {
 	const url = `${baseURL}get-all/chainId/${chainId}`;
 	return ClientAxios.get(url).then(({ data }) => data);
 };
-export { createEvent, getAllEvent };
+
+const getEventById = async (id: string) => {
+	const url = `${baseURL}get-by-id/eventId/${id}`;
+	return ClientAxios.get(url).then(({ data }) => data);
+};
+export { createEvent, getAllEvent, getEventById };

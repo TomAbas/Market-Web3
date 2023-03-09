@@ -117,7 +117,7 @@ const router = createHashRouter([
 				element: <Prediction />,
 			},
 			{
-				path: 'predict',
+				path: 'predict-detail/:eventId',
 				element: <Predict />,
 			},
 			{
