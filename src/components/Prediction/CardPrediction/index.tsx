@@ -3,9 +3,14 @@ import AddIcon from '@mui/icons-material/Add';
 import CardPredict from '../Card';
 import { Typography, Stack, Container, Grid } from '@mui/material';
 import { getAllEvent } from 'api/eventApi';
+import { useAppSelector } from 'redux/hooks';
+import { selectUser } from 'redux/slices/userInfo';
+import { useNavigate } from 'react-router-dom';
 const Index = () => {
+	const navigate = useNavigate();
+	const REACT_APP_APTOS_ADMIN = process.env.REACT_APP_APTOS_NODE_URL;
 	const [listEvent, setListEvent] = useState([]);
-
+	const userInfo = useAppSelector(selectUser);
 	useEffect(() => {
 		getAllEvent().then((data) => {
 			console.log(data);
@@ -81,28 +86,33 @@ const Index = () => {
 						);
 					})}
 				</Stack>
-				<Stack
-					gap={'8px'}
-					direction={'row'}
-					alignItems={'center'}
-					sx={{
-						width: 'fit content',
-						background: '#FFFFFF',
-						textAlign: 'center',
-						border: '1.5px solid #e7e8ec',
-						padding: '10px 30px',
-						borderRadius: 3,
-						cursor: 'pointer',
-						'&:hover': {
-							color: '#FFFFFF',
-							background: '#1976d2',
-						},
-						marginRight: 1,
-					}}
-				>
-					Create
-					<AddIcon></AddIcon>
-				</Stack>
+				{userInfo?.userAddress === REACT_APP_APTOS_ADMIN && (
+					<Stack
+						gap={'8px'}
+						direction={'row'}
+						alignItems={'center'}
+						sx={{
+							width: 'fit content',
+							background: '#FFFFFF',
+							textAlign: 'center',
+							border: '1.5px solid #e7e8ec',
+							padding: '10px 30px',
+							borderRadius: 3,
+							cursor: 'pointer',
+							'&:hover': {
+								color: '#FFFFFF',
+								background: '#1976d2',
+							},
+							marginRight: 1,
+						}}
+						onClick={() => {
+							navigate('/createPrediction');
+						}}
+					>
+						Create
+						<AddIcon></AddIcon>
+					</Stack>
+				)}
 			</Stack>
 			<hr style={{ width: '98.5%', border: '1.5px solid #e7e8ec' }} />
 			<Grid container>

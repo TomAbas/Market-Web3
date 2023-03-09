@@ -71,7 +71,7 @@ const Product = ({ data }: Props) => {
 					{data.category}
 				</Typography>
 				<Typography variant="body1" sx={{ minHeight: 50 }} fontWeight={700}>
-					{data.question}
+					{data.decription}
 				</Typography>
 				<Stack direction={'row'}>
 					<Box sx={{ width: '40%' }}>

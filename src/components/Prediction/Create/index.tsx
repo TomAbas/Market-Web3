@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import UploadMediaCustom from 'components/Forms/UploadMediaCustom';
 import { Asterisk, ErrorMessage } from 'components/Forms/Common/styled';
-import { FieldSubTitle, FieldTitleName } from 'components/Forms/FormCreateCollection/styled';
+import { FieldSubTitle } from 'components/Forms/FormCreateCollection/styled';
 import DateTimeCustomPicker from 'customComponents/DateTimePickerCustom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';

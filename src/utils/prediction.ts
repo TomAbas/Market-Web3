@@ -8,7 +8,6 @@ import { getPredictionResource } from './predictionResource';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 function usePredict() {
 	const { signAndSubmitTransaction } = useWallet();
-	// const [eventData, setEventData] = useState<any>(null);
 	async function createEvent(eventData: any) {
 		try {
 			const payload: TransactionPayload = {
@@ -23,8 +22,6 @@ function usePredict() {
 					Math.floor(Number(eventData.endTime) / 1000),
 				],
 			};
-			console.log(payload);
-			// createEventApi({ ...eventData, txHash: '12312321312' });
 			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(async (res) => {
 				let id = await getPredictionResource(
 					eventData.userAddress,
@@ -33,7 +30,6 @@ function usePredict() {
 					eventData.chainId,
 					eventData.coinType
 				);
-				console.log(id);
 				createEventApi({ ...eventData, txHash: res.hash });
 				toast.success(res.hash);
 			});
