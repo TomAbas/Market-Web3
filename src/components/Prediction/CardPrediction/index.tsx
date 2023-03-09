@@ -6,7 +6,6 @@ import { Typography, Stack, Container, Grid } from '@mui/material';
 import { getAllEvent } from 'api/eventApi';
 import { useAppSelector } from 'redux/hooks';
 import { selectUser } from 'redux/slices/userInfo';
-import { useNavigate } from 'react-router-dom';
 const Index = () => {
 	const navigate = useNavigate();
 	const REACT_APP_APTOS_ADMIN = process.env.REACT_APP_APTOS_NODE_URL;
