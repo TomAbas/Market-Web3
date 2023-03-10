@@ -112,7 +112,7 @@ const Chart2 = ({ event }: any) => {
 							p: 2,
 						}}
 					>
-						<Typography>Option</Typography>
+						<Typography sx={{ fontWeight: 700 }}>Option</Typography>
 						<AutoCompleteCustom
 							currentItem={tokenPayment}
 							listItem={event.options}
