@@ -174,6 +174,8 @@ const Chart2 = ({ event }: any) => {
 									timeStart={event.startTime}
 									timeEnd={event.endTime}
 									className={''}
+									executeZero={() => {}}
+									executeOne={() => {}}
 								/>
 							</Box>
 							<Typography sx={{ fontWeight: 700 }}>Option</Typography>
