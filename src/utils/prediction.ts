@@ -108,6 +108,22 @@ function usePredict() {
 			console.error(console.error());
 		}
 	}
+	async function redeemEvent() {
+		try {
+			const payload: TransactionPayload = {
+				type: 'entry_function_payload',
+				function: `${MARKET_ADDRESS}::prediction::predict_event`,
+				type_arguments: ['coin_type'],
+				arguments: ['creator', 'collection', 'itemName', 'amount'],
+			};
+			let txHash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
+				(res) => res.hash
+			);
+			toast.success(txHash);
+		} catch (error: any) {
+			console.error(console.error());
+		}
+	}
 
 	return {
 		createEvent,
@@ -115,6 +131,7 @@ function usePredict() {
 		finalizeEvent,
 		initializePrediction,
 		predictEvent,
+		redeemEvent,
 		// setEventData,
 	};
 }

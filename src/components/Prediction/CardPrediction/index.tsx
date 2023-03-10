@@ -8,7 +8,7 @@ import { useAppSelector } from 'redux/hooks';
 import { selectUser } from 'redux/slices/userInfo';
 const Index = () => {
 	const navigate = useNavigate();
-	const REACT_APP_APTOS_ADMIN = process.env.REACT_APP_APTOS_NODE_URL;
+	const REACT_APP_APTOS_ADMIN = process.env.REACT_APP_APTOS_ADMIN;
 	const [listEvent, setListEvent] = useState([]);
 	const userInfo = useAppSelector(selectUser);
 	useEffect(() => {
@@ -105,7 +105,7 @@ const Index = () => {
 							marginRight: 1,
 						}}
 						onClick={() => {
-							navigate('/createPrediction');
+							navigate('/createPredict');
 						}}
 					>
 						Create
