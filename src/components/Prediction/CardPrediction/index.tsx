@@ -10,10 +10,22 @@ const Index = () => {
 	const navigate = useNavigate();
 	const REACT_APP_APTOS_ADMIN = process.env.REACT_APP_APTOS_NODE_URL;
 	const [listEvent, setListEvent] = useState([]);
+	const [dislayEvent, setDisplayEvent] = useState<any>([]);
 	const userInfo = useAppSelector(selectUser);
+	function filterEventByCategory(category: string) {
+		if (category === 'All') {
+			setDisplayEvent(listEvent);
+		} else {
+			const filterEvent = listEvent.filter((item: any) => {
+				return item.category === category;
+			});
+			setDisplayEvent(filterEvent);
+		}
+	}
 	useEffect(() => {
 		getAllEvent().then((data) => {
 			setListEvent(data);
+			setDisplayEvent([...data]);
 		});
 	}, []);
 	const listCategory = [
@@ -78,6 +90,9 @@ const Index = () => {
 										background: '#1976d2',
 									},
 								}}
+								onClick={() => {
+									filterEventByCategory(item.name);
+								}}
 								key={index}
 							>
 								{item.name}
@@ -115,7 +130,7 @@ const Index = () => {
 			</Stack>
 			<hr style={{ width: '98.5%', border: '1.5px solid #e7e8ec' }} />
 			<Grid container>
-				{listEvent.map((item, index) => {
+				{dislayEvent.map((item: any, index: number) => {
 					return <CardPredict data={item} key={index} />;
 				})}
 			</Grid>
