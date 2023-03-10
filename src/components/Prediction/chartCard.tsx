@@ -82,12 +82,20 @@ const Chart2 = ({ event }: any) => {
 											<>
 												<Stack direction={'row'}>
 													<Avatar
+														sx={{ width: '40px', height: '40px' }}
 														alt="Remy Sharp"
 														src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
 													/>
 
-													<Typography>{item.key}</Typography>
-													<Typography sx={{ marginLeft: '250px' }}>
+													<Typography sx={{ marginTop: '7px' }}>
+														{item.key}
+													</Typography>
+													<Typography
+														sx={{
+															marginLeft: '250px',
+															marginTop: '7px',
+														}}
+													>
 														stacke
 													</Typography>
 												</Stack>
