@@ -8,8 +8,11 @@ import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
 import TabList from '@mui/lab/TabList';
 import AutoCompleteCustom from 'components/CustomField/AutoCompleteCustom';
+
 import { Option } from 'constants/predict';
 import { ItemCardStyle } from 'components/Marketplace/CardNFT/styled';
+import CountDown from 'customComponents/CountDown';
+import ActivityTab from 'components/Profile/TabUserInfo/ActivityTab/ActivityTab';
 
 const data = [
 	{ year: 'OP1', population: 2 },
@@ -49,8 +52,7 @@ const Chart2 = ({ event }: any) => {
 						}}
 					>
 						<TabList centered onChange={handleChange} aria-label="lab API tabs example">
-							<Tab label="Detail" value="1" />
-							<Tab label="History" value="2" />
+							<Tab label="History" value="1" />
 						</TabList>
 					</Box>
 					<TabPanel value="1">
@@ -61,110 +63,197 @@ const Chart2 = ({ event }: any) => {
 								<Animation />
 							</Chart>
 						</Stack>
-						<form>
-							<Stack direction={'row'}>
-								<Box
-									sx={{
-										width: '100%',
-										border: '1px solid gainsboro',
-										borderRadius: 2,
-										textAlign: 'center',
-										padding: 1,
-									}}
-								>
-									<Stack direction={'row'}>
-										<Typography sx={{ marginLeft: '40px' }}>Option</Typography>
-										<Typography sx={{ marginLeft: '260px' }}>Name</Typography>
-									</Stack>
-									<hr />
-									{event.options.map((item: any, index: number) => {
-										return (
-											<>
-												<Stack direction={'row'}>
-													<Avatar
-														sx={{ width: '40px', height: '40px' }}
-														alt="Remy Sharp"
-														src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
-													/>
 
-													<Typography sx={{ marginTop: '7px' }}>
-														{item.key}
-													</Typography>
-													<Typography
-														sx={{
-															marginLeft: '250px',
-															marginTop: '7px',
-														}}
-													>
-														stacke
-													</Typography>
-												</Stack>
-												<hr />
-											</>
-										);
-									})}
-								</Box>
-							</Stack>
-						</form>
+						<ActivityTab infoUser={[]} />
 					</TabPanel>
 					<TabPanel value="2">
 						<Box sx={{ width: '100%', height: 220 }}></Box>
 					</TabPanel>
 				</TabContext>
 			</Box>
-			<Box sx={{ width: '100%' }}>
-				<form>
-					<Box
-						sx={{
-							border: '1.5px solid #e7e8ec',
-							p: 2,
-						}}
-					>
-						<Typography sx={{ fontWeight: 700 }}>Option</Typography>
-						<AutoCompleteCustom
-							currentItem={tokenPayment}
-							listItem={event.options}
-							placeholder="Option 1"
-							// disabled={!state.feeMethod}
-							sx={{
-								borderRadius: '12px',
-								input: {
-									padding: '15px 5px 15px 0',
-								},
-							}}
+			<Stack direction={'column'} spacing={4}>
+				<Box
+					sx={{
+						border: '1px solid gainsboro',
+						height: '255px',
+						overflowY: 'auto',
+						'&::-webkit-scrollbar': {
+							display: 'block',
+							width: 3,
+						},
+						'&::-webkit-scrollbar-track': {
+							display: 'block',
+							background: '#0c5599',
+						},
+						'&::-webkit-scrollbar-thumb': {
+							display: 'block',
+							background: '#65b8ff',
+							borderRadius: '5px',
+						},
+					}}
+				>
+					<Typography>Option</Typography>
+					<hr />
+					<Stack direction={'row'}>
+						<Avatar
+							sx={{ width: '40px', height: '40px' }}
+							alt="Remy Sharp"
+							src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
 						/>
-						<InputItem>
-							<InputTitle sx={{ display: 'flex' }}>
-								Amount
-								<Typography
-									sx={{
-										marginLeft: '10px',
-										color: '#c4c4c4',
-										fontSize: '12px',
-										fontWeight: 'normal',
-									}}
-								></Typography>
-							</InputTitle>
-							<input type="text" placeholder="0" />
-						</InputItem>
+
+						<Typography sx={{ marginTop: '7px' }}>
+							Option 1: Pinocchio - Best Animated Feature Film
+						</Typography>
+					</Stack>
+					<Stack direction={'row'}>
+						<Avatar
+							sx={{ width: '40px', height: '40px' }}
+							alt="Remy Sharp"
+							src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
+						/>
+
+						<Typography sx={{ marginTop: '7px' }}>
+							Option 2: "The Fabelmans" - Best Picture
+						</Typography>
+					</Stack>
+					<Stack direction={'row'}>
+						<Avatar
+							sx={{ width: '40px', height: '40px' }}
+							alt="Remy Sharp"
+							src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
+						/>
+
+						<Typography sx={{ marginTop: '7px' }}>
+							Option 3: "The Fabelmans" - Best Picture
+						</Typography>
+					</Stack>
+					<Stack direction={'row'}>
+						<Avatar
+							sx={{ width: '40px', height: '40px' }}
+							alt="Remy Sharp"
+							src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
+						/>
+
+						<Typography sx={{ marginTop: '7px' }}>
+							Option 4: "The Fabelmans" - Best Picture
+						</Typography>
+					</Stack>
+					<Stack direction={'row'}>
+						<Avatar
+							sx={{ width: '40px', height: '40px' }}
+							alt="Remy Sharp"
+							src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
+						/>
+
+						<Typography sx={{ marginTop: '7px' }}>
+							Option 5: "The Fabelmans" - Best Picture
+						</Typography>
+					</Stack>
+					<Stack direction={'row'}>
+						<Avatar
+							sx={{ width: '40px', height: '40px' }}
+							alt="Remy Sharp"
+							src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
+						/>
+
+						<Typography sx={{ marginTop: '7px' }}>
+							Option 6: "The Fabelmans" - Best Picture
+						</Typography>
+					</Stack>
+				</Box>
+				<Box sx={{ width: '100%' }}>
+					<form>
 						<Box
 							sx={{
-								cursor: 'pointer',
-								backgroundColor: '#0071E3',
-								marginTop: '30px',
-								width: '100%',
-								border: '1px solid gainsboro',
-								borderRadius: 2,
-								textAlign: 'center',
-								padding: 1,
-								bottom: 0,
+								border: '1.5px solid #e7e8ec',
+								p: 2,
 							}}
 						>
-							Predict
+							<Box sx={{ backgroundColor: '#0071E3', borderRadius: '5px' }}>
+								<CountDown
+									timeStart={event.startTime}
+									timeEnd={event.endTime}
+									className={''}
+								/>
+							</Box>
+							<Typography sx={{ fontWeight: 700 }}>Option</Typography>
+							<AutoCompleteCustom
+								currentItem={tokenPayment}
+								listItem={event.options}
+								placeholder="Option 1"
+								// disabled={!state.feeMethod}
+								sx={{
+									borderRadius: '12px',
+									input: {
+										padding: '15px 5px 15px 0',
+									},
+								}}
+							/>
+
+							<InputItem>
+								<InputTitle sx={{ display: 'flex' }}>Amount</InputTitle>
+								<input type="text" placeholder="0" />
+							</InputItem>
+							<Typography sx={{ fontWeight: 700 }}>Percentage</Typography>
+							<Box>
+								<Stack direction={'row'} spacing={2}>
+									<Box
+										sx={{
+											border: '1.5px solid #e7e8ec',
+											cursor: 'pointer',
+											'&:hover': {
+												color: '#FFFFFF',
+												background: '#1976d2',
+											},
+										}}
+									>
+										25%
+									</Box>
+									<Box
+										sx={{
+											border: '1.5px solid #e7e8ec',
+											cursor: 'pointer',
+											'&:hover': {
+												color: '#FFFFFF',
+												background: '#1976d2',
+											},
+										}}
+									>
+										50%
+									</Box>
+									<Box
+										sx={{
+											border: '1.5px solid #e7e8ec',
+											cursor: 'pointer',
+											'&:hover': {
+												color: '#FFFFFF',
+												background: '#1976d2',
+											},
+										}}
+									>
+										75%
+									</Box>
+								</Stack>
+							</Box>
+							<Box
+								sx={{
+									cursor: 'pointer',
+									backgroundColor: '#0071E3',
+									marginTop: '30px',
+									width: '100%',
+									border: '1px solid gainsboro',
+									borderRadius: 2,
+									textAlign: 'center',
+									padding: 1,
+									bottom: 0,
+								}}
+							>
+								Predict
+							</Box>
 						</Box>
-					</Box>
-				</form>
-			</Box>
+					</form>
+				</Box>
+			</Stack>
 		</Stack>
 	);
 };
