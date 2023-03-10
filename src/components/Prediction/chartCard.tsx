@@ -69,12 +69,14 @@ const Chart2 = ({ event }: any) => {
 	const onSubmit = async (data: any) => {
 		console.log(data);
 		let eventData = {
+			_id: event._id,
 			coinType: event.coinType,
 			option: data.option,
 			amount: data.amount,
 			creator: event.userAddress,
 			description: event.description,
 			options: event.options.map((item: any) => item.name),
+			optionId: event.options.find((item: any) => item.name === data.option)._id,
 		};
 		await predictEvent(eventData);
 	};

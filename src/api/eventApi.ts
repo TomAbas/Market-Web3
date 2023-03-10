@@ -17,7 +17,7 @@ const getEventById = async (id: string) => {
 };
 
 const predictEventApi = async (data: any): Promise<Response<any>> => {
-	const url = `${baseURL}predict`;
+	const url = `${baseURL}predict/eventId/${data.eventId}/optionId/${data.optionId}`;
 	return ClientAxios.post(url, data).then(({ data }) => data);
 };
 

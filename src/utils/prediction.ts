@@ -3,11 +3,14 @@ import { toast } from 'react-toastify';
 // import { useState } from 'react';
 import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generated';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
-import { createEvent as createEventApi } from '../api/eventApi';
+import { createEvent as createEventApi, predictEventApi } from '../api/eventApi';
 import { getPredictionResource } from './predictionResource';
 import { changeTokenToWeiByCoinType } from './function';
+import { useAppSelector } from 'redux/hooks';
+import { selectUser } from 'redux/slices/userInfo';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 function usePredict() {
+	const userInfo = useAppSelector(selectUser);
 	const { signAndSubmitTransaction } = useWallet();
 	async function createEvent(eventData: any) {
 		try {
@@ -102,9 +105,19 @@ function usePredict() {
 				],
 			};
 			let txHash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
-				(res) => res.hash
+				(res) => {
+					// res.hash;
+					let body = {
+						amount: eventData.amount,
+						txHash: res.hash,
+						userAddress: userInfo?.userAddress,
+						optionId: eventData.optionId,
+						eventId: eventData._id,
+					};
+					predictEventApi(body);
+				}
 			);
-			toast.success(txHash);
+			toast.success('success');
 		} catch (error: any) {
 			console.error(console.error());
 		}
