@@ -109,7 +109,6 @@ const Chart2 = ({ event }: any) => {
 					<Box
 						sx={{
 							border: '1.5px solid #e7e8ec',
-							borderRadius: '3px',
 							p: 2,
 						}}
 					>
@@ -120,6 +119,7 @@ const Chart2 = ({ event }: any) => {
 							placeholder="Option 1"
 							// disabled={!state.feeMethod}
 							sx={{
+								borderRadius: '12px',
 								input: {
 									padding: '15px 5px 15px 0',
 								},
