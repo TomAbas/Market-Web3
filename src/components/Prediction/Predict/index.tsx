@@ -34,6 +34,7 @@ const Predict = () => {
 									height: '30px',
 									width: 110,
 									textAlign: 'center',
+									p: '5px',
 								}}
 							>
 								Politics

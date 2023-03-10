@@ -9,6 +9,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import TabList from '@mui/lab/TabList';
 import AutoCompleteCustom from 'components/CustomField/AutoCompleteCustom';
 import { Option } from 'constants/predict';
+import { ItemCardStyle } from 'components/Marketplace/CardNFT/styled';
 
 const data = [
 	{ year: 'OP1', population: 2 },
@@ -20,7 +21,9 @@ const data = [
 	{ year: 'OP7', population: 7 },
 ];
 const Chart2 = ({ event }: any) => {
-	console.log(event);
+	event.options = event.options.map((item: any, index: number) => {
+		return { ...item, key: `Option ${index + 1}` };
+	});
 	const [tokenPayment] = React.useState<any>(null);
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
@@ -54,7 +57,7 @@ const Chart2 = ({ event }: any) => {
 						<Stack sx={{ width: '100%', height: 220 }}>
 							<Chart data={event.options}>
 								<ArgumentAxis />
-								<BarSeries valueField="value" argumentField="name" />
+								<BarSeries valueField="value" argumentField="key" />
 								<Animation />
 							</Chart>
 						</Stack>
@@ -71,7 +74,7 @@ const Chart2 = ({ event }: any) => {
 								>
 									<Stack direction={'row'}>
 										<Typography sx={{ marginLeft: '40px' }}>Option</Typography>
-										<Typography sx={{ marginLeft: '330px' }}>Pool</Typography>
+										<Typography sx={{ marginLeft: '260px' }}>Name</Typography>
 									</Stack>
 									<hr />
 									{event.options.map((item: any, index: number) => {
@@ -83,9 +86,9 @@ const Chart2 = ({ event }: any) => {
 														src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
 													/>
 
-													<Typography>{item.name}</Typography>
-													<Typography sx={{ marginLeft: '300px' }}>
-														$ {item.value}
+													<Typography>{item.key}</Typography>
+													<Typography sx={{ marginLeft: '250px' }}>
+														stacke
 													</Typography>
 												</Stack>
 												<hr />
@@ -105,9 +108,8 @@ const Chart2 = ({ event }: any) => {
 				<form>
 					<Box
 						sx={{
-							background: ' #FFFFFF',
 							border: '1.5px solid #e7e8ec',
-							borderRadius: 2,
+							borderRadius: '3px',
 							p: 2,
 						}}
 					>
@@ -118,7 +120,6 @@ const Chart2 = ({ event }: any) => {
 							placeholder="Option 1"
 							// disabled={!state.feeMethod}
 							sx={{
-								width: '455px',
 								input: {
 									padding: '15px 5px 15px 0',
 								},
