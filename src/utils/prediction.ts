@@ -100,23 +100,21 @@ function usePredict() {
 					eventData.option,
 					changeTokenToWeiByCoinType(eventData.amount, eventData.coinTpe),
 					eventData.creator,
-					eventData.description + ':?:' + eventData.coinType,
+					eventData.description + '?#(' + eventData.coinType + ')',
 					eventData.options,
 				],
 			};
-			let txHash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
-				(res) => {
-					// res.hash;
-					let body = {
-						amount: eventData.amount,
-						txHash: res.hash,
-						userAddress: userInfo?.userAddress,
-						optionId: eventData.optionId,
-						eventId: eventData._id,
-					};
-					predictEventApi(body);
-				}
-			);
+			await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then((res) => {
+				// res.hash;
+				let body = {
+					amount: changeTokenToWeiByCoinType(eventData.amount, eventData.coinTpe) ,
+					txHash: res.hash,
+					userAddress: userInfo?.userAddress,
+					optionId: eventData.optionId,
+					eventId: eventData._id,
+				};
+				predictEventApi(body);
+			});
 			toast.success('success');
 		} catch (error: any) {
 			console.error(console.error());
