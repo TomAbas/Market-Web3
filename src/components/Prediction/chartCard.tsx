@@ -74,6 +74,8 @@ const Chart2 = ({ event }: any) => {
 			<Stack direction={'column'} spacing={4}>
 				<Box
 					sx={{
+						background: '#FFFF',
+						padding: '2px 2px 2px 8px',
 						border: '1px solid gainsboro',
 						height: '255px',
 						overflowY: 'auto',
@@ -92,70 +94,34 @@ const Chart2 = ({ event }: any) => {
 						},
 					}}
 				>
-					<Typography>Option</Typography>
+					<Typography sx={{ fontWeight: 700 }}>Option</Typography>
 					<hr />
 					<Stack direction={'row'}>
-						<Avatar
-							sx={{ width: '40px', height: '40px' }}
-							alt="Remy Sharp"
-							src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
-						/>
-
 						<Typography sx={{ marginTop: '7px' }}>
 							Option 1: Pinocchio - Best Animated Feature Film
 						</Typography>
 					</Stack>
 					<Stack direction={'row'}>
-						<Avatar
-							sx={{ width: '40px', height: '40px' }}
-							alt="Remy Sharp"
-							src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
-						/>
-
 						<Typography sx={{ marginTop: '7px' }}>
 							Option 2: "The Fabelmans" - Best Picture
 						</Typography>
 					</Stack>
 					<Stack direction={'row'}>
-						<Avatar
-							sx={{ width: '40px', height: '40px' }}
-							alt="Remy Sharp"
-							src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
-						/>
-
 						<Typography sx={{ marginTop: '7px' }}>
 							Option 3: "The Fabelmans" - Best Picture
 						</Typography>
 					</Stack>
 					<Stack direction={'row'}>
-						<Avatar
-							sx={{ width: '40px', height: '40px' }}
-							alt="Remy Sharp"
-							src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
-						/>
-
 						<Typography sx={{ marginTop: '7px' }}>
 							Option 4: "The Fabelmans" - Best Picture
 						</Typography>
 					</Stack>
 					<Stack direction={'row'}>
-						<Avatar
-							sx={{ width: '40px', height: '40px' }}
-							alt="Remy Sharp"
-							src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
-						/>
-
 						<Typography sx={{ marginTop: '7px' }}>
 							Option 5: "The Fabelmans" - Best Picture
 						</Typography>
 					</Stack>
 					<Stack direction={'row'}>
-						<Avatar
-							sx={{ width: '40px', height: '40px' }}
-							alt="Remy Sharp"
-							src="https://www.seekpng.com/png/full/72-729756_how-to-add-a-new-user-to-your.png"
-						/>
-
 						<Typography sx={{ marginTop: '7px' }}>
 							Option 6: "The Fabelmans" - Best Picture
 						</Typography>
