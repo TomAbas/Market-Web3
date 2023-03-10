@@ -5,6 +5,7 @@ import { TransactionPayload } from '@martiandao/aptos-web3-bip44.js/dist/generat
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { createEvent as createEventApi } from '../api/eventApi';
 import { getPredictionResource } from './predictionResource';
+import { changeTokenToWeiByCoinType } from './function';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
 function usePredict() {
 	const { signAndSubmitTransaction } = useWallet();
@@ -15,7 +16,7 @@ function usePredict() {
 				function: `${MARKET_ADDRESS}::prediction::create_event`,
 				type_arguments: ['0x1::aptos_coin::AptosCoin'],
 				arguments: [
-					eventData.description + ':?:' + eventData.coinType,
+					eventData.description + '?#(' + eventData.coinType + ')',
 					eventData.image,
 					eventData.options,
 					Math.floor(Number(eventData.startTime) / 1000),
@@ -86,20 +87,21 @@ function usePredict() {
 			console.error(console.error());
 		}
 	}
-	async function predictEvent() {
+	async function predictEvent(eventData: any) {
 		try {
 			const payload: TransactionPayload = {
 				type: 'entry_function_payload',
 				function: `${MARKET_ADDRESS}::prediction::predict_event`,
-				type_arguments: [],
+				type_arguments: [eventData.coinType],
 				arguments: [
-					'option',
-					'amount',
-					'event_creator',
-					'event_description',
-					'event_options',
+					eventData.option,
+					changeTokenToWeiByCoinType(eventData.amount, eventData.coinTpe),
+					eventData.creator,
+					eventData.description + ':?:' + eventData.coinType,
+					eventData.options,
 				],
 			};
+			console.log(payload);
 			let txHash = await signAndSubmitTransaction(payload, { gas_unit_price: 100 }).then(
 				(res) => res.hash
 			);
