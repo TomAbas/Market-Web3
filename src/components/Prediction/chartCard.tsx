@@ -77,7 +77,6 @@ const Chart2 = ({ event }: any) => {
 			options: event.options.map((item: any) => item.name),
 			optionId: event.options.find((item: any) => item.name === data.option)._id,
 		};
-		console.log(eventData);
 		await predictEvent(eventData);
 	};
 
