@@ -17,7 +17,6 @@ import { selectUser } from 'redux/slices/userInfo';
 import useGetAcountTokenAmount from 'hooks/useGetAcountTokenAmount';
 import { handleTrigger } from 'redux/slices/nftFilter';
 const MARKET_ADDRESS = process.env.REACT_APP_MARKET_ADDRESS;
-const MARKET_RESOURCE_ADDRESS = process.env.REACT_APP_MARKET_RESOURCE_ADDRESS;
 const MARKET_COINT_TYPE = process.env.REACT_APP_MARKET_COIN_TYPE;
 
 function useBuyItemAptos(offer: nftItem) {

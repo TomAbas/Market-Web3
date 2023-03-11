@@ -78,7 +78,7 @@ const Predict = () => {
 							fontSize: '26px',
 						}}
 					>
-						Will Trump be president of USA at 30-03
+						{event?.description}
 					</Stack>
 				</Stack>
 			</Box>

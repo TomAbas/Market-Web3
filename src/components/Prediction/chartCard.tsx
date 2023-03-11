@@ -14,6 +14,11 @@ import { ItemCardStyle } from 'components/Marketplace/CardNFT/styled';
 import CountDown from 'customComponents/CountDown';
 import ActivityTab from 'components/Profile/TabUserInfo/ActivityTab/ActivityTab';
 
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
+import usePredict from 'utils/prediction';
 const data = [
 	{ year: 'OP1', population: 2 },
 	{ year: 'OP2', population: 3 },
@@ -23,20 +28,68 @@ const data = [
 	{ year: 'OP6', population: 6 },
 	{ year: 'OP7', population: 7 },
 ];
+interface ModalPlacePredict {
+	option: string;
+	amount: number;
+}
 const Chart2 = ({ event }: any) => {
+	const { predictEvent } = usePredict();
+	const [valueTab, setValueTab] = React.useState('1');
 	event.options = event.options.map((item: any, index: number) => {
 		return { ...item, key: `Option ${index + 1}` };
 	});
-	const [tokenPayment] = React.useState<any>(null);
+	const [option, setOption] = React.useState();
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-		setValue(newValue);
+		setValueTab(newValue);
 	};
-	const [chartData] = React.useState(data);
-	const [value, setValue] = React.useState('1');
+	const handleSelectOption = (value: any) => {
+		setOption(value);
+		let selectedOption = event.options.find((item: any) => item.key === value.name);
+		setValue('option', selectedOption.name);
+	};
+	const schema = yup
+		.object({
+			amount: yup
+				.number()
+				.integer()
+				.min(0, "Can't be negative")
+				.transform((cv, ov) => {
+					// handle case not enter a number throw error: NaN cast from ""
+					return ov === '' ? undefined : cv;
+				})
+				.required('Required'),
+			option: yup.string().required('Required'),
+		})
+		.required();
+
+	const {
+		register,
+		handleSubmit,
+		setValue,
+		formState: { errors },
+	} = useForm<ModalPlacePredict>({
+		resolver: yupResolver(schema),
+	});
+	//
+
+	const onSubmit = async (data: any) => {
+		let eventData = {
+			_id: event._id,
+			coinType: event.coinType,
+			option: data.option,
+			amount: data.amount,
+			creator: event.userAddress,
+			description: event.description,
+			options: event.options.map((item: any) => item.name),
+			optionId: event.options.find((item: any) => item.name === data.option)._id,
+		};
+		await predictEvent(eventData);
+	};
+
 	return (
 		<Stack direction={'row'} spacing={4}>
 			<Box sx={{ width: '100%' }}>
-				<TabContext value={value}>
+				<TabContext value={valueTab}>
 					<Box
 						sx={{
 							borderBottom: 1,
@@ -71,157 +124,74 @@ const Chart2 = ({ event }: any) => {
 					</TabPanel>
 				</TabContext>
 			</Box>
-			<Stack direction={'column'} spacing={4}>
-				<Box
-					sx={{
-						background: '#FFFF',
-						padding: '2px 2px 2px 8px',
-						border: '1px solid gainsboro',
-						height: '255px',
-						overflowY: 'auto',
-						'&::-webkit-scrollbar': {
-							display: 'block',
-							width: 3,
-						},
-						'&::-webkit-scrollbar-track': {
-							display: 'block',
-							background: '#0c5599',
-						},
-						'&::-webkit-scrollbar-thumb': {
-							display: 'block',
-							background: '#65b8ff',
-							borderRadius: '5px',
-						},
-					}}
-				>
-					<Typography sx={{ fontWeight: 700 }}>Option</Typography>
-					<hr />
-					<Stack direction={'row'}>
-						<Typography sx={{ marginTop: '7px' }}>
-							Option 1: Pinocchio - Best Animated Feature Film
-						</Typography>
-					</Stack>
-					<Stack direction={'row'}>
-						<Typography sx={{ marginTop: '7px' }}>
-							Option 2: "The Fabelmans" - Best Picture
-						</Typography>
-					</Stack>
-					<Stack direction={'row'}>
-						<Typography sx={{ marginTop: '7px' }}>
-							Option 3: "The Fabelmans" - Best Picture
-						</Typography>
-					</Stack>
-					<Stack direction={'row'}>
-						<Typography sx={{ marginTop: '7px' }}>
-							Option 4: "The Fabelmans" - Best Picture
-						</Typography>
-					</Stack>
-					<Stack direction={'row'}>
-						<Typography sx={{ marginTop: '7px' }}>
-							Option 5: "The Fabelmans" - Best Picture
-						</Typography>
-					</Stack>
-					<Stack direction={'row'}>
-						<Typography sx={{ marginTop: '7px' }}>
-							Option 6: "The Fabelmans" - Best Picture
-						</Typography>
-					</Stack>
-				</Box>
-				<Box sx={{ width: '100%' }}>
-					<form>
-						<Box
-							sx={{
-								border: '1.5px solid #e7e8ec',
-								p: 2,
-							}}
-						>
-							<Box sx={{ backgroundColor: '#0071E3', borderRadius: '5px' }}>
-								<CountDown
-									timeStart={event.startTime}
-									timeEnd={event.endTime}
-									className={''}
-									executeZero={() => {}}
-									executeOne={() => {}}
-								/>
-							</Box>
-							<Typography sx={{ fontWeight: 700 }}>Option</Typography>
+			<Box sx={{ width: '100%' }}>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<Box
+						sx={{
+							border: '1.5px solid #e7e8ec',
+							p: 2,
+						}}
+					>
+						<Box sx={{ marginBottom: '20px' }}>
+							<InputItem>
+								<InputTitle>Option</InputTitle>
+							</InputItem>
 							<AutoCompleteCustom
-								currentItem={tokenPayment}
-								listItem={event.options}
+								{...register('option')}
+								currentItem={option}
+								listItem={event.options.map((item: any) => {
+									return { name: item.key };
+								})}
 								placeholder="Option 1"
-								// disabled={!state.feeMethod}
+								onChange={handleSelectOption}
 								sx={{
-									borderRadius: '12px',
 									input: {
 										padding: '15px 5px 15px 0',
 									},
 								}}
 							/>
-
-							<InputItem>
-								<InputTitle sx={{ display: 'flex' }}>Amount</InputTitle>
-								<input type="text" placeholder="0" />
-							</InputItem>
-							<Typography sx={{ fontWeight: 700 }}>Percentage</Typography>
-							<Box>
-								<Stack direction={'row'} spacing={2}>
-									<Box
-										sx={{
-											border: '1.5px solid #e7e8ec',
-											cursor: 'pointer',
-											'&:hover': {
-												color: '#FFFFFF',
-												background: '#1976d2',
-											},
-										}}
-									>
-										25%
-									</Box>
-									<Box
-										sx={{
-											border: '1.5px solid #e7e8ec',
-											cursor: 'pointer',
-											'&:hover': {
-												color: '#FFFFFF',
-												background: '#1976d2',
-											},
-										}}
-									>
-										50%
-									</Box>
-									<Box
-										sx={{
-											border: '1.5px solid #e7e8ec',
-											cursor: 'pointer',
-											'&:hover': {
-												color: '#FFFFFF',
-												background: '#1976d2',
-											},
-										}}
-									>
-										75%
-									</Box>
-								</Stack>
-							</Box>
-							<Box
-								sx={{
-									cursor: 'pointer',
-									backgroundColor: '#0071E3',
-									marginTop: '30px',
-									width: '100%',
-									border: '1px solid gainsboro',
-									borderRadius: 2,
-									textAlign: 'center',
-									padding: 1,
-									bottom: 0,
-								}}
-							>
-								Predict
-							</Box>
+							{errors.option?.message && (
+								<Typography
+									variant="body1"
+									sx={{
+										pt: 1,
+										float: 'right',
+										width: '100%',
+										fontSize: '12px',
+										marginTop: '4px',
+										marginLeft: '10px',
+										color: 'red',
+									}}
+								>
+									<>{errors.option?.message}</>
+								</Typography>
+							)}
 						</Box>
-					</form>
-				</Box>
-			</Stack>
+						<InputItem>
+							<InputTitle>Amount</InputTitle>
+							<input type="number" placeholder="0" {...register('amount')} />
+							{errors.amount?.message && (
+								<Typography
+									variant="body1"
+									sx={{
+										pt: 1,
+										float: 'right',
+										width: '100%',
+										marginLeft: '10px',
+										color: '#c4c4c4',
+										fontSize: '12px',
+									}}
+								>
+									<>{errors.amount?.message}</>
+								</Typography>
+							)}
+						</InputItem>
+						<ButtonWhite type="submit" sx={{ marginTop: '20px' }}>
+							Predict
+						</ButtonWhite>
+					</Box>
+				</form>
+			</Box>
 		</Stack>
 	);
 };
