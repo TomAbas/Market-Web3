@@ -8,26 +8,13 @@ import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
 import TabList from '@mui/lab/TabList';
 import AutoCompleteCustom from 'components/CustomField/AutoCompleteCustom';
-
-import { Option } from 'constants/predict';
-import { ItemCardStyle } from 'components/Marketplace/CardNFT/styled';
-import CountDown from 'customComponents/CountDown';
 import ActivityTab from 'components/Profile/TabUserInfo/ActivityTab/ActivityTab';
-
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import ButtonWhite from 'customComponents/ButtonWhite/ButtonWhite';
 import usePredict from 'utils/prediction';
-const data = [
-	{ year: 'OP1', population: 2 },
-	{ year: 'OP2', population: 3 },
-	{ year: 'OP3', population: 8 },
-	{ year: 'OP4', population: 4 },
-	{ year: 'OP5', population: 2 },
-	{ year: 'OP6', population: 6 },
-	{ year: 'OP7', population: 7 },
-];
+
 interface ModalPlacePredict {
 	option: string;
 	amount: number;
