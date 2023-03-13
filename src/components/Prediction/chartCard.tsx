@@ -120,7 +120,7 @@ const Chart2 = ({ event }: any) => {
 					>
 						<Box sx={{ marginBottom: '20px' }}>
 							<InputItem>
-								<InputTitle>Option</InputTitle>
+								<InputTitle>Options</InputTitle>
 							</InputItem>
 							<AutoCompleteCustom
 								{...register('option')}
