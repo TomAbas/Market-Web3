@@ -41,7 +41,6 @@ const Chart2 = ({ event }: any) => {
 				.integer()
 				.min(0, "Can't be negative")
 				.transform((cv, ov) => {
-					// handle case not enter a number throw error: NaN cast from ""
 					return ov === '' ? undefined : cv;
 				})
 				.required('Required'),
