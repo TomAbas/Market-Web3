@@ -38,7 +38,6 @@ const Chart2 = ({ event }: any) => {
 		.object({
 			amount: yup
 				.number()
-				.integer()
 				.min(0, "Can't be negative")
 				.transform((cv, ov) => {
 					return ov === '' ? undefined : cv;
@@ -155,7 +154,12 @@ const Chart2 = ({ event }: any) => {
 						</Box>
 						<InputItem>
 							<InputTitle>Amount</InputTitle>
-							<input type="number" placeholder="0" {...register('amount')} />
+							<input
+								type="number"
+								step="0.00001"
+								placeholder="0"
+								{...register('amount')}
+							/>
 							{errors.amount?.message && (
 								<Typography
 									variant="body1"
