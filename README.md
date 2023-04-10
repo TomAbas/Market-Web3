@@ -1,10 +1,6 @@
-# Metaspacecy Xmas Event Interface <!-- omit in toc -->
+# WEB3 MARKET PLACE <!-- omit in toc -->
 
 [![https://badges.frapsoft.com/os/mit/mit.svg?v=102](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://opensource.org/licenses/MIT)
-
-<img src="./assets/icon.png" alt="Metaspacecy Logo">
-
-Published on [GitHub](https://github.com/MetaSpacecy/metaspacecy-xmas-event.git)
 
 ## Installation
 
